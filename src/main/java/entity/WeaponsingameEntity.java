@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "weaponsingame", schema = "public", catalog = "s243887")
+@Table(name = "weaponsingame", schema = "public", catalog = "postgres")
 @IdClass(WeaponsingameEntityPK.class)
 public class WeaponsingameEntity {
     private int tributeid;

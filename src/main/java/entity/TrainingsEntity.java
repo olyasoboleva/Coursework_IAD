@@ -1,10 +1,11 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.sql.Time;
 
 @Entity
-@Table(name = "trainings", schema = "public", catalog = "s243887")
+@Table(name = "trainings", schema = "public", catalog = "postgres")
 public class TrainingsEntity {
     private int trainingid;
     private String name;
@@ -18,7 +19,21 @@ public class TrainingsEntity {
     private SkillsEntity skillsBySkillid;
     private UsersEntity usersByTrainer;
 
+    public TrainingsEntity() {}
+
+    public TrainingsEntity(String name, Integer skillid, Short coefficient, Short duration, String description, Integer trainer, Time timeoftraining, Short dayofweek) {
+        this.name = name;
+        this.skillid = skillid;
+        this.coefficient = coefficient;
+        this.duration = duration;
+        this.description = description;
+        this.trainer = trainer;
+        this.timeoftraining = timeoftraining;
+        this.dayofweek = dayofweek;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trainingid")
     public int getTrainingid() {
         return trainingid;
@@ -29,7 +44,7 @@ public class TrainingsEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", length = 40)
     public String getName() {
         return name;
     }
@@ -49,6 +64,7 @@ public class TrainingsEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "coefficient")
     public Short getCoefficient() {
         return coefficient;
@@ -59,6 +75,7 @@ public class TrainingsEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "duration")
     public Short getDuration() {
         return duration;

@@ -1,22 +1,37 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "skills", schema = "public", catalog = "s243887")
+@Table(name = "skills", schema = "public", catalog = "postgres")
 public class SkillsEntity {
     private int skillid;
     private String name;
     private String description;
     private String typeofskill;
     private Integer weaponid;
-    private Collection<DistrictsEntity> districtsBySkillid;
+    DistrictsEntity districtsBySkillid;
     private WeaponsEntity weaponsByWeaponid;
     private Collection<TrainingsEntity> trainingsBySkillid;
     private Collection<UserskillsEntity> userskillsBySkillid;
 
+    public SkillsEntity() {
+       trainingsBySkillid = new HashSet<TrainingsEntity>();
+       userskillsBySkillid = new HashSet<UserskillsEntity>();
+    }
+
+    public SkillsEntity(String name, String description, String typeofskill, Integer weaponid) {
+        this.name = name;
+        this.description = description;
+        this.typeofskill = typeofskill;
+        this.weaponid = weaponid;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skillid")
     public int getSkillid() {
         return skillid;
@@ -27,7 +42,8 @@ public class SkillsEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", length = 32)
     public String getName() {
         return name;
     }
@@ -47,7 +63,8 @@ public class SkillsEntity {
     }
 
     @Basic
-    @Column(name = "typeofskill")
+    @NotNull
+    @Column(name = "typeofskill", length = 42)
     public String getTypeofskill() {
         return typeofskill;
     }
@@ -92,12 +109,12 @@ public class SkillsEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "skillsBySkillid")
-    public Collection<DistrictsEntity> getDistrictsBySkillid() {
+    @OneToOne(mappedBy = "skillsBySkillid")
+    public DistrictsEntity getDistrictsBySkillid() {
         return districtsBySkillid;
     }
 
-    public void setDistrictsBySkillid(Collection<DistrictsEntity> districtsBySkillid) {
+    public void setDistrictsBySkillid(DistrictsEntity districtsBySkillid) {
         this.districtsBySkillid = districtsBySkillid;
     }
 

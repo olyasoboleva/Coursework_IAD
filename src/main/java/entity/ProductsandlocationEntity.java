@@ -1,16 +1,25 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "productsandlocation", schema = "public", catalog = "s243887")
+@Table(name = "productsandlocation", schema = "public", catalog = "postgres")
 public class ProductsandlocationEntity {
     private int applyingid;
     private int productid;
     private String typeoflocation;
     private ShopEntity shopByProductid;
 
+    public ProductsandlocationEntity() {}
+
+    public ProductsandlocationEntity(int productid, String typeoflocation) {
+        this.productid = productid;
+        this.typeoflocation = typeoflocation;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "applyingid")
     public int getApplyingid() {
         return applyingid;
@@ -21,6 +30,7 @@ public class ProductsandlocationEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "productid")
     public int getProductid() {
         return productid;
@@ -31,7 +41,8 @@ public class ProductsandlocationEntity {
     }
 
     @Basic
-    @Column(name = "typeoflocation")
+    @NotNull
+    @Column(name = "typeoflocation", length = 40)
     public String getTypeoflocation() {
         return typeoflocation;
     }

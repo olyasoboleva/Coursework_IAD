@@ -1,19 +1,34 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "arenas", schema = "public", catalog = "s243887")
+@Table(name = "arenas", schema = "public", catalog = "postgres")
 public class ArenasEntity {
+    //TODO: one to one to gameEntity
     private int arenaid;
     private short arenaLength;
     private short arenaWidth;
     private String typeoflocation;
     private Collection<GamesEntity> gamesByArenaid;
 
+    public ArenasEntity() {
+        gamesByArenaid = new HashSet<GamesEntity>();
+    }
+
+    public ArenasEntity(short arenaLength, short arenaWidth, String typeoflocation) {
+        this.arenaLength = arenaLength;
+        this.arenaWidth = arenaWidth;
+        this.typeoflocation = typeoflocation;
+        gamesByArenaid = new HashSet<GamesEntity>();
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "arenaid")
     public int getArenaid() {
         return arenaid;
@@ -24,6 +39,8 @@ public class ArenasEntity {
     }
 
     @Basic
+    @Min(0)
+    @NotNull
     @Column(name = "arena_length")
     public short getArenaLength() {
         return arenaLength;
@@ -34,6 +51,8 @@ public class ArenasEntity {
     }
 
     @Basic
+    @Min(0)
+    @NotNull
     @Column(name = "arena_width")
     public short getArenaWidth() {
         return arenaWidth;
@@ -66,7 +85,8 @@ public class ArenasEntity {
     }
 
     @Basic
-    @Column(name = "typeoflocation")
+    @NotNull
+    @Column(name = "typeoflocation", length = 40)
     public String getTypeoflocation() {
         return typeoflocation;
     }

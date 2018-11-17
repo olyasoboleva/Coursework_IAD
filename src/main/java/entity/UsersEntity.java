@@ -1,11 +1,15 @@
 package entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Collection;
 
 @Entity
-@Table(name = "users", schema = "public", catalog = "s243887")
+@Table(name = "users", schema = "public", catalog = "postgres")
 public class UsersEntity {
     private int userid;
     private String surname;
@@ -27,6 +31,7 @@ public class UsersEntity {
     private Collection<UserskillsEntity> userskillsByUserid;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
     public int getUserid() {
         return userid;
@@ -37,7 +42,8 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "surname")
+    @NotNull
+    @Column(name = "surname", length = 30)
     public String getSurname() {
         return surname;
     }
@@ -47,7 +53,8 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", length = 30)
     public String getName() {
         return name;
     }
@@ -57,7 +64,9 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "nick")
+    @NotNull
+    @UniqueElements
+    @Column(name = "nick", length = 30)
     public String getNick() {
         return nick;
     }
@@ -67,6 +76,7 @@ public class UsersEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "height")
     public Short getHeight() {
         return height;
@@ -77,6 +87,7 @@ public class UsersEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "weight")
     public Short getWeight() {
         return weight;
@@ -87,6 +98,7 @@ public class UsersEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "sex")
     public boolean isSex() {
         return sex;
@@ -117,7 +129,8 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "password")
+    @NotNull
+    @Column(name = "password", length = 40)
     public String getPassword() {
         return password;
     }
@@ -127,7 +140,7 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "status")
+    @Column(name = "status", length = 40)
     public String getStatus() {
         return status;
     }
@@ -137,6 +150,7 @@ public class UsersEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "cash")
     public Integer getCash() {
         return cash;

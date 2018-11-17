@@ -1,17 +1,30 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "prices", schema = "public", catalog = "s243887")
+@Table(name = "prices", schema = "public", catalog = "postgres")
 public class PricesEntity {
     private int priceid;
     private String name;
     private Integer cost;
     private Collection<StatusesEntity> statusesByPriceid;
 
+    public PricesEntity() {
+        statusesByPriceid = new HashSet<StatusesEntity>();
+    }
+
+    public PricesEntity(String name, Integer cost) {
+        this.name = name;
+        this.cost = cost;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "priceid")
     public int getPriceid() {
         return priceid;
@@ -22,7 +35,8 @@ public class PricesEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", length = 64)
     public String getName() {
         return name;
     }
@@ -32,6 +46,7 @@ public class PricesEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "cost")
     public Integer getCost() {
         return cost;

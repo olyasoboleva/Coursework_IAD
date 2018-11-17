@@ -1,17 +1,23 @@
 package entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "weapons", schema = "public", catalog = "s243887")
+@Table(name = "weapons", schema = "public", catalog = "postgres")
 public class WeaponsEntity {
     private int weaponid;
     private String name;
     private String typeofweapon;
     private Short damage;
     private Short radiusofaction;
+
     private SkillsEntity skillByWeaponid;
     private Collection<TributesEntity> tributesByWeaponid;
     private Collection<WeaponsingameEntity> weaponsingamesByWeaponid;
@@ -42,7 +48,9 @@ public class WeaponsEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    //TODO: может, не так. надо проверить
+    @UniqueElements
+    @Column(name = "name", length = 64)
     public String getName() {
         return name;
     }
@@ -52,7 +60,8 @@ public class WeaponsEntity {
     }
 
     @Basic
-    @Column(name = "typeofweapon")
+    @NotNull
+    @Column(name = "typeofweapon", length = 40)
     public String getTypeofweapon() {
         return typeofweapon;
     }
@@ -62,6 +71,8 @@ public class WeaponsEntity {
     }
 
     @Basic
+    @Min(0)
+    @Max(100)
     @Column(name = "damage")
     public Short getDamage() {
         return damage;
@@ -72,6 +83,7 @@ public class WeaponsEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "radiusofaction")
     public Short getRadiusofaction() {
         return radiusofaction;

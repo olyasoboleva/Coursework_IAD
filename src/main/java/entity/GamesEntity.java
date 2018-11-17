@@ -1,11 +1,15 @@
 package entity;
 
 import javax.persistence.*;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "games", schema = "public", catalog = "s243887")
+@Table(name = "games", schema = "public", catalog = "postgres")
 public class GamesEntity {
     private int gameid;
     private boolean typeofgame;
@@ -18,7 +22,21 @@ public class GamesEntity {
     private ArenasEntity arenasByArena;
     private Collection<TributesEntity> tributesByGameid;
 
+    public GamesEntity() {
+        tributesByGameid = new HashSet<TributesEntity>();
+    }
+
+    public GamesEntity(boolean typeofgame, Integer steward, Integer arena, Short numberoftributes, Date startdate) {
+        this.typeofgame = typeofgame;
+        this.steward = steward;
+        this.arena = arena;
+        this.numberoftributes = numberoftributes;
+        this.startdate = startdate;
+        tributesByGameid = new HashSet<TributesEntity>();
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gameid")
     public int getGameid() {
         return gameid;
@@ -29,6 +47,7 @@ public class GamesEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "typeofgame")
     public boolean isTypeofgame() {
         return typeofgame;
@@ -59,6 +78,7 @@ public class GamesEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "numberoftributes")
     public Short getNumberoftributes() {
         return numberoftributes;
@@ -69,6 +89,7 @@ public class GamesEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "startdate")
     public Date getStartdate() {
         return startdate;
@@ -79,6 +100,7 @@ public class GamesEntity {
     }
 
     @Basic
+    //TODO: not null
     @Column(name = "duration")
     public int getDuration() {
         return duration;

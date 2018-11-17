@@ -1,10 +1,14 @@
 package entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "districts", schema = "public", catalog = "s243887")
+@Table(name = "districts", schema = "public", catalog = "postgres")
 public class DistrictsEntity {
     private short districtid;
     private String name;
@@ -13,7 +17,19 @@ public class DistrictsEntity {
     private SkillsEntity skillsBySkillid;
     private Collection<UsersEntity> usersByDistrictid;
 
+    public DistrictsEntity() {
+        usersByDistrictid = new HashSet<UsersEntity>();
+    }
+
+    public DistrictsEntity(String name, String typeofactivity, Integer skillid) {
+        this.name = name;
+        this.typeofactivity = typeofactivity;
+        this.skillid = skillid;
+        usersByDistrictid = new HashSet<UsersEntity>();
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "districtid")
     public short getDistrictid() {
         return districtid;
@@ -24,7 +40,8 @@ public class DistrictsEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @UniqueElements
+    @Column(name = "name", length = 20)
     public String getName() {
         return name;
     }
@@ -34,7 +51,8 @@ public class DistrictsEntity {
     }
 
     @Basic
-    @Column(name = "typeofactivity")
+    @NotNull
+    @Column(name = "typeofactivity", length = 40)
     public String getTypeofactivity() {
         return typeofactivity;
     }
@@ -78,7 +96,7 @@ public class DistrictsEntity {
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "skillid", referencedColumnName = "skillid")
     public SkillsEntity getSkillsBySkillid() {
         return skillsBySkillid;

@@ -1,9 +1,11 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "presentstotributes", schema = "public", catalog = "s243887")
+@Table(name = "presentstotributes", schema = "public", catalog = "postgres")
 public class PresentstotributesEntity {
     private long sendingid;
     private int productid;
@@ -14,7 +16,17 @@ public class PresentstotributesEntity {
     private TributesEntity tributesByTributeid;
     private UsersEntity usersBySenderid;
 
+    public PresentstotributesEntity() {}
+
+    public PresentstotributesEntity(int productid, long tributeid, int senderid, Short quantity) {
+        this.productid = productid;
+        this.tributeid = tributeid;
+        this.senderid = senderid;
+        this.quantity = quantity;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sendingid")
     public long getSendingid() {
         return sendingid;
@@ -25,6 +37,7 @@ public class PresentstotributesEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "productid")
     public int getProductid() {
         return productid;
@@ -35,6 +48,7 @@ public class PresentstotributesEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "tributeid")
     public long getTributeid() {
         return tributeid;
@@ -45,6 +59,7 @@ public class PresentstotributesEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "senderid")
     public int getSenderid() {
         return senderid;
@@ -55,6 +70,7 @@ public class PresentstotributesEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "quantity")
     public Short getQuantity() {
         return quantity;

@@ -1,10 +1,14 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "tributes", schema = "public", catalog = "s243887")
+@Table(name = "tributes", schema = "public", catalog = "postgres")
 public class TributesEntity {
     private long tributeid;
     private Integer userid;
@@ -19,7 +23,22 @@ public class TributesEntity {
     private WeaponsEntity weaponsByWeaponid;
     private Collection<WeaponsingameEntity> weaponsingamesByTributeid;
 
+    public TributesEntity() {
+        presentstotributesByTributeid = new HashSet<PresentstotributesEntity>();
+        weaponsingamesByTributeid = new HashSet<WeaponsingameEntity>();
+    }
+
+    public TributesEntity(Integer userid, int gameid) {
+        this.userid = userid;
+        this.gameid = gameid;
+        this.health = 100;
+        this.status = "alive";
+    }
+
+    //TODO: CONSTRAINT user_on_game UNIQUE(gameID, userID)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tributeid")
     public long getTributeid() {
         return tributeid;
@@ -40,6 +59,7 @@ public class TributesEntity {
     }
 
     @Basic
+    @NotNull
     @Column(name = "gameid")
     public int getGameid() {
         return gameid;
@@ -50,7 +70,7 @@ public class TributesEntity {
     }
 
     @Basic
-    @Column(name = "status")
+    @Column(name = "status", length = 40)
     public String getStatus() {
         return status;
     }
@@ -60,7 +80,7 @@ public class TributesEntity {
     }
 
     @Basic
-    @Column(name = "causeofdeath")
+    @Column(name = "causeofdeath", length = 80)
     public String getCauseofdeath() {
         return causeofdeath;
     }
@@ -80,6 +100,9 @@ public class TributesEntity {
     }
 
     @Basic
+    @Min(0)
+    //TODO: этого нет в бд
+    @Max(100)
     @Column(name = "health")
     public Short getHealth() {
         return health;

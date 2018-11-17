@@ -3,14 +3,22 @@ package entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "statuses", schema = "public", catalog = "s243887")
+@Table(name = "statuses", schema = "public", catalog = "postgres")
 public class StatusesEntity {
     private long statusid;
     private String name;
     private Integer priceid;
     private PricesEntity pricesByPriceid;
 
+    public StatusesEntity() {}
+
+    public StatusesEntity(String name, Integer priceid) {
+        this.name = name;
+        this.priceid = priceid;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "statusid")
     public long getStatusid() {
         return statusid;
@@ -21,7 +29,7 @@ public class StatusesEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", length = 40)
     public String getName() {
         return name;
     }

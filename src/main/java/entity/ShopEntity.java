@@ -1,10 +1,14 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
-@Table(name = "shop", schema = "public", catalog = "s243887")
+@Table(name = "shop", schema = "public", catalog = "postgres")
 public class ShopEntity {
     private int productid;
     private String name;
@@ -15,7 +19,21 @@ public class ShopEntity {
     private Collection<PresentstotributesEntity> presentstotributesByProductid;
     private Collection<ProductsandlocationEntity> productsandlocationsByProductid;
 
+    public ShopEntity() {
+        presentstotributesByProductid = new HashSet<PresentstotributesEntity>();
+        productsandlocationsByProductid = new HashSet<ProductsandlocationEntity>();
+    }
+
+    public ShopEntity(String name, short cost, String typeofpresent, String description, Short healthrecovery) {
+        this.name = name;
+        this.cost = cost;
+        this.typeofpresent = typeofpresent;
+        this.description = description;
+        this.healthrecovery = healthrecovery;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "productid")
     public int getProductid() {
         return productid;
@@ -26,7 +44,8 @@ public class ShopEntity {
     }
 
     @Basic
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", length = 64)
     public String getName() {
         return name;
     }
@@ -36,6 +55,8 @@ public class ShopEntity {
     }
 
     @Basic
+    @NotNull
+    @Min(0)
     @Column(name = "cost")
     public short getCost() {
         return cost;
@@ -46,7 +67,8 @@ public class ShopEntity {
     }
 
     @Basic
-    @Column(name = "typeofpresent")
+    @NotNull
+    @Column(name = "typeofpresent", length = 40)
     public String getTypeofpresent() {
         return typeofpresent;
     }
@@ -66,6 +88,8 @@ public class ShopEntity {
     }
 
     @Basic
+    @Min(0)
+    @Max(100)
     @Column(name = "healthrecovery")
     public Short getHealthrecovery() {
         return healthrecovery;

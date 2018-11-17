@@ -1,9 +1,10 @@
 package entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
-@Table(name = "userskills", schema = "public", catalog = "s243887")
+@Table(name = "userskills", schema = "public", catalog = "postgres")
 @IdClass(UserskillsEntityPK.class)
 public class UserskillsEntity {
     private int userid;
@@ -41,6 +42,7 @@ public class UserskillsEntity {
     }
 
     @Basic
+    @Min(0)
     @Column(name = "levelofskill")
     public Short getLevelofskill() {
         return levelofskill;
