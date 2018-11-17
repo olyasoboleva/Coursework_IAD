@@ -75,7 +75,7 @@ public class ProductsandlocationEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "productid", referencedColumnName = "productid", nullable = false)
+    @JoinColumn(name = "productid", referencedColumnName = "productid", nullable = false, insertable = false, updatable = false)
     public ShopEntity getShopByProductid() {
         return shopByProductid;
     }

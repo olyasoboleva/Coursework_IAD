@@ -71,7 +71,7 @@ public class StatusesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "priceid", referencedColumnName = "priceid")
+    @JoinColumn(name = "priceid", referencedColumnName = "priceid", insertable = false, updatable = false)
     public PricesEntity getPricesByPriceid() {
         return pricesByPriceid;
     }

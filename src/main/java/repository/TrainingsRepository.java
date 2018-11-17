@@ -12,7 +12,7 @@ public interface TrainingsRepository extends CrudRepository<TrainingsEntity, Int
     //там ещё есть сущность, которая должна увеличивать скилл сама, но вообще на это триггер есть
     //или не надо это
     List<TrainingsEntity> getTrainingsEntityByDayofweek(Short dayofweek);
-    List<TrainingsEntity> getTrainingsEntityByTimeoftrainig(Time timeoftrainig);
+    List<TrainingsEntity> getTrainingsEntityByTimeoftraining(Time timeoftrainig);
     List<TrainingsEntity> getTrainingsEntityBySkillid(Integer skillid);
     List<TrainingsEntity> getTrainingsEntityByTrainer(Integer trainer);
 }

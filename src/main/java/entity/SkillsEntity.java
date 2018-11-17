@@ -119,7 +119,7 @@ public class SkillsEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid")
+    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid", insertable = false, updatable = false)
     public WeaponsEntity getWeaponsByWeaponid() {
         return weaponsByWeaponid;
     }

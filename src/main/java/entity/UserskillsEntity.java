@@ -75,7 +75,7 @@ public class UserskillsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid", nullable = false)
+    @JoinColumn(name = "userid", referencedColumnName = "userid", nullable = false, insertable = false, updatable = false)
     public UsersEntity getUsersByUserid() {
         return usersByUserid;
     }
@@ -85,7 +85,7 @@ public class UserskillsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "skillid", referencedColumnName = "skillid", nullable = false)
+    @JoinColumn(name = "skillid", referencedColumnName = "skillid", nullable = false, insertable = false, updatable = false)
     public SkillsEntity getSkillsBySkillid() {
         return skillsBySkillid;
     }

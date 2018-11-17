@@ -12,13 +12,14 @@ public class Main {
 
 
         ArenasEntity arenasEntity = new ArenasEntity();
-        arenasEntity.setArenaid(2);
         arenasEntity.setArenaLength((short) 123);
         arenasEntity.setArenaWidth((short)12);
+        arenasEntity.setTypeoflocation("Лес");
 
         ArenasRepository arenasRepository = (ArenasRepository) ctx.getBean("arenasRepository");
 
         arenasRepository.save(arenasEntity);
+
 
 
     }

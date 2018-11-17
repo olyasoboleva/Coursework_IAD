@@ -237,7 +237,7 @@ public class UsersEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "district", referencedColumnName = "districtid")
+    @JoinColumn(name = "district", referencedColumnName = "districtid", insertable = false, updatable = false)
     public DistrictsEntity getDistrictsByDistrict() {
         return districtsByDistrict;
     }

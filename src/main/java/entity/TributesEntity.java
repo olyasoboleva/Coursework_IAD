@@ -15,12 +15,10 @@ public class TributesEntity {
     private int gameid;
     private String status;
     private String causeofdeath;
-    private Integer weaponid;
     private Short health;
     private Collection<PresentstotributesEntity> presentstotributesByTributeid;
     private UsersEntity usersByUserid;
     private GamesEntity gamesByGameid;
-    private WeaponsEntity weaponsByWeaponid;
     private Collection<WeaponsingameEntity> weaponsingamesByTributeid;
 
     public TributesEntity() {
@@ -90,16 +88,6 @@ public class TributesEntity {
     }
 
     @Basic
-    @Column(name = "weaponid")
-    public Integer getWeaponid() {
-        return weaponid;
-    }
-
-    public void setWeaponid(Integer weaponid) {
-        this.weaponid = weaponid;
-    }
-
-    @Basic
     @Min(0)
     //TODO: этого нет в бд
     @Max(100)
@@ -124,7 +112,6 @@ public class TributesEntity {
         if (userid != null ? !userid.equals(that.userid) : that.userid != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (causeofdeath != null ? !causeofdeath.equals(that.causeofdeath) : that.causeofdeath != null) return false;
-        if (weaponid != null ? !weaponid.equals(that.weaponid) : that.weaponid != null) return false;
         if (health != null ? !health.equals(that.health) : that.health != null) return false;
 
         return true;
@@ -137,7 +124,6 @@ public class TributesEntity {
         result = 31 * result + gameid;
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (causeofdeath != null ? causeofdeath.hashCode() : 0);
-        result = 31 * result + (weaponid != null ? weaponid.hashCode() : 0);
         result = 31 * result + (health != null ? health.hashCode() : 0);
         return result;
     }
@@ -152,7 +138,7 @@ public class TributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid")
+    @JoinColumn(name = "userid", referencedColumnName = "userid", insertable = false, updatable = false)
     public UsersEntity getUsersByUserid() {
         return usersByUserid;
     }
@@ -162,23 +148,13 @@ public class TributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "gameid", referencedColumnName = "gameid", nullable = false)
+    @JoinColumn(name = "gameid", referencedColumnName = "gameid", nullable = false, insertable = false, updatable = false)
     public GamesEntity getGamesByGameid() {
         return gamesByGameid;
     }
 
     public void setGamesByGameid(GamesEntity gamesByGameid) {
         this.gamesByGameid = gamesByGameid;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid")
-    public WeaponsEntity getWeaponsByWeaponid() {
-        return weaponsByWeaponid;
-    }
-
-    public void setWeaponsByWeaponid(WeaponsEntity weaponsByWeaponid) {
-        this.weaponsByWeaponid = weaponsByWeaponid;
     }
 
     @OneToMany(mappedBy = "tributesByTributeid")

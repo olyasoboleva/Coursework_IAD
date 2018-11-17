@@ -100,7 +100,6 @@ userID integer REFERENCES users,
 gameID integer REFERENCES games NOT NULL,
 status varchar(40),
 causeOfDeath varchar(80),
-weaponID integer REFERENCES weapons,
 health smallint DEFAULT 100,
 CONSTRAINT health CHECK (health >= 0),
 CONSTRAINT user_on_game UNIQUE(gameID, userID)

@@ -107,7 +107,7 @@ public class PresentstotributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "productid", referencedColumnName = "productid", nullable = false)
+    @JoinColumn(name = "productid", referencedColumnName = "productid", nullable = false, insertable = false, updatable = false)
     public ShopEntity getShopByProductid() {
         return shopByProductid;
     }
@@ -117,7 +117,7 @@ public class PresentstotributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tributeid", referencedColumnName = "tributeid", nullable = false)
+    @JoinColumn(name = "tributeid", referencedColumnName = "tributeid", nullable = false, insertable = false, updatable = false)
     public TributesEntity getTributesByTributeid() {
         return tributesByTributeid;
     }
@@ -127,7 +127,7 @@ public class PresentstotributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "senderid", referencedColumnName = "userid", nullable = false)
+    @JoinColumn(name = "senderid", referencedColumnName = "userid", nullable = false, insertable = false, updatable = false)
     public UsersEntity getUsersBySenderid() {
         return usersBySenderid;
     }

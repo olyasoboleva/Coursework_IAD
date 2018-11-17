@@ -161,7 +161,7 @@ public class TrainingsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "skillid", referencedColumnName = "skillid")
+    @JoinColumn(name = "skillid", referencedColumnName = "skillid", insertable = false, updatable = false)
     public SkillsEntity getSkillsBySkillid() {
         return skillsBySkillid;
     }
@@ -171,7 +171,7 @@ public class TrainingsEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "trainer", referencedColumnName = "userid")
+    @JoinColumn(name = "trainer", referencedColumnName = "userid", insertable = false, updatable = false)
     public UsersEntity getUsersByTrainer() {
         return usersByTrainer;
     }

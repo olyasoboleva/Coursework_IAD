@@ -142,7 +142,7 @@ public class GamesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "steward", referencedColumnName = "userid")
+    @JoinColumn(name = "steward", referencedColumnName = "userid", insertable = false, updatable = false)
     public UsersEntity getUsersBySteward() {
         return usersBySteward;
     }
@@ -152,7 +152,7 @@ public class GamesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "arena", referencedColumnName = "arenaid")
+    @JoinColumn(name = "arena", referencedColumnName = "arenaid", insertable = false, updatable = false)
     public ArenasEntity getArenasByArena() {
         return arenasByArena;
     }

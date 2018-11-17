@@ -60,7 +60,7 @@ public class WeaponsingameEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tributeid", referencedColumnName = "tributeid", nullable = false)
+    @JoinColumn(name = "tributeid", referencedColumnName = "tributeid", nullable = false, updatable = false, insertable = false)
     public TributesEntity getTributesByTributeid() {
         return tributesByTributeid;
     }
@@ -70,7 +70,7 @@ public class WeaponsingameEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid", nullable = false)
+    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid", nullable = false, updatable = false, insertable = false)
     public WeaponsEntity getWeaponsByWeaponid() {
         return weaponsByWeaponid;
     }

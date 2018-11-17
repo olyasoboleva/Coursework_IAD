@@ -19,11 +19,9 @@ public class WeaponsEntity {
     private Short radiusofaction;
 
     private SkillsEntity skillByWeaponid;
-    private Collection<TributesEntity> tributesByWeaponid;
     private Collection<WeaponsingameEntity> weaponsingamesByWeaponid;
 
     public WeaponsEntity(){
-        tributesByWeaponid = new HashSet<TributesEntity>();
         weaponsingamesByWeaponid  =new HashSet<WeaponsingameEntity>();
     }
 
@@ -32,7 +30,6 @@ public class WeaponsEntity {
         this.typeofweapon = typeofweapon;
         this.damage = damage;
         this.radiusofaction = radiusofaction;
-        tributesByWeaponid = new HashSet<TributesEntity>();
         weaponsingamesByWeaponid  =new HashSet<WeaponsingameEntity>();
     }
 
@@ -127,15 +124,6 @@ public class WeaponsEntity {
 
     public void setSkillByWeaponid(SkillsEntity skillByWeaponid) {
         this.skillByWeaponid = skillByWeaponid;
-    }
-
-    @OneToMany(mappedBy = "weaponsByWeaponid")
-    public Collection<TributesEntity> getTributesByWeaponid() {
-        return tributesByWeaponid;
-    }
-
-    public void setTributesByWeaponid(Collection<TributesEntity> tributesByWeaponid) {
-        this.tributesByWeaponid = tributesByWeaponid;
     }
 
     @OneToMany(mappedBy = "weaponsByWeaponid")

@@ -97,7 +97,7 @@ public class DistrictsEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "skillid", referencedColumnName = "skillid")
+    @JoinColumn(name = "skillid", referencedColumnName = "skillid", insertable = false, updatable = false)
     public SkillsEntity getSkillsBySkillid() {
         return skillsBySkillid;
     }
