@@ -20,4 +20,3 @@ drop table productsAndLocation cascade;
 drop table skills cascade;
 drop table weapons cascade;
 drop table presentstotributes cascade ;
-drop table presentsandlocation cascade ;

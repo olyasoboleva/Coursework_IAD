@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "arenas", schema = "public", catalog = "s243887")
@@ -8,8 +9,11 @@ public class ArenasEntity {
     private int arenaid;
     private short arenaLength;
     private short arenaWidth;
+    private String typeoflocation;
+    private Collection<GamesEntity> gamesByArenaid;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "arenaid")
     public int getArenaid() {
         return arenaid;
@@ -61,4 +65,22 @@ public class ArenasEntity {
         return result;
     }
 
+    @Basic
+    @Column(name = "typeoflocation")
+    public String getTypeoflocation() {
+        return typeoflocation;
+    }
+
+    public void setTypeoflocation(String typeoflocation) {
+        this.typeoflocation = typeoflocation;
+    }
+
+    @OneToMany(mappedBy = "arenasByArena")
+    public Collection<GamesEntity> getGamesByArenaid() {
+        return gamesByArenaid;
+    }
+
+    public void setGamesByArenaid(Collection<GamesEntity> gamesByArenaid) {
+        this.gamesByArenaid = gamesByArenaid;
+    }
 }

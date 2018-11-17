@@ -12,7 +12,7 @@ public class Main {
 
 
         ArenasEntity arenasEntity = new ArenasEntity();
-        arenasEntity.setArenaid(1);
+        arenasEntity.setArenaid(2);
         arenasEntity.setArenaLength((short) 123);
         arenasEntity.setArenaWidth((short)12);
 
