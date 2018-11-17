@@ -1,8 +1,14 @@
 import config.database.DatabaseConfig;
 import entity.ArenasEntity;
+import entity.DistrictsEntity;
+import entity.SkillsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import repository.ArenasRepository;
+import repository.DistrictsRepository;
+import repository.SkillsRepository;
+
+import java.util.List;
 
 public class Main {
 
@@ -21,6 +27,24 @@ public class Main {
         arenasRepository.save(arenasEntity);
 
 
+        DistrictsRepository districtsRepository = (DistrictsRepository) ctx.getBean("districtsRepository");
+        SkillsRepository skillsRepository = (SkillsRepository) ctx.getBean("skillsRepository");
 
+
+        DistrictsEntity districtsEntity = new DistrictsEntity();
+        districtsEntity.setName("Дистрикт 11");
+        districtsEntity.setTypeofactivity("Роскошь");
+
+        SkillsEntity skillsEntity = new SkillsEntity();
+        skillsEntity.setName("Изготовление украшений");
+        skillsEntity.setTypeofskill("Другое");
+        skillsEntity.setDescription("keklol");
+
+        skillsRepository.save(skillsEntity);
+        districtsEntity.setSkillid(skillsEntity.getSkillid());
+        districtsRepository.save(districtsEntity);
+
+        SkillsEntity skillsEntity1 = skillsRepository.findSkillsBySkillid(skillsEntity.getSkillid());
+        System.out.println(skillsEntity1.getDescription());
     }
 }

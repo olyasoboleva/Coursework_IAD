@@ -151,8 +151,10 @@ public class GamesEntity {
         this.usersBySteward = usersBySteward;
     }
 
-    @ManyToOne
+
+    @OneToOne
     @JoinColumn(name = "arena", referencedColumnName = "arenaid", insertable = false, updatable = false)
+
     public ArenasEntity getArenasByArena() {
         return arenasByArena;
     }

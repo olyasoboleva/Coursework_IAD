@@ -10,7 +10,7 @@ import java.util.HashSet;
 @Entity
 @Table(name = "districts", schema = "public", catalog = "postgres")
 public class DistrictsEntity {
-    private short districtid;
+    private int districtid;
     private String name;
     private String typeofactivity;
     private Integer skillid;
@@ -31,16 +31,15 @@ public class DistrictsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "districtid")
-    public short getDistrictid() {
+    public int getDistrictid() {
         return districtid;
     }
 
-    public void setDistrictid(short districtid) {
+    public void setDistrictid(int districtid) {
         this.districtid = districtid;
     }
 
     @Basic
-    @UniqueElements
     @Column(name = "name", length = 20)
     public String getName() {
         return name;

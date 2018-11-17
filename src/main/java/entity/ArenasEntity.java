@@ -14,17 +14,14 @@ public class ArenasEntity {
     private short arenaLength;
     private short arenaWidth;
     private String typeoflocation;
-    private Collection<GamesEntity> gamesByArenaid;
+    private GamesEntity gamesByArenaid;
 
-    public ArenasEntity() {
-        gamesByArenaid = new HashSet<GamesEntity>();
-    }
+    public ArenasEntity() {}
 
     public ArenasEntity(short arenaLength, short arenaWidth, String typeoflocation) {
         this.arenaLength = arenaLength;
         this.arenaWidth = arenaWidth;
         this.typeoflocation = typeoflocation;
-        gamesByArenaid = new HashSet<GamesEntity>();
     }
 
     @Id
@@ -95,12 +92,12 @@ public class ArenasEntity {
         this.typeoflocation = typeoflocation;
     }
 
-    @OneToMany(mappedBy = "arenasByArena")
-    public Collection<GamesEntity> getGamesByArenaid() {
+    @OneToOne(mappedBy = "arenasByArena")
+    public GamesEntity getGamesByArenaid() {
         return gamesByArenaid;
     }
 
-    public void setGamesByArenaid(Collection<GamesEntity> gamesByArenaid) {
+    public void setGamesByArenaid(GamesEntity gamesByArenaid) {
         this.gamesByArenaid = gamesByArenaid;
     }
 }
