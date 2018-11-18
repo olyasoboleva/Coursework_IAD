@@ -32,13 +32,13 @@ public class Main {
 
 
         DistrictsEntity districtsEntity = new DistrictsEntity();
-        districtsEntity.setName("Дистрикт 11");
+        districtsEntity.setName("Дистрикт 5");
         districtsEntity.setTypeofactivity("Роскошь");
 
         SkillsEntity skillsEntity = new SkillsEntity();
         skillsEntity.setName("Изготовление украшений");
         skillsEntity.setTypeofskill("Другое");
-        skillsEntity.setDescription("keklol");
+        skillsEntity.setDescription("kek lol");
 
         skillsRepository.save(skillsEntity);
         districtsEntity.setSkillid(skillsEntity.getSkillid());

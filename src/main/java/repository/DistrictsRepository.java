@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface DistrictsRepository extends CrudRepository<DistrictsEntity, Integer> {
-    DistrictsEntity findDistrictsEntityByDistrictid(short districtid);
+    DistrictsEntity findDistrictsEntityByDistrictid(int districtid);
 }

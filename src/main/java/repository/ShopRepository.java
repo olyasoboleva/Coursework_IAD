@@ -8,4 +8,6 @@ import java.util.List;
 public interface ShopRepository extends CrudRepository<ShopEntity, Integer> {
     ShopEntity findShopEntityByProductid(int productid);
     List<ShopEntity> findShopEntitiesByTypeofpresent(String typeofpresent);
+
+    //TODO: тут тоже нужен запрос, получающий все подарки трибута, но тут снова два join. аааааааааа помогите
 }
