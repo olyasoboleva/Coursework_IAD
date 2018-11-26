@@ -41,10 +41,10 @@ public class Main {
         skillsEntity.setDescription("kek lol");
 
         skillsRepository.save(skillsEntity);
-        districtsEntity.setSkillid(skillsEntity.getSkillid());
+        districtsEntity.setSkillsBySkillid(skillsEntity);
         districtsRepository.save(districtsEntity);
 
-        SkillsEntity skillsEntity1 = skillsRepository.findSkillsBySkillid(skillsEntity.getSkillid());
+        SkillsEntity skillsEntity1 = skillsRepository.findSkillsEntityByDistrictsBySkillid(districtsEntity);
         System.out.println(skillsEntity1.getDescription());
     }
 }

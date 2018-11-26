@@ -32,6 +32,8 @@ public class ShopEntity {
         this.healthrecovery = healthrecovery;
     }
 
+    //TODO: связь с оружием
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "productid")

@@ -13,7 +13,7 @@ public class SkillsEntity {
     private String description;
     private String typeofskill;
     private Integer weaponid;
-    DistrictsEntity districtsBySkillid;
+    private DistrictsEntity districtsBySkillid;
     private WeaponsEntity weaponsByWeaponid;
     private Collection<TrainingsEntity> trainingsBySkillid;
     private Collection<UserskillsEntity> userskillsBySkillid;

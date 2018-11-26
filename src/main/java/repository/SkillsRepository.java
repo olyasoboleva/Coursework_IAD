@@ -1,6 +1,8 @@
 package repository;
 
+import entity.DistrictsEntity;
 import entity.SkillsEntity;
+import entity.TrainingsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -10,27 +12,20 @@ import java.util.List;
 
 public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
     SkillsEntity findSkillsEntityBySkillid(int skillid);
-
-//FIXME: что-то тут не так? в этом запросе
     /**
      * Получение скилла, который связан с дистриктом
-     * @param skillID скилл
+     * @param districtsEntity дистрикт
      * @return
      */
-    @Query(value = "select skill from DistrictsEntity district join SkillsEntity skill on(district.skillid = skill.skillid) where district.skillid = :skillID")
-    SkillsEntity findSkillsBySkillid(@Param("skillID")int skillID);
+    SkillsEntity findSkillsEntityByDistrictsBySkillid(DistrictsEntity districtsEntity);
 
-
-
-    ///////////
 
     /**
-     * Получить скилл, который увелисивается после прохождения данной тренировки
-     * @param trainingID тренировка
-     * @return скилл
+     * Получить скилл, который увеличивается после прохождения данной тренировки
+     * @param training тренировка
+     * @return skills
      */
-    @Query("select  skill from SkillsEntity skill join TrainingsEntity training on(skill.skillid = training.skillid) where training.trainingid = :trainingID")
-    SkillsEntity findSkillByTraining(@Param("trainingID")int trainingID);
+    SkillsEntity findSkillsEntityByTrainingsBySkillid(TrainingsEntity training);
 
 
     //TODO: я чёт сломалась на этом запросе, присоединяя userskills, а потом user
