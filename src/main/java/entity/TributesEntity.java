@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "tributes", schema = "public", catalog = "postgres")
+@Table(name = "tributes", uniqueConstraints = {@UniqueConstraint( columnNames = {"gameid","userid"})},schema = "public", catalog = "postgres")
 public class TributesEntity {
     private long tributeid;
     private Integer userid;
@@ -32,8 +32,6 @@ public class TributesEntity {
         this.health = 100;
         this.status = "alive";
     }
-
-    //TODO: CONSTRAINT user_on_game UNIQUE(gameID, userID)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -165,4 +163,5 @@ public class TributesEntity {
     public void setWeaponsingamesByTributeid(Collection<WeaponsingameEntity> weaponsingamesByTributeid) {
         this.weaponsingamesByTributeid = weaponsingamesByTributeid;
     }
+
 }

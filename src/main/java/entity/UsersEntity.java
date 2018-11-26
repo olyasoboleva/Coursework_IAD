@@ -65,8 +65,7 @@ public class UsersEntity {
 
     @Basic
     @NotNull
-    @UniqueElements
-    @Column(name = "nick", length = 30)
+    @Column(name = "nick", length = 30, unique = true)
     public String getNick() {
         return nick;
     }

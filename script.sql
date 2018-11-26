@@ -41,15 +41,14 @@ radiusOfAction smallint CHECK (radiusOfAction > 0)
 
 CREATE TABLE users (
 userID integer PRIMARY KEY,
+login INTEGER REFERENCES userLogin,
 surname varchar(30) NOT NULL,
 name varchar(30) NOT NULL,
-nick varchar(30) NOT NULL UNIQUE,
 height smallint,
 weight smallint,
 sex boolean NOT NULL,
 district smallint REFERENCES districts,
 birthday date,
-password varchar(40) NOT NULL,
 status varchar(40),
 cash integer
 CONSTRAINT info CHECK (height > 0 AND weight >0 AND cash >= 0)
@@ -131,4 +130,10 @@ CREATE TABLE statuses (
  statusID bigint PRIMARY KEY,
  name varchar(40),
  priceID integer REFERENCES prices
+);
+
+CREATE TABLE userLogin (
+  loginID INTEGER PRIMARY KEY,
+  nick varchar(30) NOT NULL UNIQUE,
+  password varchar(40) NOT NULL
 );

@@ -16,7 +16,6 @@ public class Main {
     public static void main(String[] args){
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DatabaseConfig.class);
 
-
         ArenasEntity arenasEntity = new ArenasEntity();
         arenasEntity.setArenaLength((short) 123);
         arenasEntity.setArenaWidth((short)12);

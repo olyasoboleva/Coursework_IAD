@@ -40,7 +40,7 @@ public class DistrictsEntity {
     }
 
     @Basic
-    @Column(name = "name", length = 20)
+    @Column(name = "name", length = 20, unique = true)
     public String getName() {
         return name;
     }
