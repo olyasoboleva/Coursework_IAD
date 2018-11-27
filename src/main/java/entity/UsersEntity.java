@@ -1,7 +1,5 @@
 package entity;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -14,13 +12,11 @@ public class UsersEntity {
     private int userid;
     private String surname;
     private String name;
-    private String nick;
     private Short height;
     private Short weight;
     private boolean sex;
     private Short district;
     private Date birthday;
-    private String password;
     private String status;
     private Integer cash;
     private Collection<GamesEntity> gamesByUserid;
@@ -29,6 +25,7 @@ public class UsersEntity {
     private Collection<TributesEntity> tributesByUserid;
     private DistrictsEntity districtsByDistrict;
     private Collection<UserskillsEntity> userskillsByUserid;
+    private UserloginEntity userlogin;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,16 +60,6 @@ public class UsersEntity {
         this.name = name;
     }
 
-    @Basic
-    @NotNull
-    @Column(name = "nick", length = 30, unique = true)
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
 
     @Basic
     @Min(0)
@@ -127,16 +114,6 @@ public class UsersEntity {
         this.birthday = birthday;
     }
 
-    @Basic
-    @NotNull
-    @Column(name = "password", length = 40)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Basic
     @Column(name = "status", length = 40)
@@ -170,12 +147,10 @@ public class UsersEntity {
         if (sex != that.sex) return false;
         if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (nick != null ? !nick.equals(that.nick) : that.nick != null) return false;
         if (height != null ? !height.equals(that.height) : that.height != null) return false;
         if (weight != null ? !weight.equals(that.weight) : that.weight != null) return false;
         if (district != null ? !district.equals(that.district) : that.district != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (cash != null ? !cash.equals(that.cash) : that.cash != null) return false;
 
@@ -187,13 +162,11 @@ public class UsersEntity {
         int result = userid;
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (nick != null ? nick.hashCode() : 0);
         result = 31 * result + (height != null ? height.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (sex ? 1 : 0);
         result = 31 * result + (district != null ? district.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (cash != null ? cash.hashCode() : 0);
         return result;
@@ -252,5 +225,14 @@ public class UsersEntity {
 
     public void setUserskillsByUserid(Collection<UserskillsEntity> userskillsByUserid) {
         this.userskillsByUserid = userskillsByUserid;
+    }
+
+    @OneToOne(mappedBy = "user")
+    public UserloginEntity getUserlogin() {
+        return userlogin;
+    }
+
+    public void setUserlogin(UserloginEntity userlogin) {
+        this.userlogin = userlogin;
     }
 }
