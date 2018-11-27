@@ -45,8 +45,6 @@ public class WeaponsEntity {
     }
 
     @Basic
-    //TODO: может, не так. надо проверить
-    @UniqueElements
     @Column(name = "name", length = 64, unique = true)
     public String getName() {
         return name;

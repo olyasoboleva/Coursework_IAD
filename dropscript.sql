@@ -1,5 +1,3 @@
-
-
 drop table arenas cascade;
 drop table users cascade;
 drop table tributes cascade;
@@ -17,3 +15,4 @@ drop table skills cascade;
 drop table weapons cascade;
 drop table presentstotributes cascade ;
 drop table productsandlocation CASCADE ;
+drop table userlogin CASCADE ;

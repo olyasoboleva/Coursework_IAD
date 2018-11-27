@@ -9,7 +9,6 @@ import java.util.HashSet;
 @Entity
 @Table(name = "arenas", schema = "public", catalog = "postgres")
 public class ArenasEntity {
-    //TODO: one to one to gameEntity
     private int arenaid;
     private short arenaLength;
     private short arenaWidth;

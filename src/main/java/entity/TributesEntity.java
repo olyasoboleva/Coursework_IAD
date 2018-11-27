@@ -87,7 +87,6 @@ public class TributesEntity {
 
     @Basic
     @Min(0)
-    //TODO: этого нет в бд
     @Max(100)
     @Column(name = "health")
     public Short getHealth() {

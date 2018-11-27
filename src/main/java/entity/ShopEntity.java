@@ -18,21 +18,21 @@ public class ShopEntity {
     private Short healthrecovery;
     private Collection<PresentstotributesEntity> presentstotributesByProductid;
     private Collection<ProductsandlocationEntity> productsandlocationsByProductid;
+    private String picturePath;
 
     public ShopEntity() {
         presentstotributesByProductid = new HashSet<PresentstotributesEntity>();
         productsandlocationsByProductid = new HashSet<ProductsandlocationEntity>();
     }
 
-    public ShopEntity(String name, short cost, String typeofpresent, String description, Short healthrecovery) {
+    public ShopEntity(String name, short cost, String typeofpresent, String description, Short healthrecovery, String picture) {
         this.name = name;
         this.cost = cost;
         this.typeofpresent = typeofpresent;
         this.description = description;
         this.healthrecovery = healthrecovery;
+        this.picturePath = picture;
     }
-
-    //TODO: связь с оружием
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,6 +88,17 @@ public class ShopEntity {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Basic
+    @Column(name = "picturepath")
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+
 
     @Basic
     @Min(0)

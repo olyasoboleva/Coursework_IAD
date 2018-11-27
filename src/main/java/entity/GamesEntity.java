@@ -100,8 +100,7 @@ public class GamesEntity {
     }
 
     @Basic
-    //TODO: not null
-    @Column(name = "duration")
+    @Column(name = "duration", nullable = false)
     public int getDuration() {
         return duration;
     }

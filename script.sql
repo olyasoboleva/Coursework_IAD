@@ -27,6 +27,7 @@ name varchar(64) NOT NULL,
 cost smallint NOT NULL CHECK (cost >= 0),
 typeOfPresent VARCHAR(40) NOT NULL,
 description text,
+picturepath  varchar(40) not null ,
 healthRecovery smallint
 CHECK ((healthRecovery < 100) AND (healthRecovery >= 0))
 );
@@ -37,6 +38,12 @@ name varchar(64) NOT NULL UNIQUE,
 typeOfWeapon VARCHAR(40) NOT NULL,
 damage smallint CHECK ((damage >= 0) AND (damage <= 100)),
 radiusOfAction smallint CHECK (radiusOfAction > 0)
+);
+
+CREATE TABLE userLogin (
+ loginID INTEGER PRIMARY KEY,
+ nick varchar(30) NOT NULL UNIQUE,
+ password varchar(40) NOT NULL
 );
 
 CREATE TABLE users (
@@ -130,10 +137,4 @@ CREATE TABLE statuses (
  statusID bigint PRIMARY KEY,
  name varchar(40),
  priceID integer REFERENCES prices
-);
-
-CREATE TABLE userLogin (
-  loginID INTEGER PRIMARY KEY,
-  nick varchar(30) NOT NULL UNIQUE,
-  password varchar(40) NOT NULL
 );
