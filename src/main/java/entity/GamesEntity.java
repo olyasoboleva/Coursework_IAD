@@ -13,8 +13,8 @@ import java.util.HashSet;
 public class GamesEntity {
     private int gameid;
     private boolean typeofgame;
-    private Integer steward;
-    private Integer arena;
+    private Integer steward; //TODO: а это разве надо?????
+    private Integer arena;//TODO: а это разве надо?????
     private Short numberoftributes;
     private Date startdate;
     private int duration;

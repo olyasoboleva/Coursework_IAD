@@ -17,20 +17,22 @@ public class WeaponsEntity {
     private String typeofweapon;
     private Short damage;
     private Short radiusofaction;
+    private String picturePath;
 
     private SkillsEntity skillByWeaponid;
     private Collection<WeaponsingameEntity> weaponsingamesByWeaponid;
 
     public WeaponsEntity(){
-        weaponsingamesByWeaponid  =new HashSet<WeaponsingameEntity>();
+        weaponsingamesByWeaponid  = new HashSet<WeaponsingameEntity>();
     }
 
-    public WeaponsEntity(String name, String typeofweapon, Short damage, Short radiusofaction) {
+    public WeaponsEntity(String name, String typeofweapon, Short damage, Short radiusofaction, String picturePath) {
         this.name = name;
         this.typeofweapon = typeofweapon;
         this.damage = damage;
         this.radiusofaction = radiusofaction;
-        weaponsingamesByWeaponid  =new HashSet<WeaponsingameEntity>();
+        this.weaponsingamesByWeaponid  =new HashSet<WeaponsingameEntity>();
+        this.picturePath = picturePath;
     }
 
     @Id
@@ -86,6 +88,16 @@ public class WeaponsEntity {
 
     public void setRadiusofaction(Short radiusofaction) {
         this.radiusofaction = radiusofaction;
+    }
+
+    @Basic
+    @Column(name = "picturePath", nullable = false)
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 
     @Override

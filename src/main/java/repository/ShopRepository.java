@@ -1,13 +1,14 @@
 package repository;
 
 import entity.ShopEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ShopRepository extends CrudRepository<ShopEntity, Integer> {
+public interface ShopRepository extends JpaRepository<ShopEntity, Integer> {
     ShopEntity findShopEntityByProductid(int productid);
     List<ShopEntity> findShopEntitiesByTypeofpresent(String typeofpresent);
 
-    //TODO: тут тоже нужен запрос, получающий все подарки трибута, но тут снова два join. аааааааааа помогите
+
 }

@@ -37,7 +37,8 @@ weaponID integer PRIMARY KEY,
 name varchar(64) NOT NULL UNIQUE,
 typeOfWeapon VARCHAR(40) NOT NULL,
 damage smallint CHECK ((damage >= 0) AND (damage <= 100)),
-radiusOfAction smallint CHECK (radiusOfAction > 0)
+radiusOfAction smallint CHECK (radiusOfAction > 0),
+picturePath VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE userLogin (
@@ -57,8 +58,9 @@ sex boolean NOT NULL,
 district smallint REFERENCES districts,
 birthday date,
 status varchar(40),
-cash integer
-CONSTRAINT info CHECK (height > 0 AND weight >0 AND cash >= 0)
+cash integer,
+ picturePath VARCHAR(40) NOT NULL,
+ CONSTRAINT info CHECK (height > 0 AND weight >0 AND cash >= 0)
 );
 
 
@@ -107,7 +109,7 @@ gameID integer REFERENCES games NOT NULL,
 status varchar(40),
 causeOfDeath varchar(80),
 health smallint DEFAULT 100,
-CONSTRAINT health CHECK (health >= 0),
+CONSTRAINT health CHECK (health >= 0 and health <= 100),
 CONSTRAINT user_on_game UNIQUE(gameID, userID)
 );
 

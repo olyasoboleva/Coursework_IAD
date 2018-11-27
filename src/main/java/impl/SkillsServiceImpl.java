@@ -1,42 +1,67 @@
 package impl;
 
 import entity.SkillsEntity;
+import entity.TributesEntity;
+import entity.UsersEntity;
 import entity.UserskillsEntity;
 import org.springframework.transaction.annotation.Transactional;
 import repository.SkillsRepository;
+import repository.UserRepository;
 import repository.UserskillsRepository;
 import service.SkillsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service("skillsService")
 public class SkillsServiceImpl implements SkillsService {
 
     private final SkillsRepository skillsRepository;
     private final UserskillsRepository userskillsRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public SkillsServiceImpl(SkillsRepository skillsRepository, UserskillsRepository userskillsRepository) {
+    public SkillsServiceImpl(SkillsRepository skillsRepository, UserskillsRepository userskillsRepository, UserRepository userRepository) {
         this.skillsRepository = skillsRepository;
         this.userskillsRepository = userskillsRepository;
+        this.userRepository = userRepository;
     }
 
-    /* FIXME: я и тут попробовала сделать двойной join, но нужна помощь
-     .//еще я поменяла два репозитория с Crud на jpa, потому что иначе такой stream() не сделать
+
       /**
        * Получить все скиллы пользователя
-       * @param userID пользователь
-       * @return скиллы
+       * @param user пользователь
+       * @return скиллы и их уровень
        */
-    public List<SkillsEntity> getAllUserSkills(int userID) {
-        //List<UserskillsEntity> list = userskillsRepository.getUserskillsEntitiesByUserid(userID);
-        //return userskillsRepository.findAll().stream().filter(userskillsEntity -> userskillsEntity.getUserid() == userID).collect(Collectors.toList());
-    return null;
+      @Transactional
+      @Override
+    public Map<SkillsEntity, Short> getAllUserSkills(UsersEntity user) {
+        Map<SkillsEntity, Short> allUserSkills = new HashMap<>();
+        List<UserskillsEntity> userSkills = userskillsRepository.getUserskillsEntitiesByUsersByUserid(user);
+        List<SkillsEntity> allSkills = skillsRepository.findAll();
+        for (SkillsEntity skill : allSkills) {
+            for (UserskillsEntity userSkill : userSkills) {
+                if (skill.getSkillid() == userSkill.getSkillid()) {
+                    allUserSkills.put(skill,userSkill.getLevelofskill());
+                }
+            }
+        }
+        return allUserSkills;
+    }
 
+    /**
+     * Получение всех скиллов трибута
+     * @param tribute трибут
+     * @return скиллы и их уровень
+     */
+    @Transactional
+    @Override
+    public Map<SkillsEntity, Short> getAllTributeSkills(TributesEntity tribute) {
+          UsersEntity user = userRepository.findUsersEntityByTributesByUserid(tribute);
+        return getAllUserSkills(user);
     }
 
 

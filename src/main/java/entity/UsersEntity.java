@@ -19,6 +19,7 @@ public class UsersEntity {
     private Date birthday;
     private String status;
     private Integer cash;
+    private String picturePath;
     private Collection<GamesEntity> gamesByUserid;
     private Collection<PresentstotributesEntity> presentstotributesByUserid;
     private Collection<TrainingsEntity> trainingsByUserid;
@@ -26,6 +27,29 @@ public class UsersEntity {
     private DistrictsEntity districtsByDistrict;
     private Collection<UserskillsEntity> userskillsByUserid;
     private UserloginEntity userlogin;
+
+    public UsersEntity() {}
+
+    public UsersEntity(String surname, String name, Short height, Short weight, boolean sex, Short district, Date birthday, String picturePath, UserloginEntity userlogin) {
+        this.surname = surname;
+        this.name = name;
+        this.height = height;
+        this.weight = weight;
+        this.sex = sex;
+        this.district = district;
+        this.birthday = birthday;
+        this.picturePath = picturePath;
+        this.cash = 1000;
+        this.status = "Наблюдатель";
+        this.userlogin = userlogin;
+    }
+
+    public UsersEntity(String surname, String name, String picturePath, UserloginEntity userlogin) {
+        this.surname = surname;
+        this.name = name;
+        this.picturePath = picturePath;
+        this.userlogin = userlogin;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -134,6 +158,16 @@ public class UsersEntity {
 
     public void setCash(Integer cash) {
         this.cash = cash;
+    }
+
+    @Basic
+    @Column(name = "picturePath", nullable = false)
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
 
     @Override

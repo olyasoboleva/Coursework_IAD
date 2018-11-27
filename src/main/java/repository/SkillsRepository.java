@@ -15,7 +15,7 @@ public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
     /**
      * Получение скилла, который связан с дистриктом
      * @param districtsEntity дистрикт
-     * @return
+     * @return скилл
      */
     SkillsEntity findSkillsEntityByDistrictsBySkillid(DistrictsEntity districtsEntity);
 
@@ -26,12 +26,6 @@ public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
      * @return skills
      */
     SkillsEntity findSkillsEntityByTrainingsBySkillid(TrainingsEntity training);
-
-
-    //TODO: я чёт сломалась на этом запросе, присоединяя userskills, а потом user
-    @Query("select skill from SkillsEntity skill join UserskillsEntity  userskill")
-    List<SkillsEntity> findSkillsByUser(@Param("userID")int userID);
-
 
 
 }

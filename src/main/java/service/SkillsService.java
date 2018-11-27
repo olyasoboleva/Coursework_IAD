@@ -1,9 +1,11 @@
 package service;
 
 import entity.SkillsEntity;
+import entity.TributesEntity;
 import entity.UsersEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SkillsService {
 
@@ -11,5 +13,6 @@ public interface SkillsService {
     SkillsEntity updateSkill(SkillsEntity skill);
     boolean deleteSkill(SkillsEntity skill);
 
-    public List<SkillsEntity> getAllUserSkills(int userID);
+    Map<SkillsEntity, Short> getAllUserSkills(UsersEntity user);
+    Map<SkillsEntity, Short> getAllTributeSkills(TributesEntity tribute);
 }

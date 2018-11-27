@@ -26,8 +26,8 @@ public class TributesEntity {
         weaponsingamesByTributeid = new HashSet<WeaponsingameEntity>();
     }
 
-    public TributesEntity(Integer userid, int gameid) {
-        this.userid = userid;
+    public TributesEntity(UsersEntity user,int gameid) {
+        this.usersByUserid = user;
         this.gameid = gameid;
         this.health = 100;
         this.status = "alive";
