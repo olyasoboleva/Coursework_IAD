@@ -13,8 +13,6 @@ import java.util.HashSet;
 public class GamesEntity {
     private int gameid;
     private boolean typeofgame;
-    private Integer steward; //TODO: а это разве надо?????
-    private Integer arena; //TODO: а это разве надо?????
     private Short numberoftributes;
     private Date startdate;
     private int duration;
@@ -28,8 +26,6 @@ public class GamesEntity {
 
     public GamesEntity(boolean typeofgame, Integer steward, Integer arena, Short numberoftributes, Date startdate) {
         this.typeofgame = typeofgame;
-        this.steward = steward;
-        this.arena = arena;
         this.numberoftributes = numberoftributes;
         this.startdate = startdate;
         tributesByGameid = new HashSet<TributesEntity>();
@@ -55,26 +51,6 @@ public class GamesEntity {
 
     public void setTypeofgame(boolean typeofgame) {
         this.typeofgame = typeofgame;
-    }
-
-    @Basic
-    @Column(name = "steward")
-    public Integer getSteward() {
-        return steward;
-    }
-
-    public void setSteward(Integer steward) {
-        this.steward = steward;
-    }
-
-    @Basic
-    @Column(name = "arena")
-    public Integer getArena() {
-        return arena;
-    }
-
-    public void setArena(Integer arena) {
-        this.arena = arena;
     }
 
     @Basic
@@ -119,8 +95,6 @@ public class GamesEntity {
         if (gameid != that.gameid) return false;
         if (typeofgame != that.typeofgame) return false;
         if (duration != that.duration) return false;
-        if (steward != null ? !steward.equals(that.steward) : that.steward != null) return false;
-        if (arena != null ? !arena.equals(that.arena) : that.arena != null) return false;
         if (numberoftributes != null ? !numberoftributes.equals(that.numberoftributes) : that.numberoftributes != null)
             return false;
         if (startdate != null ? !startdate.equals(that.startdate) : that.startdate != null) return false;
@@ -132,8 +106,6 @@ public class GamesEntity {
     public int hashCode() {
         int result = gameid;
         result = 31 * result + (typeofgame ? 1 : 0);
-        result = 31 * result + (steward != null ? steward.hashCode() : 0);
-        result = 31 * result + (arena != null ? arena.hashCode() : 0);
         result = 31 * result + (numberoftributes != null ? numberoftributes.hashCode() : 0);
         result = 31 * result + (startdate != null ? startdate.hashCode() : 0);
         result = 31 * result + duration;
@@ -152,7 +124,7 @@ public class GamesEntity {
 
 
     @OneToOne
-    @JoinColumn(name = "arena", referencedColumnName = "arenaid", insertable = false, updatable = false)
+    @JoinColumn(name = "arena", referencedColumnName = "arenaid")
 
     public ArenasEntity getArenasByArena() {
         return arenasByArena;

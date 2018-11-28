@@ -7,14 +7,12 @@ import javax.persistence.*;
 public class StatusesEntity {
     private long statusid;
     private String name;
-    private Integer priceid;
     private PricesEntity pricesByPriceid;
 
     public StatusesEntity() {}
 
     public StatusesEntity(String name, Integer priceid) {
         this.name = name;
-        this.priceid = priceid;
     }
 
     @Id
@@ -38,16 +36,6 @@ public class StatusesEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "priceid")
-    public Integer getPriceid() {
-        return priceid;
-    }
-
-    public void setPriceid(Integer priceid) {
-        this.priceid = priceid;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,8 +45,6 @@ public class StatusesEntity {
 
         if (statusid != that.statusid) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (priceid != null ? !priceid.equals(that.priceid) : that.priceid != null) return false;
-
         return true;
     }
 
@@ -66,7 +52,6 @@ public class StatusesEntity {
     public int hashCode() {
         int result = (int) (statusid ^ (statusid >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (priceid != null ? priceid.hashCode() : 0);
         return result;
     }
 

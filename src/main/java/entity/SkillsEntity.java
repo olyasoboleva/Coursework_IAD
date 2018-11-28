@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -12,7 +14,6 @@ public class SkillsEntity {
     private String name;
     private String description;
     private String typeofskill;
-    private Integer weaponid;
     private DistrictsEntity districtsBySkillid;
     private WeaponsEntity weaponsByWeaponid;
     private Collection<TrainingsEntity> trainingsBySkillid;
@@ -27,7 +28,6 @@ public class SkillsEntity {
         this.name = name;
         this.description = description;
         this.typeofskill = typeofskill;
-        this.weaponid = weaponid;
     }
 
     @Id
@@ -73,16 +73,6 @@ public class SkillsEntity {
         this.typeofskill = typeofskill;
     }
 
-    @Basic
-    @Column(name = "weaponid")
-    public Integer getWeaponid() {
-        return weaponid;
-    }
-
-    public void setWeaponid(Integer weaponid) {
-        this.weaponid = weaponid;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,8 +84,6 @@ public class SkillsEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (typeofskill != null ? !typeofskill.equals(that.typeofskill) : that.typeofskill != null) return false;
-        if (weaponid != null ? !weaponid.equals(that.weaponid) : that.weaponid != null) return false;
-
         return true;
     }
 
@@ -105,11 +93,11 @@ public class SkillsEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (typeofskill != null ? typeofskill.hashCode() : 0);
-        result = 31 * result + (weaponid != null ? weaponid.hashCode() : 0);
         return result;
     }
 
     @OneToOne(mappedBy = "skillsBySkillid")
+    @JsonManagedReference
     public DistrictsEntity getDistrictsBySkillid() {
         return districtsBySkillid;
     }
@@ -119,7 +107,7 @@ public class SkillsEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid", insertable = false, updatable = false)
+    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid")
     public WeaponsEntity getWeaponsByWeaponid() {
         return weaponsByWeaponid;
     }

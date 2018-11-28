@@ -9,11 +9,9 @@ import java.sql.Time;
 public class TrainingsEntity {
     private int trainingid;
     private String name;
-    private Integer skillid;
     private Short coefficient;
     private Short duration;
     private String description;
-    private Integer trainer;
     private Time timeoftraining;
     private Short dayofweek;
     private SkillsEntity skillsBySkillid;
@@ -23,11 +21,9 @@ public class TrainingsEntity {
 
     public TrainingsEntity(String name, Integer skillid, Short coefficient, Short duration, String description, Integer trainer, Time timeoftraining, Short dayofweek) {
         this.name = name;
-        this.skillid = skillid;
         this.coefficient = coefficient;
         this.duration = duration;
         this.description = description;
-        this.trainer = trainer;
         this.timeoftraining = timeoftraining;
         this.dayofweek = dayofweek;
     }
@@ -51,16 +47,6 @@ public class TrainingsEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Basic
-    @Column(name = "skillid")
-    public Integer getSkillid() {
-        return skillid;
-    }
-
-    public void setSkillid(Integer skillid) {
-        this.skillid = skillid;
     }
 
     @Basic
@@ -96,16 +82,6 @@ public class TrainingsEntity {
     }
 
     @Basic
-    @Column(name = "trainer")
-    public Integer getTrainer() {
-        return trainer;
-    }
-
-    public void setTrainer(Integer trainer) {
-        this.trainer = trainer;
-    }
-
-    @Basic
     @Column(name = "timeoftraining")
     public Time getTimeoftraining() {
         return timeoftraining;
@@ -134,11 +110,9 @@ public class TrainingsEntity {
 
         if (trainingid != that.trainingid) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (skillid != null ? !skillid.equals(that.skillid) : that.skillid != null) return false;
         if (coefficient != null ? !coefficient.equals(that.coefficient) : that.coefficient != null) return false;
         if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (trainer != null ? !trainer.equals(that.trainer) : that.trainer != null) return false;
         if (timeoftraining != null ? !timeoftraining.equals(that.timeoftraining) : that.timeoftraining != null)
             return false;
         if (dayofweek != null ? !dayofweek.equals(that.dayofweek) : that.dayofweek != null) return false;
@@ -150,11 +124,9 @@ public class TrainingsEntity {
     public int hashCode() {
         int result = trainingid;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (skillid != null ? skillid.hashCode() : 0);
         result = 31 * result + (coefficient != null ? coefficient.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (trainer != null ? trainer.hashCode() : 0);
         result = 31 * result + (timeoftraining != null ? timeoftraining.hashCode() : 0);
         result = 31 * result + (dayofweek != null ? dayofweek.hashCode() : 0);
         return result;

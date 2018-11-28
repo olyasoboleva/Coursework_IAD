@@ -12,4 +12,5 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
     List<TributesEntity> getTributesEntitiesByUsersByUserid(UsersEntity user);
     List<TributesEntity> getTributesEntitiesByStatus(String status);
     List<TributesEntity> getTributesEntitiesByGamesByGameid(GamesEntity game);
+    List<TributesEntity> getTributesEntityByStatusAndGamesByGameid(String status, GamesEntity game);
 }

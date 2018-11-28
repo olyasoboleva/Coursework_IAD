@@ -8,11 +8,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "tributes", uniqueConstraints = {@UniqueConstraint( columnNames = {"gameid","userid"})},schema = "public", catalog = "postgres")
+@Table(name = "tributes",schema = "public", catalog = "postgres")
 public class TributesEntity {
     private long tributeid;
-    private Integer userid;
-    private int gameid;
     private String status;
     private String causeofdeath;
     private Short health;
@@ -28,7 +26,6 @@ public class TributesEntity {
 
     public TributesEntity(UsersEntity user,int gameid) {
         this.usersByUserid = user;
-        this.gameid = gameid;
         this.health = 100;
         this.status = "alive";
     }
@@ -42,27 +39,6 @@ public class TributesEntity {
 
     public void setTributeid(long tributeid) {
         this.tributeid = tributeid;
-    }
-
-    @Basic
-    @Column(name = "userid")
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
-
-    @Basic
-    @NotNull
-    @Column(name = "gameid")
-    public int getGameid() {
-        return gameid;
-    }
-
-    public void setGameid(int gameid) {
-        this.gameid = gameid;
     }
 
     @Basic
@@ -105,8 +81,6 @@ public class TributesEntity {
         TributesEntity that = (TributesEntity) o;
 
         if (tributeid != that.tributeid) return false;
-        if (gameid != that.gameid) return false;
-        if (userid != null ? !userid.equals(that.userid) : that.userid != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (causeofdeath != null ? !causeofdeath.equals(that.causeofdeath) : that.causeofdeath != null) return false;
         if (health != null ? !health.equals(that.health) : that.health != null) return false;
@@ -117,8 +91,6 @@ public class TributesEntity {
     @Override
     public int hashCode() {
         int result = (int) (tributeid ^ (tributeid >>> 32));
-        result = 31 * result + (userid != null ? userid.hashCode() : 0);
-        result = 31 * result + gameid;
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (causeofdeath != null ? causeofdeath.hashCode() : 0);
         result = 31 * result + (health != null ? health.hashCode() : 0);
@@ -135,7 +107,7 @@ public class TributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid", insertable = false, updatable = false)
+    @JoinColumn(name = "userid", referencedColumnName = "userid", nullable = false)
     public UsersEntity getUsersByUserid() {
         return usersByUserid;
     }
@@ -145,7 +117,7 @@ public class TributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "gameid", referencedColumnName = "gameid", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "gameid", referencedColumnName = "gameid", nullable = false)
     public GamesEntity getGamesByGameid() {
         return gamesByGameid;
     }

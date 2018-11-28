@@ -7,14 +7,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "productsandlocation", schema = "public", catalog = "postgres")
 public class ProductsandlocationEntity {
     private int applyingid;
-    private int productid;
+    //TODO: добавить сущность с локациями и их отображениями на карте
     private String typeoflocation;
     private ShopEntity shopByProductid;
 
     public ProductsandlocationEntity() {}
 
     public ProductsandlocationEntity(int productid, String typeoflocation) {
-        this.productid = productid;
         this.typeoflocation = typeoflocation;
     }
 
@@ -27,17 +26,6 @@ public class ProductsandlocationEntity {
 
     public void setApplyingid(int applyingid) {
         this.applyingid = applyingid;
-    }
-
-    @Basic
-    @NotNull
-    @Column(name = "productid")
-    public int getProductid() {
-        return productid;
-    }
-
-    public void setProductid(int productid) {
-        this.productid = productid;
     }
 
     @Basic
@@ -59,7 +47,6 @@ public class ProductsandlocationEntity {
         ProductsandlocationEntity that = (ProductsandlocationEntity) o;
 
         if (applyingid != that.applyingid) return false;
-        if (productid != that.productid) return false;
         if (typeoflocation != null ? !typeoflocation.equals(that.typeoflocation) : that.typeoflocation != null)
             return false;
 
@@ -69,7 +56,6 @@ public class ProductsandlocationEntity {
     @Override
     public int hashCode() {
         int result = applyingid;
-        result = 31 * result + productid;
         result = 31 * result + (typeoflocation != null ? typeoflocation.hashCode() : 0);
         return result;
     }

@@ -8,9 +8,6 @@ import javax.validation.constraints.NotNull;
 @Table(name = "presentstotributes", schema = "public", catalog = "postgres")
 public class PresentstotributesEntity {
     private long sendingid;
-    private int productid;
-    private long tributeid;
-    private int senderid;
     private Short quantity;
     private ShopEntity shopByProductid;
     private TributesEntity tributesByTributeid;
@@ -19,9 +16,6 @@ public class PresentstotributesEntity {
     public PresentstotributesEntity() {}
 
     public PresentstotributesEntity(int productid, long tributeid, int senderid, Short quantity) {
-        this.productid = productid;
-        this.tributeid = tributeid;
-        this.senderid = senderid;
         this.quantity = quantity;
     }
 
@@ -34,39 +28,6 @@ public class PresentstotributesEntity {
 
     public void setSendingid(long sendingid) {
         this.sendingid = sendingid;
-    }
-
-    @Basic
-    @NotNull
-    @Column(name = "productid")
-    public int getProductid() {
-        return productid;
-    }
-
-    public void setProductid(int productid) {
-        this.productid = productid;
-    }
-
-    @Basic
-    @NotNull
-    @Column(name = "tributeid")
-    public long getTributeid() {
-        return tributeid;
-    }
-
-    public void setTributeid(long tributeid) {
-        this.tributeid = tributeid;
-    }
-
-    @Basic
-    @NotNull
-    @Column(name = "senderid")
-    public int getSenderid() {
-        return senderid;
-    }
-
-    public void setSenderid(int senderid) {
-        this.senderid = senderid;
     }
 
     @Basic
@@ -88,9 +49,6 @@ public class PresentstotributesEntity {
         PresentstotributesEntity that = (PresentstotributesEntity) o;
 
         if (sendingid != that.sendingid) return false;
-        if (productid != that.productid) return false;
-        if (tributeid != that.tributeid) return false;
-        if (senderid != that.senderid) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
 
         return true;
@@ -99,9 +57,6 @@ public class PresentstotributesEntity {
     @Override
     public int hashCode() {
         int result = (int) (sendingid ^ (sendingid >>> 32));
-        result = 31 * result + productid;
-        result = 31 * result + (int) (tributeid ^ (tributeid >>> 32));
-        result = 31 * result + senderid;
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         return result;
     }

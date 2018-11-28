@@ -140,3 +140,5 @@ CREATE TABLE statuses (
  name varchar(40),
  priceID integer REFERENCES prices
 );
+
+CREATE SEQUENCE serial;

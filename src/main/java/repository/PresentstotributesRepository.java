@@ -12,8 +12,4 @@ public interface PresentstotributesRepository extends CrudRepository<Presentstot
     List<PresentstotributesEntity> getPresentstotributesEntityByUsersBySenderidAndTributesByTributeid(UsersEntity sender, TributesEntity tribute);
     List<PresentstotributesEntity> getPresentstotributesEntityByUsersBySenderid(UsersEntity sender);
     List<PresentstotributesEntity> getPresentstotributesEntityByTributesByTributeid(TributesEntity tribute);
-
-    //FIXME: блин, это в сервисе будет, потому что это не работает скорее всего
-    @Query("select present from PresentstotributesEntity present join TributesEntity tribute where present.tributeid = tribute.tributeid")
-    List<PresentstotributesEntity> findPresentsByTribute(@Param("tributeID")int tributeID);
 }

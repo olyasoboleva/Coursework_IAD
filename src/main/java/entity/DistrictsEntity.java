@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ public class DistrictsEntity {
     private int districtid;
     private String name;
     private String typeofactivity;
-    private Integer skillid;
+    //private Integer skillid;
     private SkillsEntity skillsBySkillid;
     private Collection<UsersEntity> usersByDistrictid;
 
@@ -24,7 +25,7 @@ public class DistrictsEntity {
     public DistrictsEntity(String name, String typeofactivity, Integer skillid) {
         this.name = name;
         this.typeofactivity = typeofactivity;
-        this.skillid = skillid;
+        //this.skillid = skillid;
         usersByDistrictid = new HashSet<UsersEntity>();
     }
 
@@ -60,7 +61,7 @@ public class DistrictsEntity {
         this.typeofactivity = typeofactivity;
     }
 
-    @Basic
+    /*@Basic
     @Column(name = "skillid")
     public Integer getSkillid() {
         return skillid;
@@ -69,6 +70,7 @@ public class DistrictsEntity {
     public void setSkillid(Integer skillid) {
         this.skillid = skillid;
     }
+    */
 
     @Override
     public boolean equals(Object o) {
@@ -81,7 +83,7 @@ public class DistrictsEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (typeofactivity != null ? !typeofactivity.equals(that.typeofactivity) : that.typeofactivity != null)
             return false;
-        if (skillid != null ? !skillid.equals(that.skillid) : that.skillid != null) return false;
+      //  if (skillid != null ? !skillid.equals(that.skillid) : that.skillid != null) return false;
 
         return true;
     }
@@ -91,12 +93,13 @@ public class DistrictsEntity {
         int result = (int) districtid;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (typeofactivity != null ? typeofactivity.hashCode() : 0);
-        result = 31 * result + (skillid != null ? skillid.hashCode() : 0);
+        //result = 31 * result + (skillid != null ? skillid.hashCode() : 0);
         return result;
     }
 
     @OneToOne
-    @JoinColumn(name = "skillid", referencedColumnName = "skillid", insertable = false, updatable = false)
+    @JoinColumn(name = "skillid", referencedColumnName = "skillid")
+    @JsonBackReference(value="skillsDistricts")
     public SkillsEntity getSkillsBySkillid() {
         return skillsBySkillid;
     }

@@ -40,9 +40,12 @@ public class ShopServiceImpl implements ShopService{
         List<ShopEntity> tributePresents = new ArrayList<>();
         for (PresentstotributesEntity present : presents) {
             for (ShopEntity product : allproducts) {
+                //TODO: тут что-то сломалось из-за отсутствия теперь ид)))
+                /*
                 if (product.getProductid() == present.getProductid()) {
                     tributePresents.add(product);
                 }
+                */
             }
         }
         return  tributePresents;

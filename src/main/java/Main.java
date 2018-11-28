@@ -29,9 +29,8 @@ public class Main {
         SkillsRepository skillsRepository = (SkillsRepository) ctx.getBean("skillsRepository");
 
         DistrictsEntity districtsEntity = new DistrictsEntity();
-        districtsEntity.setName("Дистрикт 6");
+        districtsEntity.setName("Дистрикт 55");
         districtsEntity.setTypeofactivity("Роскошь");
-        districtsRepository.save(districtsEntity);
 ///
         SkillsEntity skillsEntity = new SkillsEntity();
         skillsEntity.setName("Изготовление украшений");
@@ -69,9 +68,9 @@ public class Main {
         gamesRepository.save(game);
 
         TributesEntity tribute = new TributesEntity();
+        TributesRepository tributesRepository = (TributesRepository) ctx.getBean("tributesRepository");
         tribute.setUsersByUserid(user);
         tribute.setGamesByGameid(game);
-        TributesRepository tributesRepository = (TributesRepository) ctx.getBean("tributesRepository");
         tributesRepository.save(tribute);
 
 
@@ -88,6 +87,7 @@ public class Main {
         weaponsRepository.save(weapon2);
 
 
+        /*
         WeaponsingameEntity weaponsingameEntity1 = new WeaponsingameEntity();
         weaponsingameEntity1.setTributesByTributeid(tribute);
         weaponsingameEntity1.setWeaponsByWeaponid(weapon1);
@@ -104,6 +104,7 @@ public class Main {
         for (WeaponsEntity weaponsEntity : list) {
             System.out.println(weaponsEntity.getName());
         }
-        
+        */
+
     }
 }

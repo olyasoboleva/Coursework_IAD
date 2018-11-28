@@ -15,7 +15,6 @@ public class UsersEntity {
     private Short height;
     private Short weight;
     private boolean sex;
-    private Short district;
     private Date birthday;
     private String status;
     private Integer cash;
@@ -36,7 +35,6 @@ public class UsersEntity {
         this.height = height;
         this.weight = weight;
         this.sex = sex;
-        this.district = district;
         this.birthday = birthday;
         this.picturePath = picturePath;
         this.cash = 1000;
@@ -113,15 +111,6 @@ public class UsersEntity {
     }
 
     @Basic
-    @Column(name = "district")
-    public Short getDistrict() {
-        return district;
-    }
-    public void setDistrict(Short district) {
-        this.district = district;
-    }
-
-    @Basic
     @Column(name = "birthday")
     public Date getBirthday() {
         return birthday;
@@ -172,7 +161,6 @@ public class UsersEntity {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (height != null ? !height.equals(that.height) : that.height != null) return false;
         if (weight != null ? !weight.equals(that.weight) : that.weight != null) return false;
-        if (district != null ? !district.equals(that.district) : that.district != null) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
         if (cash != null ? !cash.equals(that.cash) : that.cash != null) return false;
@@ -188,7 +176,6 @@ public class UsersEntity {
         result = 31 * result + (height != null ? height.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (sex ? 1 : 0);
-        result = 31 * result + (district != null ? district.hashCode() : 0);
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (cash != null ? cash.hashCode() : 0);
@@ -245,7 +232,7 @@ public class UsersEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "loginid", referencedColumnName = "loginid", insertable = false, updatable = false)
+    @JoinColumn(name = "loginid", referencedColumnName = "loginid")
     public UserloginEntity getUserlogin() {
         return userlogin;
     }
