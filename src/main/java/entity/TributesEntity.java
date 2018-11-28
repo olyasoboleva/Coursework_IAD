@@ -34,7 +34,7 @@ public class TributesEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tributeid")
     public long getTributeid() {
         return tributeid;

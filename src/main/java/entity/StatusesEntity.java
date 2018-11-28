@@ -18,7 +18,7 @@ public class StatusesEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "statusid")
     public long getStatusid() {
         return statusid;

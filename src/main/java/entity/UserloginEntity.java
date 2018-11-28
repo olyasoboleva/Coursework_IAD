@@ -20,7 +20,7 @@ public class UserloginEntity {
     public UserloginEntity() {}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "loginid")
     public int getLoginid() {
         return loginid;
@@ -52,12 +52,10 @@ public class UserloginEntity {
         this.password = password;
     }
 
-    @OneToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid", insertable = false, updatable = false)
+    @OneToOne(mappedBy = "userlogin")
     public UsersEntity getUser() {
         return user;
     }
-
     public void setUser(UsersEntity user) {
         this.user = user;
     }

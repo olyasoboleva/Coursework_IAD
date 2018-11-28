@@ -19,7 +19,7 @@ public class WeaponsingameEntity {
     public WeaponsingameEntity() {}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tributeid")
     public int getTributeid() {
         return tributeid;

@@ -33,7 +33,7 @@ public class TrainingsEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "trainingid")
     public int getTrainingid() {
         return trainingid;

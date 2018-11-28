@@ -14,7 +14,7 @@ public class GamesEntity {
     private int gameid;
     private boolean typeofgame;
     private Integer steward; //TODO: а это разве надо?????
-    private Integer arena;//TODO: а это разве надо?????
+    private Integer arena; //TODO: а это разве надо?????
     private Short numberoftributes;
     private Date startdate;
     private int duration;
@@ -36,7 +36,7 @@ public class GamesEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "gameid")
     public int getGameid() {
         return gameid;

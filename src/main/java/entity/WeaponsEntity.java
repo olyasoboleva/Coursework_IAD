@@ -36,7 +36,7 @@ public class WeaponsEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "weaponid")
     public int getWeaponid() {
         return weaponid;

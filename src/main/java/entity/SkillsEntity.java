@@ -31,7 +31,7 @@ public class SkillsEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "skillid")
     public int getSkillid() {
         return skillid;

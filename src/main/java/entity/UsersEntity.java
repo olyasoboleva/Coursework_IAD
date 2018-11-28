@@ -52,12 +52,11 @@ public class UsersEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userid")
     public int getUserid() {
         return userid;
     }
-
     public void setUserid(int userid) {
         this.userid = userid;
     }
@@ -68,7 +67,6 @@ public class UsersEntity {
     public String getSurname() {
         return surname;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
@@ -79,7 +77,6 @@ public class UsersEntity {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -91,7 +88,6 @@ public class UsersEntity {
     public Short getHeight() {
         return height;
     }
-
     public void setHeight(Short height) {
         this.height = height;
     }
@@ -102,7 +98,6 @@ public class UsersEntity {
     public Short getWeight() {
         return weight;
     }
-
     public void setWeight(Short weight) {
         this.weight = weight;
     }
@@ -113,7 +108,6 @@ public class UsersEntity {
     public boolean isSex() {
         return sex;
     }
-
     public void setSex(boolean sex) {
         this.sex = sex;
     }
@@ -123,7 +117,6 @@ public class UsersEntity {
     public Short getDistrict() {
         return district;
     }
-
     public void setDistrict(Short district) {
         this.district = district;
     }
@@ -133,7 +126,6 @@ public class UsersEntity {
     public Date getBirthday() {
         return birthday;
     }
-
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
@@ -144,7 +136,6 @@ public class UsersEntity {
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
@@ -155,7 +146,6 @@ public class UsersEntity {
     public Integer getCash() {
         return cash;
     }
-
     public void setCash(Integer cash) {
         this.cash = cash;
     }
@@ -165,7 +155,6 @@ public class UsersEntity {
     public String getPicturePath() {
         return picturePath;
     }
-
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath;
     }
@@ -210,7 +199,6 @@ public class UsersEntity {
     public Collection<GamesEntity> getGamesByUserid() {
         return gamesByUserid;
     }
-
     public void setGamesByUserid(Collection<GamesEntity> gamesByUserid) {
         this.gamesByUserid = gamesByUserid;
     }
@@ -219,7 +207,6 @@ public class UsersEntity {
     public Collection<PresentstotributesEntity> getPresentstotributesByUserid() {
         return presentstotributesByUserid;
     }
-
     public void setPresentstotributesByUserid(Collection<PresentstotributesEntity> presentstotributesByUserid) {
         this.presentstotributesByUserid = presentstotributesByUserid;
     }
@@ -228,7 +215,6 @@ public class UsersEntity {
     public Collection<TrainingsEntity> getTrainingsByUserid() {
         return trainingsByUserid;
     }
-
     public void setTrainingsByUserid(Collection<TrainingsEntity> trainingsByUserid) {
         this.trainingsByUserid = trainingsByUserid;
     }
@@ -237,7 +223,6 @@ public class UsersEntity {
     public Collection<TributesEntity> getTributesByUserid() {
         return tributesByUserid;
     }
-
     public void setTributesByUserid(Collection<TributesEntity> tributesByUserid) {
         this.tributesByUserid = tributesByUserid;
     }
@@ -247,7 +232,6 @@ public class UsersEntity {
     public DistrictsEntity getDistrictsByDistrict() {
         return districtsByDistrict;
     }
-
     public void setDistrictsByDistrict(DistrictsEntity districtsByDistrict) {
         this.districtsByDistrict = districtsByDistrict;
     }
@@ -256,16 +240,15 @@ public class UsersEntity {
     public Collection<UserskillsEntity> getUserskillsByUserid() {
         return userskillsByUserid;
     }
-
     public void setUserskillsByUserid(Collection<UserskillsEntity> userskillsByUserid) {
         this.userskillsByUserid = userskillsByUserid;
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne
+    @JoinColumn(name = "loginid", referencedColumnName = "loginid", insertable = false, updatable = false)
     public UserloginEntity getUserlogin() {
         return userlogin;
     }
-
     public void setUserlogin(UserloginEntity userlogin) {
         this.userlogin = userlogin;
     }

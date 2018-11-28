@@ -29,7 +29,7 @@ public class Main {
         SkillsRepository skillsRepository = (SkillsRepository) ctx.getBean("skillsRepository");
 
         DistrictsEntity districtsEntity = new DistrictsEntity();
-        districtsEntity.setName("Дистрикт 22");
+        districtsEntity.setName("Дистрикт 6");
         districtsEntity.setTypeofactivity("Роскошь");
         districtsRepository.save(districtsEntity);
 ///
@@ -47,7 +47,7 @@ public class Main {
 /////////////////////////
 
         UserloginEntity userlogin = new UserloginEntity();
-        userlogin.setNick("redish2482");
+        userlogin.setNick("redish248");
         userlogin.setPassword("12345");
         UserloginRepository userloginRepository = (UserloginRepository)ctx.getBean("userloginRepository");
         userloginRepository.save(userlogin);
@@ -76,11 +76,11 @@ public class Main {
 
 
         WeaponsEntity weapon1 = new WeaponsEntity();
-        weapon1.setName("меч2");
+        weapon1.setName("меч");
         weapon1.setPicturePath("/");
         weapon1.setTypeofweapon("Холодное оружие");
         WeaponsEntity weapon2 = new WeaponsEntity();
-        weapon2.setName("лук2");
+        weapon2.setName("лук");
         weapon2.setPicturePath("/");
         weapon2.setTypeofweapon("что-то там");
         WeaponsRepository weaponsRepository = (WeaponsRepository)ctx.getBean("weaponsRepository");

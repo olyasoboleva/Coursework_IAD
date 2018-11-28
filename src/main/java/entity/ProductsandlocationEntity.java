@@ -19,7 +19,7 @@ public class ProductsandlocationEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "applyingid")
     public int getApplyingid() {
         return applyingid;

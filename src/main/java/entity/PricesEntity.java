@@ -24,7 +24,7 @@ public class PricesEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "priceid")
     public int getPriceid() {
         return priceid;
