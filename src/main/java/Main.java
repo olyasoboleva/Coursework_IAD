@@ -87,7 +87,6 @@ public class Main {
         weaponsRepository.save(weapon2);
 
 
-        /*
         WeaponsingameEntity weaponsingameEntity1 = new WeaponsingameEntity();
         weaponsingameEntity1.setTributesByTributeid(tribute);
         weaponsingameEntity1.setWeaponsByWeaponid(weapon1);
@@ -98,8 +97,28 @@ public class Main {
         weaponsingameRepository.save(weaponsingameEntity1);
         weaponsingameRepository.save(weaponsingameEntity2);
 
+        UserskillsEntity userskillsEntity = new UserskillsEntity();
+        userskillsEntity.setSkillsBySkillid(skillsEntity);
+        userskillsEntity.setUsersByUserid(user);
+        userskillsEntity.setLevelofskill((short)20);
+        UserskillsRepository userskillsRepository = (UserskillsRepository)ctx.getBean("userskillsRepository");
+        userskillsRepository.save(userskillsEntity);
 
-        WeaponsServiceImpl weaponsService = new WeaponsServiceImpl(weaponsRepository, weaponsingameRepository);
+        LocationsEntity locationsEntity = new LocationsEntity("forest", "forest.jpg");
+        LocationsRepository locationsRepository = (LocationsRepository)ctx.getBean("locationsRepository");
+        locationsRepository.save(locationsEntity);
+
+        ShopEntity product = new ShopEntity("Веревка", (short) 120, "Инструменты", "Прочная длинная веревка", (short) 0, "rope.jpg");
+        ShopRepository shopRepository = (ShopRepository)ctx.getBean("shopRepository");
+        shopRepository.save(product);
+
+        ProductsandlocationEntity productsandlocationEntity = new ProductsandlocationEntity();
+        productsandlocationEntity.setLocation(locationsEntity);
+        productsandlocationEntity.setShopByProductid(product);
+        ProductsandlocationRepository productsandlocationRepository = (ProductsandlocationRepository)ctx.getBean("productsandlocationRepository");
+        productsandlocationRepository.save(productsandlocationEntity);
+
+        /*WeaponsServiceImpl weaponsService = new WeaponsServiceImpl(weaponsRepository, weaponsingameRepository);
         List<WeaponsEntity> list = weaponsService.getTributeWeapons(tribute);
         for (WeaponsEntity weaponsEntity : list) {
             System.out.println(weaponsEntity.getName());

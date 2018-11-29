@@ -14,23 +14,19 @@ public class DistrictsEntity {
     private int districtid;
     private String name;
     private String typeofactivity;
-    //private Integer skillid;
     private SkillsEntity skillsBySkillid;
     private Collection<UsersEntity> usersByDistrictid;
 
-    public DistrictsEntity() {
-        usersByDistrictid = new HashSet<UsersEntity>();
-    }
+    public DistrictsEntity() { }
 
-    public DistrictsEntity(String name, String typeofactivity, Integer skillid) {
+    public DistrictsEntity(String name, String typeofactivity, SkillsEntity skill) {
         this.name = name;
         this.typeofactivity = typeofactivity;
-        //this.skillid = skillid;
-        usersByDistrictid = new HashSet<UsersEntity>();
+        this.skillsBySkillid = skill;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "districtid")
     public int getDistrictid() {
         return districtid;
@@ -61,17 +57,6 @@ public class DistrictsEntity {
         this.typeofactivity = typeofactivity;
     }
 
-    /*@Basic
-    @Column(name = "skillid")
-    public Integer getSkillid() {
-        return skillid;
-    }
-
-    public void setSkillid(Integer skillid) {
-        this.skillid = skillid;
-    }
-    */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,10 +66,7 @@ public class DistrictsEntity {
 
         if (districtid != that.districtid) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (typeofactivity != null ? !typeofactivity.equals(that.typeofactivity) : that.typeofactivity != null)
-            return false;
-      //  if (skillid != null ? !skillid.equals(that.skillid) : that.skillid != null) return false;
-
+        if (typeofactivity != null ? !typeofactivity.equals(that.typeofactivity) : that.typeofactivity != null) return false;
         return true;
     }
 
@@ -93,7 +75,6 @@ public class DistrictsEntity {
         int result = (int) districtid;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (typeofactivity != null ? typeofactivity.hashCode() : 0);
-        //result = 31 * result + (skillid != null ? skillid.hashCode() : 0);
         return result;
     }
 

@@ -20,7 +20,7 @@ public class UserloginEntity {
     public UserloginEntity() {}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loginid")
     public int getLoginid() {
         return loginid;

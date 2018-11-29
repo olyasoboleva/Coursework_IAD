@@ -19,17 +19,19 @@ public class TrainingsEntity {
 
     public TrainingsEntity() {}
 
-    public TrainingsEntity(String name, Integer skillid, Short coefficient, Short duration, String description, Integer trainer, Time timeoftraining, Short dayofweek) {
+    public TrainingsEntity(String name, SkillsEntity skill, Short coefficient, Short duration, String description, UsersEntity trainer, Time timeoftraining, Short dayofweek) {
         this.name = name;
         this.coefficient = coefficient;
         this.duration = duration;
         this.description = description;
         this.timeoftraining = timeoftraining;
         this.dayofweek = dayofweek;
+        this.skillsBySkillid = skill;
+        this.usersByTrainer = trainer;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trainingid")
     public int getTrainingid() {
         return trainingid;

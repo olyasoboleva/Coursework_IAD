@@ -17,21 +17,19 @@ public class TributesEntity {
     private Collection<PresentstotributesEntity> presentstotributesByTributeid;
     private UsersEntity usersByUserid;
     private GamesEntity gamesByGameid;
-    private Collection<WeaponsingameEntity> weaponsingamesByTributeid;
+    private Collection<WeaponsEntity> weaponOfTribute;
 
-    public TributesEntity() {
-        presentstotributesByTributeid = new HashSet<PresentstotributesEntity>();
-        weaponsingamesByTributeid = new HashSet<WeaponsingameEntity>();
-    }
+    public TributesEntity() { }
 
-    public TributesEntity(UsersEntity user,int gameid) {
+    public TributesEntity(UsersEntity user, GamesEntity game) {
         this.usersByUserid = user;
         this.health = 100;
         this.status = "alive";
+        this.gamesByGameid = game;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tributeid")
     public long getTributeid() {
         return tributeid;
@@ -126,13 +124,12 @@ public class TributesEntity {
         this.gamesByGameid = gamesByGameid;
     }
 
-    @OneToMany(mappedBy = "tributesByTributeid")
-    public Collection<WeaponsingameEntity> getWeaponsingamesByTributeid() {
-        return weaponsingamesByTributeid;
+    @ManyToMany(mappedBy = "owners")
+    public Collection<WeaponsEntity> getWeaponOfTribute() {
+        return weaponOfTribute;
     }
 
-    public void setWeaponsingamesByTributeid(Collection<WeaponsingameEntity> weaponsingamesByTributeid) {
-        this.weaponsingamesByTributeid = weaponsingamesByTributeid;
+    public void setWeaponOfTribute(Collection<WeaponsEntity> weaponOfTribute) {
+        this.weaponOfTribute = weaponOfTribute;
     }
-
 }

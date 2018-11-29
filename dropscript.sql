@@ -16,3 +16,4 @@ drop table weapons cascade;
 drop table presentstotributes cascade ;
 drop table productsandlocation CASCADE ;
 drop table userlogin CASCADE ;
+drop table locations CASCADE ;

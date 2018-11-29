@@ -24,7 +24,7 @@ public class ArenasEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "arenaid")
     public int getArenaid() {
         return arenaid;

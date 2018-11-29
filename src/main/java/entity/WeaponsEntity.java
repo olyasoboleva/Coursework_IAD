@@ -20,23 +20,20 @@ public class WeaponsEntity {
     private String picturePath;
 
     private SkillsEntity skillByWeaponid;
-    private Collection<WeaponsingameEntity> weaponsingamesByWeaponid;
+    private Collection<TributesEntity> owners;
 
-    public WeaponsEntity(){
-        weaponsingamesByWeaponid  = new HashSet<WeaponsingameEntity>();
-    }
+    public WeaponsEntity(){ }
 
     public WeaponsEntity(String name, String typeofweapon, Short damage, Short radiusofaction, String picturePath) {
         this.name = name;
         this.typeofweapon = typeofweapon;
         this.damage = damage;
         this.radiusofaction = radiusofaction;
-        this.weaponsingamesByWeaponid  =new HashSet<WeaponsingameEntity>();
         this.picturePath = picturePath;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weaponid")
     public int getWeaponid() {
         return weaponid;
@@ -136,12 +133,17 @@ public class WeaponsEntity {
         this.skillByWeaponid = skillByWeaponid;
     }
 
-    @OneToMany(mappedBy = "weaponsByWeaponid")
-    public Collection<WeaponsingameEntity> getWeaponsingamesByWeaponid() {
-        return weaponsingamesByWeaponid;
+    @ManyToMany
+    @JoinTable(
+            name = "weaponsingame",
+            joinColumns = {@JoinColumn(name = "weaponid")},
+            inverseJoinColumns = {@JoinColumn(name = "tributeid")}
+    )
+    public Collection<TributesEntity> getOwners() {
+        return owners;
     }
 
-    public void setWeaponsingamesByWeaponid(Collection<WeaponsingameEntity> weaponsingamesByWeaponid) {
-        this.weaponsingamesByWeaponid = weaponsingamesByWeaponid;
+    public void setOwners(Collection<TributesEntity> owners) {
+        this.owners = owners;
     }
 }

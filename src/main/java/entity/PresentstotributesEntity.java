@@ -15,12 +15,15 @@ public class PresentstotributesEntity {
 
     public PresentstotributesEntity() {}
 
-    public PresentstotributesEntity(int productid, long tributeid, int senderid, Short quantity) {
+    public PresentstotributesEntity(ShopEntity product, TributesEntity tribute, UsersEntity sender, Short quantity) {
+        this.shopByProductid = product;
+        this.tributesByTributeid = tribute;
+        this.usersBySenderid = sender;
         this.quantity = quantity;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sendingid")
     public long getSendingid() {
         return sendingid;

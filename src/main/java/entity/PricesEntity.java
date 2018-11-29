@@ -14,9 +14,7 @@ public class PricesEntity {
     private Integer cost;
     private Collection<StatusesEntity> statusesByPriceid;
 
-    public PricesEntity() {
-        statusesByPriceid = new HashSet<StatusesEntity>();
-    }
+    public PricesEntity() { }
 
     public PricesEntity(String name, Integer cost) {
         this.name = name;
@@ -24,7 +22,7 @@ public class PricesEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "priceid")
     public int getPriceid() {
         return priceid;

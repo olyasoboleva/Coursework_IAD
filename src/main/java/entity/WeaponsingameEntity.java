@@ -11,15 +11,14 @@ public class WeaponsingameEntity {
     private TributesEntity tributesByTributeid;
     private WeaponsEntity weaponsByWeaponid;
 
-    public WeaponsingameEntity(int tributeid, int weaponid) {
-        this.tributeid = tributeid;
-        this.weaponid = weaponid;
+    public WeaponsingameEntity(TributesEntity tribute, WeaponsEntity weapon) {
+        setTributesByTributeid(tribute);
+        setWeaponsByWeaponid(weapon);
     }
 
     public WeaponsingameEntity() {}
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tributeid")
     public int getTributeid() {
         return tributeid;
@@ -67,6 +66,7 @@ public class WeaponsingameEntity {
 
     public void setTributesByTributeid(TributesEntity tributesByTributeid) {
         this.tributesByTributeid = tributesByTributeid;
+        tributeid = (int)tributesByTributeid.getTributeid();
     }
 
     @ManyToOne
@@ -77,5 +77,6 @@ public class WeaponsingameEntity {
 
     public void setWeaponsByWeaponid(WeaponsEntity weaponsByWeaponid) {
         this.weaponsByWeaponid = weaponsByWeaponid;
+        weaponid = weaponsByWeaponid.getWeaponid();
     }
 }

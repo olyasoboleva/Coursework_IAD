@@ -126,7 +126,7 @@ ALTER TABLE districts ADD FOREIGN KEY (skillID) REFERENCES skills;
 CREATE TABLE productsAndLocation (
 applyingID integer PRIMARY KEY,
 productID integer REFERENCES shop NOT NULL,
-typeOfLocation VARCHAR(40) NOT NULL
+locationid integer REFERENCES locations NOT NULL
 );
 
 CREATE TABLE weaponsInGame (
@@ -139,6 +139,12 @@ CREATE TABLE statuses (
  statusID bigint PRIMARY KEY,
  name varchar(40),
  priceID integer REFERENCES prices
+);
+
+CREATE TABLE locations (
+ locationID integer PRIMARY KEY ,
+ name varchar(40),
+ picturePath varchar(40) not null
 );
 
 CREATE SEQUENCE serial;

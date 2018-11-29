@@ -15,9 +15,9 @@ public class UserskillsEntity {
 
     public UserskillsEntity(){}
 
-    public UserskillsEntity(int userid, int skillid, Short levelofskill) {
-        this.userid = userid;
-        this.skillid = skillid;
+    public UserskillsEntity(UsersEntity user, SkillsEntity skill, Short levelofskill) {
+        setUsersByUserid(user);
+        setSkillsBySkillid(skill);
         this.levelofskill = levelofskill;
     }
 
@@ -82,6 +82,7 @@ public class UserskillsEntity {
 
     public void setUsersByUserid(UsersEntity usersByUserid) {
         this.usersByUserid = usersByUserid;
+        this.userid = usersByUserid.getUserid();
     }
 
     @ManyToOne
@@ -92,5 +93,6 @@ public class UserskillsEntity {
 
     public void setSkillsBySkillid(SkillsEntity skillsBySkillid) {
         this.skillsBySkillid = skillsBySkillid;
+        this.skillid = skillsBySkillid.getSkillid();
     }
 }

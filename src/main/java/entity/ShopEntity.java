@@ -17,13 +17,10 @@ public class ShopEntity {
     private String description;
     private Short healthrecovery;
     private Collection<PresentstotributesEntity> presentstotributesByProductid;
-    private Collection<ProductsandlocationEntity> productsandlocationsByProductid;
+    private Collection<LocationsEntity> locations;
     private String picturePath;
 
-    public ShopEntity() {
-        presentstotributesByProductid = new HashSet<PresentstotributesEntity>();
-        productsandlocationsByProductid = new HashSet<ProductsandlocationEntity>();
-    }
+    public ShopEntity() { }
 
     public ShopEntity(String name, short cost, String typeofpresent, String description, Short healthrecovery, String picture) {
         this.name = name;
@@ -35,7 +32,7 @@ public class ShopEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "productid")
     public int getProductid() {
         return productid;
@@ -151,12 +148,17 @@ public class ShopEntity {
         this.presentstotributesByProductid = presentstotributesByProductid;
     }
 
-    @OneToMany(mappedBy = "shopByProductid")
-    public Collection<ProductsandlocationEntity> getProductsandlocationsByProductid() {
-        return productsandlocationsByProductid;
+    @ManyToMany
+    @JoinTable(
+            name = "productsandlocation",
+            joinColumns = {@JoinColumn(name = "productid")},
+            inverseJoinColumns = {@JoinColumn(name = "locationid")}
+    )
+    public Collection<LocationsEntity> getLocations() {
+        return locations;
     }
 
-    public void setProductsandlocationsByProductid(Collection<ProductsandlocationEntity> productsandlocationsByProductid) {
-        this.productsandlocationsByProductid = productsandlocationsByProductid;
+    public void setLocations(Collection<LocationsEntity> locations) {
+        this.locations = locations;
     }
 }

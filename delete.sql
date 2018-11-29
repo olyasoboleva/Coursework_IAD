@@ -14,3 +14,4 @@ DELETE FROM weapons;
 DELETE FROM shop;
 DELETE FROM prices;
 DELETE FROM arenas;
+DELETE from locations;

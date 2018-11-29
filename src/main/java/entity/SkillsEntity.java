@@ -17,21 +17,19 @@ public class SkillsEntity {
     private DistrictsEntity districtsBySkillid;
     private WeaponsEntity weaponsByWeaponid;
     private Collection<TrainingsEntity> trainingsBySkillid;
-    private Collection<UserskillsEntity> userskillsBySkillid;
+    private Collection<UsersEntity> users;
 
-    public SkillsEntity() {
-       trainingsBySkillid = new HashSet<TrainingsEntity>();
-       userskillsBySkillid = new HashSet<UserskillsEntity>();
-    }
+    public SkillsEntity() { }
 
-    public SkillsEntity(String name, String description, String typeofskill, Integer weaponid) {
+    public SkillsEntity(String name, String description, String typeofskill, WeaponsEntity weapon) {
         this.name = name;
         this.description = description;
         this.typeofskill = typeofskill;
+        this.weaponsByWeaponid = weapon;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skillid")
     public int getSkillid() {
         return skillid;
@@ -125,12 +123,12 @@ public class SkillsEntity {
         this.trainingsBySkillid = trainingsBySkillid;
     }
 
-    @OneToMany(mappedBy = "skillsBySkillid")
-    public Collection<UserskillsEntity> getUserskillsBySkillid() {
-        return userskillsBySkillid;
+    @ManyToMany(mappedBy = "skills")
+    public Collection<UsersEntity> getUsers() {
+        return users;
     }
 
-    public void setUserskillsBySkillid(Collection<UserskillsEntity> userskillsBySkillid) {
-        this.userskillsBySkillid = userskillsBySkillid;
+    public void setUsers(Collection<UsersEntity> users) {
+        this.users = users;
     }
 }

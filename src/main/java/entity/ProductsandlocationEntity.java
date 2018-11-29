@@ -7,18 +7,20 @@ import javax.validation.constraints.NotNull;
 @Table(name = "productsandlocation", schema = "public", catalog = "postgres")
 public class ProductsandlocationEntity {
     private int applyingid;
-    //TODO: добавить сущность с локациями и их отображениями на карте
-    private String typeoflocation;
+    private int locationid;
+    private int productid;
+    private LocationsEntity location;
     private ShopEntity shopByProductid;
 
     public ProductsandlocationEntity() {}
 
-    public ProductsandlocationEntity(int productid, String typeoflocation) {
-        this.typeoflocation = typeoflocation;
+    public ProductsandlocationEntity(ShopEntity product, LocationsEntity location) {
+        setLocation(location);
+        setShopByProductid(product);
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "applyingid")
     public int getApplyingid() {
         return applyingid;
@@ -30,13 +32,24 @@ public class ProductsandlocationEntity {
 
     @Basic
     @NotNull
-    @Column(name = "typeoflocation", length = 40)
-    public String getTypeoflocation() {
-        return typeoflocation;
+    @Column(name = "locationid")
+    public int getLocationid() {
+        return locationid;
     }
 
-    public void setTypeoflocation(String typeoflocation) {
-        this.typeoflocation = typeoflocation;
+    public void setLocationid(int locationid) {
+        this.locationid = locationid;
+    }
+
+    @Basic
+    @NotNull
+    @Column(name = "productid")
+    public int getProductid() {
+        return productid;
+    }
+
+    public void setProductid(int productid) {
+        this.productid = productid;
     }
 
     @Override
@@ -47,8 +60,6 @@ public class ProductsandlocationEntity {
         ProductsandlocationEntity that = (ProductsandlocationEntity) o;
 
         if (applyingid != that.applyingid) return false;
-        if (typeoflocation != null ? !typeoflocation.equals(that.typeoflocation) : that.typeoflocation != null)
-            return false;
 
         return true;
     }
@@ -56,7 +67,7 @@ public class ProductsandlocationEntity {
     @Override
     public int hashCode() {
         int result = applyingid;
-        result = 31 * result + (typeoflocation != null ? typeoflocation.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
         return result;
     }
 
@@ -68,5 +79,18 @@ public class ProductsandlocationEntity {
 
     public void setShopByProductid(ShopEntity shopByProductid) {
         this.shopByProductid = shopByProductid;
+        setProductid(shopByProductid.getProductid());
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "locationid", referencedColumnName = "locationid", nullable = false, insertable = false, updatable = false)
+    public LocationsEntity getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationsEntity location) {
+        this.location = location;
+        setLocationid(location.getLocationid());
     }
 }

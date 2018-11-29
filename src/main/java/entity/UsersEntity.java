@@ -23,13 +23,14 @@ public class UsersEntity {
     private Collection<PresentstotributesEntity> presentstotributesByUserid;
     private Collection<TrainingsEntity> trainingsByUserid;
     private Collection<TributesEntity> tributesByUserid;
+
+    private Collection<SkillsEntity> skills;
     private DistrictsEntity districtsByDistrict;
-    private Collection<UserskillsEntity> userskillsByUserid;
     private UserloginEntity userlogin;
 
     public UsersEntity() {}
 
-    public UsersEntity(String surname, String name, Short height, Short weight, boolean sex, Short district, Date birthday, String picturePath, UserloginEntity userlogin) {
+    public UsersEntity(String surname, String name, Short height, Short weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserloginEntity userlogin) {
         this.surname = surname;
         this.name = name;
         this.height = height;
@@ -40,6 +41,7 @@ public class UsersEntity {
         this.cash = 1000;
         this.status = "Наблюдатель";
         this.userlogin = userlogin;
+        this.districtsByDistrict = district;
     }
 
     public UsersEntity(String surname, String name, String picturePath, UserloginEntity userlogin) {
@@ -50,7 +52,7 @@ public class UsersEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userid")
     public int getUserid() {
         return userid;
@@ -223,14 +225,6 @@ public class UsersEntity {
         this.districtsByDistrict = districtsByDistrict;
     }
 
-    @OneToMany(mappedBy = "usersByUserid")
-    public Collection<UserskillsEntity> getUserskillsByUserid() {
-        return userskillsByUserid;
-    }
-    public void setUserskillsByUserid(Collection<UserskillsEntity> userskillsByUserid) {
-        this.userskillsByUserid = userskillsByUserid;
-    }
-
     @OneToOne
     @JoinColumn(name = "loginid", referencedColumnName = "loginid")
     public UserloginEntity getUserlogin() {
@@ -238,5 +232,18 @@ public class UsersEntity {
     }
     public void setUserlogin(UserloginEntity userlogin) {
         this.userlogin = userlogin;
+    }
+
+    @ManyToMany
+    @JoinTable(
+            name = "userskills",
+            joinColumns = {@JoinColumn(name = "userid")},
+            inverseJoinColumns = {@JoinColumn(name = "skillid")}
+    )
+    public Collection<SkillsEntity> getSkills() {
+        return skills;
+    }
+    public void setSkills(Collection<SkillsEntity> skills) {
+        this.skills = skills;
     }
 }

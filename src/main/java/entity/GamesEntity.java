@@ -20,19 +20,18 @@ public class GamesEntity {
     private ArenasEntity arenasByArena;
     private Collection<TributesEntity> tributesByGameid;
 
-    public GamesEntity() {
-        tributesByGameid = new HashSet<TributesEntity>();
-    }
+    public GamesEntity() { }
 
-    public GamesEntity(boolean typeofgame, Integer steward, Integer arena, Short numberoftributes, Date startdate) {
+    public GamesEntity(boolean typeofgame, UsersEntity steward, ArenasEntity arena, Short numberoftributes, Date startdate) {
         this.typeofgame = typeofgame;
         this.numberoftributes = numberoftributes;
         this.startdate = startdate;
-        tributesByGameid = new HashSet<TributesEntity>();
+        this.usersBySteward = steward;
+        this.arenasByArena = arena;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "gameid")
     public int getGameid() {
         return gameid;

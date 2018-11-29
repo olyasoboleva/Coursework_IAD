@@ -11,12 +11,13 @@ public class StatusesEntity {
 
     public StatusesEntity() {}
 
-    public StatusesEntity(String name, Integer priceid) {
+    public StatusesEntity(String name, PricesEntity price) {
         this.name = name;
+        this.pricesByPriceid = price;
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "statusid")
     public long getStatusid() {
         return statusid;
