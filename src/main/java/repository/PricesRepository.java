@@ -12,5 +12,4 @@ public interface PricesRepository extends CrudRepository<PricesEntity,Integer> {
      * @return price
      */
     PricesEntity findPricesEntityByPriceid(int priceid);
-    //TODO: какая-то дичь со связами со статусами
 }

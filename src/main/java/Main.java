@@ -119,12 +119,9 @@ public class Main {
         ProductsandlocationRepository productsandlocationRepository = (ProductsandlocationRepository)ctx.getBean("productsandlocationRepository");
         productsandlocationRepository.save(productsandlocationEntity);
 
-        /*WeaponsServiceImpl weaponsService = new WeaponsServiceImpl(weaponsRepository, weaponsingameRepository);
-        List<WeaponsEntity> list = weaponsService.getTributeWeapons(tribute);
-        for (WeaponsEntity weaponsEntity : list) {
-            System.out.println(weaponsEntity.getName());
+        List<WeaponsEntity> weaponList = weaponsRepository.getWeaponsEntitiesByOwners(tribute);
+        for (WeaponsEntity weapon: weaponList){
+            System.out.println(weapon.getName());
         }
-        */
-
     }
 }

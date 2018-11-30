@@ -16,7 +16,7 @@ public class UsersEntity {
     private Short weight;
     private boolean sex;
     private Date birthday;
-    private String status;
+    private StatusesEntity status;
     private Integer cash;
     private String picturePath;
     private Collection<GamesEntity> gamesByUserid;
@@ -30,7 +30,7 @@ public class UsersEntity {
 
     public UsersEntity() {}
 
-    public UsersEntity(String surname, String name, Short height, Short weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserloginEntity userlogin) {
+    public UsersEntity(String surname, String name, Short height, Short weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserloginEntity userlogin, StatusesEntity status) {
         this.surname = surname;
         this.name = name;
         this.height = height;
@@ -39,16 +39,17 @@ public class UsersEntity {
         this.birthday = birthday;
         this.picturePath = picturePath;
         this.cash = 1000;
-        this.status = "Наблюдатель";
+        this.status = status;
         this.userlogin = userlogin;
         this.districtsByDistrict = district;
     }
 
-    public UsersEntity(String surname, String name, String picturePath, UserloginEntity userlogin) {
+    public UsersEntity(String surname, String name, String picturePath, UserloginEntity userlogin, StatusesEntity status) {
         this.surname = surname;
         this.name = name;
         this.picturePath = picturePath;
         this.userlogin = userlogin;
+        this.status = status;
     }
 
     @Id
@@ -119,16 +120,6 @@ public class UsersEntity {
     }
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-
-    @Basic
-    @Column(name = "status", length = 40)
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     @Basic
@@ -223,6 +214,15 @@ public class UsersEntity {
     }
     public void setDistrictsByDistrict(DistrictsEntity districtsByDistrict) {
         this.districtsByDistrict = districtsByDistrict;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "statusid", referencedColumnName = "statusid", insertable = false, updatable = false)
+    public StatusesEntity getStatus() {
+        return status;
+    }
+    public void setStatus(StatusesEntity status) {
+        this.status = status;
     }
 
     @OneToOne

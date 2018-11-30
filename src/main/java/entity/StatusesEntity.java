@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "statuses", schema = "public", catalog = "postgres")
@@ -8,6 +9,7 @@ public class StatusesEntity {
     private long statusid;
     private String name;
     private PricesEntity pricesByPriceid;
+    private Collection<UsersEntity> users;
 
     public StatusesEntity() {}
 
@@ -54,6 +56,14 @@ public class StatusesEntity {
         int result = (int) (statusid ^ (statusid >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
+    public Collection<UsersEntity> getUsers() {
+        return users;
+    }
+    public void setUsers(Collection<UsersEntity> users) {
+        this.users = users;
     }
 
     @OneToOne

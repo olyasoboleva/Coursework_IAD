@@ -25,6 +25,11 @@ CREATE TABLE prices (
  cost integer CHECK (cost >= 0)
 );
 
+CREATE TABLE statuses (
+  statusID bigint PRIMARY KEY,
+  name varchar(40),
+  priceID integer REFERENCES prices
+);
 
 CREATE TABLE shop (
 productID integer PRIMARY KEY,
@@ -62,10 +67,10 @@ weight smallint,
 sex boolean NOT NULL,
 district smallint REFERENCES districts,
 birthday date,
-status varchar(40),
+statusid integer REFERENCES statuses NOT NULL,
 cash integer,
- picturePath VARCHAR(40) NOT NULL,
- CONSTRAINT info CHECK (height > 0 AND weight >0 AND cash >= 0)
+picturePath VARCHAR(40) NOT NULL,
+CONSTRAINT info CHECK (height > 0 AND weight >0 AND cash >= 0)
 );
 
 
@@ -140,8 +145,3 @@ CREATE TABLE weaponsInGame (
  PRIMARY KEY (tributeID, weaponID)
 );
 
-CREATE TABLE statuses (
- statusID bigint PRIMARY KEY,
- name varchar(40),
- priceID integer REFERENCES prices
-);

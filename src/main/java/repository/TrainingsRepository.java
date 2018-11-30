@@ -25,12 +25,6 @@ public interface TrainingsRepository extends CrudRepository<TrainingsEntity, Int
      */
     List<TrainingsEntity> getTrainingsEntityByDayofweek(Short dayofweek);
 
-    //FIXME: а оно надо?
-    List<TrainingsEntity> getTrainingsEntityByTimeoftraining(Time timeoftraining);
-
-    //FIXME: и это зачем?
-    List<TrainingsEntity> getTrainingsEntityBySkillsBySkillid(SkillsEntity skill);
-
     /**
      * find schedule of trainer
      * @param trainer trainer

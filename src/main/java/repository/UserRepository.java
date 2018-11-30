@@ -23,7 +23,7 @@ public interface UserRepository extends CrudRepository<UsersEntity, Integer> {
      * @param status status
      * @return list of users
      */
-    List<UsersEntity> getUsersEntitiesByDistrictsByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(DistrictsEntity district, boolean sex, Date date1, Date date2, String status);
+    List<UsersEntity> getUsersEntitiesByDistrictsByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(DistrictsEntity district, boolean sex, Date date1, Date date2, StatusesEntity status);
 
     /**
      * find user, who play for this tribute
@@ -44,7 +44,7 @@ public interface UserRepository extends CrudRepository<UsersEntity, Integer> {
      * @param status status
      * @return list of users
      */
-    List<UsersEntity> getUsersEntitiesByStatus(String status);
+    List<UsersEntity> getUsersEntitiesByStatus(StatusesEntity status);
 
     /**
      * find trainer

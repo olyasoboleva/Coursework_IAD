@@ -13,8 +13,8 @@ public interface UserloginRepository extends CrudRepository<UserloginEntity, Int
      */
     UserloginEntity findUserloginEntityByUser(UsersEntity user);
 
-    //TODO: хмм, чет появились сомнения насчет всей этой фигни
-    UserloginEntity findUserloginEntityByNick(String nick);
+    //TODO: в сервисы или убрать
+    //UserloginEntity findUserloginEntityByNick(String nick);
 
     /**
      * find user by nick and password
