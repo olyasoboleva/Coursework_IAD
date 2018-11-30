@@ -6,7 +6,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "statuses", schema = "public", catalog = "postgres")
 public class StatusesEntity {
-    private long statusid;
+    private int statusid;
     private String name;
     private PricesEntity pricesByPriceid;
     private Collection<UsersEntity> users;
@@ -21,11 +21,11 @@ public class StatusesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "statusid")
-    public long getStatusid() {
+    public int getStatusid() {
         return statusid;
     }
 
-    public void setStatusid(long statusid) {
+    public void setStatusid(int statusid) {
         this.statusid = statusid;
     }
 

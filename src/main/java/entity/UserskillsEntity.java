@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.Objects;
 
 @Entity
 @Table(name = "userskills", schema = "public", catalog = "postgres")
@@ -9,13 +10,13 @@ import javax.validation.constraints.Min;
 public class UserskillsEntity {
     private int userid;
     private int skillid;
-    private Short levelofskill;
+    private int levelofskill;
     private UsersEntity usersByUserid;
     private SkillsEntity skillsBySkillid;
 
     public UserskillsEntity(){}
 
-    public UserskillsEntity(UsersEntity user, SkillsEntity skill, Short levelofskill) {
+    public UserskillsEntity(UsersEntity user, SkillsEntity skill, int levelofskill) {
         setUsersByUserid(user);
         setSkillsBySkillid(skill);
         this.levelofskill = levelofskill;
@@ -44,11 +45,11 @@ public class UserskillsEntity {
     @Basic
     @Min(0)
     @Column(name = "levelofskill")
-    public Short getLevelofskill() {
+    public int getLevelofskill() {
         return levelofskill;
     }
 
-    public void setLevelofskill(Short levelofskill) {
+    public void setLevelofskill(int levelofskill) {
         this.levelofskill = levelofskill;
     }
 
@@ -56,22 +57,18 @@ public class UserskillsEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UserskillsEntity that = (UserskillsEntity) o;
-
-        if (userid != that.userid) return false;
-        if (skillid != that.skillid) return false;
-        if (levelofskill != null ? !levelofskill.equals(that.levelofskill) : that.levelofskill != null) return false;
-
-        return true;
+        return userid == that.userid &&
+                skillid == that.skillid &&
+                levelofskill == that.levelofskill &&
+                Objects.equals(usersByUserid, that.usersByUserid) &&
+                Objects.equals(skillsBySkillid, that.skillsBySkillid);
     }
 
     @Override
     public int hashCode() {
-        int result = userid;
-        result = 31 * result + skillid;
-        result = 31 * result + (levelofskill != null ? levelofskill.hashCode() : 0);
-        return result;
+
+        return Objects.hash(userid, skillid, levelofskill, usersByUserid, skillsBySkillid);
     }
 
     @ManyToOne

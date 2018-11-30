@@ -7,13 +7,14 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 @Table(name = "games", schema = "public", catalog = "postgres")
 public class GamesEntity {
     private int gameid;
     private boolean typeofgame;
-    private Short numberoftributes;
+    private int numberoftributes;
     private Date startdate;
     private int duration;
     private UsersEntity usersBySteward;
@@ -22,7 +23,7 @@ public class GamesEntity {
 
     public GamesEntity() { }
 
-    public GamesEntity(boolean typeofgame, UsersEntity steward, ArenasEntity arena, Short numberoftributes, Date startdate) {
+    public GamesEntity(boolean typeofgame, UsersEntity steward, ArenasEntity arena, int numberoftributes, Date startdate) {
         this.typeofgame = typeofgame;
         this.numberoftributes = numberoftributes;
         this.startdate = startdate;
@@ -55,11 +56,11 @@ public class GamesEntity {
     @Basic
     @Min(0)
     @Column(name = "numberoftributes")
-    public Short getNumberoftributes() {
+    public int getNumberoftributes() {
         return numberoftributes;
     }
 
-    public void setNumberoftributes(Short numberoftributes) {
+    public void setNumberoftributes(int numberoftributes) {
         this.numberoftributes = numberoftributes;
     }
 
@@ -88,27 +89,21 @@ public class GamesEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         GamesEntity that = (GamesEntity) o;
-
-        if (gameid != that.gameid) return false;
-        if (typeofgame != that.typeofgame) return false;
-        if (duration != that.duration) return false;
-        if (numberoftributes != null ? !numberoftributes.equals(that.numberoftributes) : that.numberoftributes != null)
-            return false;
-        if (startdate != null ? !startdate.equals(that.startdate) : that.startdate != null) return false;
-
-        return true;
+        return gameid == that.gameid &&
+                typeofgame == that.typeofgame &&
+                numberoftributes == that.numberoftributes &&
+                duration == that.duration &&
+                Objects.equals(startdate, that.startdate) &&
+                Objects.equals(usersBySteward, that.usersBySteward) &&
+                Objects.equals(arenasByArena, that.arenasByArena) &&
+                Objects.equals(tributesByGameid, that.tributesByGameid);
     }
 
     @Override
     public int hashCode() {
-        int result = gameid;
-        result = 31 * result + (typeofgame ? 1 : 0);
-        result = 31 * result + (numberoftributes != null ? numberoftributes.hashCode() : 0);
-        result = 31 * result + (startdate != null ? startdate.hashCode() : 0);
-        result = 31 * result + duration;
-        return result;
+
+        return Objects.hash(gameid, typeofgame, numberoftributes, startdate, duration, usersBySteward, arenasByArena, tributesByGameid);
     }
 
     @ManyToOne

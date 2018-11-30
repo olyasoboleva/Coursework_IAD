@@ -6,14 +6,15 @@ CREATE TABLE locations (
 
 CREATE TABLE arenas (
 arenaID integer PRIMARY KEY,
-arena_length smallint NOT NULL,
-arena_width smallint NOT NULL,
+arena_length integer NOT NULL,
+arena_width integer NOT NULL,
 locationid integer REFERENCES locations NOT NULL,
-CONSTRAINT check_area CHECK ((arena_width> 0) AND (arena_length> 0)) );
+CONSTRAINT check_area CHECK ((arena_width> 0) AND (arena_length> 0))
+);
 
 
 CREATE TABLE districts (
-districtID smallint PRIMARY KEY,
+districtID integer PRIMARY KEY,
 name varchar(20) UNIQUE,
 typeOfActivity VARCHAR(40) NOT NULL,
 skillID integer
@@ -26,19 +27,18 @@ CREATE TABLE prices (
 );
 
 CREATE TABLE statuses (
-  statusID bigint PRIMARY KEY,
-  name varchar(40),
-  priceID integer REFERENCES prices
+ statusID integer PRIMARY KEY,
+ name varchar(40),
+ priceID integer REFERENCES prices
 );
-
 CREATE TABLE shop (
 productID integer PRIMARY KEY,
 name varchar(64) NOT NULL,
-cost smallint NOT NULL CHECK (cost >= 0),
+cost integer NOT NULL CHECK (cost >= 0),
 typeOfPresent VARCHAR(40) NOT NULL,
 description text,
 picturepath  varchar(40) not null ,
-healthRecovery smallint
+healthRecovery integer
 CHECK ((healthRecovery < 100) AND (healthRecovery >= 0))
 );
 
@@ -46,8 +46,8 @@ CREATE TABLE weapons (
 weaponID integer PRIMARY KEY,
 name varchar(64) NOT NULL UNIQUE,
 typeOfWeapon VARCHAR(40) NOT NULL,
-damage smallint CHECK ((damage >= 0) AND (damage <= 100)),
-radiusOfAction smallint CHECK (radiusOfAction > 0),
+damage integer CHECK ((damage >= 0) AND (damage <= 100)),
+radiusOfAction integer CHECK (radiusOfAction > 0),
 picturePath VARCHAR(40) NOT NULL
 );
 
@@ -62,10 +62,10 @@ userID integer PRIMARY KEY,
 loginid INTEGER REFERENCES userLogin,
 surname varchar(30) NOT NULL,
 name varchar(30) NOT NULL,
-height smallint,
-weight smallint,
+height integer,
+weight integer,
 sex boolean NOT NULL,
-district smallint REFERENCES districts,
+district integer REFERENCES districts,
 birthday date,
 statusid integer REFERENCES statuses NOT NULL,
 cash integer,
@@ -86,18 +86,18 @@ CREATE TABLE trainings (
 trainingID integer PRIMARY KEY,
 name VARCHAR(40),
 skillID integer REFERENCES skills,
-coefficient smallint CHECK (coefficient >= 0),
-duration smallint CHECK (duration > 0),
+coefficient integer CHECK (coefficient >= 0),
+duration integer CHECK (duration > 0),
 description text,
 trainer integer REFERENCES users,
 timeOfTraining TIME,
-dayOfWeek smallint
+dayOfWeek integer
 );
 
 CREATE TABLE userSkills (
  userID integer REFERENCES users,
  skillID integer REFERENCES skills,
- levelOfSkill smallint CHECK (levelOfSkill >= 0),
+ levelOfSkill integer CHECK (levelOfSkill >= 0),
  PRIMARY KEY (userID, skillID)
 );
 
@@ -107,28 +107,28 @@ gameID integer PRIMARY KEY,
 typeOfGame boolean NOT NULL,
 steward integer REFERENCES users,
 arena integer REFERENCES arenas,
-numberOfTributes smallint CHECK (numberOfTributes > 0),
+numberOfTributes integer CHECK (numberOfTributes > 0),
 startDate date NOT NULL,
 duration  integer NOT NULL
 );
 
 CREATE TABLE tributes (
-tributeID bigint PRIMARY KEY,
+tributeID integer PRIMARY KEY,
 userID integer REFERENCES users,
 gameID integer REFERENCES games NOT NULL,
 status varchar(40),
 causeOfDeath varchar(80),
-health smallint DEFAULT 100,
+health integer DEFAULT 100,
 CONSTRAINT health CHECK (health >= 0 and health <= 100),
 CONSTRAINT user_on_game UNIQUE(gameID, userID)
 );
 
 CREATE TABLE  presentsToTributes (
- sendingID bigint PRIMARY KEY,
+ sendingID integer PRIMARY KEY,
  productID integer REFERENCES shop NOT NULL,
- tributeID bigint REFERENCES tributes NOT NULL,
+ tributeID integer REFERENCES tributes NOT NULL,
  senderID integer REFERENCES users NOT NULL,
- quantity smallint CHECK (quantity >= 0)
+ quantity integer CHECK (quantity >= 0)
 );
 
 ALTER TABLE districts ADD FOREIGN KEY (skillID) REFERENCES skills;

@@ -6,23 +6,24 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 @Table(name = "shop", schema = "public", catalog = "postgres")
 public class ShopEntity {
     private int productid;
     private String name;
-    private short cost;
+    private int cost;
     private String typeofpresent;
     private String description;
-    private Short healthrecovery;
+    private int healthrecovery;
     private Collection<TributesEntity> productOwners;
     private Collection<LocationsEntity> locations;
     private String picturePath;
 
     public ShopEntity() { }
 
-    public ShopEntity(String name, short cost, String typeofpresent, String description, Short healthrecovery, String picture) {
+    public ShopEntity(String name, int cost, String typeofpresent, String description, int healthrecovery, String picture) {
         this.name = name;
         this.cost = cost;
         this.typeofpresent = typeofpresent;
@@ -57,11 +58,11 @@ public class ShopEntity {
     @NotNull
     @Min(0)
     @Column(name = "cost")
-    public short getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(short cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
@@ -101,11 +102,11 @@ public class ShopEntity {
     @Min(0)
     @Max(100)
     @Column(name = "healthrecovery")
-    public Short getHealthrecovery() {
+    public int getHealthrecovery() {
         return healthrecovery;
     }
 
-    public void setHealthrecovery(Short healthrecovery) {
+    public void setHealthrecovery(int healthrecovery) {
         this.healthrecovery = healthrecovery;
     }
 
@@ -113,30 +114,22 @@ public class ShopEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ShopEntity that = (ShopEntity) o;
-
-        if (productid != that.productid) return false;
-        if (cost != that.cost) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (typeofpresent != null ? !typeofpresent.equals(that.typeofpresent) : that.typeofpresent != null)
-            return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (healthrecovery != null ? !healthrecovery.equals(that.healthrecovery) : that.healthrecovery != null)
-            return false;
-
-        return true;
+        return productid == that.productid &&
+                cost == that.cost &&
+                healthrecovery == that.healthrecovery &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(typeofpresent, that.typeofpresent) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(productOwners, that.productOwners) &&
+                Objects.equals(locations, that.locations) &&
+                Objects.equals(picturePath, that.picturePath);
     }
 
     @Override
     public int hashCode() {
-        int result = productid;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (int) cost;
-        result = 31 * result + (typeofpresent != null ? typeofpresent.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (healthrecovery != null ? healthrecovery.hashCode() : 0);
-        return result;
+
+        return Objects.hash(productid, name, cost, typeofpresent, description, healthrecovery, productOwners, locations, picturePath);
     }
 
     @ManyToMany(fetch = FetchType.LAZY)

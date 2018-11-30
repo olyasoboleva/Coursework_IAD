@@ -8,6 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 @Table(name = "weapons", schema = "public", catalog = "postgres")
@@ -15,8 +16,8 @@ public class WeaponsEntity {
     private int weaponid;
     private String name;
     private String typeofweapon;
-    private Short damage;
-    private Short radiusofaction;
+    private int damage;
+    private int radiusofaction;
     private String picturePath;
 
     private SkillsEntity skillByWeaponid;
@@ -24,7 +25,7 @@ public class WeaponsEntity {
 
     public WeaponsEntity(){ }
 
-    public WeaponsEntity(String name, String typeofweapon, Short damage, Short radiusofaction, String picturePath) {
+    public WeaponsEntity(String name, String typeofweapon, int damage, int radiusofaction, String picturePath) {
         this.name = name;
         this.typeofweapon = typeofweapon;
         this.damage = damage;
@@ -68,22 +69,22 @@ public class WeaponsEntity {
     @Min(0)
     @Max(100)
     @Column(name = "damage")
-    public Short getDamage() {
+    public int getDamage() {
         return damage;
     }
 
-    public void setDamage(Short damage) {
+    public void setDamage(int damage) {
         this.damage = damage;
     }
 
     @Basic
     @Min(0)
     @Column(name = "radiusofaction")
-    public Short getRadiusofaction() {
+    public int getRadiusofaction() {
         return radiusofaction;
     }
 
-    public void setRadiusofaction(Short radiusofaction) {
+    public void setRadiusofaction(int radiusofaction) {
         this.radiusofaction = radiusofaction;
     }
 
@@ -101,27 +102,21 @@ public class WeaponsEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         WeaponsEntity that = (WeaponsEntity) o;
-
-        if (weaponid != that.weaponid) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (typeofweapon != null ? !typeofweapon.equals(that.typeofweapon) : that.typeofweapon != null) return false;
-        if (damage != null ? !damage.equals(that.damage) : that.damage != null) return false;
-        if (radiusofaction != null ? !radiusofaction.equals(that.radiusofaction) : that.radiusofaction != null)
-            return false;
-
-        return true;
+        return weaponid == that.weaponid &&
+                damage == that.damage &&
+                radiusofaction == that.radiusofaction &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(typeofweapon, that.typeofweapon) &&
+                Objects.equals(picturePath, that.picturePath) &&
+                Objects.equals(skillByWeaponid, that.skillByWeaponid) &&
+                Objects.equals(owners, that.owners);
     }
 
     @Override
     public int hashCode() {
-        int result = weaponid;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (typeofweapon != null ? typeofweapon.hashCode() : 0);
-        result = 31 * result + (damage != null ? damage.hashCode() : 0);
-        result = 31 * result + (radiusofaction != null ? radiusofaction.hashCode() : 0);
-        return result;
+
+        return Objects.hash(weaponid, name, typeofweapon, damage, radiusofaction, picturePath, skillByWeaponid, owners);
     }
 
     @OneToOne(mappedBy = "weaponsByWeaponid")

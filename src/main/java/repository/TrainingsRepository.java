@@ -23,7 +23,7 @@ public interface TrainingsRepository extends CrudRepository<TrainingsEntity, Int
      * @param dayofweek day of week
      * @return list of trainings
      */
-    List<TrainingsEntity> getTrainingsEntityByDayofweek(Short dayofweek);
+    List<TrainingsEntity> getTrainingsEntityByDayofweek(int dayofweek);
 
     /**
      * find schedule of trainer

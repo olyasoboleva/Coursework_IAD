@@ -21,8 +21,8 @@ public class Main {
         locationsRepository.save(locationsEntity);
 
         ArenasEntity arenasEntity = new ArenasEntity();
-        arenasEntity.setArenaLength((short) 123);
-        arenasEntity.setArenaWidth((short)12);
+        arenasEntity.setArenaLength(123);
+        arenasEntity.setArenaWidth(12);
         arenasEntity.setMainLocation(locationsEntity);
 
         ArenasRepository arenasRepository = (ArenasRepository) ctx.getBean("arenasRepository");
@@ -58,8 +58,13 @@ public class Main {
 
         UsersEntity user = new UsersEntity();
         user.setName("Ira");
+        user.setSex(true);
         user.setSurname("Redkina");
-        user.setPicturePath("/");
+        user.setCash(10000);
+        user.setBirthday(new Date(1));
+        user.setHeight(163);
+        user.setWeight(47);
+        user.setPicturePath("pic.jpg");
         user.setUserlogin(userlogin);
         UserRepository userRepository = (UserRepository)ctx.getBean("userRepository");
         userRepository.save(user);
@@ -70,6 +75,7 @@ public class Main {
         game.setDuration(15);
         game.setTypeofgame(true);
         game.setStartdate(new Date(1));
+        game.setNumberoftributes(24);
         gamesRepository.save(game);
 
         TributesEntity tribute = new TributesEntity();
@@ -83,10 +89,12 @@ public class Main {
         weapon1.setName("меч");
         weapon1.setPicturePath("/");
         weapon1.setTypeofweapon("Холодное оружие");
+        weapon1.setRadiusofaction(10);
         WeaponsEntity weapon2 = new WeaponsEntity();
         weapon2.setName("лук");
         weapon2.setPicturePath("/");
         weapon2.setTypeofweapon("что-то там");
+        weapon2.setRadiusofaction(10);
         WeaponsRepository weaponsRepository = (WeaponsRepository)ctx.getBean("weaponsRepository");
         weaponsRepository.save(weapon1);
         weaponsRepository.save(weapon2);
@@ -105,11 +113,11 @@ public class Main {
         UserskillsEntity userskillsEntity = new UserskillsEntity();
         userskillsEntity.setSkillsBySkillid(skillsEntity);
         userskillsEntity.setUsersByUserid(user);
-        userskillsEntity.setLevelofskill((short)20);
+        userskillsEntity.setLevelofskill(20);
         UserskillsRepository userskillsRepository = (UserskillsRepository)ctx.getBean("userskillsRepository");
         userskillsRepository.save(userskillsEntity);
 
-        ShopEntity product = new ShopEntity("Веревка", (short) 120, "Инструменты", "Прочная длинная веревка", (short) 0, "rope.jpg");
+        ShopEntity product = new ShopEntity("Верёвка", 120, "Инструменты", "Прочная длинная веревка", 0, "rope.jpg");
         ShopRepository shopRepository = (ShopRepository)ctx.getBean("shopRepository");
         shopRepository.save(product);
 

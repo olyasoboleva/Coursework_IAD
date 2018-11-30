@@ -38,8 +38,8 @@ public class SkillsServiceImpl implements SkillsService {
        */
       @Transactional
       @Override
-    public Map<SkillsEntity, Short> getAllUserSkills(UsersEntity user) {
-        Map<SkillsEntity, Short> allUserSkills = new HashMap<>();
+    public Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user) {
+        Map<SkillsEntity, Integer> allUserSkills = new HashMap<>();
         List<UserskillsEntity> userSkills = userskillsRepository.getUserskillsEntitiesByUsersByUserid(user);
         List<SkillsEntity> allSkills = skillsRepository.findAll();
         for (SkillsEntity skill : allSkills) {
@@ -59,7 +59,7 @@ public class SkillsServiceImpl implements SkillsService {
      */
     @Transactional
     @Override
-    public Map<SkillsEntity, Short> getAllTributeSkills(TributesEntity tribute) {
+    public Map<SkillsEntity, Integer> getAllTributeSkills(TributesEntity tribute) {
           UsersEntity user = userRepository.findUsersEntityByTributesByUserid(tribute);
         return getAllUserSkills(user);
     }

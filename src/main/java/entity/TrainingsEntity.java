@@ -3,23 +3,24 @@ package entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.sql.Time;
+import java.util.Objects;
 
 @Entity
 @Table(name = "trainings", schema = "public", catalog = "postgres")
 public class TrainingsEntity {
     private int trainingid;
     private String name;
-    private Short coefficient;
-    private Short duration;
+    private int coefficient;
+    private int duration;
     private String description;
     private Time timeoftraining;
-    private Short dayofweek;
+    private int dayofweek;
     private SkillsEntity skillsBySkillid;
     private UsersEntity usersByTrainer;
 
     public TrainingsEntity() {}
 
-    public TrainingsEntity(String name, SkillsEntity skill, Short coefficient, Short duration, String description, UsersEntity trainer, Time timeoftraining, Short dayofweek) {
+    public TrainingsEntity(String name, SkillsEntity skill, int coefficient, int duration, String description, UsersEntity trainer, Time timeoftraining, int dayofweek) {
         this.name = name;
         this.coefficient = coefficient;
         this.duration = duration;
@@ -54,22 +55,22 @@ public class TrainingsEntity {
     @Basic
     @Min(0)
     @Column(name = "coefficient")
-    public Short getCoefficient() {
+    public int getCoefficient() {
         return coefficient;
     }
 
-    public void setCoefficient(Short coefficient) {
+    public void setCoefficient(int coefficient) {
         this.coefficient = coefficient;
     }
 
     @Basic
     @Min(0)
     @Column(name = "duration")
-    public Short getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Short duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -95,11 +96,11 @@ public class TrainingsEntity {
 
     @Basic
     @Column(name = "dayofweek")
-    public Short getDayofweek() {
+    public int getDayofweek() {
         return dayofweek;
     }
 
-    public void setDayofweek(Short dayofweek) {
+    public void setDayofweek(int dayofweek) {
         this.dayofweek = dayofweek;
     }
 
@@ -107,31 +108,22 @@ public class TrainingsEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TrainingsEntity that = (TrainingsEntity) o;
-
-        if (trainingid != that.trainingid) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (coefficient != null ? !coefficient.equals(that.coefficient) : that.coefficient != null) return false;
-        if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (timeoftraining != null ? !timeoftraining.equals(that.timeoftraining) : that.timeoftraining != null)
-            return false;
-        if (dayofweek != null ? !dayofweek.equals(that.dayofweek) : that.dayofweek != null) return false;
-
-        return true;
+        return trainingid == that.trainingid &&
+                coefficient == that.coefficient &&
+                duration == that.duration &&
+                dayofweek == that.dayofweek &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(description, that.description) &&
+                Objects.equals(timeoftraining, that.timeoftraining) &&
+                Objects.equals(skillsBySkillid, that.skillsBySkillid) &&
+                Objects.equals(usersByTrainer, that.usersByTrainer);
     }
 
     @Override
     public int hashCode() {
-        int result = trainingid;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (coefficient != null ? coefficient.hashCode() : 0);
-        result = 31 * result + (duration != null ? duration.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (timeoftraining != null ? timeoftraining.hashCode() : 0);
-        result = 31 * result + (dayofweek != null ? dayofweek.hashCode() : 0);
-        return result;
+
+        return Objects.hash(trainingid, name, coefficient, duration, description, timeoftraining, dayofweek, skillsBySkillid, usersByTrainer);
     }
 
     @ManyToOne

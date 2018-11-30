@@ -13,6 +13,6 @@ public interface SkillsService {
     SkillsEntity updateSkill(SkillsEntity skill);
     boolean deleteSkill(SkillsEntity skill);
 
-    Map<SkillsEntity, Short> getAllUserSkills(UsersEntity user);
-    Map<SkillsEntity, Short> getAllTributeSkills(TributesEntity tribute);
+    Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user);
+    Map<SkillsEntity, Integer> getAllTributeSkills(TributesEntity tribute);
 }

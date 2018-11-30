@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users", schema = "public", catalog = "postgres")
@@ -12,12 +13,12 @@ public class UsersEntity {
     private int userid;
     private String surname;
     private String name;
-    private Short height;
-    private Short weight;
+    private int height;
+    private int weight;
     private boolean sex;
     private Date birthday;
     private StatusesEntity status;
-    private Integer cash;
+    private int cash;
     private String picturePath;
     private Collection<GamesEntity> gamesByUserid;
     private Collection<PresentstotributesEntity> presentstotributesByUserid;
@@ -30,7 +31,8 @@ public class UsersEntity {
 
     public UsersEntity() {}
 
-    public UsersEntity(String surname, String name, Short height, Short weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserloginEntity userlogin, StatusesEntity status) {
+
+    public UsersEntity(String surname, String name, int height, int weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserloginEntity userlogin) {
         this.surname = surname;
         this.name = name;
         this.height = height;
@@ -86,20 +88,20 @@ public class UsersEntity {
     @Basic
     @Min(0)
     @Column(name = "height")
-    public Short getHeight() {
+    public int getHeight() {
         return height;
     }
-    public void setHeight(Short height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
     @Basic
     @Min(0)
     @Column(name = "weight")
-    public Short getWeight() {
+    public int getWeight() {
         return weight;
     }
-    public void setWeight(Short weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 
@@ -145,34 +147,30 @@ public class UsersEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         UsersEntity that = (UsersEntity) o;
-
-        if (userid != that.userid) return false;
-        if (sex != that.sex) return false;
-        if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (height != null ? !height.equals(that.height) : that.height != null) return false;
-        if (weight != null ? !weight.equals(that.weight) : that.weight != null) return false;
-        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (cash != null ? !cash.equals(that.cash) : that.cash != null) return false;
-
-        return true;
+        return userid == that.userid &&
+                height == that.height &&
+                weight == that.weight &&
+                sex == that.sex &&
+                cash == that.cash &&
+                Objects.equals(surname, that.surname) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(birthday, that.birthday) &&
+                Objects.equals(status, that.status) &&
+                Objects.equals(picturePath, that.picturePath) &&
+                Objects.equals(gamesByUserid, that.gamesByUserid) &&
+                Objects.equals(presentstotributesByUserid, that.presentstotributesByUserid) &&
+                Objects.equals(trainingsByUserid, that.trainingsByUserid) &&
+                Objects.equals(tributesByUserid, that.tributesByUserid) &&
+                Objects.equals(skills, that.skills) &&
+                Objects.equals(districtsByDistrict, that.districtsByDistrict) &&
+                Objects.equals(userlogin, that.userlogin);
     }
 
     @Override
     public int hashCode() {
-        int result = userid;
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (height != null ? height.hashCode() : 0);
-        result = 31 * result + (weight != null ? weight.hashCode() : 0);
-        result = 31 * result + (sex ? 1 : 0);
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (cash != null ? cash.hashCode() : 0);
-        return result;
+
+        return Objects.hash(userid, surname, name, height, weight, sex, birthday, status, cash, picturePath, gamesByUserid, presentstotributesByUserid, trainingsByUserid, tributesByUserid, skills, districtsByDistrict, userlogin);
     }
 
     @OneToMany(mappedBy = "usersBySteward", fetch = FetchType.LAZY)

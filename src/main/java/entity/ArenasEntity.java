@@ -10,14 +10,14 @@ import java.util.HashSet;
 @Table(name = "arenas", schema = "public", catalog = "postgres")
 public class ArenasEntity {
     private int arenaid;
-    private short arenaLength;
-    private short arenaWidth;
+    private int arenaLength;
+    private int arenaWidth;
     private LocationsEntity mainLocation;
     private GamesEntity gamesByArenaid;
 
     public ArenasEntity() {}
 
-    public ArenasEntity(short arenaLength, short arenaWidth, LocationsEntity location) {
+    public ArenasEntity(int arenaLength, int arenaWidth, LocationsEntity location) {
         this.arenaLength = arenaLength;
         this.arenaWidth = arenaWidth;
         this.mainLocation = location;
@@ -38,11 +38,11 @@ public class ArenasEntity {
     @Min(0)
     @NotNull
     @Column(name = "arena_length")
-    public short getArenaLength() {
+    public int getArenaLength() {
         return arenaLength;
     }
 
-    public void setArenaLength(short arenaLength) {
+    public void setArenaLength(int arenaLength) {
         this.arenaLength = arenaLength;
     }
 
@@ -50,11 +50,11 @@ public class ArenasEntity {
     @Min(0)
     @NotNull
     @Column(name = "arena_width")
-    public short getArenaWidth() {
+    public int getArenaWidth() {
         return arenaWidth;
     }
 
-    public void setArenaWidth(short arenaWidth) {
+    public void setArenaWidth(int arenaWidth) {
         this.arenaWidth = arenaWidth;
     }
 

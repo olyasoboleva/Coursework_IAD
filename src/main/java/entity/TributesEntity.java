@@ -6,14 +6,15 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tributes",schema = "public", catalog = "postgres")
 public class TributesEntity {
-    private long tributeid;
+    private int tributeid;
     private String status;
     private String causeofdeath;
-    private Short health;
+    private int health;
     private Collection<ShopEntity> productsOfTribute;
     private UsersEntity usersByUserid;
     private GamesEntity gamesByGameid;
@@ -31,11 +32,11 @@ public class TributesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tributeid")
-    public long getTributeid() {
+    public int getTributeid() {
         return tributeid;
     }
 
-    public void setTributeid(long tributeid) {
+    public void setTributeid(int tributeid) {
         this.tributeid = tributeid;
     }
 
@@ -63,11 +64,11 @@ public class TributesEntity {
     @Min(0)
     @Max(100)
     @Column(name = "health")
-    public Short getHealth() {
+    public int getHealth() {
         return health;
     }
 
-    public void setHealth(Short health) {
+    public void setHealth(int health) {
         this.health = health;
     }
 
@@ -75,24 +76,21 @@ public class TributesEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TributesEntity that = (TributesEntity) o;
-
-        if (tributeid != that.tributeid) return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (causeofdeath != null ? !causeofdeath.equals(that.causeofdeath) : that.causeofdeath != null) return false;
-        if (health != null ? !health.equals(that.health) : that.health != null) return false;
-
-        return true;
+        return tributeid == that.tributeid &&
+                health == that.health &&
+                Objects.equals(status, that.status) &&
+                Objects.equals(causeofdeath, that.causeofdeath) &&
+                Objects.equals(productsOfTribute, that.productsOfTribute) &&
+                Objects.equals(usersByUserid, that.usersByUserid) &&
+                Objects.equals(gamesByGameid, that.gamesByGameid) &&
+                Objects.equals(weaponOfTribute, that.weaponOfTribute);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (tributeid ^ (tributeid >>> 32));
-        result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (causeofdeath != null ? causeofdeath.hashCode() : 0);
-        result = 31 * result + (health != null ? health.hashCode() : 0);
-        return result;
+
+        return Objects.hash(tributeid, status, causeofdeath, health, productsOfTribute, usersByUserid, gamesByGameid, weaponOfTribute);
     }
 
     @ManyToOne
