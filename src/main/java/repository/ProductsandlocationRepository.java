@@ -9,11 +9,16 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProductsandlocationRepository extends CrudRepository<ProductsandlocationEntity, Integer> {
+    /**
+     * find appling by id
+     * @param applyingid id
+     * @return applying
+     */
     ProductsandlocationEntity findProductsandlocationEntityByApplyingid(int applyingid);
     /**
-     * Позволяет во время игры получить тип местности, для которого можно использовать этот подарок
-     * @param product поиск по подарку
-     * @return все такие связи
+     * find all applying of product
+     * @param product product
+     * @return list of applyings
      */
     List<ProductsandlocationEntity> getProductsandlocationEntitiesByShopByProductid(ShopEntity product);
 }

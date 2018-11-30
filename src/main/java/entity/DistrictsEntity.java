@@ -1,8 +1,6 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -80,7 +78,6 @@ public class DistrictsEntity {
 
     @OneToOne
     @JoinColumn(name = "skillid", referencedColumnName = "skillid")
-    @JsonBackReference(value="skillsDistricts")
     public SkillsEntity getSkillsBySkillid() {
         return skillsBySkillid;
     }
@@ -89,7 +86,7 @@ public class DistrictsEntity {
         this.skillsBySkillid = skillsBySkillid;
     }
 
-    @OneToMany(mappedBy = "districtsByDistrict")
+    @OneToMany(mappedBy = "districtsByDistrict", fetch = FetchType.LAZY)
     public Collection<UsersEntity> getUsersByDistrictid() {
         return usersByDistrictid;
     }

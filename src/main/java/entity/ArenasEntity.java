@@ -12,15 +12,15 @@ public class ArenasEntity {
     private int arenaid;
     private short arenaLength;
     private short arenaWidth;
-    private String typeoflocation;
+    private LocationsEntity mainLocation;
     private GamesEntity gamesByArenaid;
 
     public ArenasEntity() {}
 
-    public ArenasEntity(short arenaLength, short arenaWidth, String typeoflocation) {
+    public ArenasEntity(short arenaLength, short arenaWidth, LocationsEntity location) {
         this.arenaLength = arenaLength;
         this.arenaWidth = arenaWidth;
-        this.typeoflocation = typeoflocation;
+        this.mainLocation = location;
     }
 
     @Id
@@ -80,15 +80,14 @@ public class ArenasEntity {
         return result;
     }
 
-    @Basic
-    @NotNull
-    @Column(name = "typeoflocation", length = 40)
-    public String getTypeoflocation() {
-        return typeoflocation;
+    @ManyToOne
+    @JoinColumn(name = "locationid", referencedColumnName = "locationid", nullable = false)
+    public LocationsEntity getMainLocation() {
+        return mainLocation;
     }
 
-    public void setTypeoflocation(String typeoflocation) {
-        this.typeoflocation = typeoflocation;
+    public void setMainLocation(LocationsEntity mainLocation) {
+        this.mainLocation = mainLocation;
     }
 
     @OneToOne(mappedBy = "arenasByArena")

@@ -1,9 +1,14 @@
+CREATE TABLE locations (
+ locationID integer PRIMARY KEY ,
+ name varchar(40),
+ picturePath varchar(40) not null
+);
 
 CREATE TABLE arenas (
 arenaID integer PRIMARY KEY,
 arena_length smallint NOT NULL,
 arena_width smallint NOT NULL,
-typeOfLocation VARCHAR(40) NOT NULL,
+locationid integer REFERENCES locations NOT NULL,
 CONSTRAINT check_area CHECK ((arena_width> 0) AND (arena_length> 0)) );
 
 
@@ -49,7 +54,7 @@ CREATE TABLE userLogin (
 
 CREATE TABLE users (
 userID integer PRIMARY KEY,
-login INTEGER REFERENCES userLogin,
+loginid INTEGER REFERENCES userLogin,
 surname varchar(30) NOT NULL,
 name varchar(30) NOT NULL,
 height smallint,
@@ -140,11 +145,3 @@ CREATE TABLE statuses (
  name varchar(40),
  priceID integer REFERENCES prices
 );
-
-CREATE TABLE locations (
- locationID integer PRIMARY KEY ,
- name varchar(40),
- picturePath varchar(40) not null
-);
-
-CREATE SEQUENCE serial;

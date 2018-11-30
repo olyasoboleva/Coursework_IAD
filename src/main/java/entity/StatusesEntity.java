@@ -56,7 +56,7 @@ public class StatusesEntity {
         return result;
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "priceid", referencedColumnName = "priceid", insertable = false, updatable = false)
     public PricesEntity getPricesByPriceid() {
         return pricesByPriceid;

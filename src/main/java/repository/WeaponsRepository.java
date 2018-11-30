@@ -2,6 +2,7 @@ package repository;
 
 
 import entity.SkillsEntity;
+import entity.TributesEntity;
 import entity.WeaponsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,9 +15,16 @@ public interface WeaponsRepository extends JpaRepository<WeaponsEntity, Integer>
     WeaponsEntity findWeaponsEntityByWeaponid(int id);
 
     /**
-     * Позволяет получить оружие, которое связано с передаваемым скиллом
-     * @param skill
-     * @return оружие
+     * find weapon for this skill
+     * @param skill skill
+     * @return weapon
      */
-    List<WeaponsEntity> getWeaponsEntitiesBySkillByWeaponid(SkillsEntity skill);
+    WeaponsEntity getWeaponsEntitiesBySkillByWeaponid(SkillsEntity skill);
+
+    /**
+     * find weapons, which tribute have
+     * @param tribute tribute
+     * @return lit of weapons
+     */
+    List<WeaponsEntity> getWeaponsEntitiesByOwners(TributesEntity tribute);
 }

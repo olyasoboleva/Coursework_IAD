@@ -13,11 +13,19 @@ import java.util.List;
 
 public interface UserskillsRepository extends JpaRepository<UserskillsEntity, UserskillsEntityPK> {
     /**
-     * Получить уровень скилла пользователя
-     * @param user пользователь
-     * @param skill скилл
-     * @return сущность, с которой можно получить уровень
+     * find user's level of skill
+     *
+     * @param user user
+     * @param skill skill
+     * @return user's skill with level
      */
     UserskillsEntity findUserskillsEntityByUsersByUseridAndSkillsBySkillid(UsersEntity user, SkillsEntity skill);
+
+    /**
+     * find user's skills
+     *
+     * @param user user
+     * @return list of skills with level
+     */
     List<UserskillsEntity> getUserskillsEntitiesByUsersByUserid(UsersEntity user);
 }

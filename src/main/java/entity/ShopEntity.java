@@ -16,7 +16,7 @@ public class ShopEntity {
     private String typeofpresent;
     private String description;
     private Short healthrecovery;
-    private Collection<PresentstotributesEntity> presentstotributesByProductid;
+    private Collection<TributesEntity> productOwners;
     private Collection<LocationsEntity> locations;
     private String picturePath;
 
@@ -139,16 +139,7 @@ public class ShopEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "shopByProductid")
-    public Collection<PresentstotributesEntity> getPresentstotributesByProductid() {
-        return presentstotributesByProductid;
-    }
-
-    public void setPresentstotributesByProductid(Collection<PresentstotributesEntity> presentstotributesByProductid) {
-        this.presentstotributesByProductid = presentstotributesByProductid;
-    }
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "productsandlocation",
             joinColumns = {@JoinColumn(name = "productid")},
@@ -160,5 +151,14 @@ public class ShopEntity {
 
     public void setLocations(Collection<LocationsEntity> locations) {
         this.locations = locations;
+    }
+
+    @ManyToMany(mappedBy = "productsOfTribute", fetch = FetchType.LAZY)
+    public Collection<TributesEntity> getProductOwners() {
+        return productOwners;
+    }
+
+    public void setProductOwners(Collection<TributesEntity> productOwners) {
+        this.productOwners = productOwners;
     }
 }

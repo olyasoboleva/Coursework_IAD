@@ -9,10 +9,25 @@ import java.sql.Date;
 import java.util.List;
 
 public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
+    /**
+     * find game by id
+     * @param gameid id
+     * @return game
+     */
     GamesEntity findGamesEntityByGameid(int gameid);
-    //а оно вообще надо при связи 1-1?
-    GamesEntity getGamesEntityByArenasByArena(ArenasEntity arena);
-    //по сути все игры распорядителя вряд ли нужны, надо только будущие и текущие, надо будет с датами помудрить (но возможно это уже сервис)
-    List<GamesEntity> getGamesEntitiesByUsersBySteward(UsersEntity steward);
+
+    /**
+     * fine all steward's games, which start after date
+     * @param steward steward
+     * @param date start date
+     * @return list of games
+     */
+    List<GamesEntity> getGamesEntitiesByUsersByStewardAndStartdateGreaterThan(UsersEntity steward, Date date);
+
+    /**
+     * find all games, which start on this date
+     * @param startdate start date
+     * @return list of games
+     */
     List<GamesEntity> getGamesEntitiesByStartdate(Date startdate);
 }

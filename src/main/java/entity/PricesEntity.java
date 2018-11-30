@@ -12,7 +12,7 @@ public class PricesEntity {
     private int priceid;
     private String name;
     private Integer cost;
-    private Collection<StatusesEntity> statusesByPriceid;
+    private StatusesEntity statusesByPriceid;
 
     public PricesEntity() { }
 
@@ -76,12 +76,12 @@ public class PricesEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "pricesByPriceid")
-    public Collection<StatusesEntity> getStatusesByPriceid() {
+    @OneToOne(mappedBy = "pricesByPriceid")
+    public StatusesEntity getStatusesByPriceid() {
         return statusesByPriceid;
     }
 
-    public void setStatusesByPriceid(Collection<StatusesEntity> statusesByPriceid) {
+    public void setStatusesByPriceid(StatusesEntity statusesByPriceid) {
         this.statusesByPriceid = statusesByPriceid;
     }
 }

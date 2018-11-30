@@ -1,7 +1,5 @@
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -95,7 +93,6 @@ public class SkillsEntity {
     }
 
     @OneToOne(mappedBy = "skillsBySkillid")
-    @JsonManagedReference
     public DistrictsEntity getDistrictsBySkillid() {
         return districtsBySkillid;
     }
@@ -114,7 +111,7 @@ public class SkillsEntity {
         this.weaponsByWeaponid = weaponsByWeaponid;
     }
 
-    @OneToMany(mappedBy = "skillsBySkillid")
+    @OneToMany(mappedBy = "skillsBySkillid", fetch = FetchType.LAZY)
     public Collection<TrainingsEntity> getTrainingsBySkillid() {
         return trainingsBySkillid;
     }
@@ -123,7 +120,7 @@ public class SkillsEntity {
         this.trainingsBySkillid = trainingsBySkillid;
     }
 
-    @ManyToMany(mappedBy = "skills")
+    @ManyToMany(mappedBy = "skills", fetch = FetchType.LAZY)
     public Collection<UsersEntity> getUsers() {
         return users;
     }

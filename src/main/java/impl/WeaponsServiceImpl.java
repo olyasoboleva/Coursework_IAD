@@ -34,18 +34,16 @@ public class WeaponsServiceImpl implements WeaponsService {
     @Override
     public List<WeaponsEntity> getTributeWeapons(TributesEntity tribute) {
         List<WeaponsEntity> tributeWeapons = new ArrayList<>();
-        List<WeaponsingameEntity> gameWeapon = weaponsingameRepository.getWeaponsingameEntitiesByTributesByTributeid(tribute);
+        //FIXME: сломалось
+        /*List<WeaponsingameEntity> gameWeapon = weaponsingameRepository.getWeaponsingameEntitiesByTributesByTributeid(tribute);
         List<WeaponsEntity> allWeapons = weaponsRepository.findAll();
         for (WeaponsEntity weapons : allWeapons) {
             for (WeaponsingameEntity weapon : gameWeapon) {
-                //TODO: тут тоже сломалось
-                /*
                 if (weapons.getWeaponid() == weapon.getWeaponid()) {
                     tributeWeapons.add(weapons);
                 }
-                */
             }
-        }
+        }*/
         return tributeWeapons;
     }
 

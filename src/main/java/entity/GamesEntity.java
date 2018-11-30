@@ -133,7 +133,7 @@ public class GamesEntity {
         this.arenasByArena = arenasByArena;
     }
 
-    @OneToMany(mappedBy = "gamesByGameid")
+    @OneToMany(mappedBy = "gamesByGameid", fetch = FetchType.LAZY)
     public Collection<TributesEntity> getTributesByGameid() {
         return tributesByGameid;
     }

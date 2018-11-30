@@ -15,10 +15,15 @@ public class Main {
     public static void main(String[] args){
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DatabaseConfig.class);
 
+
+        LocationsEntity locationsEntity = new LocationsEntity("forest", "forest.jpg");
+        LocationsRepository locationsRepository = (LocationsRepository)ctx.getBean("locationsRepository");
+        locationsRepository.save(locationsEntity);
+
         ArenasEntity arenasEntity = new ArenasEntity();
         arenasEntity.setArenaLength((short) 123);
         arenasEntity.setArenaWidth((short)12);
-        arenasEntity.setTypeoflocation("Лес");
+        arenasEntity.setMainLocation(locationsEntity);
 
         ArenasRepository arenasRepository = (ArenasRepository) ctx.getBean("arenasRepository");
 
@@ -103,10 +108,6 @@ public class Main {
         userskillsEntity.setLevelofskill((short)20);
         UserskillsRepository userskillsRepository = (UserskillsRepository)ctx.getBean("userskillsRepository");
         userskillsRepository.save(userskillsEntity);
-
-        LocationsEntity locationsEntity = new LocationsEntity("forest", "forest.jpg");
-        LocationsRepository locationsRepository = (LocationsRepository)ctx.getBean("locationsRepository");
-        locationsRepository.save(locationsEntity);
 
         ShopEntity product = new ShopEntity("Веревка", (short) 120, "Инструменты", "Прочная длинная веревка", (short) 0, "rope.jpg");
         ShopRepository shopRepository = (ShopRepository)ctx.getBean("shopRepository");

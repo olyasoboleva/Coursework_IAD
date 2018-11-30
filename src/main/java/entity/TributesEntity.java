@@ -14,7 +14,7 @@ public class TributesEntity {
     private String status;
     private String causeofdeath;
     private Short health;
-    private Collection<PresentstotributesEntity> presentstotributesByTributeid;
+    private Collection<ShopEntity> productsOfTribute;
     private UsersEntity usersByUserid;
     private GamesEntity gamesByGameid;
     private Collection<WeaponsEntity> weaponOfTribute;
@@ -95,15 +95,6 @@ public class TributesEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "tributesByTributeid")
-    public Collection<PresentstotributesEntity> getPresentstotributesByTributeid() {
-        return presentstotributesByTributeid;
-    }
-
-    public void setPresentstotributesByTributeid(Collection<PresentstotributesEntity> presentstotributesByTributeid) {
-        this.presentstotributesByTributeid = presentstotributesByTributeid;
-    }
-
     @ManyToOne
     @JoinColumn(name = "userid", referencedColumnName = "userid", nullable = false)
     public UsersEntity getUsersByUserid() {
@@ -124,12 +115,26 @@ public class TributesEntity {
         this.gamesByGameid = gamesByGameid;
     }
 
-    @ManyToMany(mappedBy = "owners")
+    @ManyToMany(mappedBy = "owners", fetch = FetchType.LAZY)
     public Collection<WeaponsEntity> getWeaponOfTribute() {
         return weaponOfTribute;
     }
 
     public void setWeaponOfTribute(Collection<WeaponsEntity> weaponOfTribute) {
         this.weaponOfTribute = weaponOfTribute;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "presentstotributes",
+            joinColumns = {@JoinColumn(name = "tributeid")},
+            inverseJoinColumns = {@JoinColumn(name = "productid")}
+    )
+    public Collection<ShopEntity> getProductsOfTribute() {
+        return productsOfTribute;
+    }
+
+    public void setProductsOfTribute(Collection<ShopEntity> productsOfTribute) {
+        this.productsOfTribute = productsOfTribute;
     }
 }

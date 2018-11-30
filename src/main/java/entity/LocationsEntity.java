@@ -13,6 +13,7 @@ public class LocationsEntity {
     private String picturepath;
 
     private Collection<ShopEntity> products;
+    private Collection<ArenasEntity> arenas;
 
     public LocationsEntity(){ }
 
@@ -68,12 +69,21 @@ public class LocationsEntity {
     }
 
 
-    @ManyToMany(mappedBy = "locations")
+    @ManyToMany(mappedBy = "locations", fetch = FetchType.LAZY)
     public Collection<ShopEntity> getProducts() {
         return products;
     }
 
     public void setProducts(Collection<ShopEntity> products) {
         this.products = products;
+    }
+
+    @OneToMany(mappedBy = "mainLocation", fetch = FetchType.LAZY)
+    public Collection<ArenasEntity> getArenas() {
+        return arenas;
+    }
+
+    public void setArenas(Collection<ArenasEntity> arenas) {
+        this.arenas = arenas;
     }
 }

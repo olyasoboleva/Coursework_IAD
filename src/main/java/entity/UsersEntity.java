@@ -184,7 +184,7 @@ public class UsersEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "usersBySteward")
+    @OneToMany(mappedBy = "usersBySteward", fetch = FetchType.LAZY)
     public Collection<GamesEntity> getGamesByUserid() {
         return gamesByUserid;
     }
@@ -192,7 +192,7 @@ public class UsersEntity {
         this.gamesByUserid = gamesByUserid;
     }
 
-    @OneToMany(mappedBy = "usersBySenderid")
+    @OneToMany(mappedBy = "usersBySenderid", fetch = FetchType.LAZY)
     public Collection<PresentstotributesEntity> getPresentstotributesByUserid() {
         return presentstotributesByUserid;
     }
@@ -200,7 +200,7 @@ public class UsersEntity {
         this.presentstotributesByUserid = presentstotributesByUserid;
     }
 
-    @OneToMany(mappedBy = "usersByTrainer")
+    @OneToMany(mappedBy = "usersByTrainer", fetch = FetchType.LAZY)
     public Collection<TrainingsEntity> getTrainingsByUserid() {
         return trainingsByUserid;
     }
@@ -208,7 +208,7 @@ public class UsersEntity {
         this.trainingsByUserid = trainingsByUserid;
     }
 
-    @OneToMany(mappedBy = "usersByUserid")
+    @OneToMany(mappedBy = "usersByUserid", fetch = FetchType.LAZY)
     public Collection<TributesEntity> getTributesByUserid() {
         return tributesByUserid;
     }
@@ -234,7 +234,7 @@ public class UsersEntity {
         this.userlogin = userlogin;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "userskills",
             joinColumns = {@JoinColumn(name = "userid")},

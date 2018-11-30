@@ -133,7 +133,7 @@ public class WeaponsEntity {
         this.skillByWeaponid = skillByWeaponid;
     }
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "weaponsingame",
             joinColumns = {@JoinColumn(name = "weaponid")},
