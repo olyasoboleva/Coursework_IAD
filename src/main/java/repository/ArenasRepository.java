@@ -7,15 +7,15 @@ import org.springframework.data.repository.CrudRepository;
 public interface ArenasRepository extends CrudRepository<ArenasEntity, Integer> {
     /**
      * find arena by id
-     * @param arenaid id
+     * @param arenaId id
      * @return arena
      */
-    ArenasEntity findArenasEntityByArenaid(int arenaid);
+    ArenasEntity findArenasEntityByArenaId(int arenaId);
 
     /**
      * find arena, where game takes place
      * @param game game
      * @return arena
      */
-    ArenasEntity findArenasEntityByGamesByArenaid(GamesEntity game);
+    ArenasEntity findArenasEntityByGame(GamesEntity game);
 }

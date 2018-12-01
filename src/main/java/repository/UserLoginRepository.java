@@ -1,23 +1,23 @@
 package repository;
 
-import entity.UserloginEntity;
+import entity.UserLoginEntity;
 import entity.UsersEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserloginRepository extends CrudRepository<UserloginEntity, Integer> {
+public interface UserLoginRepository extends CrudRepository<UserLoginEntity, Integer> {
     /**
      * find login parameters of user
      *
      * @param user user
      * @return user login
      */
-    UserloginEntity findUserloginEntityByUser(UsersEntity user);
+    UserLoginEntity findUserLoginEntityByUser(UsersEntity user);
 
 
     //TODO: в сервисы или убрать
     //TODO: хмм, чет появились сомнения насчет всей этой фигни
     //TODO: можно в сервисы на поиск UserEntity
-    //UserloginEntity findUserloginEntityByNick(String nick);
+    //UserLoginEntity findUserLoginEntityByNick(String nick);
 
     /**
      * find user by nick and password
@@ -26,5 +26,5 @@ public interface UserloginRepository extends CrudRepository<UserloginEntity, Int
      * @param password password
      * @return user login
      */
-    UserloginEntity findUserloginEntityByNickAndPassword(String nick, String password);
+    UserLoginEntity findUserLoginEntityByNickAndPassword(String nick, String password);
 }

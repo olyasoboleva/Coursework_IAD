@@ -1,4 +1,3 @@
-DELETE FROM statuses;
 DELETE FROM weaponsingame;
 DELETE FROM productsandlocation;
 DELETE FROM presentstotributes;
@@ -6,10 +5,11 @@ DELETE FROM tributes;
 DELETE FROM games;
 DELETE FROM userskills;
 DELETE FROM trainings;
+DELETE FROM users;
 DELETE FROM districts;
 DELETE FROM skills;
-DELETE FROM users;
-DELETE FROM userlogin;
+DELETE FROM statuses;
+DELETE FROM userLogin;
 DELETE FROM weapons;
 DELETE FROM shop;
 DELETE FROM prices;

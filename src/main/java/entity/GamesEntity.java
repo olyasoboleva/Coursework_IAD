@@ -6,73 +6,72 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
 @Table(name = "games", schema = "public", catalog = "postgres")
 public class GamesEntity {
-    private int gameid;
-    private boolean typeofgame;
-    private int numberoftributes;
-    private Date startdate;
+    private int gameId;
+    private boolean typeOfGame;
+    private int numberOfTributes;
+    private Date startDate;
     private int duration;
-    private UsersEntity usersBySteward;
-    private ArenasEntity arenasByArena;
-    private Collection<TributesEntity> tributesByGameid;
+    private UsersEntity steward;
+    private ArenasEntity arena;
+    private Collection<TributesEntity> tributes;
 
     public GamesEntity() { }
 
-    public GamesEntity(boolean typeofgame, UsersEntity steward, ArenasEntity arena, int numberoftributes, Date startdate) {
-        this.typeofgame = typeofgame;
-        this.numberoftributes = numberoftributes;
-        this.startdate = startdate;
-        this.usersBySteward = steward;
-        this.arenasByArena = arena;
+    public GamesEntity(boolean typeOfGame, UsersEntity steward, ArenasEntity arena, int numberOfTributes, Date startDate) {
+        this.typeOfGame = typeOfGame;
+        this.numberOfTributes = numberOfTributes;
+        this.startDate = startDate;
+        this.steward = steward;
+        this.arena = arena;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "gameid")
-    public int getGameid() {
-        return gameid;
+    @Column(name = "gameId")
+    public int getGameId() {
+        return gameId;
     }
 
-    public void setGameid(int gameid) {
-        this.gameid = gameid;
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
     }
 
     @Basic
     @NotNull
-    @Column(name = "typeofgame")
-    public boolean isTypeofgame() {
-        return typeofgame;
+    @Column(name = "typeOfGame")
+    public boolean isTypeOfGame() {
+        return typeOfGame;
     }
 
-    public void setTypeofgame(boolean typeofgame) {
-        this.typeofgame = typeofgame;
+    public void setTypeOfGame(boolean typeOfGame) {
+        this.typeOfGame = typeOfGame;
     }
 
     @Basic
     @Min(0)
-    @Column(name = "numberoftributes")
-    public int getNumberoftributes() {
-        return numberoftributes;
+    @Column(name = "numberOfTributes")
+    public int getNumberOfTributes() {
+        return numberOfTributes;
     }
 
-    public void setNumberoftributes(int numberoftributes) {
-        this.numberoftributes = numberoftributes;
+    public void setNumberOfTributes(int numberOfTributes) {
+        this.numberOfTributes = numberOfTributes;
     }
 
     @Basic
     @NotNull
-    @Column(name = "startdate")
-    public Date getStartdate() {
-        return startdate;
+    @Column(name = "startDate")
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     @Basic
@@ -90,50 +89,46 @@ public class GamesEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GamesEntity that = (GamesEntity) o;
-        return gameid == that.gameid &&
-                typeofgame == that.typeofgame &&
-                numberoftributes == that.numberoftributes &&
+        return gameId == that.gameId &&
+                typeOfGame == that.typeOfGame &&
+                numberOfTributes == that.numberOfTributes &&
                 duration == that.duration &&
-                Objects.equals(startdate, that.startdate) &&
-                Objects.equals(usersBySteward, that.usersBySteward) &&
-                Objects.equals(arenasByArena, that.arenasByArena) &&
-                Objects.equals(tributesByGameid, that.tributesByGameid);
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(steward, that.steward) &&
+                Objects.equals(arena, that.arena) &&
+                Objects.equals(tributes, that.tributes);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(gameid, typeofgame, numberoftributes, startdate, duration, usersBySteward, arenasByArena, tributesByGameid);
+        return Objects.hash(gameId, typeOfGame, numberOfTributes, startDate, duration, steward, arena, tributes);
     }
 
     @ManyToOne
-    @JoinColumn(name = "steward", referencedColumnName = "userid", insertable = false, updatable = false)
-    public UsersEntity getUsersBySteward() {
-        return usersBySteward;
+    @JoinColumn(name = "steward", referencedColumnName = "userId", insertable = false, updatable = false)
+    public UsersEntity getSteward() {
+        return steward;
     }
-
-    public void setUsersBySteward(UsersEntity usersBySteward) {
-        this.usersBySteward = usersBySteward;
+    public void setSteward(UsersEntity steward) {
+        this.steward = steward;
     }
 
 
     @OneToOne
-    @JoinColumn(name = "arena", referencedColumnName = "arenaid")
-
-    public ArenasEntity getArenasByArena() {
-        return arenasByArena;
+    @JoinColumn(name = "arena", referencedColumnName = "arenaId")
+    public ArenasEntity getArena() {
+        return arena;
+    }
+    public void setArena(ArenasEntity arena) {
+        this.arena = arena;
     }
 
-    public void setArenasByArena(ArenasEntity arenasByArena) {
-        this.arenasByArena = arenasByArena;
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
+    public Collection<TributesEntity> getTributes() {
+        return tributes;
     }
-
-    @OneToMany(mappedBy = "gamesByGameid", fetch = FetchType.LAZY)
-    public Collection<TributesEntity> getTributesByGameid() {
-        return tributesByGameid;
-    }
-
-    public void setTributesByGameid(Collection<TributesEntity> tributesByGameid) {
-        this.tributesByGameid = tributesByGameid;
+    public void setTributes(Collection<TributesEntity> tributes) {
+        this.tributes = tributes;
     }
 }

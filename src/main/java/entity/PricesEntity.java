@@ -3,16 +3,14 @@ package entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.HashSet;
 
 @Entity
 @Table(name = "prices", schema = "public", catalog = "postgres")
 public class PricesEntity {
-    private int priceid;
+    private int priceId;
     private String name;
     private Integer cost;
-    private StatusesEntity statusesByPriceid;
+    private StatusesEntity status;
 
     public PricesEntity() { }
 
@@ -23,13 +21,13 @@ public class PricesEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "priceid")
-    public int getPriceid() {
-        return priceid;
+    @Column(name = "priceId")
+    public int getPriceId() {
+        return priceId;
     }
 
-    public void setPriceid(int priceid) {
-        this.priceid = priceid;
+    public void setPriceId(int priceId) {
+        this.priceId = priceId;
     }
 
     @Basic
@@ -61,7 +59,7 @@ public class PricesEntity {
 
         PricesEntity that = (PricesEntity) o;
 
-        if (priceid != that.priceid) return false;
+        if (priceId != that.priceId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
 
@@ -70,18 +68,17 @@ public class PricesEntity {
 
     @Override
     public int hashCode() {
-        int result = priceid;
+        int result = priceId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         return result;
     }
 
-    @OneToOne(mappedBy = "pricesByPriceid")
-    public StatusesEntity getStatusesByPriceid() {
-        return statusesByPriceid;
+    @OneToOne(mappedBy = "price")
+    public StatusesEntity getStatus() {
+        return status;
     }
-
-    public void setStatusesByPriceid(StatusesEntity statusesByPriceid) {
-        this.statusesByPriceid = statusesByPriceid;
+    public void setStatus(StatusesEntity status) {
+        this.status = status;
     }
 }

@@ -11,10 +11,10 @@ import java.util.List;
 public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
     /**
      * find game by id
-     * @param gameid id
+     * @param gameId id
      * @return game
      */
-    GamesEntity findGamesEntityByGameid(int gameid);
+    GamesEntity findGamesEntityByGameId(int gameId);
 
     /**
      * fine all steward's games, which start after date
@@ -22,12 +22,12 @@ public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
      * @param date start date
      * @return list of games
      */
-    List<GamesEntity> getGamesEntitiesByUsersByStewardAndStartdateGreaterThan(UsersEntity steward, Date date);
+    List<GamesEntity> getGamesEntitiesByStewardAndStartDateGreaterThan(UsersEntity steward, Date date);
 
     /**
      * find all games, which start on this date
-     * @param startdate start date
+     * @param startDate start date
      * @return list of games
      */
-    List<GamesEntity> getGamesEntitiesByStartdate(Date startdate);
+    List<GamesEntity> getGamesEntitiesByStartDate(Date startDate);
 }

@@ -3,41 +3,39 @@ package entity;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tributes",schema = "public", catalog = "postgres")
 public class TributesEntity {
-    private int tributeid;
+    private int tributeId;
     private String status;
-    private String causeofdeath;
+    private String causeOfDeath;
     private int health;
     private Collection<ShopEntity> productsOfTribute;
-    private UsersEntity usersByUserid;
-    private GamesEntity gamesByGameid;
+    private UsersEntity user;
+    private GamesEntity game;
     private Collection<WeaponsEntity> weaponOfTribute;
 
     public TributesEntity() { }
 
     public TributesEntity(UsersEntity user, GamesEntity game) {
-        this.usersByUserid = user;
+        this.user = user;
         this.health = 100;
         this.status = "alive";
-        this.gamesByGameid = game;
+        this.game = game;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tributeid")
-    public int getTributeid() {
-        return tributeid;
+    @Column(name = "tributeId")
+    public int getTributeId() {
+        return tributeId;
     }
 
-    public void setTributeid(int tributeid) {
-        this.tributeid = tributeid;
+    public void setTributeId(int tributeId) {
+        this.tributeId = tributeId;
     }
 
     @Basic
@@ -51,13 +49,13 @@ public class TributesEntity {
     }
 
     @Basic
-    @Column(name = "causeofdeath", length = 80)
-    public String getCauseofdeath() {
-        return causeofdeath;
+    @Column(name = "causeOfDeath", length = 80)
+    public String getCauseOfDeath() {
+        return causeOfDeath;
     }
 
-    public void setCauseofdeath(String causeofdeath) {
-        this.causeofdeath = causeofdeath;
+    public void setCauseOfDeath(String causeOfDeath) {
+        this.causeOfDeath = causeOfDeath;
     }
 
     @Basic
@@ -77,40 +75,39 @@ public class TributesEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TributesEntity that = (TributesEntity) o;
-        return tributeid == that.tributeid &&
+        return tributeId == that.tributeId &&
                 health == that.health &&
                 Objects.equals(status, that.status) &&
-                Objects.equals(causeofdeath, that.causeofdeath) &&
+                Objects.equals(causeOfDeath, that.causeOfDeath) &&
                 Objects.equals(productsOfTribute, that.productsOfTribute) &&
-                Objects.equals(usersByUserid, that.usersByUserid) &&
-                Objects.equals(gamesByGameid, that.gamesByGameid) &&
+                Objects.equals(user, that.user) &&
+                Objects.equals(game, that.game) &&
                 Objects.equals(weaponOfTribute, that.weaponOfTribute);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(tributeid, status, causeofdeath, health, productsOfTribute, usersByUserid, gamesByGameid, weaponOfTribute);
+        return Objects.hash(tributeId, status, causeOfDeath, health, productsOfTribute, user, game, weaponOfTribute);
     }
 
     @ManyToOne
-    @JoinColumn(name = "userid", referencedColumnName = "userid", nullable = false)
-    public UsersEntity getUsersByUserid() {
-        return usersByUserid;
+    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    public UsersEntity getUser() {
+        return user;
     }
 
-    public void setUsersByUserid(UsersEntity usersByUserid) {
-        this.usersByUserid = usersByUserid;
+    public void setUser(UsersEntity user) {
+        this.user = user;
     }
 
     @ManyToOne
-    @JoinColumn(name = "gameid", referencedColumnName = "gameid", nullable = false)
-    public GamesEntity getGamesByGameid() {
-        return gamesByGameid;
+    @JoinColumn(name = "gameId", referencedColumnName = "gameId", nullable = false)
+    public GamesEntity getGame() {
+        return game;
     }
-
-    public void setGamesByGameid(GamesEntity gamesByGameid) {
-        this.gamesByGameid = gamesByGameid;
+    public void setGame(GamesEntity game) {
+        this.game = game;
     }
 
     @ManyToMany(mappedBy = "owners", fetch = FetchType.LAZY)
@@ -124,9 +121,9 @@ public class TributesEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "presentstotributes",
-            joinColumns = {@JoinColumn(name = "tributeid")},
-            inverseJoinColumns = {@JoinColumn(name = "productid")}
+            name = "presentsToTributes",
+            joinColumns = {@JoinColumn(name = "tributeId")},
+            inverseJoinColumns = {@JoinColumn(name = "productId")}
     )
     public Collection<ShopEntity> getProductsOfTribute() {
         return productsOfTribute;

@@ -12,16 +12,16 @@ import java.util.List;
 public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
     /**
      * find skill by id
-     * @param skillid id
+     * @param skillId id
      * @return skill
      */
-    SkillsEntity findSkillsEntityBySkillid(int skillid);
+    SkillsEntity findSkillsEntityBySkillId(int skillId);
     /**
      * find default skill of district
      * @param districtsEntity district
      * @return skill
      */
-    SkillsEntity findSkillsEntityByDistrictsBySkillid(DistrictsEntity districtsEntity);
+    SkillsEntity findSkillsEntityByDistrict(DistrictsEntity districtsEntity);
 
 
     /**
@@ -29,7 +29,7 @@ public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
      * @param training training
      * @return skill
      */
-    SkillsEntity findSkillsEntityByTrainingsBySkillid(TrainingsEntity training);
+    SkillsEntity findSkillsEntityByTrainings(TrainingsEntity training);
 
     /**
      * find all skills of user
@@ -43,6 +43,6 @@ public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
      * @param weapon weapon
      * @return skill
      */
-    SkillsEntity findSkillsEntitiesByWeaponsByWeaponid(WeaponsEntity weapon);
+    SkillsEntity findSkillsEntitiesByWeapon(WeaponsEntity weapon);
 
 }

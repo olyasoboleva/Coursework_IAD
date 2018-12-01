@@ -1,34 +1,32 @@
 package impl;
 
-import entity.WeaponsingameEntity;
+import entity.WeaponsInGameEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.WeaponsingameRepository;
-import service.WeaponsingameService;
-
-import java.util.List;
+import repository.WeaponsInGameRepository;
+import service.WeaponsInGameService;
 
 @Service("weaponsInGameService")
-public class WeaponsingameServiceImpl implements WeaponsingameService {
+public class WeaponsInGameServiceImpl implements WeaponsInGameService {
 
-    private final WeaponsingameRepository weaponsInGameRepository;
+    private final WeaponsInGameRepository weaponsInGameRepository;
 
     @Autowired
-    public WeaponsingameServiceImpl(WeaponsingameRepository weaponsInGameRepository) {
+    public WeaponsInGameServiceImpl(WeaponsInGameRepository weaponsInGameRepository) {
         this.weaponsInGameRepository = weaponsInGameRepository;
     }
 
     @Transactional
     @Override
-    public WeaponsingameEntity createWeaponsInGame(WeaponsingameEntity weaponInGame) {
+    public WeaponsInGameEntity createWeaponsInGame(WeaponsInGameEntity weaponInGame) {
         weaponsInGameRepository.save(weaponInGame);
         return weaponInGame;
     }
 
     @Transactional
     @Override
-    public boolean deleteWeaponsInGame(WeaponsingameEntity weaponInGame) {
+    public boolean deleteWeaponsInGame(WeaponsInGameEntity weaponInGame) {
         weaponsInGameRepository.delete(weaponInGame);
         return true;
     }

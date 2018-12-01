@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "users", schema = "public", catalog = "postgres")
 public class UsersEntity {
-    private int userid;
+    private int userId;
     private String surname;
     private String name;
     private int height;
@@ -20,19 +20,19 @@ public class UsersEntity {
     private StatusesEntity status;
     private int cash;
     private String picturePath;
-    private Collection<GamesEntity> gamesByUserid;
-    private Collection<PresentstotributesEntity> presentstotributesByUserid;
-    private Collection<TrainingsEntity> trainingsByUserid;
-    private Collection<TributesEntity> tributesByUserid;
+    private Collection<GamesEntity> stewardGames;
+    private Collection<PresentsToTributesEntity> presentstotributesByUserid;
+    private Collection<TrainingsEntity> trainings;
+    private Collection<TributesEntity> tributesByUser;
 
     private Collection<SkillsEntity> skills;
-    private DistrictsEntity districtsByDistrict;
-    private UserloginEntity userlogin;
+    private DistrictsEntity district;
+    private UserLoginEntity userLogin;
 
     public UsersEntity() {}
 
 
-    public UsersEntity(String surname, String name, int height, int weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserloginEntity userlogin) {
+    public UsersEntity(String surname, String name, int height, int weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserLoginEntity userLogin, StatusesEntity status) {
         this.surname = surname;
         this.name = name;
         this.height = height;
@@ -42,26 +42,26 @@ public class UsersEntity {
         this.picturePath = picturePath;
         this.cash = 1000;
         this.status = status;
-        this.userlogin = userlogin;
-        this.districtsByDistrict = district;
+        this.userLogin = userLogin;
+        this.district = district;
     }
 
-    public UsersEntity(String surname, String name, String picturePath, UserloginEntity userlogin, StatusesEntity status) {
+    public UsersEntity(String surname, String name, String picturePath, UserLoginEntity userLogin, StatusesEntity status) {
         this.surname = surname;
         this.name = name;
         this.picturePath = picturePath;
-        this.userlogin = userlogin;
+        this.userLogin = userLogin;
         this.status = status;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid")
-    public int getUserid() {
-        return userid;
+    @Column(name = "userId")
+    public int getUserId() {
+        return userId;
     }
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Basic
@@ -148,7 +148,7 @@ public class UsersEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UsersEntity that = (UsersEntity) o;
-        return userid == that.userid &&
+        return userId == that.userId &&
                 height == that.height &&
                 weight == that.weight &&
                 sex == that.sex &&
@@ -158,64 +158,64 @@ public class UsersEntity {
                 Objects.equals(birthday, that.birthday) &&
                 Objects.equals(status, that.status) &&
                 Objects.equals(picturePath, that.picturePath) &&
-                Objects.equals(gamesByUserid, that.gamesByUserid) &&
+                Objects.equals(stewardGames, that.stewardGames) &&
                 Objects.equals(presentstotributesByUserid, that.presentstotributesByUserid) &&
-                Objects.equals(trainingsByUserid, that.trainingsByUserid) &&
-                Objects.equals(tributesByUserid, that.tributesByUserid) &&
+                Objects.equals(trainings, that.trainings) &&
+                Objects.equals(tributesByUser, that.tributesByUser) &&
                 Objects.equals(skills, that.skills) &&
-                Objects.equals(districtsByDistrict, that.districtsByDistrict) &&
-                Objects.equals(userlogin, that.userlogin);
+                Objects.equals(district, that.district) &&
+                Objects.equals(userLogin, that.userLogin);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userid, surname, name, height, weight, sex, birthday, status, cash, picturePath, gamesByUserid, presentstotributesByUserid, trainingsByUserid, tributesByUserid, skills, districtsByDistrict, userlogin);
+        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, picturePath, stewardGames, presentstotributesByUserid, trainings, tributesByUser, skills, district, userLogin);
     }
 
-    @OneToMany(mappedBy = "usersBySteward", fetch = FetchType.LAZY)
-    public Collection<GamesEntity> getGamesByUserid() {
-        return gamesByUserid;
+    @OneToMany(mappedBy = "steward", fetch = FetchType.LAZY)
+    public Collection<GamesEntity> getStewardGames() {
+        return stewardGames;
     }
-    public void setGamesByUserid(Collection<GamesEntity> gamesByUserid) {
-        this.gamesByUserid = gamesByUserid;
+    public void setStewardGames(Collection<GamesEntity> stewardGames) {
+        this.stewardGames = stewardGames;
     }
 
     @OneToMany(mappedBy = "usersBySenderid", fetch = FetchType.LAZY)
-    public Collection<PresentstotributesEntity> getPresentstotributesByUserid() {
+    public Collection<PresentsToTributesEntity> getPresentstotributesByUserid() {
         return presentstotributesByUserid;
     }
-    public void setPresentstotributesByUserid(Collection<PresentstotributesEntity> presentstotributesByUserid) {
+    public void setPresentstotributesByUserid(Collection<PresentsToTributesEntity> presentstotributesByUserid) {
         this.presentstotributesByUserid = presentstotributesByUserid;
     }
 
-    @OneToMany(mappedBy = "usersByTrainer", fetch = FetchType.LAZY)
-    public Collection<TrainingsEntity> getTrainingsByUserid() {
-        return trainingsByUserid;
+    @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY)
+    public Collection<TrainingsEntity> getTrainings() {
+        return trainings;
     }
-    public void setTrainingsByUserid(Collection<TrainingsEntity> trainingsByUserid) {
-        this.trainingsByUserid = trainingsByUserid;
-    }
-
-    @OneToMany(mappedBy = "usersByUserid", fetch = FetchType.LAZY)
-    public Collection<TributesEntity> getTributesByUserid() {
-        return tributesByUserid;
-    }
-    public void setTributesByUserid(Collection<TributesEntity> tributesByUserid) {
-        this.tributesByUserid = tributesByUserid;
+    public void setTrainings(Collection<TrainingsEntity> trainings) {
+        this.trainings = trainings;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "district", referencedColumnName = "districtid", insertable = false, updatable = false)
-    public DistrictsEntity getDistrictsByDistrict() {
-        return districtsByDistrict;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    public Collection<TributesEntity> getTributesByUser() {
+        return tributesByUser;
     }
-    public void setDistrictsByDistrict(DistrictsEntity districtsByDistrict) {
-        this.districtsByDistrict = districtsByDistrict;
+    public void setTributesByUser(Collection<TributesEntity> tributesByUser) {
+        this.tributesByUser = tributesByUser;
     }
 
     @ManyToOne
-    @JoinColumn(name = "statusid", referencedColumnName = "statusid", insertable = false, updatable = false)
+    @JoinColumn(name = "district", referencedColumnName = "districtId")
+    public DistrictsEntity getDistrict() {
+        return district;
+    }
+    public void setDistrict(DistrictsEntity district) {
+        this.district = district;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "statusId", referencedColumnName = "statusId")
     public StatusesEntity getStatus() {
         return status;
     }
@@ -224,19 +224,19 @@ public class UsersEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "loginid", referencedColumnName = "loginid")
-    public UserloginEntity getUserlogin() {
-        return userlogin;
+    @JoinColumn(name = "loginId", referencedColumnName = "loginId")
+    public UserLoginEntity getUserLogin() {
+        return userLogin;
     }
-    public void setUserlogin(UserloginEntity userlogin) {
-        this.userlogin = userlogin;
+    public void setUserLogin(UserLoginEntity userLogin) {
+        this.userLogin = userLogin;
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "userskills",
-            joinColumns = {@JoinColumn(name = "userid")},
-            inverseJoinColumns = {@JoinColumn(name = "skillid")}
+            joinColumns = {@JoinColumn(name = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "skillId")}
     )
     public Collection<SkillsEntity> getSkills() {
         return skills;

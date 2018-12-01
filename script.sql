@@ -8,7 +8,7 @@ CREATE TABLE arenas (
 arenaID integer PRIMARY KEY,
 arena_length integer NOT NULL,
 arena_width integer NOT NULL,
-locationid integer REFERENCES locations NOT NULL,
+locationId integer REFERENCES locations NOT NULL,
 CONSTRAINT check_area CHECK ((arena_width> 0) AND (arena_length> 0))
 );
 
@@ -59,7 +59,7 @@ CREATE TABLE userLogin (
 
 CREATE TABLE users (
 userID integer PRIMARY KEY,
-loginid INTEGER REFERENCES userLogin,
+loginId INTEGER REFERENCES userLogin,
 surname varchar(30) NOT NULL,
 name varchar(30) NOT NULL,
 height integer,
@@ -67,7 +67,7 @@ weight integer,
 sex boolean NOT NULL,
 district integer REFERENCES districts,
 birthday date,
-statusid integer REFERENCES statuses NOT NULL,
+statusId integer REFERENCES statuses NOT NULL,
 cash integer,
 picturePath VARCHAR(40) NOT NULL,
 CONSTRAINT info CHECK (height > 0 AND weight >0 AND cash >= 0)
@@ -136,7 +136,7 @@ ALTER TABLE districts ADD FOREIGN KEY (skillID) REFERENCES skills;
 CREATE TABLE productsAndLocation (
 applyingID integer PRIMARY KEY,
 productID integer REFERENCES shop NOT NULL,
-locationid integer REFERENCES locations NOT NULL
+locationId integer REFERENCES locations NOT NULL
 );
 
 CREATE TABLE weaponsInGame (

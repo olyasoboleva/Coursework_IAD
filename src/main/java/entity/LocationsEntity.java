@@ -2,15 +2,14 @@ package entity;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
 @Table(name = "locations", schema = "public", catalog = "postgres")
 public class LocationsEntity {
-    private int locationid;
+    private int locationId;
     private String name;
-    private String picturepath;
+    private String picturePath;
 
     private Collection<ShopEntity> products;
     private Collection<ArenasEntity> arenas;
@@ -19,18 +18,18 @@ public class LocationsEntity {
 
     public LocationsEntity(String name, String picturepath){
         this.name = name;
-        this.picturepath = picturepath;
+        this.picturePath = picturepath;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "locationid")
-    public int getLocationid() {
-        return locationid;
+    @Column(name = "locationId")
+    public int getLocationId() {
+        return locationId;
     }
 
-    public void setLocationid(int locationid) {
-        this.locationid = locationid;
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 
     @Basic
@@ -44,13 +43,13 @@ public class LocationsEntity {
     }
 
     @Basic
-    @Column(name = "picturepath")
+    @Column(name = "picturePath")
     public String getPicturepath() {
-        return picturepath;
+        return picturePath;
     }
 
     public void setPicturepath(String picturepath) {
-        this.picturepath = picturepath;
+        this.picturePath = picturepath;
     }
 
     @Override
@@ -58,14 +57,14 @@ public class LocationsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LocationsEntity that = (LocationsEntity) o;
-        return locationid == that.locationid &&
+        return locationId == that.locationId &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(picturepath, that.picturepath);
+                Objects.equals(picturePath, that.picturePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(locationid, name, picturepath);
+        return Objects.hash(locationId, name, picturePath);
     }
 
 

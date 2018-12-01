@@ -11,10 +11,10 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
     /**
      * find tribute by id
      *
-     * @param tributeid id
+     * @param tributeId id
      * @return tribute
      */
-    TributesEntity findTributesEntityByTributeid(long tributeid);
+    TributesEntity findTributesEntityByTributeId(long tributeId);
 
     /**
      * find all tributes of user
@@ -22,7 +22,7 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
      * @param user user
      * @return list of tributes
      */
-    List<TributesEntity> getTributesEntitiesByUsersByUserid(UsersEntity user);
+    List<TributesEntity> getTributesEntitiesByUser(UsersEntity user);
 
     /**
      * find all tributes of game
@@ -30,7 +30,7 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
      * @param game game
      * @return list of tributes
      */
-    List<TributesEntity> getTributesEntitiesByGamesByGameid(GamesEntity game);
+    List<TributesEntity> getTributesEntitiesByGame(GamesEntity game);
 
     /**
      * find all tributes of game with this status
@@ -39,5 +39,5 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
      * @param game game
      * @return list of games
      */
-    List<TributesEntity> getTributesEntityByStatusAndGamesByGameid(String status, GamesEntity game);
+    List<TributesEntity> getTributesEntityByStatusAndGame(String status, GamesEntity game);
 }

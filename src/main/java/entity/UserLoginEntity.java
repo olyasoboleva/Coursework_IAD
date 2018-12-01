@@ -5,29 +5,29 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "userlogin", schema = "public", catalog = "postgres")
-public class UserloginEntity {
+public class UserLoginEntity {
 
-    private int loginid;
+    private int loginId;
     private String nick;
     private String password;
     private UsersEntity user;
 
-    public UserloginEntity(String nick, String password) {
+    public UserLoginEntity(String nick, String password) {
         this.nick = nick;
         this.password = password;
     }
 
-    public UserloginEntity() {}
+    public UserLoginEntity() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "loginid")
-    public int getLoginid() {
-        return loginid;
+    @Column(name = "loginId")
+    public int getLoginId() {
+        return loginId;
     }
 
-    public void setLoginid(int loginid) {
-        this.loginid = loginid;
+    public void setLoginId(int loginId) {
+        this.loginId = loginId;
     }
 
     @Basic
@@ -52,7 +52,7 @@ public class UserloginEntity {
         this.password = password;
     }
 
-    @OneToOne(mappedBy = "userlogin")
+    @OneToOne(mappedBy = "userLogin")
     public UsersEntity getUser() {
         return user;
     }

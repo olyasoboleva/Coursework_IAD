@@ -1,18 +1,11 @@
 package impl;
 
-import entity.PresentstotributesEntity;
-import entity.ShopEntity;
 import entity.TributesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.PresentstotributesRepository;
-import repository.ShopRepository;
 import repository.TributesRepository;
 import service.TributesService;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service("tributesService")
 public class TributesServiceImpl implements TributesService {

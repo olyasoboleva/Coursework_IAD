@@ -9,5 +9,5 @@ public interface StatusesRepository extends CrudRepository<StatusesEntity, Integ
      * @param statusid id
      * @return status
      */
-    StatusesEntity findStatusesEntityByStatusid(long statusid);
+    StatusesEntity findStatusesEntityByStatusId(long statusid);
 }

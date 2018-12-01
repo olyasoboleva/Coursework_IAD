@@ -3,11 +3,11 @@ package impl;
 import entity.SkillsEntity;
 import entity.TributesEntity;
 import entity.UsersEntity;
-import entity.UserskillsEntity;
+import entity.UserSkillsEntity;
 import org.springframework.transaction.annotation.Transactional;
 import repository.SkillsRepository;
 import repository.UserRepository;
-import repository.UserskillsRepository;
+import repository.UserSkillsRepository;
 import service.SkillsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ import java.util.Map;
 public class SkillsServiceImpl implements SkillsService {
 
     private final SkillsRepository skillsRepository;
-    private final UserskillsRepository userskillsRepository;
+    private final UserSkillsRepository userSkillsRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public SkillsServiceImpl(SkillsRepository skillsRepository, UserskillsRepository userskillsRepository, UserRepository userRepository) {
+    public SkillsServiceImpl(SkillsRepository skillsRepository, UserSkillsRepository userSkillsRepository, UserRepository userRepository) {
         this.skillsRepository = skillsRepository;
-        this.userskillsRepository = userskillsRepository;
+        this.userSkillsRepository = userSkillsRepository;
         this.userRepository = userRepository;
     }
 
@@ -40,12 +40,12 @@ public class SkillsServiceImpl implements SkillsService {
       @Override
     public Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user) {
         Map<SkillsEntity, Integer> allUserSkills = new HashMap<>();
-        List<UserskillsEntity> userSkills = userskillsRepository.getUserskillsEntitiesByUsersByUserid(user);
+        List<UserSkillsEntity> userSkills = userSkillsRepository.getUserSkillsEntitiesByUsersByUserid(user);
         List<SkillsEntity> allSkills = skillsRepository.findAll();
         for (SkillsEntity skill : allSkills) {
-            for (UserskillsEntity userSkill : userSkills) {
-                if (skill.getSkillid() == userSkill.getSkillid()) {
-                    allUserSkills.put(skill,userSkill.getLevelofskill());
+            for (UserSkillsEntity userSkill : userSkills) {
+                if (skill.getSkillId() == userSkill.getSkillId()) {
+                    allUserSkills.put(skill,userSkill.getLevelOfSkill());
                 }
             }
         }
@@ -60,7 +60,7 @@ public class SkillsServiceImpl implements SkillsService {
     @Transactional
     @Override
     public Map<SkillsEntity, Integer> getAllTributeSkills(TributesEntity tribute) {
-          UsersEntity user = userRepository.findUsersEntityByTributesByUserid(tribute);
+          UsersEntity user = userRepository.findUsersEntityByTributesByUser(tribute);
         return getAllUserSkills(user);
     }
 

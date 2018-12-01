@@ -1,29 +1,28 @@
 package impl;
 
-import entity.PresentstotributesEntity;
+import entity.PresentsToTributesEntity;
 import entity.ShopEntity;
 import entity.TributesEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.PresentstotributesRepository;
+import repository.PresentsToTributesRepository;
 import repository.ShopRepository;
 import service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service("shopService")
 public class ShopServiceImpl implements ShopService{
 
     private final ShopRepository shopRepository;
-    private final PresentstotributesRepository presentstotributesRepository;
+    private final PresentsToTributesRepository presentsToTributesRepository;
 
     @Autowired
-    public ShopServiceImpl(ShopRepository shopRepository, PresentstotributesRepository presentstotributesRepository) {
+    public ShopServiceImpl(ShopRepository shopRepository, PresentsToTributesRepository presentsToTributesRepository) {
         this.shopRepository = shopRepository;
-        this.presentstotributesRepository = presentstotributesRepository;
+        this.presentsToTributesRepository = presentsToTributesRepository;
     }
 
     //TODO: ну я вроде написала это?
@@ -35,14 +34,14 @@ public class ShopServiceImpl implements ShopService{
     @Transactional
     @Override
     public List<ShopEntity> getAllPresentsOfTribute(TributesEntity tribute) {
-        List<PresentstotributesEntity> presents = presentstotributesRepository.getPresentstotributesEntityByTributesByTributeid(tribute);
+        List<PresentsToTributesEntity> presents = presentsToTributesRepository.getPresentsToTributesEntityByTributesByTributeid(tribute);
         List<ShopEntity> allproducts = shopRepository.findAll();
         List<ShopEntity> tributePresents = new ArrayList<>();
-        for (PresentstotributesEntity present : presents) {
+        for (PresentsToTributesEntity present : presents) {
             for (ShopEntity product : allproducts) {
                 //TODO: тут что-то сломалось из-за отсутствия теперь ид)))
                 /*
-                if (product.getProductid() == present.getProductid()) {
+                if (product.getProductId() == present.getProductId()) {
                     tributePresents.add(product);
                 }
                 */

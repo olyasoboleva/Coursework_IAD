@@ -12,7 +12,7 @@ public interface LocationsRepository  extends CrudRepository<LocationsEntity, In
      * @param id id
      * @return location
      */
-    LocationsEntity findLocationsEntityByLocationid(int id);
+    LocationsEntity findLocationsEntityByLocationId(int id);
 
     /**
      * find all locations, where product can be applied

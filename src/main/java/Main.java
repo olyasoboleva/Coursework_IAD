@@ -1,10 +1,7 @@
 import config.database.DatabaseConfig;
 import entity.*;
-import impl.WeaponsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import repository.*;
-import service.WeaponsService;
 
 import java.sql.Date;
 import java.util.List;
@@ -35,26 +32,31 @@ public class Main {
 
         DistrictsEntity districtsEntity = new DistrictsEntity();
         districtsEntity.setName("Дистрикт 55");
-        districtsEntity.setTypeofactivity("Роскошь");
+        districtsEntity.setTypeOfActivity("Роскошь");
 ///
         SkillsEntity skillsEntity = new SkillsEntity();
         skillsEntity.setName("Изготовление украшений");
-        skillsEntity.setTypeofskill("Другое");
+        skillsEntity.setTypeOfSkill("Другое");
         skillsEntity.setDescription("kek lol");
 
         skillsRepository.save(skillsEntity);
-        districtsEntity.setSkillsBySkillid(skillsEntity);
+        districtsEntity.setSkill(skillsEntity);
         districtsRepository.save(districtsEntity);
 
-        SkillsEntity skillsEntity1 = skillsRepository.findSkillsEntityByDistrictsBySkillid(districtsEntity);
+        SkillsEntity skillsEntity1 = skillsRepository.findSkillsEntityByDistrict(districtsEntity);
         System.out.println(skillsEntity1.getDescription());
 /////////////////////////
 
-        UserloginEntity userlogin = new UserloginEntity();
+        UserLoginEntity userlogin = new UserLoginEntity();
         userlogin.setNick("redish248");
         userlogin.setPassword("12345");
-        UserloginRepository userloginRepository = (UserloginRepository)ctx.getBean("userloginRepository");
-        userloginRepository.save(userlogin);
+        UserLoginRepository userLoginRepository = (UserLoginRepository)ctx.getBean("userLoginRepository");
+        userLoginRepository.save(userlogin);
+
+        StatusesEntity status = new StatusesEntity();
+        status.setName("Наблюдатель");
+        StatusesRepository statusesRepository = (StatusesRepository)ctx.getBean("statusesRepository");
+        statusesRepository.save(status);
 
         UsersEntity user = new UsersEntity();
         user.setName("Ira");
@@ -64,68 +66,70 @@ public class Main {
         user.setBirthday(new Date(1));
         user.setHeight(163);
         user.setWeight(47);
+        user.setStatus(status);
         user.setPicturePath("pic.jpg");
-        user.setUserlogin(userlogin);
+        user.setUserLogin(userlogin);
+        user.setDistrict(districtsEntity);
         UserRepository userRepository = (UserRepository)ctx.getBean("userRepository");
         userRepository.save(user);
 
         GamesEntity game = new GamesEntity();
         GamesRepository gamesRepository = (GamesRepository) ctx.getBean("gamesRepository");
-        game.setArenasByArena(arenasEntity);
+        game.setArena(arenasEntity);
         game.setDuration(15);
-        game.setTypeofgame(true);
-        game.setStartdate(new Date(1));
-        game.setNumberoftributes(24);
+        game.setTypeOfGame(true);
+        game.setStartDate(new Date(1));
+        game.setNumberOfTributes(24);
         gamesRepository.save(game);
 
         TributesEntity tribute = new TributesEntity();
         TributesRepository tributesRepository = (TributesRepository) ctx.getBean("tributesRepository");
-        tribute.setUsersByUserid(user);
-        tribute.setGamesByGameid(game);
+        tribute.setUser(user);
+        tribute.setGame(game);
         tributesRepository.save(tribute);
 
 
         WeaponsEntity weapon1 = new WeaponsEntity();
         weapon1.setName("меч");
         weapon1.setPicturePath("/");
-        weapon1.setTypeofweapon("Холодное оружие");
-        weapon1.setRadiusofaction(10);
+        weapon1.setTypeOfWeapon("Холодное оружие");
+        weapon1.setRadiusOfAction(10);
         WeaponsEntity weapon2 = new WeaponsEntity();
         weapon2.setName("лук");
         weapon2.setPicturePath("/");
-        weapon2.setTypeofweapon("что-то там");
-        weapon2.setRadiusofaction(10);
+        weapon2.setTypeOfWeapon("что-то там");
+        weapon2.setRadiusOfAction(10);
         WeaponsRepository weaponsRepository = (WeaponsRepository)ctx.getBean("weaponsRepository");
         weaponsRepository.save(weapon1);
         weaponsRepository.save(weapon2);
 
 
-        WeaponsingameEntity weaponsingameEntity1 = new WeaponsingameEntity();
-        weaponsingameEntity1.setTributesByTributeid(tribute);
-        weaponsingameEntity1.setWeaponsByWeaponid(weapon1);
-        WeaponsingameEntity weaponsingameEntity2 = new WeaponsingameEntity();
-        weaponsingameEntity2.setTributesByTributeid(tribute);
-        weaponsingameEntity2.setWeaponsByWeaponid(weapon2);
-        WeaponsingameRepository weaponsingameRepository = (WeaponsingameRepository)ctx.getBean("weaponsingameRepository");
-        weaponsingameRepository.save(weaponsingameEntity1);
-        weaponsingameRepository.save(weaponsingameEntity2);
+        WeaponsInGameEntity weaponsInGameEntity1 = new WeaponsInGameEntity();
+        weaponsInGameEntity1.setTributesByTributeid(tribute);
+        weaponsInGameEntity1.setWeaponsByWeaponid(weapon1);
+        WeaponsInGameEntity weaponsInGameEntity2 = new WeaponsInGameEntity();
+        weaponsInGameEntity2.setTributesByTributeid(tribute);
+        weaponsInGameEntity2.setWeaponsByWeaponid(weapon2);
+        WeaponsInGameRepository weaponsInGameRepository = (WeaponsInGameRepository)ctx.getBean("weaponsInGameRepository");
+        weaponsInGameRepository.save(weaponsInGameEntity1);
+        weaponsInGameRepository.save(weaponsInGameEntity2);
 
-        UserskillsEntity userskillsEntity = new UserskillsEntity();
-        userskillsEntity.setSkillsBySkillid(skillsEntity);
-        userskillsEntity.setUsersByUserid(user);
-        userskillsEntity.setLevelofskill(20);
-        UserskillsRepository userskillsRepository = (UserskillsRepository)ctx.getBean("userskillsRepository");
-        userskillsRepository.save(userskillsEntity);
+        UserSkillsEntity userSkillsEntity = new UserSkillsEntity();
+        userSkillsEntity.setSkillsBySkillid(skillsEntity);
+        userSkillsEntity.setUsersByUserid(user);
+        userSkillsEntity.setLevelOfSkill(20);
+        UserSkillsRepository userSkillsRepository = (UserSkillsRepository)ctx.getBean("userSkillsRepository");
+        userSkillsRepository.save(userSkillsEntity);
 
         ShopEntity product = new ShopEntity("Верёвка", 120, "Инструменты", "Прочная длинная веревка", 0, "rope.jpg");
         ShopRepository shopRepository = (ShopRepository)ctx.getBean("shopRepository");
         shopRepository.save(product);
 
-        ProductsandlocationEntity productsandlocationEntity = new ProductsandlocationEntity();
-        productsandlocationEntity.setLocation(locationsEntity);
-        productsandlocationEntity.setShopByProductid(product);
-        ProductsandlocationRepository productsandlocationRepository = (ProductsandlocationRepository)ctx.getBean("productsandlocationRepository");
-        productsandlocationRepository.save(productsandlocationEntity);
+        ProductsAndLocationEntity productsAndLocationEntity = new ProductsAndLocationEntity();
+        productsAndLocationEntity.setLocation(locationsEntity);
+        productsAndLocationEntity.setShopByProductid(product);
+        ProductsAndLocationRepository productsAndLocationRepository = (ProductsAndLocationRepository)ctx.getBean("productsAndLocationRepository");
+        productsAndLocationRepository.save(productsAndLocationEntity);
 
         List<WeaponsEntity> weaponList = weaponsRepository.getWeaponsEntitiesByOwners(tribute);
         for (WeaponsEntity weapon: weaponList){

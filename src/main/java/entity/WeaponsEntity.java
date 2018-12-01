@@ -1,47 +1,44 @@
 package entity;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 
 @Entity
 @Table(name = "weapons", schema = "public", catalog = "postgres")
 public class WeaponsEntity {
-    private int weaponid;
+    private int weaponId;
     private String name;
-    private String typeofweapon;
+    private String typeOfWeapon;
     private int damage;
-    private int radiusofaction;
+    private int radiusOfAction;
     private String picturePath;
 
-    private SkillsEntity skillByWeaponid;
+    private SkillsEntity skill;
     private Collection<TributesEntity> owners;
 
     public WeaponsEntity(){ }
 
-    public WeaponsEntity(String name, String typeofweapon, int damage, int radiusofaction, String picturePath) {
+    public WeaponsEntity(String name, String typeOfWeapon, int damage, int radiusOfAction, String picturePath) {
         this.name = name;
-        this.typeofweapon = typeofweapon;
+        this.typeOfWeapon = typeOfWeapon;
         this.damage = damage;
-        this.radiusofaction = radiusofaction;
+        this.radiusOfAction = radiusOfAction;
         this.picturePath = picturePath;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "weaponid")
-    public int getWeaponid() {
-        return weaponid;
+    @Column(name = "weaponId")
+    public int getWeaponId() {
+        return weaponId;
     }
 
-    public void setWeaponid(int weaponid) {
-        this.weaponid = weaponid;
+    public void setWeaponId(int weaponId) {
+        this.weaponId = weaponId;
     }
 
     @Basic
@@ -56,13 +53,13 @@ public class WeaponsEntity {
 
     @Basic
     @NotNull
-    @Column(name = "typeofweapon", length = 40)
-    public String getTypeofweapon() {
-        return typeofweapon;
+    @Column(name = "typeOfWeapon", length = 40)
+    public String getTypeOfWeapon() {
+        return typeOfWeapon;
     }
 
-    public void setTypeofweapon(String typeofweapon) {
-        this.typeofweapon = typeofweapon;
+    public void setTypeOfWeapon(String typeOfWeapon) {
+        this.typeOfWeapon = typeOfWeapon;
     }
 
     @Basic
@@ -79,13 +76,13 @@ public class WeaponsEntity {
 
     @Basic
     @Min(0)
-    @Column(name = "radiusofaction")
-    public int getRadiusofaction() {
-        return radiusofaction;
+    @Column(name = "radiusOfAction")
+    public int getRadiusOfAction() {
+        return radiusOfAction;
     }
 
-    public void setRadiusofaction(int radiusofaction) {
-        this.radiusofaction = radiusofaction;
+    public void setRadiusOfAction(int radiusOfAction) {
+        this.radiusOfAction = radiusOfAction;
     }
 
     @Basic
@@ -103,36 +100,35 @@ public class WeaponsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         WeaponsEntity that = (WeaponsEntity) o;
-        return weaponid == that.weaponid &&
+        return weaponId == that.weaponId &&
                 damage == that.damage &&
-                radiusofaction == that.radiusofaction &&
+                radiusOfAction == that.radiusOfAction &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(typeofweapon, that.typeofweapon) &&
+                Objects.equals(typeOfWeapon, that.typeOfWeapon) &&
                 Objects.equals(picturePath, that.picturePath) &&
-                Objects.equals(skillByWeaponid, that.skillByWeaponid) &&
+                Objects.equals(skill, that.skill) &&
                 Objects.equals(owners, that.owners);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(weaponid, name, typeofweapon, damage, radiusofaction, picturePath, skillByWeaponid, owners);
+        return Objects.hash(weaponId, name, typeOfWeapon, damage, radiusOfAction, picturePath, skill, owners);
     }
 
-    @OneToOne(mappedBy = "weaponsByWeaponid")
-    public SkillsEntity getSkillByWeaponid() {
-        return skillByWeaponid;
+    @OneToOne(mappedBy = "weapon")
+    public SkillsEntity getSkill() {
+        return skill;
     }
-
-    public void setSkillByWeaponid(SkillsEntity skillByWeaponid) {
-        this.skillByWeaponid = skillByWeaponid;
+    public void setSkill(SkillsEntity skill) {
+        this.skill = skill;
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "weaponsingame",
-            joinColumns = {@JoinColumn(name = "weaponid")},
-            inverseJoinColumns = {@JoinColumn(name = "tributeid")}
+            name = "weaponsInGame",
+            joinColumns = {@JoinColumn(name = "weaponId")},
+            inverseJoinColumns = {@JoinColumn(name = "tributeId")}
     )
     public Collection<TributesEntity> getOwners() {
         return owners;

@@ -5,18 +5,18 @@
         <class>entity.ArenasEntity</class>
         <class>entity.DistrictsEntity</class>
         <class>entity.GamesEntity</class>
-        <class>entity.PresentstotributesEntity</class>
+        <class>entity.PresentsToTributesEntity</class>
         <class>entity.PricesEntity</class>
-        <class>entity.ProductsandlocationEntity</class>
+        <class>entity.ProductsAndLocationEntity</class>
         <class>entity.ShopEntity</class>
         <class>entity.SkillsEntity</class>
         <class>entity.StatusesEntity</class>
         <class>entity.TrainingsEntity</class>
         <class>entity.TributesEntity</class>
         <class>entity.UsersEntity</class>
-        <class>entity.UserskillsEntity</class>
+        <class>entity.UserSkillsEntity</class>
         <class>entity.WeaponsEntity</class>
-        <class>entity.WeaponsingameEntity</class>
+        <class>entity.WeaponsInGameEntity</class>
         <properties>
             <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
             <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>

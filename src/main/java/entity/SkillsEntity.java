@@ -3,38 +3,37 @@ package entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
-import java.util.HashSet;
 
 @Entity
 @Table(name = "skills", schema = "public", catalog = "postgres")
 public class SkillsEntity {
-    private int skillid;
+    private int skillId;
     private String name;
     private String description;
-    private String typeofskill;
-    private DistrictsEntity districtsBySkillid;
-    private WeaponsEntity weaponsByWeaponid;
-    private Collection<TrainingsEntity> trainingsBySkillid;
+    private String typeOfSkill;
+    private DistrictsEntity district;
+    private WeaponsEntity weapon;
+    private Collection<TrainingsEntity> trainings;
     private Collection<UsersEntity> users;
 
     public SkillsEntity() { }
 
-    public SkillsEntity(String name, String description, String typeofskill, WeaponsEntity weapon) {
+    public SkillsEntity(String name, String description, String typeOfSkill, WeaponsEntity weapon) {
         this.name = name;
         this.description = description;
-        this.typeofskill = typeofskill;
-        this.weaponsByWeaponid = weapon;
+        this.typeOfSkill = typeOfSkill;
+        this.weapon = weapon;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "skillid")
-    public int getSkillid() {
-        return skillid;
+    @Column(name = "skillId")
+    public int getSkillId() {
+        return skillId;
     }
 
-    public void setSkillid(int skillid) {
-        this.skillid = skillid;
+    public void setSkillId(int skillId) {
+        this.skillId = skillId;
     }
 
     @Basic
@@ -60,13 +59,13 @@ public class SkillsEntity {
 
     @Basic
     @NotNull
-    @Column(name = "typeofskill", length = 42)
-    public String getTypeofskill() {
-        return typeofskill;
+    @Column(name = "typeOfSkill", length = 42)
+    public String getTypeOfSkill() {
+        return typeOfSkill;
     }
 
-    public void setTypeofskill(String typeofskill) {
-        this.typeofskill = typeofskill;
+    public void setTypeOfSkill(String typeOfSkill) {
+        this.typeOfSkill = typeOfSkill;
     }
 
     @Override
@@ -76,55 +75,51 @@ public class SkillsEntity {
 
         SkillsEntity that = (SkillsEntity) o;
 
-        if (skillid != that.skillid) return false;
+        if (skillId != that.skillId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (typeofskill != null ? !typeofskill.equals(that.typeofskill) : that.typeofskill != null) return false;
+        if (typeOfSkill != null ? !typeOfSkill.equals(that.typeOfSkill) : that.typeOfSkill != null) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = skillid;
+        int result = skillId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (typeofskill != null ? typeofskill.hashCode() : 0);
+        result = 31 * result + (typeOfSkill != null ? typeOfSkill.hashCode() : 0);
         return result;
     }
 
-    @OneToOne(mappedBy = "skillsBySkillid")
-    public DistrictsEntity getDistrictsBySkillid() {
-        return districtsBySkillid;
+    @OneToOne(mappedBy = "skill")
+    public DistrictsEntity getDistrict() {
+        return district;
     }
-
-    public void setDistrictsBySkillid(DistrictsEntity districtsBySkillid) {
-        this.districtsBySkillid = districtsBySkillid;
+    public void setDistrict(DistrictsEntity district) {
+        this.district = district;
     }
 
     @OneToOne
-    @JoinColumn(name = "weaponid", referencedColumnName = "weaponid")
-    public WeaponsEntity getWeaponsByWeaponid() {
-        return weaponsByWeaponid;
+    @JoinColumn(name = "weaponId", referencedColumnName = "weaponId")
+    public WeaponsEntity getWeapon() {
+        return weapon;
+    }
+    public void setWeapon(WeaponsEntity weapon) {
+        this.weapon = weapon;
     }
 
-    public void setWeaponsByWeaponid(WeaponsEntity weaponsByWeaponid) {
-        this.weaponsByWeaponid = weaponsByWeaponid;
+    @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
+    public Collection<TrainingsEntity> getTrainings() {
+        return trainings;
     }
-
-    @OneToMany(mappedBy = "skillsBySkillid", fetch = FetchType.LAZY)
-    public Collection<TrainingsEntity> getTrainingsBySkillid() {
-        return trainingsBySkillid;
-    }
-
-    public void setTrainingsBySkillid(Collection<TrainingsEntity> trainingsBySkillid) {
-        this.trainingsBySkillid = trainingsBySkillid;
+    public void setTrainings(Collection<TrainingsEntity> trainings) {
+        this.trainings = trainings;
     }
 
     @ManyToMany(mappedBy = "skills", fetch = FetchType.LAZY)
     public Collection<UsersEntity> getUsers() {
         return users;
     }
-
     public void setUsers(Collection<UsersEntity> users) {
         this.users = users;
     }

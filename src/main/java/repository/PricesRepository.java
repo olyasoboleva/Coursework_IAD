@@ -8,8 +8,8 @@ import java.util.List;
 public interface PricesRepository extends CrudRepository<PricesEntity,Integer> {
     /**
      * find price by id
-     * @param priceid id
+     * @param priceId id
      * @return price
      */
-    PricesEntity findPricesEntityByPriceid(int priceid);
+    PricesEntity findPricesEntityByPriceId(int priceId);
 }

@@ -2,11 +2,10 @@ package impl;
 
 import entity.TributesEntity;
 import entity.WeaponsEntity;
-import entity.WeaponsingameEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.WeaponsRepository;
-import repository.WeaponsingameRepository;
+import repository.WeaponsInGameRepository;
 import service.WeaponsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,12 +16,12 @@ import java.util.List;
 public class WeaponsServiceImpl implements WeaponsService {
 
     private final WeaponsRepository weaponsRepository;
-    private final WeaponsingameRepository weaponsingameRepository;
+    private final WeaponsInGameRepository weaponsInGameRepository;
 
     @Autowired
-    public WeaponsServiceImpl(WeaponsRepository weaponsRepository, WeaponsingameRepository weaponsingameRepository) {
+    public WeaponsServiceImpl(WeaponsRepository weaponsRepository, WeaponsInGameRepository weaponsInGameRepository) {
         this.weaponsRepository = weaponsRepository;
-        this.weaponsingameRepository = weaponsingameRepository;
+        this.weaponsInGameRepository = weaponsInGameRepository;
     }
 
     /**
@@ -35,11 +34,11 @@ public class WeaponsServiceImpl implements WeaponsService {
     public List<WeaponsEntity> getTributeWeapons(TributesEntity tribute) {
         List<WeaponsEntity> tributeWeapons = new ArrayList<>();
         //FIXME: сломалось
-        /*List<WeaponsingameEntity> gameWeapon = weaponsingameRepository.getWeaponsingameEntitiesByTributesByTributeid(tribute);
+        /*List<WeaponsInGameEntity> gameWeapon = weaponsInGameRepository.getWeaponsingameEntitiesByTributesByTributeid(tribute);
         List<WeaponsEntity> allWeapons = weaponsRepository.findAll();
         for (WeaponsEntity weapons : allWeapons) {
-            for (WeaponsingameEntity weapon : gameWeapon) {
-                if (weapons.getWeaponid() == weapon.getWeaponid()) {
+            for (WeaponsInGameEntity weapon : gameWeapon) {
+                if (weapons.getWeaponId() == weapon.getWeaponId()) {
                     tributeWeapons.add(weapons);
                 }
             }

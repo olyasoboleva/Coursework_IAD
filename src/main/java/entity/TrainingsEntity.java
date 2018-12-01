@@ -8,38 +8,38 @@ import java.util.Objects;
 @Entity
 @Table(name = "trainings", schema = "public", catalog = "postgres")
 public class TrainingsEntity {
-    private int trainingid;
+    private int trainingId;
     private String name;
     private int coefficient;
     private int duration;
     private String description;
-    private Time timeoftraining;
-    private int dayofweek;
-    private SkillsEntity skillsBySkillid;
-    private UsersEntity usersByTrainer;
+    private Time timeOfTraining;
+    private int dayOfWeek;
+    private SkillsEntity skill;
+    private UsersEntity trainer;
 
     public TrainingsEntity() {}
 
-    public TrainingsEntity(String name, SkillsEntity skill, int coefficient, int duration, String description, UsersEntity trainer, Time timeoftraining, int dayofweek) {
+    public TrainingsEntity(String name, SkillsEntity skill, int coefficient, int duration, String description, UsersEntity trainer, Time timeOfTraining, int dayOfWeek) {
         this.name = name;
         this.coefficient = coefficient;
         this.duration = duration;
         this.description = description;
-        this.timeoftraining = timeoftraining;
-        this.dayofweek = dayofweek;
-        this.skillsBySkillid = skill;
-        this.usersByTrainer = trainer;
+        this.timeOfTraining = timeOfTraining;
+        this.dayOfWeek = dayOfWeek;
+        this.skill = skill;
+        this.trainer = trainer;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "trainingid")
-    public int getTrainingid() {
-        return trainingid;
+    @Column(name = "trainingId")
+    public int getTrainingId() {
+        return trainingId;
     }
 
-    public void setTrainingid(int trainingid) {
-        this.trainingid = trainingid;
+    public void setTrainingId(int trainingId) {
+        this.trainingId = trainingId;
     }
 
     @Basic
@@ -85,23 +85,23 @@ public class TrainingsEntity {
     }
 
     @Basic
-    @Column(name = "timeoftraining")
-    public Time getTimeoftraining() {
-        return timeoftraining;
+    @Column(name = "timeOfTraining")
+    public Time getTimeOfTraining() {
+        return timeOfTraining;
     }
 
-    public void setTimeoftraining(Time timeoftraining) {
-        this.timeoftraining = timeoftraining;
+    public void setTimeOfTraining(Time timeOfTraining) {
+        this.timeOfTraining = timeOfTraining;
     }
 
     @Basic
-    @Column(name = "dayofweek")
-    public int getDayofweek() {
-        return dayofweek;
+    @Column(name = "dayOfWeek")
+    public int getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setDayofweek(int dayofweek) {
-        this.dayofweek = dayofweek;
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     @Override
@@ -109,40 +109,38 @@ public class TrainingsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TrainingsEntity that = (TrainingsEntity) o;
-        return trainingid == that.trainingid &&
+        return trainingId == that.trainingId &&
                 coefficient == that.coefficient &&
                 duration == that.duration &&
-                dayofweek == that.dayofweek &&
+                dayOfWeek == that.dayOfWeek &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(timeoftraining, that.timeoftraining) &&
-                Objects.equals(skillsBySkillid, that.skillsBySkillid) &&
-                Objects.equals(usersByTrainer, that.usersByTrainer);
+                Objects.equals(timeOfTraining, that.timeOfTraining) &&
+                Objects.equals(skill, that.skill) &&
+                Objects.equals(trainer, that.trainer);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(trainingid, name, coefficient, duration, description, timeoftraining, dayofweek, skillsBySkillid, usersByTrainer);
+        return Objects.hash(trainingId, name, coefficient, duration, description, timeOfTraining, dayOfWeek, skill, trainer);
     }
 
     @ManyToOne
-    @JoinColumn(name = "skillid", referencedColumnName = "skillid", insertable = false, updatable = false)
-    public SkillsEntity getSkillsBySkillid() {
-        return skillsBySkillid;
+    @JoinColumn(name = "skillId", referencedColumnName = "skillId", insertable = false, updatable = false)
+    public SkillsEntity getSkill() {
+        return skill;
     }
-
-    public void setSkillsBySkillid(SkillsEntity skillsBySkillid) {
-        this.skillsBySkillid = skillsBySkillid;
+    public void setSkill(SkillsEntity skill) {
+        this.skill = skill;
     }
 
     @ManyToOne
-    @JoinColumn(name = "trainer", referencedColumnName = "userid", insertable = false, updatable = false)
-    public UsersEntity getUsersByTrainer() {
-        return usersByTrainer;
+    @JoinColumn(name = "trainer", referencedColumnName = "userId", insertable = false, updatable = false)
+    public UsersEntity getTrainer() {
+        return trainer;
     }
-
-    public void setUsersByTrainer(UsersEntity usersByTrainer) {
-        this.usersByTrainer = usersByTrainer;
+    public void setTrainer(UsersEntity trainer) {
+        this.trainer = trainer;
     }
 }

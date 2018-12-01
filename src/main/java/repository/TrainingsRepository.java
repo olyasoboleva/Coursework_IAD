@@ -13,22 +13,22 @@ import java.util.List;
 public interface TrainingsRepository extends CrudRepository<TrainingsEntity, Integer> {
     /**
      * find training by id
-     * @param trainingid id
+     * @param trainingId id
      * @return training
      */
-    TrainingsEntity findTrainingsEntityByTrainingid(int trainingid);
+    TrainingsEntity findTrainingsEntityByTrainingId(int trainingId);
 
     /**
      * find training on this day of week
-     * @param dayofweek day of week
+     * @param dayOfWeek day of week
      * @return list of trainings
      */
-    List<TrainingsEntity> getTrainingsEntityByDayofweek(int dayofweek);
+    List<TrainingsEntity> getTrainingsEntityByDayOfWeek(int dayOfWeek);
 
     /**
      * find schedule of trainer
      * @param trainer trainer
      * @return list of trainings
      */
-    List<TrainingsEntity> getTrainingsEntityByUsersByTrainer(UsersEntity trainer);
+    List<TrainingsEntity> getTrainingsEntityByTrainer(UsersEntity trainer);
 }

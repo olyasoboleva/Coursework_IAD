@@ -12,7 +12,7 @@ public interface UserRepository extends CrudRepository<UsersEntity, Integer> {
      * @param userid id
      * @return user
      */
-    UsersEntity findUsersEntityByUserid(int userid);
+    UsersEntity findUsersEntityByUserId(int userid);
 
     /**
      * find users for next game by parameters
@@ -23,21 +23,21 @@ public interface UserRepository extends CrudRepository<UsersEntity, Integer> {
      * @param status status
      * @return list of users
      */
-    List<UsersEntity> getUsersEntitiesByDistrictsByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(DistrictsEntity district, boolean sex, Date date1, Date date2, StatusesEntity status);
+    List<UsersEntity> getUsersEntitiesByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(DistrictsEntity district, boolean sex, Date date1, Date date2, StatusesEntity status);
 
     /**
      * find user, who play for this tribute
      * @param tribute tribute
      * @return user
      */
-    UsersEntity findUsersEntityByTributesByUserid(TributesEntity tribute);
+    UsersEntity findUsersEntityByTributesByUser(TributesEntity tribute);
 
     /**
      * find user by login
-     * @param userlogin user login
+     * @param userLogin user login
      * @return user
      */
-    UsersEntity findUsersEntityByUserlogin(UserloginEntity userlogin);
+    UsersEntity findUsersEntityByUserLogin(UserLoginEntity userLogin);
 
     /**
      * find user by status
@@ -51,5 +51,5 @@ public interface UserRepository extends CrudRepository<UsersEntity, Integer> {
      * @param training training
      * @return trainer
      */
-    UsersEntity findUsersEntityByTrainingsByUserid(TrainingsEntity training);
+    UsersEntity findUsersEntityByTrainings(TrainingsEntity training);
 }

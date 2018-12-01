@@ -9,8 +9,8 @@ import org.springframework.data.repository.query.Param;
 public interface DistrictsRepository extends CrudRepository<DistrictsEntity, Integer> {
     /**
      * find district by id
-     * @param districtid id
+     * @param districtId id
      * @return district
      */
-    DistrictsEntity findDistrictsEntityByDistrictid(int districtid);
+    DistrictsEntity findDistrictsEntityByDistrictId(int districtId);
 }

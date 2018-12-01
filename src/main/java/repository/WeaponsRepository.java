@@ -12,14 +12,14 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface WeaponsRepository extends JpaRepository<WeaponsEntity, Integer> {
-    WeaponsEntity findWeaponsEntityByWeaponid(int id);
+    WeaponsEntity findWeaponsEntityByWeaponId(int id);
 
     /**
      * find weapon for this skill
      * @param skill skill
      * @return weapon
      */
-    WeaponsEntity getWeaponsEntitiesBySkillByWeaponid(SkillsEntity skill);
+    WeaponsEntity getWeaponsEntitiesBySkill(SkillsEntity skill);
 
     /**
      * find weapons, which tribute have

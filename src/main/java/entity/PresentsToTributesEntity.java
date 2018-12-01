@@ -2,21 +2,21 @@ package entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
 @Table(name = "presentstotributes", schema = "public", catalog = "postgres")
-public class PresentstotributesEntity {
-    private int sendingid;
+public class PresentsToTributesEntity {
+    private int sendingId;
     private int quantity;
+    //TODO: names
     private ShopEntity shopByProductid;
     private TributesEntity tributesByTributeid;
     private UsersEntity usersBySenderid;
 
-    public PresentstotributesEntity() {}
+    public PresentsToTributesEntity() {}
 
-    public PresentstotributesEntity(ShopEntity product, TributesEntity tribute, UsersEntity sender, int quantity) {
+    public PresentsToTributesEntity(ShopEntity product, TributesEntity tribute, UsersEntity sender, int quantity) {
         this.shopByProductid = product;
         this.tributesByTributeid = tribute;
         this.usersBySenderid = sender;
@@ -25,13 +25,13 @@ public class PresentstotributesEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sendingid")
-    public int getSendingid() {
-        return sendingid;
+    @Column(name = "sendingId")
+    public int getSendingId() {
+        return sendingId;
     }
 
-    public void setSendingid(int sendingid) {
-        this.sendingid = sendingid;
+    public void setSendingId(int sendingId) {
+        this.sendingId = sendingId;
     }
 
     @Basic
@@ -49,8 +49,8 @@ public class PresentstotributesEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PresentstotributesEntity that = (PresentstotributesEntity) o;
-        return sendingid == that.sendingid &&
+        PresentsToTributesEntity that = (PresentsToTributesEntity) o;
+        return sendingId == that.sendingId &&
                 quantity == that.quantity &&
                 Objects.equals(shopByProductid, that.shopByProductid) &&
                 Objects.equals(tributesByTributeid, that.tributesByTributeid) &&
@@ -60,7 +60,7 @@ public class PresentstotributesEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(sendingid, quantity, shopByProductid, tributesByTributeid, usersBySenderid);
+        return Objects.hash(sendingId, quantity, shopByProductid, tributesByTributeid, usersBySenderid);
     }
 
     @ManyToOne

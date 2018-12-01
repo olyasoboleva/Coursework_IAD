@@ -6,27 +6,27 @@ import java.util.Collection;
 @Entity
 @Table(name = "statuses", schema = "public", catalog = "postgres")
 public class StatusesEntity {
-    private int statusid;
+    private int statusId;
     private String name;
-    private PricesEntity pricesByPriceid;
+    private PricesEntity price;
     private Collection<UsersEntity> users;
 
     public StatusesEntity() {}
 
     public StatusesEntity(String name, PricesEntity price) {
         this.name = name;
-        this.pricesByPriceid = price;
+        this.price = price;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "statusid")
-    public int getStatusid() {
-        return statusid;
+    @Column(name = "statusId")
+    public int getStatusId() {
+        return statusId;
     }
 
-    public void setStatusid(int statusid) {
-        this.statusid = statusid;
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
     @Basic
@@ -46,14 +46,14 @@ public class StatusesEntity {
 
         StatusesEntity that = (StatusesEntity) o;
 
-        if (statusid != that.statusid) return false;
+        if (statusId != that.statusId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (statusid ^ (statusid >>> 32));
+        int result = (int) (statusId ^ (statusId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
@@ -67,12 +67,11 @@ public class StatusesEntity {
     }
 
     @OneToOne
-    @JoinColumn(name = "priceid", referencedColumnName = "priceid", insertable = false, updatable = false)
-    public PricesEntity getPricesByPriceid() {
-        return pricesByPriceid;
+    @JoinColumn(name = "priceId", referencedColumnName = "priceId", insertable = false, updatable = false)
+    public PricesEntity getPrice() {
+        return price;
     }
-
-    public void setPricesByPriceid(PricesEntity pricesByPriceid) {
-        this.pricesByPriceid = pricesByPriceid;
+    public void setPrice(PricesEntity price) {
+        this.price = price;
     }
 }

@@ -3,17 +3,15 @@ package entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
-import java.util.HashSet;
 
 @Entity
 @Table(name = "arenas", schema = "public", catalog = "postgres")
 public class ArenasEntity {
-    private int arenaid;
+    private int arenaId;
     private int arenaLength;
     private int arenaWidth;
     private LocationsEntity mainLocation;
-    private GamesEntity gamesByArenaid;
+    private GamesEntity game;
 
     public ArenasEntity() {}
 
@@ -25,13 +23,13 @@ public class ArenasEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "arenaid")
-    public int getArenaid() {
-        return arenaid;
+    @Column(name = "arenaId")
+    public int getArenaId() {
+        return arenaId;
     }
 
-    public void setArenaid(int arenaid) {
-        this.arenaid = arenaid;
+    public void setArenaId(int arenaId) {
+        this.arenaId = arenaId;
     }
 
     @Basic
@@ -65,7 +63,7 @@ public class ArenasEntity {
 
         ArenasEntity that = (ArenasEntity) o;
 
-        if (arenaid != that.arenaid) return false;
+        if (arenaId != that.arenaId) return false;
         if (arenaLength != that.arenaLength) return false;
         if (arenaWidth != that.arenaWidth) return false;
 
@@ -74,28 +72,26 @@ public class ArenasEntity {
 
     @Override
     public int hashCode() {
-        int result = arenaid;
-        result = 31 * result + (int) arenaLength;
-        result = 31 * result + (int) arenaWidth;
+        int result = arenaId;
+        result = 31 * result +  arenaLength;
+        result = 31 * result + arenaWidth;
         return result;
     }
 
     @ManyToOne
-    @JoinColumn(name = "locationid", referencedColumnName = "locationid", nullable = false)
+    @JoinColumn(name = "locationId", referencedColumnName = "locationId", nullable = false)
     public LocationsEntity getMainLocation() {
         return mainLocation;
     }
-
     public void setMainLocation(LocationsEntity mainLocation) {
         this.mainLocation = mainLocation;
     }
 
-    @OneToOne(mappedBy = "arenasByArena")
-    public GamesEntity getGamesByArenaid() {
-        return gamesByArenaid;
+    @OneToOne(mappedBy = "arena")
+    public GamesEntity getGame() {
+        return game;
     }
-
-    public void setGamesByArenaid(GamesEntity gamesByArenaid) {
-        this.gamesByArenaid = gamesByArenaid;
+    public void setGame(GamesEntity game) {
+        this.game = game;
     }
 }
