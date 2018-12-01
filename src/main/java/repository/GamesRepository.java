@@ -17,7 +17,7 @@ public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
     GamesEntity findGamesEntityByGameId(int gameId);
 
     /**
-     * fine all steward's games, which start after date
+     * fine all steward's games which start after date
      * @param steward steward
      * @param date start date
      * @return list of games
@@ -25,7 +25,7 @@ public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
     List<GamesEntity> getGamesEntitiesByStewardAndStartDateGreaterThan(UsersEntity steward, Date date);
 
     /**
-     * find all games, which start on this date
+     * find all games which start on this date
      * @param startDate start date
      * @return list of games
      */

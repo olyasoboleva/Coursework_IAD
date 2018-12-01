@@ -25,7 +25,7 @@ public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
 
 
     /**
-     * find skill, which level this training increase
+     * find skill which level this training increase
      * @param training training
      * @return skill
      */

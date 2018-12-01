@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "weaponsingame", schema = "public", catalog = "postgres")
+@Table(name = "weaponsInGame", schema = "public", catalog = "postgres")
 @IdClass(WeaponsInGameEntityPK.class)
 public class WeaponsInGameEntity {
     private int tributeId;
@@ -67,6 +67,7 @@ public class WeaponsInGameEntity {
     public void setTribute(TributesEntity tributesByTributeid) {
         this.tribute = tributesByTributeid;
         tributeId = (int)tributesByTributeid.getTributeId();
+
     }
 
     @ManyToOne

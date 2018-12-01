@@ -14,7 +14,7 @@ public interface ArenasRepository extends CrudRepository<ArenasEntity, Integer> 
 
 
     /**
-     * find arena, where game takes place
+     * find arena where game takes place
      * @param game game
      * @return arena
      */

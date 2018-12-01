@@ -6,8 +6,15 @@ import org.springframework.data.repository.CrudRepository;
 public interface StatusesRepository extends CrudRepository<StatusesEntity, Integer> {
     /**
      * find status by id
-     * @param statusid id
+     * @param statusId id
      * @return status
      */
-    StatusesEntity findStatusesEntityByStatusId(long statusid);
+    StatusesEntity findStatusesEntityByStatusId(int statusId);
+
+    /**
+     * find status by name
+     * @param name name
+     * @return status
+     */
+    StatusesEntity findStatusesEntityByName(String name);
 }

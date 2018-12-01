@@ -31,11 +31,7 @@ public class SkillsServiceImpl implements SkillsService {
     }
 
 
-      /**
-       * Получить все скиллы пользователя
-       * @param user пользователь
-       * @return скиллы и их уровень
-       */
+
       @Transactional
       @Override
     public Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user) {
@@ -52,11 +48,7 @@ public class SkillsServiceImpl implements SkillsService {
         return allUserSkills;
     }
 
-    /**
-     * Получение всех скиллов трибута
-     * @param tribute трибут
-     * @return скиллы и их уровень
-     */
+
     @Transactional
     @Override
     public Map<SkillsEntity, Integer> getAllTributeSkills(TributesEntity tribute) {

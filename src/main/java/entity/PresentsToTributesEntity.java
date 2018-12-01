@@ -5,11 +5,10 @@ import javax.validation.constraints.Min;
 import java.util.Objects;
 
 @Entity
-@Table(name = "presentstotributes", schema = "public", catalog = "postgres")
+@Table(name = "presentsToTributes", schema = "public", catalog = "postgres")
 public class PresentsToTributesEntity {
     private int sendingId;
     private int quantity;
-    //TODO: names
     private ShopEntity product;
     private TributesEntity tribute;
     private UsersEntity sender;
@@ -59,12 +58,11 @@ public class PresentsToTributesEntity {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(sendingId, quantity, product, tribute, sender);
     }
 
     @ManyToOne
-    @JoinColumn(name = "productid", referencedColumnName = "productid", nullable = false)
+    @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false)
     public ShopEntity getProduct() {
         return product;
     }
@@ -74,7 +72,7 @@ public class PresentsToTributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "tributeid", referencedColumnName = "tributeid", nullable = false)
+    @JoinColumn(name = "tributeId", referencedColumnName = "tributeId", nullable = false)
     public TributesEntity getTribute() {
         return tribute;
     }
@@ -84,7 +82,7 @@ public class PresentsToTributesEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "senderid", referencedColumnName = "userid", nullable = false)
+    @JoinColumn(name = "senderId", referencedColumnName = "userId", nullable = false)
     public UsersEntity getSender() {
         return sender;
     }

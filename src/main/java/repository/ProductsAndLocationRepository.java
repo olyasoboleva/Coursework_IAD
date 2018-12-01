@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductsAndLocationRepository extends CrudRepository<ProductsAndLocationEntity, Integer> {
     /**
-     * find appling by id
+     * find applying by id
      * @param applyingId id
      * @return applying
      */

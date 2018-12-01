@@ -1,3 +1,4 @@
+/* ///////////////////////////////////////////////// !!*/
 CREATE FUNCTION check_date_of_birth() RETURNS trigger AS '
 BEGIN
 IF (((SELECT startDate FROM games WHERE gameId = NEW.gameId) - (SELECT birthday FROM users WHERE userId = NEW.userId)) < 12*365) THEN
@@ -17,7 +18,7 @@ ON tributes
 FOR EACH ROW
 EXECUTE PROCEDURE check_date_of_birth();
 
-/* ///////////////////////////////////////////////// */
+/* ///////////////////////////////////////////////// !!*/
 
 CREATE FUNCTION check_number_of_weapons() RETURNS trigger AS '
 BEGIN
@@ -62,7 +63,7 @@ CREATE TRIGGER check_present BEFORE INSERT OR UPDATE
   FOR EACH ROW
 EXECUTE PROCEDURE check_present();
 
-/* ///////////////////////////////////////////////// */
+/* ///////////////////////////////////////////////// it will be generated*/
 
 CREATE FUNCTION check_tributes() RETURNS trigger AS '
 BEGIN
@@ -89,7 +90,7 @@ IF ((SELECT typeOfGame FROM games WHERE games.gameId = NEW.gameId) = TRUE ) THEN
 	END IF;
 ELSEIF ((SELECT COUNT(tributeId) FROM tributes WHERE gameId = NEW.gameId GROUP BY gameId)
 	>= (SELECT numberOfTributes FROM games WHERE gameId = NEW.gameId)) THEN
-	RAISE WARNING ''В этой версии игры не можеть быть больше трибутов'';
+	RAISE WARNING ''В этой версии игры не может быть больше трибутов'';
 	RETURN NULL;
 ELSE
 	RETURN NEW;
@@ -103,55 +104,6 @@ CREATE TRIGGER check_tributes BEFORE INSERT
   FOR EACH ROW
 EXECUTE PROCEDURE check_tributes();
 
-/* ///////////////////////////////////////////////// */
-
-CREATE FUNCTION insert_skill() RETURNS trigger AS '
-BEGIN
-INSERT INTO userskills VALUES (NEW.userId,
-					(SELECT skillId FROM districts WHERE districtId = NEW.district),
-					100);
-RETURN NEW;
-END;
-' LANGUAGE plpgsql;
-
-
-CREATE TRIGGER insert_skill AFTER INSERT ON users
-  FOR EACH ROW
-EXECUTE PROCEDURE insert_skill();
-
-/* ///////////////////////////////////////////////// */
-
-CREATE FUNCTION insert_skill() RETURNS trigger AS '
-BEGIN
-INSERT INTO userskills VALUES (NEW.userId,
-					(SELECT skillId FROM districts WHERE districtId = NEW.district),
-					100);
-RETURN NEW;
-END;
-' LANGUAGE plpgsql;
-
-
-CREATE TRIGGER insert_skill AFTER INSERT ON users
-  FOR EACH ROW
-EXECUTE PROCEDURE insert_skill();
-
-
-/* ///////////////////////////////////////////////// */
-
-CREATE FUNCTION insert_weapons() RETURNS trigger AS '
-BEGIN
-IF ((SELECT weaponId FROM weapons JOIN shop USING(name) WHERE productId = NEW.productId) IS NOT NULL) THEN
-INSERT INTO weaponsingame VALUES (NEW.tributeId,(SELECT weapons.weaponId FROM weapons JOIN shop USING(name) WHERE productId = NEW.productId));
-RETURN NEW;
-ELSE RETURN NULL;
-END IF;
-END;
-' LANGUAGE plpgsql;
-
-
-CREATE TRIGGER insert_weapons AFTER INSERT ON presentstotributes
-  FOR EACH ROW
-EXECUTE PROCEDURE insert_weapons();
 
 /* ///////////////////////////////////////////////// */
 

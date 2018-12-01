@@ -2,6 +2,7 @@ package impl;
 
 import entity.TributesEntity;
 import entity.WeaponsEntity;
+import entity.WeaponsInGameEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.WeaponsRepository;
@@ -24,17 +25,11 @@ public class WeaponsServiceImpl implements WeaponsService {
         this.weaponsInGameRepository = weaponsInGameRepository;
     }
 
-    /**
-     * Получение оружия трибута
-     * @param tribute трибут
-     * @return его оружие
-     */
     @Transactional
     @Override
     public List<WeaponsEntity> getTributeWeapons(TributesEntity tribute) {
         List<WeaponsEntity> tributeWeapons = new ArrayList<>();
-        //FIXME: сломалось
-        /*List<WeaponsInGameEntity> gameWeapon = weaponsInGameRepository.getWeaponsingameEntitiesByTributesByTributeid(tribute);
+        List<WeaponsInGameEntity> gameWeapon = weaponsInGameRepository.getWeaponsInGameEntitiesByTribute(tribute);
         List<WeaponsEntity> allWeapons = weaponsRepository.findAll();
         for (WeaponsEntity weapons : allWeapons) {
             for (WeaponsInGameEntity weapon : gameWeapon) {
@@ -42,7 +37,7 @@ public class WeaponsServiceImpl implements WeaponsService {
                     tributeWeapons.add(weapons);
                 }
             }
-        }*/
+        }
         return tributeWeapons;
     }
 

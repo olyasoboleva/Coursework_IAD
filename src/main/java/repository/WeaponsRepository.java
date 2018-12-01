@@ -22,7 +22,7 @@ public interface WeaponsRepository extends JpaRepository<WeaponsEntity, Integer>
     WeaponsEntity getWeaponsEntitiesBySkill(SkillsEntity skill);
 
     /**
-     * find weapons, which tribute have
+     * find weapons which tribute have
      * @param tribute tribute
      * @return lit of weapons
      */

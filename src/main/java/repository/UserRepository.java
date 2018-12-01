@@ -9,10 +9,10 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<UsersEntity, Integer> {
     /**
      * find user by id
-     * @param userid id
+     * @param userId id
      * @return user
      */
-    UsersEntity findUsersEntityByUserId(int userid);
+    UsersEntity findUsersEntityByUserId(int userId);
 
     /**
      * find users for next game by parameters

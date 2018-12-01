@@ -15,7 +15,7 @@ public interface LocationsRepository  extends CrudRepository<LocationsEntity, In
     LocationsEntity findLocationsEntityByLocationId(int id);
 
     /**
-     * find all locations, where product can be applied
+     * find all locations where product can be applied
      * @param product product
      * @return list of locations
      */

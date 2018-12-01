@@ -25,26 +25,18 @@ public class ShopServiceImpl implements ShopService{
         this.presentsToTributesRepository = presentsToTributesRepository;
     }
 
-    //TODO: ну я вроде написала это?
-    /**
-     * Запрос получает все подарки трибута
-     * @param tribute трибут
-     * @return подарки
-     */
     @Transactional
     @Override
     public List<ShopEntity> getAllPresentsOfTribute(TributesEntity tribute) {
         List<PresentsToTributesEntity> presents = presentsToTributesRepository.getPresentsToTributesEntityByTribute(tribute);
         List<ShopEntity> allproducts = shopRepository.findAll();
         List<ShopEntity> tributePresents = new ArrayList<>();
-        for (PresentsToTributesEntity present : presents) {
-            for (ShopEntity product : allproducts) {
-                //TODO: тут что-то сломалось из-за отсутствия теперь ид)))
-                /*
-                if (product.getProductId() == present.getProductId()) {
+        for (ShopEntity product : allproducts ) {
+            for (PresentsToTributesEntity present : presents) {
+                if (product.equals(present.getProduct())) {
                     tributePresents.add(product);
                 }
-                */
+
             }
         }
         return  tributePresents;

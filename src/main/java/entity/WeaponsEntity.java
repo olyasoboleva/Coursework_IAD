@@ -137,4 +137,6 @@ public class WeaponsEntity {
     public void setOwners(Collection<TributesEntity> owners) {
         this.owners = owners;
     }
+
+
 }
