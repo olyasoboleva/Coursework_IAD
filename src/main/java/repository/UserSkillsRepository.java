@@ -16,7 +16,7 @@ public interface UserSkillsRepository extends JpaRepository<UserSkillsEntity, Us
      * @param skill skill
      * @return user's skill with level
      */
-    UserSkillsEntity findUserSkillsEntityByUsersByUseridAndSkillsBySkillid(UsersEntity user, SkillsEntity skill);
+    UserSkillsEntity findUserSkillsEntityByUserAndSkill(UsersEntity user, SkillsEntity skill);
 
     /**
      * find user's skills
@@ -24,5 +24,5 @@ public interface UserSkillsRepository extends JpaRepository<UserSkillsEntity, Us
      * @param user user
      * @return list of skills with level
      */
-    List<UserSkillsEntity> getUserSkillsEntitiesByUsersByUserid(UsersEntity user);
+    List<UserSkillsEntity> getUserSkillsEntitiesByUser(UsersEntity user);
 }

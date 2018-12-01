@@ -10,14 +10,13 @@ public class ProductsAndLocationEntity {
     private int locationId;
     private int productId;
     private LocationsEntity location;
-    //rename
-    private ShopEntity shopByProductid;
+    private ShopEntity product;
 
     public ProductsAndLocationEntity() {}
 
     public ProductsAndLocationEntity(ShopEntity product, LocationsEntity location) {
         setLocation(location);
-        setShopByProductid(product);
+        setProduct(product);
     }
 
     @Id
@@ -74,12 +73,12 @@ public class ProductsAndLocationEntity {
 
     @ManyToOne
     @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false, insertable = false, updatable = false)
-    public ShopEntity getShopByProductid() {
-        return shopByProductid;
+    public ShopEntity getProduct() {
+        return product;
     }
 
-    public void setShopByProductid(ShopEntity shopByProductid) {
-        this.shopByProductid = shopByProductid;
+    public void setProduct(ShopEntity shopByProductid) {
+        this.product = shopByProductid;
         setProductId(shopByProductid.getProductId());
     }
 

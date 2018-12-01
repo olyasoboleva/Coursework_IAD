@@ -18,5 +18,5 @@ public interface ProductsAndLocationRepository extends CrudRepository<ProductsAn
      * @param product product
      * @return list of applyings
      */
-    List<ProductsAndLocationEntity> getProductsAndLocationEntitiesByShopByProductid(ShopEntity product);
+    List<ProductsAndLocationEntity> getProductsAndLocationEntitiesByProduct(ShopEntity product);
 }

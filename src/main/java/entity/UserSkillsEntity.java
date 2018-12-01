@@ -11,14 +11,14 @@ public class UserSkillsEntity {
     private int userId;
     private int skillId;
     private int levelOfSkill;
-    private UsersEntity usersByUserid;
-    private SkillsEntity skillsBySkillid;
+    private UsersEntity user;
+    private SkillsEntity skill;
 
     public UserSkillsEntity(){}
 
     public UserSkillsEntity(UsersEntity user, SkillsEntity skill, int levelOfSkill) {
-        setUsersByUserid(user);
-        setSkillsBySkillid(skill);
+        setUser(user);
+        setSkill(skill);
         this.levelOfSkill = levelOfSkill;
     }
 
@@ -61,35 +61,35 @@ public class UserSkillsEntity {
         return userId == that.userId &&
                 skillId == that.skillId &&
                 levelOfSkill == that.levelOfSkill &&
-                Objects.equals(usersByUserid, that.usersByUserid) &&
-                Objects.equals(skillsBySkillid, that.skillsBySkillid);
+                Objects.equals(user, that.user) &&
+                Objects.equals(skill, that.skill);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, skillId, levelOfSkill, usersByUserid, skillsBySkillid);
+        return Objects.hash(userId, skillId, levelOfSkill, user, skill);
     }
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false, insertable = false, updatable = false)
-    public UsersEntity getUsersByUserid() {
-        return usersByUserid;
+    public UsersEntity getUser() {
+        return user;
     }
 
-    public void setUsersByUserid(UsersEntity usersByUserid) {
-        this.usersByUserid = usersByUserid;
+    public void setUser(UsersEntity usersByUserid) {
+        this.user = usersByUserid;
         this.userId = usersByUserid.getUserId();
     }
 
     @ManyToOne
     @JoinColumn(name = "skillId", referencedColumnName = "skillId", nullable = false, insertable = false, updatable = false)
-    public SkillsEntity getSkillsBySkillid() {
-        return skillsBySkillid;
+    public SkillsEntity getSkill() {
+        return skill;
     }
 
-    public void setSkillsBySkillid(SkillsEntity skillsBySkillid) {
-        this.skillsBySkillid = skillsBySkillid;
+    public void setSkill(SkillsEntity skillsBySkillid) {
+        this.skill = skillsBySkillid;
         this.skillId = skillsBySkillid.getSkillId();
     }
 }

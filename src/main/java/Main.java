@@ -105,18 +105,18 @@ public class Main {
 
 
         WeaponsInGameEntity weaponsInGameEntity1 = new WeaponsInGameEntity();
-        weaponsInGameEntity1.setTributesByTributeid(tribute);
-        weaponsInGameEntity1.setWeaponsByWeaponid(weapon1);
+        weaponsInGameEntity1.setTribute(tribute);
+        weaponsInGameEntity1.setWeapon(weapon1);
         WeaponsInGameEntity weaponsInGameEntity2 = new WeaponsInGameEntity();
-        weaponsInGameEntity2.setTributesByTributeid(tribute);
-        weaponsInGameEntity2.setWeaponsByWeaponid(weapon2);
+        weaponsInGameEntity2.setTribute(tribute);
+        weaponsInGameEntity2.setWeapon(weapon2);
         WeaponsInGameRepository weaponsInGameRepository = (WeaponsInGameRepository)ctx.getBean("weaponsInGameRepository");
         weaponsInGameRepository.save(weaponsInGameEntity1);
         weaponsInGameRepository.save(weaponsInGameEntity2);
 
         UserSkillsEntity userSkillsEntity = new UserSkillsEntity();
-        userSkillsEntity.setSkillsBySkillid(skillsEntity);
-        userSkillsEntity.setUsersByUserid(user);
+        userSkillsEntity.setSkill(skillsEntity);
+        userSkillsEntity.setUser(user);
         userSkillsEntity.setLevelOfSkill(20);
         UserSkillsRepository userSkillsRepository = (UserSkillsRepository)ctx.getBean("userSkillsRepository");
         userSkillsRepository.save(userSkillsEntity);
@@ -127,7 +127,7 @@ public class Main {
 
         ProductsAndLocationEntity productsAndLocationEntity = new ProductsAndLocationEntity();
         productsAndLocationEntity.setLocation(locationsEntity);
-        productsAndLocationEntity.setShopByProductid(product);
+        productsAndLocationEntity.setProduct(product);
         ProductsAndLocationRepository productsAndLocationRepository = (ProductsAndLocationRepository)ctx.getBean("productsAndLocationRepository");
         productsAndLocationRepository.save(productsAndLocationEntity);
 

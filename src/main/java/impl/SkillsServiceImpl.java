@@ -40,7 +40,7 @@ public class SkillsServiceImpl implements SkillsService {
       @Override
     public Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user) {
         Map<SkillsEntity, Integer> allUserSkills = new HashMap<>();
-        List<UserSkillsEntity> userSkills = userSkillsRepository.getUserSkillsEntitiesByUsersByUserid(user);
+        List<UserSkillsEntity> userSkills = userSkillsRepository.getUserSkillsEntitiesByUser(user);
         List<SkillsEntity> allSkills = skillsRepository.findAll();
         for (SkillsEntity skill : allSkills) {
             for (UserSkillsEntity userSkill : userSkills) {

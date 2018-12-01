@@ -8,12 +8,12 @@ import javax.persistence.*;
 public class WeaponsInGameEntity {
     private int tributeId;
     private int weaponId;
-    private TributesEntity tributesByTributeid;
-    private WeaponsEntity weaponsByWeaponid;
+    private TributesEntity tribute;
+    private WeaponsEntity weapon;
 
     public WeaponsInGameEntity(TributesEntity tribute, WeaponsEntity weapon) {
-        setTributesByTributeid(tribute);
-        setWeaponsByWeaponid(weapon);
+        setTribute(tribute);
+        setWeapon(weapon);
     }
 
     public WeaponsInGameEntity() {}
@@ -60,23 +60,23 @@ public class WeaponsInGameEntity {
 
     @ManyToOne
     @JoinColumn(name = "tributeId", referencedColumnName = "tributeId", nullable = false, updatable = false, insertable = false)
-    public TributesEntity getTributesByTributeid() {
-        return tributesByTributeid;
+    public TributesEntity getTribute() {
+        return tribute;
     }
 
-    public void setTributesByTributeid(TributesEntity tributesByTributeid) {
-        this.tributesByTributeid = tributesByTributeid;
+    public void setTribute(TributesEntity tributesByTributeid) {
+        this.tribute = tributesByTributeid;
         tributeId = (int)tributesByTributeid.getTributeId();
     }
 
     @ManyToOne
     @JoinColumn(name = "weaponId", referencedColumnName = "weaponId", nullable = false, updatable = false, insertable = false)
-    public WeaponsEntity getWeaponsByWeaponid() {
-        return weaponsByWeaponid;
+    public WeaponsEntity getWeapon() {
+        return weapon;
     }
 
-    public void setWeaponsByWeaponid(WeaponsEntity weaponsByWeaponid) {
-        this.weaponsByWeaponid = weaponsByWeaponid;
+    public void setWeapon(WeaponsEntity weaponsByWeaponid) {
+        this.weapon = weaponsByWeaponid;
         weaponId = weaponsByWeaponid.getWeaponId();
     }
 }
