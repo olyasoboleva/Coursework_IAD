@@ -10,16 +10,16 @@ public class PresentsToTributesEntity {
     private int sendingId;
     private int quantity;
     //TODO: names
-    private ShopEntity shopByProductid;
-    private TributesEntity tributesByTributeid;
-    private UsersEntity usersBySenderid;
+    private ShopEntity product;
+    private TributesEntity tribute;
+    private UsersEntity sender;
 
     public PresentsToTributesEntity() {}
 
     public PresentsToTributesEntity(ShopEntity product, TributesEntity tribute, UsersEntity sender, int quantity) {
-        this.shopByProductid = product;
-        this.tributesByTributeid = tribute;
-        this.usersBySenderid = sender;
+        this.product = product;
+        this.tribute = tribute;
+        this.sender = sender;
         this.quantity = quantity;
     }
 
@@ -52,44 +52,44 @@ public class PresentsToTributesEntity {
         PresentsToTributesEntity that = (PresentsToTributesEntity) o;
         return sendingId == that.sendingId &&
                 quantity == that.quantity &&
-                Objects.equals(shopByProductid, that.shopByProductid) &&
-                Objects.equals(tributesByTributeid, that.tributesByTributeid) &&
-                Objects.equals(usersBySenderid, that.usersBySenderid);
+                Objects.equals(product, that.product) &&
+                Objects.equals(tribute, that.tribute) &&
+                Objects.equals(sender, that.sender);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(sendingId, quantity, shopByProductid, tributesByTributeid, usersBySenderid);
+        return Objects.hash(sendingId, quantity, product, tribute, sender);
     }
 
     @ManyToOne
-    @JoinColumn(name = "productid", referencedColumnName = "productid", nullable = false, insertable = false, updatable = false)
-    public ShopEntity getShopByProductid() {
-        return shopByProductid;
+    @JoinColumn(name = "productid", referencedColumnName = "productid", nullable = false)
+    public ShopEntity getProduct() {
+        return product;
     }
 
-    public void setShopByProductid(ShopEntity shopByProductid) {
-        this.shopByProductid = shopByProductid;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "tributeid", referencedColumnName = "tributeid", nullable = false, insertable = false, updatable = false)
-    public TributesEntity getTributesByTributeid() {
-        return tributesByTributeid;
-    }
-
-    public void setTributesByTributeid(TributesEntity tributesByTributeid) {
-        this.tributesByTributeid = tributesByTributeid;
+    public void setProduct(ShopEntity shopByProductid) {
+        this.product = shopByProductid;
     }
 
     @ManyToOne
-    @JoinColumn(name = "senderid", referencedColumnName = "userid", nullable = false, insertable = false, updatable = false)
-    public UsersEntity getUsersBySenderid() {
-        return usersBySenderid;
+    @JoinColumn(name = "tributeid", referencedColumnName = "tributeid", nullable = false)
+    public TributesEntity getTribute() {
+        return tribute;
     }
 
-    public void setUsersBySenderid(UsersEntity usersBySenderid) {
-        this.usersBySenderid = usersBySenderid;
+    public void setTribute(TributesEntity tributesByTributeid) {
+        this.tribute = tributesByTributeid;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "senderid", referencedColumnName = "userid", nullable = false)
+    public UsersEntity getSender() {
+        return sender;
+    }
+
+    public void setSender(UsersEntity usersBySenderid) {
+        this.sender = usersBySenderid;
     }
 }

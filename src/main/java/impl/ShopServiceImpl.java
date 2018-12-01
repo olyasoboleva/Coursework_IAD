@@ -34,7 +34,7 @@ public class ShopServiceImpl implements ShopService{
     @Transactional
     @Override
     public List<ShopEntity> getAllPresentsOfTribute(TributesEntity tribute) {
-        List<PresentsToTributesEntity> presents = presentsToTributesRepository.getPresentsToTributesEntityByTributesByTributeid(tribute);
+        List<PresentsToTributesEntity> presents = presentsToTributesRepository.getPresentsToTributesEntityByTribute(tribute);
         List<ShopEntity> allproducts = shopRepository.findAll();
         List<ShopEntity> tributePresents = new ArrayList<>();
         for (PresentsToTributesEntity present : presents) {

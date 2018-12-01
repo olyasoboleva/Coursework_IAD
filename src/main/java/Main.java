@@ -135,5 +135,18 @@ public class Main {
         for (WeaponsEntity weapon: weaponList){
             System.out.println(weapon.getName());
         }
+
+        PresentsToTributesEntity presentsToTributesEntity = new PresentsToTributesEntity();
+        PresentsToTributesRepository presentsToTributesRepository = (PresentsToTributesRepository)ctx.getBean("presentsToTributesRepository");
+        presentsToTributesEntity.setQuantity(3);
+        presentsToTributesEntity.setSender(user);
+        presentsToTributesEntity.setProduct(product);
+        presentsToTributesEntity.setTribute(tribute);
+        presentsToTributesRepository.save(presentsToTributesEntity);
+
+        List<ShopEntity> shopList = shopRepository.findShopEntitiesByProductOwners(tribute);
+        for (ShopEntity prod: shopList){
+            System.out.println(prod.getName());
+        }
     }
 }

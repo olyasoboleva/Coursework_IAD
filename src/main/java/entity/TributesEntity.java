@@ -17,6 +17,7 @@ public class TributesEntity {
     private UsersEntity user;
     private GamesEntity game;
     private Collection<WeaponsEntity> weaponOfTribute;
+    private Collection<UsersEntity> presentsSenders;
 
     public TributesEntity() { }
 
@@ -131,5 +132,14 @@ public class TributesEntity {
 
     public void setProductsOfTribute(Collection<ShopEntity> productsOfTribute) {
         this.productsOfTribute = productsOfTribute;
+    }
+
+    @ManyToMany(mappedBy = "recipients", fetch = FetchType.LAZY)
+    public Collection<UsersEntity> getPresentsSenders() {
+        return presentsSenders;
+    }
+
+    public void setPresentsSenders(Collection<UsersEntity> presentsSenders) {
+        this.presentsSenders = presentsSenders;
     }
 }

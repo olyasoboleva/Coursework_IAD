@@ -52,4 +52,11 @@ public interface UserRepository extends CrudRepository<UsersEntity, Integer> {
      * @return trainer
      */
     UsersEntity findUsersEntityByTrainings(TrainingsEntity training);
+
+    /**
+     * find all senders of presents to this tribute
+     * @param tribute tribute
+     * @return list of users
+     */
+    List<UsersEntity> findUsersEntitiesByRecipients(TributesEntity tribute);
 }

@@ -17,6 +17,7 @@ public class ShopEntity {
     private String description;
     private int healthRecovery;
     private Collection<TributesEntity> productOwners;
+    private Collection<UsersEntity> senders;
     private Collection<LocationsEntity> locations;
     private String picturePath;
 
@@ -149,5 +150,14 @@ public class ShopEntity {
     }
     public void setProductOwners(Collection<TributesEntity> productOwners) {
         this.productOwners = productOwners;
+    }
+
+    @ManyToMany(mappedBy = "sendings", fetch = FetchType.LAZY)
+    public Collection<UsersEntity> getSenders() {
+        return senders;
+    }
+
+    public void setSenders(Collection<UsersEntity> senders) {
+        this.senders = senders;
     }
 }

@@ -24,6 +24,8 @@ public class UsersEntity {
     private Collection<PresentsToTributesEntity> presentstotributesByUserid;
     private Collection<TrainingsEntity> trainings;
     private Collection<TributesEntity> tributesByUser;
+    private Collection<ShopEntity> sendings;
+    private Collection<TributesEntity> recipients;
 
     private Collection<SkillsEntity> skills;
     private DistrictsEntity district;
@@ -181,7 +183,7 @@ public class UsersEntity {
         this.stewardGames = stewardGames;
     }
 
-    @OneToMany(mappedBy = "usersBySenderid", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     public Collection<PresentsToTributesEntity> getPresentstotributesByUserid() {
         return presentstotributesByUserid;
     }
@@ -243,5 +245,33 @@ public class UsersEntity {
     }
     public void setSkills(Collection<SkillsEntity> skills) {
         this.skills = skills;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "presentstotributes",
+            joinColumns = {@JoinColumn(name = "senderid")},
+            inverseJoinColumns = {@JoinColumn(name = "tributeid")}
+    )
+    public Collection<ShopEntity> getSendings() {
+        return sendings;
+    }
+
+    public void setSendings(Collection<ShopEntity> sendings) {
+        this.sendings = sendings;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "presentstotributes",
+            joinColumns = {@JoinColumn(name = "senderid")},
+            inverseJoinColumns = {@JoinColumn(name = "productid")}
+    )
+    public Collection<TributesEntity> getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(Collection<TributesEntity> recipients) {
+        this.recipients = recipients;
     }
 }

@@ -19,19 +19,19 @@ public interface PresentsToTributesRepository extends CrudRepository<PresentsToT
      * @param tribute tribute
      * @return list of presents
      */
-    List<PresentsToTributesEntity> getPresentsToTributesEntityByUsersBySenderidAndTributesByTributeid(UsersEntity sender, TributesEntity tribute);
+    List<PresentsToTributesEntity> getPresentsToTributesEntityBySenderAndTribute(UsersEntity sender, TributesEntity tribute);
 
     /**
      * find all presents from sender
      * @param sender sender
      * @return list of presents
      */
-    List<PresentsToTributesEntity> getPresentsToTributesEntityByUsersBySenderid(UsersEntity sender);
+    List<PresentsToTributesEntity> getPresentsToTributesEntityBySender(UsersEntity sender);
 
     /**
      * find all presents to tribute
      * @param tribute tribute
      * @return list of presents
      */
-    List<PresentsToTributesEntity> getPresentsToTributesEntityByTributesByTributeid(TributesEntity tribute);
+    List<PresentsToTributesEntity> getPresentsToTributesEntityByTribute(TributesEntity tribute);
 }
