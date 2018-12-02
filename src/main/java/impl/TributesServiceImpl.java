@@ -24,16 +24,12 @@ public class TributesServiceImpl implements TributesService {
     private final TributesRepository tributesRepository;
     private final UserRepository userRepository;
     private final StatusesRepository statusesRepository;
-    private final UserLoginRepository userLoginRepository;
-    UsersServiceImpl usersService;
 
     @Autowired
-    public TributesServiceImpl(TributesRepository tributesRepository, UserRepository userRepository, StatusesRepository statusesRepository, UserLoginRepository userLoginRepository) {
+    public TributesServiceImpl(TributesRepository tributesRepository, UserRepository userRepository, StatusesRepository statusesRepository) {
         this.tributesRepository = tributesRepository;
         this.userRepository = userRepository;
         this.statusesRepository = statusesRepository;
-        //usersService = new UsersServiceImpl(userRepository, userLoginRepository, tributesRepository, statusesRepository);
-        this.userLoginRepository = userLoginRepository;
     }
 
     /**
@@ -56,7 +52,7 @@ public class TributesServiceImpl implements TributesService {
         }
         StatusesEntity status = statusesRepository.findStatusesEntityByName("Трибут");
         user.setStatus(status);
-        user = usersService.updateUser(user);
+        userRepository.save(user);
         tributesRepository.save(tribute);
         return tribute;
     }

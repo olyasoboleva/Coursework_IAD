@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "hooks", schema = "public", catalog = "postgres")
 public class HooksEntity {
-    private int hookid;
+    private int hookId;
     private String name;
     private int damage;
     private LocationsEntity location;
@@ -20,13 +20,13 @@ public class HooksEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hookid")
-    public int getHookid() {
-        return hookid;
+    @Column(name = "hookId")
+    public int getHookId() {
+        return hookId;
     }
 
-    public void setHookid(int hookid) {
-        this.hookid = hookid;
+    public void setHookId(int hookId) {
+        this.hookId = hookId;
     }
 
     @Basic
@@ -56,7 +56,7 @@ public class HooksEntity {
 
         HooksEntity that = (HooksEntity) o;
 
-        if (hookid != that.hookid) return false;
+        if (hookId != that.hookId) return false;
         if (damage != that.damage) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
@@ -65,7 +65,7 @@ public class HooksEntity {
 
     @Override
     public int hashCode() {
-        int result = hookid;
+        int result = hookId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + damage;
         return result;

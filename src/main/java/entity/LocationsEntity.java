@@ -45,13 +45,13 @@ public class LocationsEntity {
 
     @Basic
     @Column(name = "picturePath")
-    public String getPicturepath() {
+    public String getPicturePath() {
         return picturePath;
     }
-
-    public void setPicturepath(String picturepath) {
-        this.picturePath = picturepath;
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
+
 
     @Override
     public boolean equals(Object o) {

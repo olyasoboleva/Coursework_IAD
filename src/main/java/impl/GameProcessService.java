@@ -60,6 +60,7 @@ public class GameProcessService {
      */
     public void beat(WeaponsInGameEntity tributeWeapon, TributesEntity tributeToBeat) {
         WeaponsEntity weapon = tributeWeapon.getWeapon();
+        //FIXME: урон нормально надо прописать)))
         if (tributeToBeat.getHealth() - weapon.getDamage() <=0) {
             tributeToBeat.setHealth(0);
             tributeToBeat.setStatus("Погибший трибут");
