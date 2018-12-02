@@ -1,11 +1,15 @@
 package impl;
 
 import entity.GamesEntity;
+import entity.UsersEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.GamesRepository;
 import service.GamesService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.sql.Date;
+import java.util.List;
 
 @Service("gamesService")
 public class GamesServiceImpl implements GamesService {
@@ -15,6 +19,21 @@ public class GamesServiceImpl implements GamesService {
     @Autowired
     public GamesServiceImpl(GamesRepository gamesRepository) {
         this.gamesRepository = gamesRepository;
+    }
+
+    @Override
+    public GamesEntity getGameById(int gameId) {
+        return gamesRepository.findGamesEntityByGameId(gameId);
+    }
+
+    @Override
+    public List<GamesEntity> getGameByStewardAndAfterDate(UsersEntity steward, Date date) {
+        return gamesRepository.getGamesEntitiesByStewardAndStartDateGreaterThan(steward, date);
+    }
+
+    @Override
+    public List<GamesEntity> getGameByStartDate(Date startDate) {
+        return gamesRepository.getGamesEntitiesByStartDate(startDate);
     }
 
     @Transactional

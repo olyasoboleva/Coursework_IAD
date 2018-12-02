@@ -2,6 +2,7 @@ package impl;
 
 import entity.PresentsToTributesEntity;
 import entity.ShopEntity;
+import entity.TributesEntity;
 import entity.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,12 @@ import repository.UserLoginRepository;
 import repository.UserRepository;
 import service.PresentsToTributesService;
 
+import java.util.List;
+
 @Service("presentsToTributesService")
 public class PresentsToTributesServiceImpl implements PresentsToTributesService {
 
+    //TODO: надо подумать, как нормально два сервиса в одной штуке использовать. Или тут сохранение другой сущности делать через репозиторий, а не через сервис
     private final PresentsToTributesRepository presentsToTributesRepository;
     private final UserRepository userRepository;
     private final UserLoginRepository userLoginRepository;
@@ -25,6 +29,26 @@ public class PresentsToTributesServiceImpl implements PresentsToTributesService 
         this.userRepository = userRepository;
         usersService = new UsersServiceImpl(userRepository, userLoginRepository);
         this.userLoginRepository = userLoginRepository;
+    }
+
+    @Override
+    public PresentsToTributesEntity getPresentsToTributeById(long sendingId) {
+        return presentsToTributesRepository.findPresentsToTributesEntityBySendingId(sendingId);
+    }
+
+    @Override
+    public List<PresentsToTributesEntity> getPresentsToTributeBySenderAndTribute(UsersEntity sender, TributesEntity tribute) {
+        return presentsToTributesRepository.getPresentsToTributesEntityBySenderAndTribute(sender, tribute);
+    }
+
+    @Override
+    public List<PresentsToTributesEntity> getPresentsToTributeBySender(UsersEntity sender) {
+        return presentsToTributesRepository.getPresentsToTributesEntityBySender(sender);
+    }
+
+    @Override
+    public List<PresentsToTributesEntity> getPresentsToTributeByTribute(TributesEntity tribute) {
+        return presentsToTributesRepository.getPresentsToTributesEntityByTribute(tribute);
     }
 
     @Transactional
@@ -39,5 +63,17 @@ public class PresentsToTributesServiceImpl implements PresentsToTributesService 
         user = usersService.updateUser(user);
         presentsToTributesRepository.save(present);
         return present;
+    }
+
+    @Override
+    public PresentsToTributesEntity updatePresentsToTributes(PresentsToTributesEntity present) {
+        presentsToTributesRepository.save(present);
+        return present;
+    }
+
+    @Override
+    public boolean deletePresentsToTributes(PresentsToTributesEntity present) {
+        presentsToTributesRepository.delete(present);
+        return true;
     }
 }

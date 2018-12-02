@@ -17,6 +17,11 @@ public class PricesServiceImpl implements PricesService {
     }
 
     @Override
+    public PricesEntity getPriceById(int priceId) {
+        return pricesRepository.findPricesEntityByPriceId(priceId);
+    }
+
+    @Override
     public PricesEntity createPrice(PricesEntity price) {
         pricesRepository.save(price);
         return price;

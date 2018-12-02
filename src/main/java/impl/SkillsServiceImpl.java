@@ -1,9 +1,6 @@
 package impl;
 
-import entity.SkillsEntity;
-import entity.TributesEntity;
-import entity.UsersEntity;
-import entity.UserSkillsEntity;
+import entity.*;
 import org.springframework.transaction.annotation.Transactional;
 import repository.SkillsRepository;
 import repository.UserRepository;
@@ -30,8 +27,6 @@ public class SkillsServiceImpl implements SkillsService {
         this.userRepository = userRepository;
     }
 
-
-
       @Transactional
       @Override
     public Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user) {
@@ -56,6 +51,31 @@ public class SkillsServiceImpl implements SkillsService {
         return getAllUserSkills(user);
     }
 
+
+    @Override
+    public SkillsEntity getSkillById(int skillId) {
+        return skillsRepository.findSkillsEntityBySkillId(skillId);
+    }
+
+    @Override
+    public SkillsEntity getSkillByDistrict(DistrictsEntity districtsEntity) {
+        return skillsRepository.findSkillsEntityByDistrict(districtsEntity);
+    }
+
+    @Override
+    public SkillsEntity getSkillByTraining(TrainingsEntity training) {
+        return skillsRepository.findSkillsEntityByTrainings(training);
+    }
+
+    @Override
+    public List<SkillsEntity> getSkillsByUser(UsersEntity user) {
+        return skillsRepository.findSkillsEntitiesByUsers(user);
+    }
+
+    @Override
+    public SkillsEntity getSkillByWeapon(WeaponsEntity weapon) {
+        return skillsRepository.findSkillsEntitiesByWeapon(weapon);
+    }
 
     @Transactional
     @Override

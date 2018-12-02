@@ -25,6 +25,21 @@ public class ShopServiceImpl implements ShopService{
         this.presentsToTributesRepository = presentsToTributesRepository;
     }
 
+    @Override
+    public ShopEntity getProductById(int productId) {
+        return shopRepository.findShopEntityByProductId(productId);
+    }
+
+    @Override
+    public List<ShopEntity> getProductsByTypeOfPresent(String type) {
+        return shopRepository.findShopEntitiesByTypeOfPresent(type);
+    }
+
+    @Override
+    public List<ShopEntity> getProductsByOwner(TributesEntity tribute) {
+        return shopRepository.findShopEntitiesByProductOwners(tribute);
+    }
+
     @Transactional
     @Override
     public List<ShopEntity> getAllPresentsOfTribute(TributesEntity tribute) {

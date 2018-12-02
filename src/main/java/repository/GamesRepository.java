@@ -17,7 +17,7 @@ public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
     GamesEntity findGamesEntityByGameId(int gameId);
 
     /**
-     * fine all steward's games which start after date
+     * find all steward's games which start after date
      * @param steward steward
      * @param date start date
      * @return list of games

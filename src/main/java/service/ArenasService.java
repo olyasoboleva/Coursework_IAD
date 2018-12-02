@@ -1,8 +1,24 @@
 package service;
 
 import entity.ArenasEntity;
+import entity.GamesEntity;
 
 public interface ArenasService {
+
+    /**
+     * find arena by id
+     * @param arenaId id
+     * @return arena
+     */
+    ArenasEntity getArenaById(int arenaId);
+
+    /**
+     * find arena where game takes place
+     * @param game game
+     * @return arena
+     */
+    ArenasEntity getArenaByGame(GamesEntity game);
+
     /**
      * It creates new arena
      * @param arena arena

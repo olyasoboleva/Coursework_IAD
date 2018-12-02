@@ -1,6 +1,7 @@
 package impl;
 
 import entity.ArenasEntity;
+import entity.GamesEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.ArenasRepository;
@@ -15,6 +16,17 @@ public class ArenasServiceImpl implements ArenasService {
     @Autowired
     public ArenasServiceImpl(ArenasRepository arenasRepository) {
         this.arenasRepository = arenasRepository;
+    }
+
+
+    @Override
+    public ArenasEntity getArenaById(int arenaId) {
+        return arenasRepository.findArenasEntityByArenaId(arenaId);
+    }
+
+    @Override
+    public  ArenasEntity getArenaByGame(GamesEntity game) {
+        return arenasRepository.findArenasEntityByGame(game);
     }
 
     @Transactional

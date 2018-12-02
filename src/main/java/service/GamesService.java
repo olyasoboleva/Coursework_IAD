@@ -1,8 +1,35 @@
 package service;
 
 import entity.GamesEntity;
+import entity.UsersEntity;
+
+import java.sql.Date;
+import java.util.List;
 
 public interface GamesService {
+
+    /**
+     * find game by id
+     * @param gameId id
+     * @return game
+     */
+    GamesEntity getGameById(int gameId);
+
+    /**
+     * find all steward's games which start after date
+     * @param steward steward
+     * @param date start date
+     * @return list of games
+     */
+    List<GamesEntity> getGameByStewardAndAfterDate(UsersEntity steward, Date date);
+
+    /**
+     * find all games which start on this date
+     * @param startDate start date
+     * @return list of games
+     */
+    List<GamesEntity> getGameByStartDate(Date startDate);
+
     /**
      * It creates new game
      * @param game game

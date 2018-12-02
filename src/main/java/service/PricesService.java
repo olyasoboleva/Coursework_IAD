@@ -3,6 +3,12 @@ package service;
 import entity.PricesEntity;
 
 public interface PricesService {
+    /**
+     * find price by id
+     * @param priceId id
+     * @return price
+     */
+    PricesEntity getPriceById(int priceId);
 
     /**
      * It creates new price
