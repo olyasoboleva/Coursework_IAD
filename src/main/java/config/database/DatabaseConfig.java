@@ -3,6 +3,8 @@ package config.database;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -12,23 +14,36 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
 @EnableJpaRepositories("repository")
 @ComponentScan("repository")
-@EnableTransactionManagement
+@PropertySource("classpath:database.properties")
 public class DatabaseConfig {
+
+    @Resource
+    private Environment env;
+
+    private static final String PROP_DATABASE_DRIVER = "db.driver";
+    private static final String PROP_DATABASE_PASSWORD = "db.password";
+    private static final String PROP_DATABASE_URL = "db.url";
+    private static final String PROP_DATABASE_USERNAME = "db.username";
+    private static final String PROP_HIBERNATE_DIALECT = "db.hibernate.dialect";
+    private static final String PROP_ENTITYMANAGER_PACKAGES_TO_SCAN = "db.entitymanager.packages.to.scan";
+    private static final String PROP_HIBERNATE_HBM2DDL_AUTO = "db.hibernate.hbm2ddl.auto";
 
     @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("databases8");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
-        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUsername(env.getRequiredProperty(PROP_DATABASE_USERNAME));
+        dataSource.setPassword(env.getRequiredProperty(PROP_DATABASE_PASSWORD));
+        dataSource.setUrl(env.getRequiredProperty(PROP_DATABASE_URL));
+        dataSource.setDriverClassName(env.getRequiredProperty(PROP_DATABASE_DRIVER));
         return dataSource;
     }
 
@@ -39,8 +54,8 @@ public class DatabaseConfig {
 
     public Properties getHibernateProperties(){
         Properties properties = new Properties();
-        properties.put("db.hibernate.hbm2ddl.auto", "update");
-        properties.put("db.hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect");
+        properties.put("db.hibernate.hbm2ddl.auto", env.getRequiredProperty(PROP_HIBERNATE_HBM2DDL_AUTO));
+        properties.put("db.hibernate.dialect", env.getRequiredProperty(PROP_HIBERNATE_DIALECT));
         return properties;
     }
 
@@ -50,7 +65,7 @@ public class DatabaseConfig {
         entityManagerFactory.setDataSource(dataSource());
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
         entityManagerFactory.setJpaProperties(getHibernateProperties());
-        entityManagerFactory.setPackagesToScan("entity");
+        entityManagerFactory.setPackagesToScan(env.getRequiredProperty(PROP_ENTITYMANAGER_PACKAGES_TO_SCAN));
         return entityManagerFactory;
     }
 
@@ -60,5 +75,4 @@ public class DatabaseConfig {
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
         return jpaTransactionManager;
     }
-
 }
