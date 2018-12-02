@@ -1,3 +1,4 @@
+drop table hooks CASCADE ;
 drop table arenas cascade;
 drop table users cascade;
 drop table tributes cascade;

@@ -13,6 +13,7 @@ public class LocationsEntity {
 
     private Collection<ShopEntity> products;
     private Collection<ArenasEntity> arenas;
+    private Collection<HooksEntity> hooks;
 
     public LocationsEntity(){ }
 
@@ -84,5 +85,14 @@ public class LocationsEntity {
 
     public void setArenas(Collection<ArenasEntity> arenas) {
         this.arenas = arenas;
+    }
+
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    public Collection<HooksEntity> getHooks() {
+        return hooks;
+    }
+
+    public void setHooks(Collection<HooksEntity> hooks) {
+        this.hooks = hooks;
     }
 }

@@ -148,5 +148,9 @@ public class Main {
         for (ShopEntity prod: shopList){
             System.out.println(prod.getName());
         }
+
+        HooksEntity hooksEntity = new HooksEntity("Пожар", 10, locationsEntity);
+        HooksRepository hooksRepository = (HooksRepository)ctx.getBean("hooksRepository");
+        hooksRepository.save(hooksEntity);
     }
 }

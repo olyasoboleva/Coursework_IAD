@@ -1,3 +1,4 @@
+DELETE from hooks;
 DELETE FROM weaponsingame;
 DELETE FROM productsandlocation;
 DELETE FROM presentstotributes;

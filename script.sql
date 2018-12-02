@@ -145,3 +145,10 @@ CREATE TABLE weaponsInGame (
  PRIMARY KEY (tributeID, weaponID)
 );
 
+CREATE TABLE hooks (
+ hookID integer PRIMARY KEY ,
+ name varchar(40) NOT NULL ,
+ location integer REFERENCES locations NOT NULL ,
+ damage integer NOT NULL
+);
+
