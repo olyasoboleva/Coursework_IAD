@@ -1,5 +1,6 @@
 package impl;
 
+import entity.GamesEntity;
 import entity.StatusesEntity;
 import entity.TributesEntity;
 import entity.UsersEntity;
@@ -14,6 +15,7 @@ import service.TributesService;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 
 
 @Service("tributesService")
@@ -72,5 +74,25 @@ public class TributesServiceImpl implements TributesService {
     public TributesEntity updateTribute(TributesEntity tribute) {
         tributesRepository.save(tribute);
         return tribute;
+    }
+
+    @Override
+    public TributesEntity getTributeById(long tributeId) {
+        return tributesRepository.findTributesEntityByTributeId(tributeId);
+    }
+
+    @Override
+    public List<TributesEntity> getTributesByUser(UsersEntity user) {
+        return tributesRepository.getTributesEntitiesByUser(user);
+    }
+
+    @Override
+    public List<TributesEntity> getTributesByGame(GamesEntity game) {
+        return tributesRepository.getTributesEntitiesByGame(game);
+    }
+
+    @Override
+    public List<TributesEntity> getTributesByStatusAndGame(String status, GamesEntity game) {
+        return tributesRepository.getTributesEntityByStatusAndGame(status, game);
     }
 }

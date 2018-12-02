@@ -1,6 +1,9 @@
 package service;
 
+import entity.TributesEntity;
 import entity.WeaponsInGameEntity;
+
+import java.util.List;
 
 public interface WeaponsInGameService {
     /**
@@ -16,4 +19,11 @@ public interface WeaponsInGameService {
      * @return true if it was deleted
      */
     boolean deleteWeaponsInGame(WeaponsInGameEntity weaponInGame);
+
+    /**
+     * Try to find all relations between tributes and theirs weapons
+     * @param tribute tribute
+     * @return links to tribute and his weapons
+     */
+    List<WeaponsInGameEntity> getWeaponsInGameByTribute(TributesEntity tribute);
 }

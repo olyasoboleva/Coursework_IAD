@@ -1,5 +1,6 @@
 package impl;
 
+import entity.SkillsEntity;
 import entity.TributesEntity;
 import entity.WeaponsEntity;
 import entity.WeaponsInGameEntity;
@@ -61,4 +62,20 @@ public class WeaponsServiceImpl implements WeaponsService {
         weaponsRepository.save(weapon);
         return weapon;
     }
+
+    @Override
+    public WeaponsEntity getWeaponById(int id) {
+        return weaponsRepository.findWeaponsEntityByWeaponId(id);
+    }
+
+    @Override
+    public WeaponsEntity getWeaponBySkill(SkillsEntity skill) {
+        return weaponsRepository.getWeaponsEntitiesBySkill(skill);
+    }
+
+    @Override
+    public List<WeaponsEntity> getWeaponsByOwners(TributesEntity tribute) {
+        return weaponsRepository.getWeaponsEntitiesByOwners(tribute);
+    }
+
 }

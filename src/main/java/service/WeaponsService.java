@@ -1,5 +1,6 @@
 package service;
 
+import entity.SkillsEntity;
 import entity.TributesEntity;
 import entity.WeaponsEntity;
 
@@ -33,4 +34,25 @@ public interface WeaponsService {
      * @return his weapon
      */
     List<WeaponsEntity> getTributeWeapons(TributesEntity tribute);
+
+    /**
+     * find weapon by id
+     * @param id id
+     * @return weapon
+     */
+    WeaponsEntity getWeaponById(int id);
+
+    /**
+     * find weapon for this skill
+     * @param skill skill
+     * @return weapon
+     */
+    WeaponsEntity getWeaponBySkill(SkillsEntity skill);
+
+    /**
+     * find weapons which tribute have
+     * @param tribute tribute
+     * @return lit of weapons
+     */
+    List<WeaponsEntity> getWeaponsByOwners(TributesEntity tribute);
 }

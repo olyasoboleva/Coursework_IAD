@@ -19,4 +19,26 @@ public class StatusesServiceImpl implements StatusesService {
         statusesRepository.save(status);
         return status;
     }
+
+    @Override
+    public StatusesEntity createStatus(StatusesEntity status) {
+        statusesRepository.save(status);
+        return status;
+    }
+
+    @Override
+    public boolean deleteStatus(StatusesEntity status) {
+        statusesRepository.delete(status);
+        return true;
+    }
+
+    @Override
+    public StatusesEntity getStatuseById(int statusId) {
+        return statusesRepository.findStatusesEntityByStatusId(statusId);
+    }
+
+    @Override
+    public StatusesEntity getStatuseByName(String name) {
+        return statusesRepository.findStatusesEntityByName(name);
+    }
 }

@@ -1,6 +1,7 @@
 package impl;
 
 import entity.UserLoginEntity;
+import entity.UsersEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,5 +37,20 @@ public class UserLoginServiceImpl implements UserLoginService {
     public boolean deleteSLogin(UserLoginEntity login) {
         userLoginRepository.delete(login);
         return true;
+    }
+
+    @Override
+    public UserLoginEntity getUserLoginByUser(UsersEntity user) {
+        return userLoginRepository.findUserLoginEntityByUser(user);
+    }
+
+    @Override
+    public UserLoginEntity getUserLoginByNick(String nick) {
+        return userLoginRepository.findUserLoginEntityByNick(nick);
+    }
+
+    @Override
+    public UserLoginEntity getUserLoginByNickAndPassword(String nick, String password) {
+        return userLoginRepository.findUserLoginEntityByNickAndPassword(nick, password);
     }
 }

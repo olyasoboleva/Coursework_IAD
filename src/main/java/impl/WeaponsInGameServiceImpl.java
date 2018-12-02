@@ -50,4 +50,8 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
         return true;
     }
 
+    @Override
+    public List<WeaponsInGameEntity> getWeaponsInGameByTribute(TributesEntity tribute) {
+        return weaponsInGameRepository.getWeaponsInGameEntitiesByTribute(tribute);
+    }
 }

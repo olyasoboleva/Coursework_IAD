@@ -1,6 +1,7 @@
 package service;
 
 import entity.UserLoginEntity;
+import entity.UsersEntity;
 
 public interface UserLoginService {
     /**
@@ -23,4 +24,27 @@ public interface UserLoginService {
      * @return true if it was successfully deleted
      */
     boolean deleteSLogin(UserLoginEntity login);
+
+    /**
+     * find login parameters of user
+     * @param user user
+     * @return user login
+     */
+    UserLoginEntity getUserLoginByUser(UsersEntity user);
+
+    /**
+     * find user login by nick
+     * @param nick username
+     * @return user login entity
+     */
+    UserLoginEntity getUserLoginByNick(String nick);
+
+    /**
+     * find user by nick and password
+     *
+     * @param nick nick
+     * @param password password
+     * @return user login
+     */
+    UserLoginEntity getUserLoginByNickAndPassword(String nick, String password);
 }
