@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.PresentsToTributesRepository;
+import repository.TributesRepository;
 import repository.UserLoginRepository;
 import repository.UserRepository;
 import service.PresentsToTributesService;
@@ -17,22 +18,18 @@ import java.util.List;
 @Service("presentsToTributesService")
 public class PresentsToTributesServiceImpl implements PresentsToTributesService {
 
-    //TODO: надо подумать, как нормально два сервиса в одной штуке использовать. Или тут сохранение другой сущности делать через репозиторий, а не через сервис
     private final PresentsToTributesRepository presentsToTributesRepository;
     private final UserRepository userRepository;
-    private final UserLoginRepository userLoginRepository;
-    UsersServiceImpl usersService;
+
 
     @Autowired
-    public PresentsToTributesServiceImpl(PresentsToTributesRepository presentsToTributesRepository, UserRepository userRepository, UserLoginRepository userLoginRepository) {
+    public PresentsToTributesServiceImpl(PresentsToTributesRepository presentsToTributesRepository, UserRepository userRepository) {
         this.presentsToTributesRepository = presentsToTributesRepository;
         this.userRepository = userRepository;
-        usersService = new UsersServiceImpl(userRepository, userLoginRepository);
-        this.userLoginRepository = userLoginRepository;
     }
 
     @Override
-    public PresentsToTributesEntity getPresentsToTributeById(long sendingId) {
+    public PresentsToTributesEntity getPresentsToTributeById(int sendingId) {
         return presentsToTributesRepository.findPresentsToTributesEntityBySendingId(sendingId);
     }
 
@@ -60,7 +57,7 @@ public class PresentsToTributesServiceImpl implements PresentsToTributesService 
             return null;
         }
         user.setCash(user.getCash() - product.getCost());
-        user = usersService.updateUser(user);
+        userRepository.save(user);
         presentsToTributesRepository.save(present);
         return present;
     }

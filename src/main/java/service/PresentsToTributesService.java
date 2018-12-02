@@ -13,7 +13,7 @@ public interface PresentsToTributesService {
      * @param sendingId id
      * @return present of tribute
      */
-    PresentsToTributesEntity getPresentsToTributeById(long sendingId);
+    PresentsToTributesEntity getPresentsToTributeById(int sendingId);
 
     /**
      * find all presents from sender to tribute

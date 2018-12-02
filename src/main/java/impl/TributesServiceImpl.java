@@ -32,10 +32,9 @@ public class TributesServiceImpl implements TributesService {
         this.tributesRepository = tributesRepository;
         this.userRepository = userRepository;
         this.statusesRepository = statusesRepository;
-        usersService = new UsersServiceImpl(userRepository, userLoginRepository);
+        usersService = new UsersServiceImpl(userRepository, userLoginRepository, tributesRepository, statusesRepository);
         this.userLoginRepository = userLoginRepository;
     }
-
 
     /**
      * It creates tribute after checking his age

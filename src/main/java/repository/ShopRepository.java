@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ShopRepository extends JpaRepository<ShopEntity, Integer> {
+public interface ShopRepository extends CrudRepository<ShopEntity, Integer> {
     /**
      * find product by id
      * @param productId id

@@ -26,12 +26,13 @@ public class WeaponsServiceImpl implements WeaponsService {
         this.weaponsInGameRepository = weaponsInGameRepository;
     }
 
+    //FIXME не тестила
     @Transactional
     @Override
     public List<WeaponsEntity> getTributeWeapons(TributesEntity tribute) {
         List<WeaponsEntity> tributeWeapons = new ArrayList<>();
         List<WeaponsInGameEntity> gameWeapon = weaponsInGameRepository.getWeaponsInGameEntitiesByTribute(tribute);
-        List<WeaponsEntity> allWeapons = weaponsRepository.findAll();
+        List<WeaponsEntity> allWeapons = (List<WeaponsEntity>) weaponsRepository.findAll();
         for (WeaponsEntity weapons : allWeapons) {
             for (WeaponsInGameEntity weapon : gameWeapon) {
                 if (weapons.getWeaponId() == weapon.getWeaponId()) {

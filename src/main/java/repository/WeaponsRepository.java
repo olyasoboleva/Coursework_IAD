@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WeaponsRepository extends JpaRepository<WeaponsEntity, Integer> {
+public interface WeaponsRepository extends CrudRepository<WeaponsEntity, Integer> {
     WeaponsEntity findWeaponsEntityByWeaponId(int id);
 
     /**

@@ -40,11 +40,12 @@ public class ShopServiceImpl implements ShopService{
         return shopRepository.findShopEntitiesByProductOwners(tribute);
     }
 
+    //FIXME: не тестила
     @Transactional
     @Override
     public List<ShopEntity> getAllPresentsOfTribute(TributesEntity tribute) {
         List<PresentsToTributesEntity> presents = presentsToTributesRepository.getPresentsToTributesEntityByTribute(tribute);
-        List<ShopEntity> allproducts = shopRepository.findAll();
+        List<ShopEntity> allproducts = (List<ShopEntity>) shopRepository.findAll();
         List<ShopEntity> tributePresents = new ArrayList<>();
         for (ShopEntity product : allproducts ) {
             for (PresentsToTributesEntity present : presents) {

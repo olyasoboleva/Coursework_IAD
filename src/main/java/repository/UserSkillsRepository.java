@@ -5,10 +5,11 @@ import entity.UsersEntity;
 import entity.UserSkillsEntity;
 import entity.UserSkillsEntityPK;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserSkillsRepository extends JpaRepository<UserSkillsEntity, UserSkillsEntityPK> {
+public interface UserSkillsRepository extends CrudRepository<UserSkillsEntity, UserSkillsEntityPK> {
     /**
      * find user's level of skill
      *

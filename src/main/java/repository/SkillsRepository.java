@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Collection;
 import java.util.List;
 
-public interface SkillsRepository extends JpaRepository<SkillsEntity,Integer> {
+public interface SkillsRepository extends CrudRepository<SkillsEntity,Integer> {
     /**
      * find skill by id
      * @param skillId id

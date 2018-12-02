@@ -27,12 +27,13 @@ public class SkillsServiceImpl implements SkillsService {
         this.userRepository = userRepository;
     }
 
+    //FIXME: не тестила
       @Transactional
       @Override
     public Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user) {
         Map<SkillsEntity, Integer> allUserSkills = new HashMap<>();
         List<UserSkillsEntity> userSkills = userSkillsRepository.getUserSkillsEntitiesByUser(user);
-        List<SkillsEntity> allSkills = skillsRepository.findAll();
+        List<SkillsEntity> allSkills = (List<SkillsEntity>) skillsRepository.findAll(); //FIXME а это норм?
         for (SkillsEntity skill : allSkills) {
             for (UserSkillsEntity userSkill : userSkills) {
                 if (skill.getSkillId() == userSkill.getSkillId()) {

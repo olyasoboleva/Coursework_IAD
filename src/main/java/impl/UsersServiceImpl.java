@@ -4,6 +4,8 @@ import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import repository.StatusesRepository;
+import repository.TributesRepository;
 import repository.UserLoginRepository;
 import repository.UserRepository;
 import service.UsersService;

@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.util.List;
 
 public interface UsersService {
+
+
     /**
      * It creates new user
      * @param user user
