@@ -1,7 +1,7 @@
 CREATE TABLE locations (
  locationID integer PRIMARY KEY ,
  name varchar(40),
- picturePath varchar(40) not null
+ picture bytea not null
 );
 
 CREATE TABLE arenas (
@@ -37,7 +37,7 @@ name varchar(64) NOT NULL,
 cost integer NOT NULL CHECK (cost >= 0),
 typeOfPresent VARCHAR(40) NOT NULL,
 description text,
-picturepath  varchar(40) not null ,
+picture bytea not null ,
 healthRecovery integer
 CHECK ((healthRecovery < 100) AND (healthRecovery >= 0))
 );
@@ -48,7 +48,7 @@ name varchar(64) NOT NULL UNIQUE,
 typeOfWeapon VARCHAR(40) NOT NULL,
 damage integer CHECK ((damage >= 0) AND (damage <= 100)),
 radiusOfAction integer CHECK (radiusOfAction > 0),
-picturePath VARCHAR(40) NOT NULL
+picture bytea NOT NULL
 );
 
 CREATE TABLE userLogin (
@@ -69,7 +69,7 @@ district integer REFERENCES districts,
 birthday date,
 statusId integer REFERENCES statuses NOT NULL,
 cash integer,
-picturePath VARCHAR(40) NOT NULL,
+picture bytea NOT NULL,
 CONSTRAINT info CHECK (height > 0 AND weight >0 AND cash >= 0)
 );
 

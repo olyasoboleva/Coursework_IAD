@@ -3,17 +3,29 @@ import entity.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import repository.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
 public class Main {
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DatabaseConfig.class);
 
+        File imgPath = new File("pic.png");
+        BufferedImage bufferedImage = ImageIO.read(imgPath);
 
-        LocationsEntity locationsEntity = new LocationsEntity("forest", "forest.jpg");
+        // get DataBufferBytes from Raster
+        WritableRaster raster = bufferedImage .getRaster();
+        DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
+
+        LocationsEntity locationsEntity = new LocationsEntity("forest", data.getData());
         LocationsRepository locationsRepository = (LocationsRepository)ctx.getBean("locationsRepository");
         locationsRepository.save(locationsEntity);
 
@@ -67,7 +79,7 @@ public class Main {
         user.setHeight(163);
         user.setWeight(47);
         user.setStatus(status);
-        user.setPicturePath("pic.jpg");
+        user.setPicture(data.getData());
         user.setUserLogin(userlogin);
         user.setDistrict(districtsEntity);
         UserRepository userRepository = (UserRepository)ctx.getBean("userRepository");
@@ -91,12 +103,12 @@ public class Main {
 
         WeaponsEntity weapon1 = new WeaponsEntity();
         weapon1.setName("меч");
-        weapon1.setPicturePath("/");
+        weapon1.setPicture(data.getData());
         weapon1.setTypeOfWeapon("Холодное оружие");
         weapon1.setRadiusOfAction(10);
         WeaponsEntity weapon2 = new WeaponsEntity();
         weapon2.setName("лук");
-        weapon2.setPicturePath("/");
+        weapon2.setPicture(data.getData());
         weapon2.setTypeOfWeapon("что-то там");
         weapon2.setRadiusOfAction(10);
         WeaponsRepository weaponsRepository = (WeaponsRepository)ctx.getBean("weaponsRepository");
@@ -121,7 +133,7 @@ public class Main {
         UserSkillsRepository userSkillsRepository = (UserSkillsRepository)ctx.getBean("userSkillsRepository");
         userSkillsRepository.save(userSkillsEntity);
 
-        ShopEntity product = new ShopEntity("Верёвка", 120, "Инструменты", "Прочная длинная веревка", 0, "rope.jpg");
+        ShopEntity product = new ShopEntity("Верёвка", 120, "Инструменты", "Прочная длинная веревка", 0, data.getData());
         ShopRepository shopRepository = (ShopRepository)ctx.getBean("shopRepository");
         shopRepository.save(product);
 

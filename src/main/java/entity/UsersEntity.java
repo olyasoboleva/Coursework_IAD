@@ -3,8 +3,8 @@ package entity;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -19,7 +19,7 @@ public class UsersEntity {
     private Date birthday;
     private StatusesEntity status;
     private int cash;
-    private String picturePath;
+    private byte[] picture;
     private Collection<GamesEntity> stewardGames;
     private Collection<PresentsToTributesEntity> presentstotributesByUserid;
     private Collection<TrainingsEntity> trainings;
@@ -34,24 +34,24 @@ public class UsersEntity {
     public UsersEntity() {}
 
 
-    public UsersEntity(String surname, String name, int height, int weight, boolean sex, DistrictsEntity district, Date birthday, String picturePath, UserLoginEntity userLogin, StatusesEntity status) {
+    public UsersEntity(String surname, String name, int height, int weight, boolean sex, DistrictsEntity district, Date birthday, byte[] picture, UserLoginEntity userLogin, StatusesEntity status) {
         this.surname = surname;
         this.name = name;
         this.height = height;
         this.weight = weight;
         this.sex = sex;
         this.birthday = birthday;
-        this.picturePath = picturePath;
+        this.picture = picture;
         this.cash = 1000;
         this.status = status;
         this.userLogin = userLogin;
         this.district = district;
     }
 
-    public UsersEntity(String surname, String name, String picturePath, UserLoginEntity userLogin, StatusesEntity status) {
+    public UsersEntity(String surname, String name, byte[] picture, UserLoginEntity userLogin, StatusesEntity status) {
         this.surname = surname;
         this.name = name;
-        this.picturePath = picturePath;
+        this.picture = picture;
         this.userLogin = userLogin;
         this.status = status;
     }
@@ -74,6 +74,16 @@ public class UsersEntity {
     }
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    @Basic
+    @Column(name = "picture")
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     @Basic
@@ -136,15 +146,6 @@ public class UsersEntity {
         this.cash = cash;
     }
 
-    @Basic
-    @Column(name = "picturePath", nullable = false)
-    public String getPicturePath() {
-        return picturePath;
-    }
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -159,7 +160,6 @@ public class UsersEntity {
                 Objects.equals(name, that.name) &&
                 Objects.equals(birthday, that.birthday) &&
                 Objects.equals(status, that.status) &&
-                Objects.equals(picturePath, that.picturePath) &&
                 Objects.equals(stewardGames, that.stewardGames) &&
                 Objects.equals(presentstotributesByUserid, that.presentstotributesByUserid) &&
                 Objects.equals(trainings, that.trainings) &&
@@ -172,7 +172,7 @@ public class UsersEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, picturePath, stewardGames, presentstotributesByUserid, trainings, tributesByUser, skills, district, userLogin);
+        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, stewardGames, presentstotributesByUserid, trainings, tributesByUser, skills, district, userLogin);
     }
 
     @OneToMany(mappedBy = "steward", fetch = FetchType.LAZY)

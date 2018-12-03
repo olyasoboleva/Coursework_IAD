@@ -9,7 +9,7 @@ import java.util.Objects;
 public class LocationsEntity {
     private int locationId;
     private String name;
-    private String picturePath;
+    private byte[] picture;
 
     private Collection<ShopEntity> products;
     private Collection<ArenasEntity> arenas;
@@ -17,9 +17,9 @@ public class LocationsEntity {
 
     public LocationsEntity(){ }
 
-    public LocationsEntity(String name, String picturepath){
+    public LocationsEntity(String name, byte[] picture){
         this.name = name;
-        this.picturePath = picturepath;
+        this.picture = picture;
     }
 
     @Id
@@ -44,13 +44,13 @@ public class LocationsEntity {
     }
 
     @Basic
-    @Column(name = "picturePath")
-    public String getPicturepath() {
-        return picturePath;
+    @Column(name = "picture")
+    public byte[] getPicture() {
+        return picture;
     }
 
-    public void setPicturepath(String picturepath) {
-        this.picturePath = picturepath;
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     @Override
@@ -60,12 +60,12 @@ public class LocationsEntity {
         LocationsEntity that = (LocationsEntity) o;
         return locationId == that.locationId &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(picturePath, that.picturePath);
+                Objects.equals(picture, that.picture);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(locationId, name, picturePath);
+        return Objects.hash(locationId, name, picture);
     }
 
 

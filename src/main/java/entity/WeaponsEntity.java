@@ -15,19 +15,19 @@ public class WeaponsEntity {
     private String typeOfWeapon;
     private int damage;
     private int radiusOfAction;
-    private String picturePath;
+    private byte[] picture;
 
     private SkillsEntity skill;
     private Collection<TributesEntity> owners;
 
     public WeaponsEntity(){ }
 
-    public WeaponsEntity(String name, String typeOfWeapon, int damage, int radiusOfAction, String picturePath) {
+    public WeaponsEntity(String name, String typeOfWeapon, int damage, int radiusOfAction,byte[] picture) {
         this.name = name;
         this.typeOfWeapon = typeOfWeapon;
         this.damage = damage;
         this.radiusOfAction = radiusOfAction;
-        this.picturePath = picturePath;
+        this.picture = picture;
     }
 
     @Id
@@ -86,13 +86,13 @@ public class WeaponsEntity {
     }
 
     @Basic
-    @Column(name = "picturePath", nullable = false)
-    public String getPicturePath() {
-        return picturePath;
+    @Column(name = "picture")
+    public byte[] getPicture() {
+        return picture;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
     @Override
@@ -105,7 +105,6 @@ public class WeaponsEntity {
                 radiusOfAction == that.radiusOfAction &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(typeOfWeapon, that.typeOfWeapon) &&
-                Objects.equals(picturePath, that.picturePath) &&
                 Objects.equals(skill, that.skill) &&
                 Objects.equals(owners, that.owners);
     }
@@ -113,7 +112,7 @@ public class WeaponsEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(weaponId, name, typeOfWeapon, damage, radiusOfAction, picturePath, skill, owners);
+        return Objects.hash(weaponId, name, typeOfWeapon, damage, radiusOfAction, picture, skill, owners);
     }
 
     @OneToOne(mappedBy = "weapon")

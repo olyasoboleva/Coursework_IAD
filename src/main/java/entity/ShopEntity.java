@@ -19,17 +19,17 @@ public class ShopEntity {
     private Collection<TributesEntity> productOwners;
     private Collection<UsersEntity> senders;
     private Collection<LocationsEntity> locations;
-    private String picturePath;
+    private byte[] picture;
 
     public ShopEntity() { }
 
-    public ShopEntity(String name, int cost, String typeOfPresent, String description, int healthRecovery, String picture) {
+    public ShopEntity(String name, int cost, String typeOfPresent, String description, int healthRecovery, byte[] picture) {
         this.name = name;
         this.cost = cost;
         this.typeOfPresent = typeOfPresent;
         this.description = description;
         this.healthRecovery = healthRecovery;
-        this.picturePath = picture;
+        this.picture = picture;
     }
 
     @Id
@@ -88,13 +88,13 @@ public class ShopEntity {
     }
 
     @Basic
-    @Column(name = "picturePath")
-    public String getPicturePath() {
-        return picturePath;
+    @Column(name = "picture")
+    public byte[] getPicture() {
+        return picture;
     }
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
     }
 
 
@@ -123,12 +123,12 @@ public class ShopEntity {
                 Objects.equals(description, that.description) &&
                 Objects.equals(productOwners, that.productOwners) &&
                 Objects.equals(locations, that.locations) &&
-                Objects.equals(picturePath, that.picturePath);
+                Objects.equals(picture, that.picture);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, name, cost, typeOfPresent, description, healthRecovery, productOwners, locations, picturePath);
+        return Objects.hash(productId, name, cost, typeOfPresent, description, healthRecovery, productOwners, locations, picture);
     }
 
     @ManyToMany(fetch = FetchType.LAZY)

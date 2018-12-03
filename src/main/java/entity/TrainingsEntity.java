@@ -13,6 +13,7 @@ public class TrainingsEntity {
     private int coefficient;
     private int duration;
     private String description;
+    //TODO: change type
     private Time timeOfTraining;
     private int dayOfWeek;
     private SkillsEntity skill;
