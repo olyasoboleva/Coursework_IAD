@@ -1,40 +1,36 @@
 package entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "productsAndLocation", schema = "public", catalog = "postgres")
 public class ProductsAndLocation {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "applyingId")
-    private int applyingId;
+    private Integer applyingId;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "locationId", nullable = false)
     private Location location;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false)
     private Shop product;
-
-    public ProductsAndLocation() {}
 
     public ProductsAndLocation(Shop product, Location location) {
         setLocation(location);
         setProduct(product);
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -43,7 +39,7 @@ public class ProductsAndLocation {
 
         ProductsAndLocation that = (ProductsAndLocation) o;
 
-        if (applyingId != that.applyingId) return false;
+        if (!Objects.equals(applyingId, that.applyingId)) return false;
 
         return true;
     }

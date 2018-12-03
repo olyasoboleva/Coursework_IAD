@@ -1,10 +1,10 @@
 /* ///////////////////////////////////////////////// !!*/
 CREATE FUNCTION check_date_of_birth() RETURNS trigger AS '
 BEGIN
-IF (((SELECT startDate FROM games WHERE gameId = NEW.gameId) - (SELECT birthday FROM users WHERE userId = NEW.userId)) < 12*365) THEN
+IF (((SELECT startDate FROM game WHERE gameId = NEW.gameId) - (SELECT birthday FROM users WHERE userId = NEW.userId)) < 12*365) THEN
 	RAISE WARNING ''Трибут должен достичь 12 лет для участия в играх'';
 	RETURN NULL;
-	ELSEIF (((SELECT startDate FROM games WHERE gameId = NEW.gameId) - (SELECT birthday FROM users WHERE userId = NEW.userId)) > 18*365) THEN
+	ELSEIF (((SELECT startDate FROM game WHERE gameId = NEW.gameId) - (SELECT birthday FROM users WHERE userId = NEW.userId)) > 18*365) THEN
 		RAISE WARNING ''Трибут не может быть старше 18 лет'';
 		RETURN NULL;
 	ELSE
@@ -59,7 +59,7 @@ END;
 ' LANGUAGE plpgsql;
 
 CREATE TRIGGER check_present BEFORE INSERT OR UPDATE
-  ON presentstotributes
+  ON presentstotribute
   FOR EACH ROW
 EXECUTE PROCEDURE check_present();
 
@@ -67,7 +67,7 @@ EXECUTE PROCEDURE check_present();
 
 CREATE FUNCTION check_tributes() RETURNS trigger AS '
 BEGIN
-IF ((SELECT typeOfGame FROM games WHERE games.gameId = NEW.gameId) = TRUE ) THEN
+IF ((SELECT typeOfGame FROM game WHERE game.gameId = NEW.gameId) = TRUE ) THEN
 	IF (((SELECT COUNT(tributeId) FROM tributes WHERE gameId = NEW.gameId GROUP BY gameId) + 1) > 24) THEN
 		RAISE WARNING ''В обычной версии игры не может быть больше 24 трибутов'';
 		RETURN NULL;
@@ -89,7 +89,7 @@ IF ((SELECT typeOfGame FROM games WHERE games.gameId = NEW.gameId) = TRUE ) THEN
 					RETURN NEW;
 	END IF;
 ELSEIF ((SELECT COUNT(tributeId) FROM tributes WHERE gameId = NEW.gameId GROUP BY gameId)
-	>= (SELECT numberOfTributes FROM games WHERE gameId = NEW.gameId)) THEN
+	>= (SELECT numberOfTributes FROM game WHERE gameId = NEW.gameId)) THEN
 	RAISE WARNING ''В этой версии игры не может быть больше трибутов'';
 	RETURN NULL;
 ELSE

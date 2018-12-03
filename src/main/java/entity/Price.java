@@ -1,42 +1,36 @@
 package entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
-@Table(name = "prices", schema = "public", catalog = "postgres")
+@Data
+@NoArgsConstructor
+@Table(name = "price", schema = "public", catalog = "postgres")
 public class Price {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "priceId")
-    private int priceId;
+    private Integer priceId;
 
-    @Getter
-    @Setter
-    @Basic
     @NotNull
     @Column(name = "name", length = 64)
     private String name;
 
-    @Getter
-    @Setter
-    @Basic
+
     @Min(0)
     @Column(name = "cost")
     private Integer cost;
 
-    @Getter
-    @Setter
     @OneToOne(mappedBy = "price")
     private Status status;
-
-    public Price() { }
 
     public Price(String name, Integer cost) {
         this.name = name;
@@ -50,7 +44,7 @@ public class Price {
 
         Price that = (Price) o;
 
-        if (priceId != that.priceId) return false;
+        if (!Objects.equals(priceId,that.priceId)) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (cost != null ? !cost.equals(that.cost) : that.cost != null) return false;
 

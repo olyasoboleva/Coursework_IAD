@@ -5,7 +5,7 @@ import entity.Shop;
 import entity.Tribute;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.PresentsToTributesRepository;
+import repository.PresentsToTributeRepository;
 import repository.ShopRepository;
 import service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ import java.util.List;
 public class ShopServiceImpl implements ShopService{
 
     private final ShopRepository shopRepository;
-    private final PresentsToTributesRepository presentsToTributesRepository;
+    private final PresentsToTributeRepository presentsToTributeRepository;
 
     @Autowired
-    public ShopServiceImpl(ShopRepository shopRepository, PresentsToTributesRepository presentsToTributesRepository) {
+    public ShopServiceImpl(ShopRepository shopRepository, PresentsToTributeRepository presentsToTributeRepository) {
         this.shopRepository = shopRepository;
-        this.presentsToTributesRepository = presentsToTributesRepository;
+        this.presentsToTributeRepository = presentsToTributeRepository;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ShopServiceImpl implements ShopService{
     @Transactional
     @Override
     public List<Shop> getAllPresentsOfTribute(Tribute tribute) {
-        List<PresentsToTribute> presents = presentsToTributesRepository.getPresentsToTributesByTribute(tribute);
+        List<PresentsToTribute> presents = presentsToTributeRepository.getPresentsToTributesByTribute(tribute);
         List<Shop> allproducts = (List<Shop>) shopRepository.findAll();
         List<Shop> tributePresents = new ArrayList<>();
         for (Shop product : allproducts ) {

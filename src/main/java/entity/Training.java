@@ -1,6 +1,8 @@
 package entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,66 +11,42 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "trainings", schema = "public", catalog = "postgres")
+@Data
+@NoArgsConstructor
+@Table(name = "training", schema = "public", catalog = "postgres")
 public class Training {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trainingId")
-    private int trainingId;
+    private Integer trainingId;
 
-    @Getter
-    @Setter
-    @Basic
     @Column(name = "name", length = 40)
     private String name;
 
-    @Getter
-    @Setter
-    @Basic
     @Min(0)
     @Column(name = "coefficient")
     private int coefficient;
 
-    @Getter
-    @Setter
-    @Basic
     @Min(0)
     @Column(name = "duration")
     private int duration;
 
-    @Getter
-    @Setter
-    @Basic
     @Column(name = "description")
     private String description;
 
-    @Getter
-    @Setter
-    @Basic
     @Column(name = "timeOfTraining")
     private LocalTime timeOfTraining;
 
-    @Getter
-    @Setter
-    @Basic
     @Column(name = "dayOfWeek")
     private int dayOfWeek;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "skillId", referencedColumnName = "skillId")
     private Skill skill;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "trainer", referencedColumnName = "userId")
     private User trainer;
-
-    public Training() {}
 
     public Training(String name, Skill skill, int coefficient, int duration, String description, User trainer, LocalTime timeOfTraining, int dayOfWeek) {
         this.name = name;
@@ -86,7 +64,7 @@ public class Training {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Training that = (Training) o;
-        return trainingId == that.trainingId &&
+        return Objects.equals(trainingId, that.trainingId) &&
                 coefficient == that.coefficient &&
                 duration == that.duration &&
                 dayOfWeek == that.dayOfWeek &&

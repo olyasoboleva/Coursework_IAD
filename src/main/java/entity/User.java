@@ -1,10 +1,7 @@
 package entity;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -28,7 +25,6 @@ public class User {
     @Column(name = "surname", length = 30)
     private String surname;
 
-    @Basic
     @NotNull
     @Column(name = "name", length = 30)
     private String name;
@@ -64,27 +60,32 @@ public class User {
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private Collection<PresentsToTribute> presentstotributesByUserid;
+
     @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY)
     private Collection<Training> trainings;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Collection<Tribute> tributesByUser;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "presentstotributes",
-            joinColumns = {@JoinColumn(name = "senderid")},
-            inverseJoinColumns = {@JoinColumn(name = "tributeid")}
+            name = "presentsToTribute",
+            joinColumns = {@JoinColumn(name = "senderId")},
+            inverseJoinColumns = {@JoinColumn(name = "tributeId")}
     )
     private Collection<Shop> sendings;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "presentstotributes",
-            joinColumns = {@JoinColumn(name = "senderid")},
-            inverseJoinColumns = {@JoinColumn(name = "productid")}
+            name = "presentsToTribute",
+            joinColumns = {@JoinColumn(name = "senderId")},
+            inverseJoinColumns = {@JoinColumn(name = "productId")}
     )
     private Collection<Tribute> recipients;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "userskills",
+            name = "userSkill",
             joinColumns = {@JoinColumn(name = "userId")},
             inverseJoinColumns = {@JoinColumn(name = "skillId")}
     )
@@ -126,7 +127,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User that = (User) o;
-        return userId == that.userId &&
+        return Objects.equals(userId, that.userId) &&
                 height == that.height &&
                 weight == that.weight &&
                 sex == that.sex &&

@@ -27,21 +27,21 @@ public class Main {
         DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
 
         Location location = new Location("forest", data.getData());
-        LocationsRepository locationsRepository = (LocationsRepository)ctx.getBean("locationsRepository");
-        locationsRepository.save(location);
+        LocationRepository locationRepository = (LocationRepository)ctx.getBean("locationRepository");
+        locationRepository.save(location);
 
         Arena arena = new Arena();
         arena.setArenaLength(123);
         arena.setArenaWidth(12);
         arena.setMainLocation(location);
 
-        ArenasRepository arenasRepository = (ArenasRepository) ctx.getBean("arenasRepository");
+        ArenaRepository arenaRepository = (ArenaRepository) ctx.getBean("arenaRepository");
 
-        arenasRepository.save(arena);
+        arenaRepository.save(arena);
 
 ////
-        DistrictsRepository districtsRepository = (DistrictsRepository) ctx.getBean("districtsRepository");
-        SkillsRepository skillsRepository = (SkillsRepository) ctx.getBean("skillsRepository");
+        DistrictRepository districtRepository = (DistrictRepository) ctx.getBean("districtRepository");
+        SkillRepository skillRepository = (SkillRepository) ctx.getBean("skillRepository");
 
         District district = new District();
         district.setName("Дистрикт 2");
@@ -52,11 +52,11 @@ public class Main {
         skill.setTypeOfSkill("Другое");
         skill.setDescription("kek lol");
 
-        skillsRepository.save(skill);
+        skillRepository.save(skill);
         district.setSkill(skill);
-        districtsRepository.save(district);
+        districtRepository.save(district);
 
-        Skill skill1 = skillsRepository.findSkillByDistrict(district);
+        Skill skill1 = skillRepository.findSkillByDistrict(district);
         System.out.println(skill1.getDescription());
 /////////////////////////
 
@@ -68,8 +68,8 @@ public class Main {
 
         Status status = new Status();
         status.setName("Наблюдатель");
-        StatusesRepository statusesRepository = (StatusesRepository)ctx.getBean("statusesRepository");
-        statusesRepository.save(status);
+        StatusRepository statusRepository = (StatusRepository)ctx.getBean("statusRepository");
+        statusRepository.save(status);
 
         User user = new User();
         user.setName("Ira");
@@ -87,19 +87,19 @@ public class Main {
         userRepository.save(user);
 
         Game game = new Game();
-        GamesRepository gamesRepository = (GamesRepository) ctx.getBean("gamesRepository");
+        GameRepository gameRepository = (GameRepository) ctx.getBean("gameRepository");
         game.setArena(arena);
         game.setDuration(15);
         game.setTypeOfGame(true);
         game.setStartDate(new Date(1));
         game.setNumberOfTributes(24);
-        gamesRepository.save(game);
+        gameRepository.save(game);
 
         Tribute tribute = new Tribute();
-        TributesRepository tributesRepository = (TributesRepository) ctx.getBean("tributesRepository");
+        TributeRepository tributeRepository = (TributeRepository) ctx.getBean("tributeRepository");
         tribute.setUser(user);
         tribute.setGame(game);
-        tributesRepository.save(tribute);
+        tributeRepository.save(tribute);
 
 
         Weapon weapon1 = new Weapon();
@@ -112,9 +112,9 @@ public class Main {
         weapon2.setPicture(data.getData());
         weapon2.setTypeOfWeapon("что-то там");
         weapon2.setRadiusOfAction(10);
-        WeaponsRepository weaponsRepository = (WeaponsRepository)ctx.getBean("weaponsRepository");
-        weaponsRepository.save(weapon1);
-        weaponsRepository.save(weapon2);
+        WeaponRepository weaponRepository = (WeaponRepository)ctx.getBean("weaponRepository");
+        weaponRepository.save(weapon1);
+        weaponRepository.save(weapon2);
 
 
         WeaponsInGame weaponsInGame1 = new WeaponsInGame();
@@ -131,8 +131,8 @@ public class Main {
         userSkill.setSkill(skill);
         userSkill.setUser(user);
         userSkill.setLevelOfSkill(20);
-        UserSkillsRepository userSkillsRepository = (UserSkillsRepository)ctx.getBean("userSkillsRepository");
-        userSkillsRepository.save(userSkill);
+        UserSkillRepository userSkillRepository = (UserSkillRepository)ctx.getBean("userSkillRepository");
+        userSkillRepository.save(userSkill);
 
         Shop product = new Shop("Верёвка", 120, "Инструменты", "Прочная длинная веревка", 0, data.getData());
         ShopRepository shopRepository = (ShopRepository)ctx.getBean("shopRepository");
@@ -144,18 +144,18 @@ public class Main {
         ProductsAndLocationRepository productsAndLocationRepository = (ProductsAndLocationRepository)ctx.getBean("productsAndLocationRepository");
         productsAndLocationRepository.save(productsAndLocation);
 
-        List<Weapon> weaponList = weaponsRepository.getWeaponsByOwners(tribute);
+        List<Weapon> weaponList = weaponRepository.getWeaponByOwners(tribute);
         for (Weapon weapon: weaponList){
             System.out.println(weapon.getName());
         }
 
         PresentsToTribute presentsToTribute = new PresentsToTribute();
-        PresentsToTributesRepository presentsToTributesRepository = (PresentsToTributesRepository)ctx.getBean("presentsToTributesRepository");
+        PresentsToTributeRepository presentsToTributeRepository = (PresentsToTributeRepository)ctx.getBean("presentsToTributeRepository");
         presentsToTribute.setQuantity(3);
         presentsToTribute.setSender(user);
         presentsToTribute.setProduct(product);
         presentsToTribute.setTribute(tribute);
-        presentsToTributesRepository.save(presentsToTribute);
+        presentsToTributeRepository.save(presentsToTribute);
 
         List<Shop> shopList = shopRepository.findShopsByProductOwners(tribute);
         for (Shop prod: shopList){
@@ -163,14 +163,14 @@ public class Main {
         }
 
         Hook hook = new Hook("Пожар", 10, location);
-        HooksRepository hooksRepository = (HooksRepository)ctx.getBean("hooksRepository");
-        hooksRepository.save(hook);
+        HookRepository hookRepository = (HookRepository)ctx.getBean("hookRepository");
+        hookRepository.save(hook);
 
-        TrainingsRepository trainingsRepository = (TrainingsRepository)ctx.getBean("trainingsRepository");
+        TrainingRepository trainingRepository = (TrainingRepository)ctx.getBean("trainingRepository");
         Training training = new Training();
         LocalTime time = LocalTime.now();
         training.setTimeOfTraining(time);
         training.setDuration(100);
-        trainingsRepository.save(training);
+        trainingRepository.save(training);
     }
 }

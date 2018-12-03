@@ -5,7 +5,7 @@ import entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.LocationsRepository;
+import repository.LocationRepository;
 import service.LocationService;
 
 import java.util.List;
@@ -13,11 +13,11 @@ import java.util.List;
 @Service("locationService")
 public class LocationServiceImpl implements LocationService {
 
-    private final LocationsRepository locationsRepository;
+    private final LocationRepository locationRepository;
 
     @Autowired
-    public LocationServiceImpl(LocationsRepository locationsRepository) {
-        this.locationsRepository = locationsRepository;
+    public LocationServiceImpl(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
     }
 
     @Override
@@ -33,21 +33,21 @@ public class LocationServiceImpl implements LocationService {
     @Transactional
     @Override
     public Location createLocation(Location location){
-        locationsRepository.save(location);
+        locationRepository.save(location);
         return location;
     }
 
     @Transactional
     @Override
     public Location updateLocation(Location location) {
-        locationsRepository.save(location);
+        locationRepository.save(location);
         return location;
     }
 
     @Transactional
     @Override
     public boolean deleteLocation(Location location) {
-        locationsRepository.delete(location);
+        locationRepository.delete(location);
         return true;
     }
 }

@@ -1,50 +1,41 @@
 package entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
-@Table(name = "arenas", schema = "public", catalog = "postgres")
+@Data
+@NoArgsConstructor
+@Table(name = "arena", schema = "public", catalog = "postgres")
 public class Arena {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "arenaId")
-    private int arenaId;
+    private Integer arenaId;
 
-    @Getter
-    @Setter
-    @Basic
     @Min(0)
     @NotNull
     @Column(name = "arena_length")
     private int arenaLength;
 
-    @Getter
-    @Setter
-    @Basic
     @Min(0)
     @NotNull
     @Column(name = "arena_width")
     private int arenaWidth;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "locationId", nullable = false)
     private Location mainLocation;
 
-    @Getter
-    @Setter
     @OneToOne(mappedBy = "arena")
     private Game game;
-
-    public Arena() {}
 
     public Arena(int arenaLength, int arenaWidth, Location location) {
         this.arenaLength = arenaLength;
@@ -59,7 +50,7 @@ public class Arena {
 
         Arena that = (Arena) o;
 
-        if (arenaId != that.arenaId) return false;
+        if (!Objects.equals(arenaId, that.arenaId)) return false;
         if (arenaLength != that.arenaLength) return false;
         if (arenaWidth != that.arenaWidth) return false;
 

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.WeaponsInGameRepository;
-import repository.WeaponsRepository;
+import repository.WeaponRepository;
 import service.WeaponsInGameService;
 
 import java.util.List;
@@ -16,13 +16,13 @@ import java.util.List;
 public class WeaponsInGameServiceImpl implements WeaponsInGameService {
 
     private final WeaponsInGameRepository weaponsInGameRepository;
-    private final WeaponsRepository weaponsRepository;
+    private final WeaponRepository weaponRepository;
 
     @Autowired
-    public WeaponsInGameServiceImpl(WeaponsInGameRepository weaponsInGameRepository, WeaponsRepository weaponsRepository) {
+    public WeaponsInGameServiceImpl(WeaponsInGameRepository weaponsInGameRepository, WeaponRepository weaponRepository) {
         this.weaponsInGameRepository = weaponsInGameRepository;
 
-        this.weaponsRepository = weaponsRepository;
+        this.weaponRepository = weaponRepository;
     }
 
     /**
@@ -34,7 +34,7 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
     @Override
     public WeaponsInGame createWeaponsInGame(WeaponsInGame weaponInGame) {
         Tribute tribute = weaponInGame.getTribute();
-        List<Weapon> list = weaponsRepository.getWeaponsByOwners(tribute);
+        List<Weapon> list = weaponRepository.getWeaponByOwners(tribute);
         if (list.size() < 3 ) {
             weaponsInGameRepository.save(weaponInGame);
             return weaponInGame;

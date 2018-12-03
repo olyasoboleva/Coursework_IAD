@@ -12,14 +12,14 @@ import java.util.List;
 public class GameProcessService {
 //FIXME: сори, мне пока лень делать для этого интерфейс. вдруг мы всё это уберём
     //Так-то всё равно нам когда-нибудь всё это понадобится. Но, может, надо будет убрать тут взаимодействие с БД будет и перенести из сервисов
-    private final TributesRepository tributesRepository;
+    private final TributeRepository tributeRepository;
     private final UserRepository userRepository;
-    private final StatusesRepository statusesRepository;
+    private final StatusRepository statusRepository;
     @Autowired
-    public GameProcessService(TributesRepository tributesRepository, UserRepository userRepository, StatusesRepository statusesRepository) {
-        this.tributesRepository = tributesRepository;
+    public GameProcessService(TributeRepository tributeRepository, UserRepository userRepository, StatusRepository statusRepository) {
+        this.tributeRepository = tributeRepository;
         this.userRepository = userRepository;
-        this.statusesRepository = statusesRepository;
+        this.statusRepository = statusRepository;
     }
 
     /**
@@ -36,7 +36,7 @@ public class GameProcessService {
         } else {
             tribute.setHealth(tribute.getHealth() + product.getHealthRecovery());
         }
-        tributesRepository.save(tribute);
+        tributeRepository.save(tribute);
     }
 
     /**
@@ -44,8 +44,8 @@ public class GameProcessService {
      * @param game game
      */
     public void changeStatusAfterEndOfTheGame(Game game) {
-        List<Tribute> allTributes = tributesRepository.getTributesByGame(game);
-        Status status = statusesRepository.findStatuseByName("Наблюдатель");
+        List<Tribute> allTributes = tributeRepository.getTributesByGame(game);
+        Status status = statusRepository.findStatuseByName("Наблюдатель");
         for (Tribute tribute: allTributes) {
             User user = userRepository.findUserByTributesByUser(tribute);
             user.setStatus(status);
@@ -67,7 +67,7 @@ public class GameProcessService {
         } else {
             tributeToBeat.setHealth(tributeToBeat.getHealth() - weapon.getDamage());
         }
-        tributesRepository.save(tributeToBeat);
+        tributeRepository.save(tributeToBeat);
     }
 
 }

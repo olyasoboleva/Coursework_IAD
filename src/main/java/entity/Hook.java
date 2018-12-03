@@ -1,39 +1,32 @@
 package entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "hooks", schema = "public", catalog = "postgres")
+@Data
+@NoArgsConstructor
+@Table(name = "hook", schema = "public", catalog = "postgres")
 public class Hook {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hookId")
-    private int hookId;
+    private Integer hookId;
 
-    @Getter
-    @Setter
-    @Basic
     @Column(name = "name")
     private String name;
 
-    @Getter
-    @Setter
-    @Basic
     @Column(name = "damage")
     private int damage;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "locationId", referencedColumnName = "locationId", nullable = false)
     private Location location;
-
-    public Hook(){ }
 
     public Hook(String name, int damage, Location location){
         this.name = name;
@@ -48,7 +41,7 @@ public class Hook {
 
         Hook that = (Hook) o;
 
-        if (hookId != that.hookId) return false;
+        if (!Objects.equals(hookId, that.hookId)) return false;
         if (damage != that.damage) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 

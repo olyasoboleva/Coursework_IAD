@@ -1,31 +1,29 @@
 package entity;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "weaponsInGame", schema = "public", catalog = "postgres")
-//@IdClass(WeaponsInGamePK.class)
 public class WeaponsInGame {
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weaponInGameId")
-    private int weaponInGameId;
+    private Integer weaponInGameId;
 
-    @Getter
-    @Setter
     @ManyToOne
-    @JoinColumn(name = "tributeId", referencedColumnName = "tributeId", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "tributeId", referencedColumnName = "tributeId", nullable = false)
     private Tribute tribute;
 
-    @Getter
-    @Setter
     @ManyToOne
-    @JoinColumn(name = "weaponId", referencedColumnName = "weaponId", nullable = false, updatable = false, insertable = false)
+    @JoinColumn(name = "weaponId", referencedColumnName = "weaponId", nullable = false)
     private Weapon weapon;
 
     public WeaponsInGame(Tribute tribute, Weapon weapon) {
@@ -33,24 +31,19 @@ public class WeaponsInGame {
         setWeapon(weapon);
     }
 
-    public WeaponsInGame() {}
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
+        if (!super.equals(o)) return false;
         WeaponsInGame that = (WeaponsInGame) o;
-
-        if (weaponInGameId != that.weaponInGameId) return false;
-
-        return true;
+        return Objects.equals(weaponInGameId, that.weaponInGameId) &&
+                Objects.equals(tribute, that.tribute) &&
+                Objects.equals(weapon, that.weapon);
     }
 
     @Override
     public int hashCode() {
-        int result = weaponInGameId;
-        return result;
+        return Objects.hash(super.hashCode(), weaponInGameId, tribute, weapon);
     }
 }
