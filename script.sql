@@ -148,7 +148,7 @@ CREATE TABLE weaponsInGame (
 CREATE TABLE hooks (
  hookID integer PRIMARY KEY ,
  name varchar(40) NOT NULL ,
- location integer REFERENCES locations NOT NULL ,
+ locationId integer REFERENCES locations NOT NULL ,
  damage integer NOT NULL
 );
 

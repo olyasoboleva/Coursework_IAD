@@ -9,10 +9,10 @@ import java.util.List;
 public interface HooksRepository extends CrudRepository<HooksEntity, Integer> {
     /**
      * find hook by id
-     * @param hookid id
+     * @param hookId id
      * @return hook
      */
-    HooksEntity findHooksEntityByHookid(int hookid);
+    HooksEntity findHooksEntityByHookId(int hookId);
 
     /**
      * find all hooks for this location
