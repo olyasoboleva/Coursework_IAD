@@ -1,7 +1,7 @@
 package service;
 
-import entity.ShopEntity;
-import entity.TributesEntity;
+import entity.Shop;
+import entity.Tribute;
 
 import java.util.List;
 
@@ -11,47 +11,47 @@ public interface ShopService {
      * @param productId id
      * @return product
      */
-    ShopEntity getProductById(int productId);
+    Shop getProductById(int productId);
 
     /**
      * find products by type
      * @param type type of present
      * @return list of products
      */
-    List<ShopEntity> getProductsByTypeOfPresent(String type);
+    List<Shop> getProductsByTypeOfPresent(String type);
 
     /**
      * find all products of tribute
      * @param tribute tribute
      * @return list of products
      */
-    List<ShopEntity> getProductsByOwner(TributesEntity tribute);
+    List<Shop> getProductsByOwner(Tribute tribute);
 
     /**
      * It finds all tributes presents
      * @param tribute tribute
      * @return list of products
      */
-    List<ShopEntity> getAllPresentsOfTribute(TributesEntity tribute);
+    List<Shop> getAllPresentsOfTribute(Tribute tribute);
 
     /**
      * It creates new product
      * @param product product
      * @return shop if product was created
      */
-    ShopEntity createProduct(ShopEntity product);
+    Shop createProduct(Shop product);
 
     /**
      * It deletes the product
      * @param product product
      * @return shop if product was successfully deleted
      */
-    boolean deleteProduct(ShopEntity product);
+    boolean deleteProduct(Shop product);
 
     /**
      * It updates the shop
      * @param product product
      * @return shop if product was updated correctly
      */
-    ShopEntity updateProduct(ShopEntity product);
+    Shop updateProduct(Shop product);
 }

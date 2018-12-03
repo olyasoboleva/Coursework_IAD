@@ -1,54 +1,45 @@
 package entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "prices", schema = "public", catalog = "postgres")
-public class PricesEntity {
-    private int priceId;
-    private String name;
-    private Integer cost;
-    private StatusesEntity status;
-
-    public PricesEntity() { }
-
-    public PricesEntity(String name, Integer cost) {
-        this.name = name;
-        this.cost = cost;
-    }
-
+public class Price {
+    @Getter
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "priceId")
-    public int getPriceId() {
-        return priceId;
-    }
+    private int priceId;
 
-    public void setPriceId(int priceId) {
-        this.priceId = priceId;
-    }
-
+    @Getter
+    @Setter
     @Basic
     @NotNull
     @Column(name = "name", length = 64)
-    public String getName() {
-        return name;
-    }
+    private String name;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    @Getter
+    @Setter
     @Basic
     @Min(0)
     @Column(name = "cost")
-    public Integer getCost() {
-        return cost;
-    }
+    private Integer cost;
 
-    public void setCost(Integer cost) {
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "price")
+    private Status status;
+
+    public Price() { }
+
+    public Price(String name, Integer cost) {
+        this.name = name;
         this.cost = cost;
     }
 
@@ -57,7 +48,7 @@ public class PricesEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PricesEntity that = (PricesEntity) o;
+        Price that = (Price) o;
 
         if (priceId != that.priceId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -72,13 +63,5 @@ public class PricesEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         return result;
-    }
-
-    @OneToOne(mappedBy = "price")
-    public StatusesEntity getStatus() {
-        return status;
-    }
-    public void setStatus(StatusesEntity status) {
-        this.status = status;
     }
 }

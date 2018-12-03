@@ -1,7 +1,7 @@
 package impl;
 
-import entity.LocationsEntity;
-import entity.ShopEntity;
+import entity.Location;
+import entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,32 +21,32 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public LocationsEntity findLocationById(int locationId) {
+    public Location findLocationById(int locationId) {
         return null;
     }
 
     @Override
-    public List<LocationsEntity> getLocationsByProduct(ShopEntity product) {
+    public List<Location> getLocationsByProduct(Shop product) {
         return null;
     }
 
     @Transactional
     @Override
-    public LocationsEntity createLocation(LocationsEntity location){
+    public Location createLocation(Location location){
         locationsRepository.save(location);
         return location;
     }
 
     @Transactional
     @Override
-    public LocationsEntity updateLocation(LocationsEntity location) {
+    public Location updateLocation(Location location) {
         locationsRepository.save(location);
         return location;
     }
 
     @Transactional
     @Override
-    public boolean deleteLocation(LocationsEntity location) {
+    public boolean deleteLocation(Location location) {
         locationsRepository.delete(location);
         return true;
     }

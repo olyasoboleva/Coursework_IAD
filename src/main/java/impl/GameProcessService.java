@@ -28,9 +28,9 @@ public class GameProcessService {
      */
     //TODO: кажется, вычитание из количества подарка мы тут не пропишем, потому что решили не менять это в БД
     @Transactional
-    public void updateHealthByPresent(PresentsToTributesEntity present) {
-        TributesEntity tribute = present.getTribute();
-        ShopEntity product = present.getProduct();
+    public void updateHealthByPresent(PresentsToTribute present) {
+        Tribute tribute = present.getTribute();
+        Shop product = present.getProduct();
         if (tribute.getHealth() + product.getHealthRecovery() > 100) {
             tribute.setHealth(100);
         } else {
@@ -43,11 +43,11 @@ public class GameProcessService {
      * After end of the game it changes statuses to Observer for all users who played in this game
      * @param game game
      */
-    public void changeStatusAfterEndOfTheGame(GamesEntity game) {
-        List<TributesEntity> allTributes = tributesRepository.getTributesEntitiesByGame(game);
-        StatusesEntity status = statusesRepository.findStatusesEntityByName("Наблюдатель");
-        for (TributesEntity tribute: allTributes) {
-            UsersEntity user = userRepository.findUsersEntityByTributesByUser(tribute);
+    public void changeStatusAfterEndOfTheGame(Game game) {
+        List<Tribute> allTributes = tributesRepository.getTributesByGame(game);
+        Status status = statusesRepository.findStatuseByName("Наблюдатель");
+        for (Tribute tribute: allTributes) {
+            User user = userRepository.findUserByTributesByUser(tribute);
             user.setStatus(status);
             userRepository.save(user);
         }
@@ -58,8 +58,8 @@ public class GameProcessService {
      * @param tributeWeapon this weapon will be used
      * @param tributeToBeat he will be beaten
      */
-    public void beat(WeaponsInGameEntity tributeWeapon, TributesEntity tributeToBeat) {
-        WeaponsEntity weapon = tributeWeapon.getWeapon();
+    public void beat(WeaponsInGame tributeWeapon, Tribute tributeToBeat) {
+        Weapon weapon = tributeWeapon.getWeapon();
         //FIXME: урон нормально надо прописать)))
         if (tributeToBeat.getHealth() - weapon.getDamage() <=0) {
             tributeToBeat.setHealth(0);

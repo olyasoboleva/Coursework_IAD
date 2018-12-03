@@ -1,7 +1,7 @@
 package service;
 
-import entity.LocationsEntity;
-import entity.ShopEntity;
+import entity.Location;
+import entity.Shop;
 
 import java.util.List;
 
@@ -12,33 +12,33 @@ public interface LocationService {
      * @param locationId id
      * @return location
      */
-    LocationsEntity findLocationById(int locationId);
+    Location findLocationById(int locationId);
 
     /**
      * find all locations where product can be applied
      * @param product product
      * @return list of locations
      */
-    List<LocationsEntity> getLocationsByProduct(ShopEntity product);
+    List<Location> getLocationsByProduct(Shop product);
 
     /**
      * It creates new Location
      * @param location location
      * @return new location
      */
-    LocationsEntity createLocation(LocationsEntity location);
+    Location createLocation(Location location);
 
     /**
      * It updates the location
      * @param location location
      * @return location if it was updated correctly
      */
-    LocationsEntity updateLocation(LocationsEntity location);
+    Location updateLocation(Location location);
 
     /**
      * It deletes location
      * @param location location
      * @return true if location was successfully deleted
      */
-    boolean deleteLocation(LocationsEntity location);
+    boolean deleteLocation(Location location);
 }

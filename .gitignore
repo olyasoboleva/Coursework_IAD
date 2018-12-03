@@ -4,3 +4,4 @@
 /src/main/java/META-INF/persistence.xml
 /src/main/java/config/database/DatabaseConfig.java
 /cw2.iml
+/src/main/resources/database.properties

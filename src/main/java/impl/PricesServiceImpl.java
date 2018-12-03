@@ -1,6 +1,6 @@
 package impl;
 
-import entity.PricesEntity;
+import entity.Price;
 import org.springframework.stereotype.Service;
 import repository.PricesRepository;
 import service.PricesService;
@@ -17,24 +17,24 @@ public class PricesServiceImpl implements PricesService {
     }
 
     @Override
-    public PricesEntity getPriceById(int priceId) {
-        return pricesRepository.findPricesEntityByPriceId(priceId);
+    public Price getPriceById(int priceId) {
+        return pricesRepository.findPriceByPriceId(priceId);
     }
 
     @Override
-    public PricesEntity createPrice(PricesEntity price) {
+    public Price createPrice(Price price) {
         pricesRepository.save(price);
         return price;
     }
 
     @Override
-    public boolean deletePrices(PricesEntity price) {
+    public boolean deletePrices(Price price) {
         pricesRepository.delete(price);
         return true;
     }
 
     @Override
-    public PricesEntity updatePrices(PricesEntity price) {
+    public Price updatePrices(Price price) {
         pricesRepository.save(price);
         return price;
     }

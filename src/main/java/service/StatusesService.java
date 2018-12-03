@@ -1,6 +1,6 @@
 package service;
 
-import entity.StatusesEntity;
+import entity.Status;
 
 public interface StatusesService {
 
@@ -9,33 +9,33 @@ public interface StatusesService {
      * @param status status
      * @return new status if it was created
      */
-    StatusesEntity createStatus(StatusesEntity status);
+    Status createStatus(Status status);
 
     /**
      * It deletes status
      * @param status status
      * @return true if it was deleted
      */
-    boolean deleteStatus(StatusesEntity status);
+    boolean deleteStatus(Status status);
 
     /**
      * It updates the status
      * @param status status
      * @return the status if it was correctly updated
      */
-    StatusesEntity updateStatuses(StatusesEntity status);
+    Status updateStatuses(Status status);
 
     /**
      * find status by id
      * @param statusId id
      * @return status
      */
-    StatusesEntity getStatuseById(int statusId);
+    Status getStatuseById(int statusId);
 
     /**
      * find status by name
      * @param name name
      * @return status
      */
-    StatusesEntity getStatuseByName(String name);
+    Status getStatuseByName(String name);
 }

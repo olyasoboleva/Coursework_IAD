@@ -1,8 +1,8 @@
 package service;
 
-import entity.SkillsEntity;
-import entity.UserSkillsEntity;
-import entity.UsersEntity;
+import entity.Skill;
+import entity.UserSkill;
+import entity.User;
 
 import java.util.List;
 
@@ -12,21 +12,21 @@ public interface UserSkillsService {
      * @param userSkill skill and user
      * @return new relation if it was created
      */
-    UserSkillsEntity createUserSkill(UserSkillsEntity userSkill);
+    UserSkill createUserSkill(UserSkill userSkill);
 
     /**
      * It deletes user skill
      * @param userSkill user and skill
      * @return true if it was successfully deleted
      */
-    boolean deleteUserSkill(UserSkillsEntity userSkill);
+    boolean deleteUserSkill(UserSkill userSkill);
 
     /**
      * It updates user skill
      * @param userSkill user and skill
      * @return tris relation it was correctly updated
      */
-    UserSkillsEntity updateUserSkills(UserSkillsEntity userSkill);
+    UserSkill updateUserSkills(UserSkill userSkill);
 
     /**
      * find user's level of skill
@@ -35,7 +35,7 @@ public interface UserSkillsService {
      * @param skill skill
      * @return user's skill with level
      */
-    UserSkillsEntity getUserSkillByUserAndSkill(UsersEntity user, SkillsEntity skill);
+    UserSkill getUserSkillByUserAndSkill(User user, Skill skill);
 
     /**
      * find user's skills
@@ -43,5 +43,5 @@ public interface UserSkillsService {
      * @param user user
      * @return list of skills with level
      */
-    List<UserSkillsEntity> getUserSkillsByUser(UsersEntity user);
+    List<UserSkill> getUserSkillsByUser(User user);
 }

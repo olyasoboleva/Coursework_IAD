@@ -1,7 +1,7 @@
 package impl;
 
-import entity.ProductsAndLocationEntity;
-import entity.ShopEntity;
+import entity.ProductsAndLocation;
+import entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,32 +21,32 @@ public class ProductsAndLocationServiceImpl implements ProductsAndLocationServic
     }
 
     @Override
-    public ProductsAndLocationEntity getProductsAndLocationById(int applyingId) {
-        return productsAndLocationRepository.findProductsAndLocationEntityByApplyingId(applyingId);
+    public ProductsAndLocation getProductsAndLocationById(int applyingId) {
+        return productsAndLocationRepository.findProductsAndLocationByApplyingId(applyingId);
     }
 
     @Override
-    public List<ProductsAndLocationEntity> getProductsAndLocationByProduct(ShopEntity product) {
-        return productsAndLocationRepository.getProductsAndLocationEntitiesByProduct(product);
+    public List<ProductsAndLocation> getProductsAndLocationByProduct(Shop product) {
+        return productsAndLocationRepository.getProductsAndLocationsByProduct(product);
     }
 
     @Transactional
     @Override
-    public ProductsAndLocationEntity createProductsAndLocation(ProductsAndLocationEntity productsandlocation) {
+    public ProductsAndLocation createProductsAndLocation(ProductsAndLocation productsandlocation) {
         productsAndLocationRepository.save(productsandlocation);
         return productsandlocation;
     }
 
     @Transactional
     @Override
-    public boolean deleteProductsAndLocation(ProductsAndLocationEntity productsAndLocation) {
+    public boolean deleteProductsAndLocation(ProductsAndLocation productsAndLocation) {
         productsAndLocationRepository.delete(productsAndLocation);
         return true;
     }
 
     @Transactional
     @Override
-    public ProductsAndLocationEntity updateProductsAndLocation(ProductsAndLocationEntity productsAndLocation) {
+    public ProductsAndLocation updateProductsAndLocation(ProductsAndLocation productsAndLocation) {
         productsAndLocationRepository.save(productsAndLocation);
         return productsAndLocation;
     }

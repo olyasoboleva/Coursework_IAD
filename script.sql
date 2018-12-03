@@ -95,10 +95,10 @@ dayOfWeek integer
 );
 
 CREATE TABLE userSkills (
+ userSkillId INTEGER PRIMARY KEY ,
  userID integer REFERENCES users,
  skillID integer REFERENCES skills,
- levelOfSkill integer CHECK (levelOfSkill >= 0),
- PRIMARY KEY (userID, skillID)
+ levelOfSkill integer CHECK (levelOfSkill >= 0)
 );
 
 
@@ -140,9 +140,9 @@ locationId integer REFERENCES locations NOT NULL
 );
 
 CREATE TABLE weaponsInGame (
+ weaponInGameId INTEGER PRIMARY KEY ,
  tributeID integer REFERENCES tributes,
- weaponID integer REFERENCES weapons,
- PRIMARY KEY (tributeID, weaponID)
+ weaponID integer REFERENCES weapons
 );
 
 CREATE TABLE hooks (

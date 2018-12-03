@@ -1,8 +1,8 @@
 package impl;
 
-import entity.TributesEntity;
-import entity.WeaponsEntity;
-import entity.WeaponsInGameEntity;
+import entity.Tribute;
+import entity.Weapon;
+import entity.WeaponsInGame;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +32,9 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
      */
     @Transactional
     @Override
-    public WeaponsInGameEntity createWeaponsInGame(WeaponsInGameEntity weaponInGame) {
-        TributesEntity tribute = weaponInGame.getTribute();
-        List<WeaponsEntity> list = weaponsRepository.getWeaponsEntitiesByOwners(tribute);
+    public WeaponsInGame createWeaponsInGame(WeaponsInGame weaponInGame) {
+        Tribute tribute = weaponInGame.getTribute();
+        List<Weapon> list = weaponsRepository.getWeaponsByOwners(tribute);
         if (list.size() < 3 ) {
             weaponsInGameRepository.save(weaponInGame);
             return weaponInGame;
@@ -45,13 +45,13 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
 
     @Transactional
     @Override
-    public boolean deleteWeaponsInGame(WeaponsInGameEntity weaponInGame) {
+    public boolean deleteWeaponsInGame(WeaponsInGame weaponInGame) {
         weaponsInGameRepository.delete(weaponInGame);
         return true;
     }
 
     @Override
-    public List<WeaponsInGameEntity> getWeaponsInGameByTribute(TributesEntity tribute) {
-        return weaponsInGameRepository.getWeaponsInGameEntitiesByTribute(tribute);
+    public List<WeaponsInGame> getWeaponsInGameByTribute(Tribute tribute) {
+        return weaponsInGameRepository.getWeaponsInGamesByTribute(tribute);
     }
 }

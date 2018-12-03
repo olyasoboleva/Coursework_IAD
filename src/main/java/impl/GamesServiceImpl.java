@@ -1,7 +1,7 @@
 package impl;
 
-import entity.GamesEntity;
-import entity.UsersEntity;
+import entity.Game;
+import entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.GamesRepository;
@@ -22,37 +22,37 @@ public class GamesServiceImpl implements GamesService {
     }
 
     @Override
-    public GamesEntity getGameById(int gameId) {
-        return gamesRepository.findGamesEntityByGameId(gameId);
+    public Game getGameById(int gameId) {
+        return gamesRepository.findGameByGameId(gameId);
     }
 
     @Override
-    public List<GamesEntity> getGameByStewardAndAfterDate(UsersEntity steward, Date date) {
-        return gamesRepository.getGamesEntitiesByStewardAndStartDateGreaterThan(steward, date);
+    public List<Game> getGameByStewardAndAfterDate(User steward, Date date) {
+        return gamesRepository.getGamesByStewardAndStartDateGreaterThan(steward, date);
     }
 
     @Override
-    public List<GamesEntity> getGameByStartDate(Date startDate) {
-        return gamesRepository.getGamesEntitiesByStartDate(startDate);
+    public List<Game> getGameByStartDate(Date startDate) {
+        return gamesRepository.getGamesByStartDate(startDate);
     }
 
     @Transactional
     @Override
-    public GamesEntity createGame(GamesEntity game) {
+    public Game createGame(Game game) {
         gamesRepository.save(game);
         return game;
     }
 
     @Transactional
     @Override
-    public boolean deleteGame(GamesEntity game) {
+    public boolean deleteGame(Game game) {
         gamesRepository.delete(game);
         return true;
     }
 
     @Transactional
     @Override
-    public GamesEntity updateGame(GamesEntity game) {
+    public Game updateGame(Game game) {
         gamesRepository.save(game);
         return game;
     }

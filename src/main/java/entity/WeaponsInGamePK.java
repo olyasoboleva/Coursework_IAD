@@ -1,39 +1,31 @@
 package entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-public class WeaponsInGameEntityPK implements Serializable {
-    private int tributeId;
-    private int weaponId;
-
+public class WeaponsInGamePK implements Serializable {
+    @Getter
+    @Setter
     @Column(name = "tributeId")
     @Id
-    public int getTributeId() {
-        return tributeId;
-    }
+    private int tributeId;
 
-    public void setTributeId(int tributeId) {
-        this.tributeId = tributeId;
-    }
-
+    @Getter
+    @Setter
     @Column(name = "weaponId")
     @Id
-    public int getWeaponId() {
-        return weaponId;
-    }
-
-    public void setWeaponId(int weaponId) {
-        this.weaponId = weaponId;
-    }
+    private int weaponId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        WeaponsInGameEntityPK that = (WeaponsInGameEntityPK) o;
+        WeaponsInGamePK that = (WeaponsInGamePK) o;
 
         if (tributeId != that.tributeId) return false;
         if (weaponId != that.weaponId) return false;

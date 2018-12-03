@@ -1,20 +1,19 @@
 package repository;
 
-import entity.ArenasEntity;
-import entity.GamesEntity;
-import entity.UsersEntity;
+import entity.Game;
+import entity.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.sql.Date;
 import java.util.List;
 
-public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
+public interface GamesRepository extends CrudRepository<Game, Integer> {
     /**
      * find game by id
      * @param gameId id
      * @return game
      */
-    GamesEntity findGamesEntityByGameId(int gameId);
+    Game findGameByGameId(int gameId);
 
     /**
      * find all steward's games which start after date
@@ -22,12 +21,12 @@ public interface GamesRepository extends CrudRepository<GamesEntity, Integer> {
      * @param date start date
      * @return list of games
      */
-    List<GamesEntity> getGamesEntitiesByStewardAndStartDateGreaterThan(UsersEntity steward, Date date);
+    List<Game> getGamesByStewardAndStartDateGreaterThan(User steward, Date date);
 
     /**
      * find all games which start on this date
      * @param startDate start date
      * @return list of games
      */
-    List<GamesEntity> getGamesEntitiesByStartDate(Date startDate);
+    List<Game> getGamesByStartDate(Date startDate);
 }

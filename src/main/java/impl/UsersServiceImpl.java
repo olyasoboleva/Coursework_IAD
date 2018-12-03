@@ -4,8 +4,6 @@ import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.StatusesRepository;
-import repository.TributesRepository;
 import repository.UserLoginRepository;
 import repository.UserRepository;
 import service.UsersService;
@@ -27,64 +25,64 @@ public class UsersServiceImpl implements UsersService {
 
     @Transactional
     @Override
-    public UsersEntity getUserByNick(String nick) {
-        UserLoginEntity login = userLoginRepository.findUserLoginEntityByNick(nick);
-        return userRepository.findUsersEntityByUserLogin(login);
+    public User getUserByNick(String nick) {
+        UserLogin login = userLoginRepository.findUserLoginByNick(nick);
+        return userRepository.findUserByUserLogin(login);
     }
 
     @Transactional
     @Override
-    public UsersEntity createUser(UsersEntity user) {
+    public User createUser(User user) {
         userRepository.save(user);
         return user;
     }
 
     @Transactional
     @Override
-    public boolean deleteUser(UsersEntity user) {
+    public boolean deleteUser(User user) {
         userRepository.delete(user);
         return true;
     }
 
     @Transactional
     @Override
-    public UsersEntity updateUser(UsersEntity user) {
+    public User updateUser(User user) {
         userRepository.save(user);
         return user;
     }
 
     @Override
-    public UsersEntity getUserByUserId(int userId) {
+    public User getUserByUserId(int userId) {
         return userRepository.findUsersEntityByUserId(userId);
     }
 
     @Override
-    public List<UsersEntity> getUsersForGame(DistrictsEntity district, boolean sex, Date date1, Date date2, StatusesEntity status) {
-        return userRepository.getUsersEntitiesByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(district, sex, date1, date2,status);
+    public List<User> getUsersForGame(District district, boolean sex, Date date1, Date date2, Status status) {
+        return userRepository.getUsersByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(district, sex, date1, date2,status);
     }
 
     @Override
-    public UsersEntity getUserByTribute(TributesEntity tribute) {
-        return userRepository.findUsersEntityByTributesByUser(tribute);
+    public User getUserByTribute(Tribute tribute) {
+        return userRepository.findUserByTributesByUser(tribute);
     }
 
     @Override
-    public UsersEntity getUserByUserLogin(UserLoginEntity userLogin) {
-        return userRepository.findUsersEntityByUserLogin(userLogin);
+    public User getUserByUserLogin(UserLogin userLogin) {
+        return userRepository.findUserByUserLogin(userLogin);
     }
 
     @Override
-    public List<UsersEntity> getUsersByStatus(StatusesEntity status) {
-        return userRepository.getUsersEntitiesByStatus(status);
+    public List<User> getUsersByStatus(Status status) {
+        return userRepository.getUsersByStatus(status);
     }
 
     @Override
-    public UsersEntity getTrainerOfTraining(TrainingsEntity training) {
-        return userRepository.findUsersEntityByTrainings(training);
+    public User getTrainerOfTraining(Training training) {
+        return userRepository.findUserByTrainings(training);
     }
 
     @Override
-    public List<UsersEntity> getSendersOfPresentsByTribute(TributesEntity tribute) {
-        return userRepository.findUsersEntitiesByRecipients(tribute);
+    public List<User> getSendersOfPresentsByTribute(Tribute tribute) {
+        return userRepository.findUsersByRecipients(tribute);
     }
 }

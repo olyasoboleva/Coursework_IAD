@@ -1,20 +1,20 @@
 package repository;
 
-import entity.GamesEntity;
-import entity.TributesEntity;
-import entity.UsersEntity;
+import entity.Game;
+import entity.Tribute;
+import entity.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface TributesRepository  extends CrudRepository<TributesEntity, Integer>{
+public interface TributesRepository  extends CrudRepository<Tribute, Integer>{
     /**
      * find tribute by id
      *
      * @param tributeId id
      * @return tribute
      */
-    TributesEntity findTributesEntityByTributeId(long tributeId);
+    Tribute findTributeByTributeId(long tributeId);
 
     /**
      * find all tributes of user
@@ -22,7 +22,7 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
      * @param user user
      * @return list of tributes
      */
-    List<TributesEntity> getTributesEntitiesByUser(UsersEntity user);
+    List<Tribute> getTributesByUser(User user);
 
     /**
      * find all tributes of game
@@ -30,7 +30,7 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
      * @param game game
      * @return list of tributes
      */
-    List<TributesEntity> getTributesEntitiesByGame(GamesEntity game);
+    List<Tribute> getTributesByGame(Game game);
 
     /**
      * find all tributes of game with this status
@@ -39,5 +39,5 @@ public interface TributesRepository  extends CrudRepository<TributesEntity, Inte
      * @param game game
      * @return list of games
      */
-    List<TributesEntity> getTributesEntityByStatusAndGame(String status, GamesEntity game);
+    List<Tribute> getTributesByStatusAndGame(String status, Game game);
 }

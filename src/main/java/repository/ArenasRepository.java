@@ -1,16 +1,16 @@
 package repository;
 
-import entity.ArenasEntity;
-import entity.GamesEntity;
+import entity.Arena;
+import entity.Game;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ArenasRepository extends CrudRepository<ArenasEntity, Integer> {
+public interface ArenasRepository extends CrudRepository<Arena, Integer> {
     /**
      * find arena by id
      * @param arenaId id
      * @return arena
      */
-    ArenasEntity findArenasEntityByArenaId(int arenaId);
+    Arena findArenaByArenaId(int arenaId);
 
 
     /**
@@ -18,5 +18,5 @@ public interface ArenasRepository extends CrudRepository<ArenasEntity, Integer> 
      * @param game game
      * @return arena
      */
-    ArenasEntity findArenasEntityByGame(GamesEntity game);
+    Arena findArenaByGame(Game game);
 }

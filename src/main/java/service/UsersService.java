@@ -13,35 +13,35 @@ public interface UsersService {
      * @param user user
      * @return new user if he was created
      */
-    UsersEntity createUser(UsersEntity user);
+    User createUser(User user);
 
     /**
      * It deletes user
      * @param user user
      * @return true if it was deleted
      */
-    boolean deleteUser(UsersEntity user);
+    boolean deleteUser(User user);
 
     /**
      * It updtaes user
      * @param user user
      * @return user if he was updated correctly
      */
-    UsersEntity updateUser(UsersEntity user);
+    User updateUser(User user);
 
     /**
      * find user by id
      * @param userId id
      * @return user
      */
-    UsersEntity getUserByUserId(int userId);
+    User getUserByUserId(int userId);
 
     /**
      * Tries to find user by nick
      * @param nick nick
      * @return user if it exists
      */
-    UsersEntity getUserByNick(String nick);
+    User getUserByNick(String nick);
 
     /**
      * find users for next game by parameters
@@ -52,40 +52,40 @@ public interface UsersService {
      * @param status status
      * @return list of users
      */
-    List<UsersEntity> getUsersForGame(DistrictsEntity district, boolean sex, Date date1, Date date2, StatusesEntity status);
+    List<User> getUsersForGame(District district, boolean sex, Date date1, Date date2, Status status);
 
     /**
      * find user, who play for this tribute
      * @param tribute tribute
      * @return user
      */
-    UsersEntity getUserByTribute(TributesEntity tribute);
+    User getUserByTribute(Tribute tribute);
 
     /**
      * find user by login
      * @param userLogin user login
      * @return user
      */
-    UsersEntity getUserByUserLogin(UserLoginEntity userLogin);
+    User getUserByUserLogin(UserLogin userLogin);
 
     /**
      * find user by status
      * @param status status
      * @return list of users
      */
-    List<UsersEntity> getUsersByStatus(StatusesEntity status);
+    List<User> getUsersByStatus(Status status);
 
     /**
      * find trainer
      * @param training training
      * @return trainer
      */
-    UsersEntity getTrainerOfTraining(TrainingsEntity training);
+    User getTrainerOfTraining(Training training);
 
     /**
      * find all senders of presents to this tribute
      * @param tribute tribute
      * @return list of users
      */
-    List<UsersEntity> getSendersOfPresentsByTribute(TributesEntity tribute);
+    List<User> getSendersOfPresentsByTribute(Tribute tribute);
 }

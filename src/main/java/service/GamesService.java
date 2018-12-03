@@ -1,7 +1,7 @@
 package service;
 
-import entity.GamesEntity;
-import entity.UsersEntity;
+import entity.Game;
+import entity.User;
 
 import java.sql.Date;
 import java.util.List;
@@ -13,7 +13,7 @@ public interface GamesService {
      * @param gameId id
      * @return game
      */
-    GamesEntity getGameById(int gameId);
+    Game getGameById(int gameId);
 
     /**
      * find all steward's games which start after date
@@ -21,33 +21,33 @@ public interface GamesService {
      * @param date start date
      * @return list of games
      */
-    List<GamesEntity> getGameByStewardAndAfterDate(UsersEntity steward, Date date);
+    List<Game> getGameByStewardAndAfterDate(User steward, Date date);
 
     /**
      * find all games which start on this date
      * @param startDate start date
      * @return list of games
      */
-    List<GamesEntity> getGameByStartDate(Date startDate);
+    List<Game> getGameByStartDate(Date startDate);
 
     /**
      * It creates new game
      * @param game game
      * @return new game if it was saved to database
      */
-    GamesEntity createGame(GamesEntity game);
+    Game createGame(Game game);
 
     /**
      * It deletes the game
      * @param game game
      * @return true if it was deleted correctly
      */
-    boolean deleteGame(GamesEntity game);
+    boolean deleteGame(Game game);
 
     /**
      * It updates the game
      * @param game game
      * @return game if it was updated correctly
      */
-    GamesEntity updateGame(GamesEntity game);
+    Game updateGame(Game game);
 }

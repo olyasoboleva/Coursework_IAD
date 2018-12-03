@@ -1,30 +1,27 @@
 package repository;
 
 
-import entity.SkillsEntity;
-import entity.TributesEntity;
-import entity.WeaponsEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import entity.Skill;
+import entity.Tribute;
+import entity.Weapon;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface WeaponsRepository extends CrudRepository<WeaponsEntity, Integer> {
-    WeaponsEntity findWeaponsEntityByWeaponId(int id);
+public interface WeaponsRepository extends CrudRepository<Weapon, Integer> {
+    Weapon findWeaponsEntityByWeaponId(int id);
 
     /**
      * find weapon for this skill
      * @param skill skill
      * @return weapon
      */
-    WeaponsEntity getWeaponsEntitiesBySkill(SkillsEntity skill);
+    Weapon getWeaponBySkill(Skill skill);
 
     /**
      * find weapons which tribute have
      * @param tribute tribute
      * @return lit of weapons
      */
-    List<WeaponsEntity> getWeaponsEntitiesByOwners(TributesEntity tribute);
+    List<Weapon> getWeaponsByOwners(Tribute tribute);
 }

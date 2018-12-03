@@ -1,6 +1,6 @@
 package impl;
 
-import entity.StatusesEntity;
+import entity.Status;
 import org.springframework.transaction.annotation.Transactional;
 import repository.StatusesRepository;
 import service.StatusesService;
@@ -15,30 +15,30 @@ public class StatusesServiceImpl implements StatusesService {
 
     @Transactional
     @Override
-    public StatusesEntity updateStatuses(StatusesEntity status) {
+    public Status updateStatuses(Status status) {
         statusesRepository.save(status);
         return status;
     }
 
     @Override
-    public StatusesEntity createStatus(StatusesEntity status) {
+    public Status createStatus(Status status) {
         statusesRepository.save(status);
         return status;
     }
 
     @Override
-    public boolean deleteStatus(StatusesEntity status) {
+    public boolean deleteStatus(Status status) {
         statusesRepository.delete(status);
         return true;
     }
 
     @Override
-    public StatusesEntity getStatuseById(int statusId) {
-        return statusesRepository.findStatusesEntityByStatusId(statusId);
+    public Status getStatuseById(int statusId) {
+        return statusesRepository.findStatusByStatusId(statusId);
     }
 
     @Override
-    public StatusesEntity getStatuseByName(String name) {
-        return statusesRepository.findStatusesEntityByName(name);
+    public Status getStatuseByName(String name) {
+        return statusesRepository.findStatuseByName(name);
     }
 }

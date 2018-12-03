@@ -1,8 +1,8 @@
 package impl;
 
-import entity.PresentsToTributesEntity;
-import entity.ShopEntity;
-import entity.TributesEntity;
+import entity.PresentsToTribute;
+import entity.Shop;
+import entity.Tribute;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.PresentsToTributesRepository;
@@ -26,29 +26,29 @@ public class ShopServiceImpl implements ShopService{
     }
 
     @Override
-    public ShopEntity getProductById(int productId) {
-        return shopRepository.findShopEntityByProductId(productId);
+    public Shop getProductById(int productId) {
+        return shopRepository.findShopByProductId(productId);
     }
 
     @Override
-    public List<ShopEntity> getProductsByTypeOfPresent(String type) {
-        return shopRepository.findShopEntitiesByTypeOfPresent(type);
+    public List<Shop> getProductsByTypeOfPresent(String type) {
+        return shopRepository.findShopsByTypeOfPresent(type);
     }
 
     @Override
-    public List<ShopEntity> getProductsByOwner(TributesEntity tribute) {
-        return shopRepository.findShopEntitiesByProductOwners(tribute);
+    public List<Shop> getProductsByOwner(Tribute tribute) {
+        return shopRepository.findShopsByProductOwners(tribute);
     }
 
     //FIXME: не тестила
     @Transactional
     @Override
-    public List<ShopEntity> getAllPresentsOfTribute(TributesEntity tribute) {
-        List<PresentsToTributesEntity> presents = presentsToTributesRepository.getPresentsToTributesEntityByTribute(tribute);
-        List<ShopEntity> allproducts = (List<ShopEntity>) shopRepository.findAll();
-        List<ShopEntity> tributePresents = new ArrayList<>();
-        for (ShopEntity product : allproducts ) {
-            for (PresentsToTributesEntity present : presents) {
+    public List<Shop> getAllPresentsOfTribute(Tribute tribute) {
+        List<PresentsToTribute> presents = presentsToTributesRepository.getPresentsToTributesByTribute(tribute);
+        List<Shop> allproducts = (List<Shop>) shopRepository.findAll();
+        List<Shop> tributePresents = new ArrayList<>();
+        for (Shop product : allproducts ) {
+            for (PresentsToTribute present : presents) {
                 if (product.equals(present.getProduct())) {
                     tributePresents.add(product);
                 }
@@ -60,21 +60,21 @@ public class ShopServiceImpl implements ShopService{
 
     @Transactional
     @Override
-    public ShopEntity createProduct(ShopEntity product) {
+    public Shop createProduct(Shop product) {
         shopRepository.save(product);
         return product;
     }
 
     @Transactional
     @Override
-    public boolean deleteProduct(ShopEntity product) {
+    public boolean deleteProduct(Shop product) {
         shopRepository.delete(product);
         return true;
     }
 
     @Transactional
     @Override
-    public ShopEntity updateProduct(ShopEntity product) {
+    public Shop updateProduct(Shop product) {
         shopRepository.save(product);
         return product;
     }

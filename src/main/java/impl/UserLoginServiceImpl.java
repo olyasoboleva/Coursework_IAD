@@ -1,7 +1,7 @@
 package impl;
 
-import entity.UserLoginEntity;
-import entity.UsersEntity;
+import entity.UserLogin;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,37 +20,37 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Transactional
     @Override
-    public UserLoginEntity createLogin(UserLoginEntity login) {
+    public UserLogin createLogin(UserLogin login) {
         userLoginRepository.save(login);
         return login;
     }
 
     @Transactional
     @Override
-    public UserLoginEntity updateLogin(UserLoginEntity login) {
+    public UserLogin updateLogin(UserLogin login) {
         userLoginRepository.save(login);
         return login;
     }
 
     @Transactional
     @Override
-    public boolean deleteSLogin(UserLoginEntity login) {
+    public boolean deleteSLogin(UserLogin login) {
         userLoginRepository.delete(login);
         return true;
     }
 
     @Override
-    public UserLoginEntity getUserLoginByUser(UsersEntity user) {
-        return userLoginRepository.findUserLoginEntityByUser(user);
+    public UserLogin getUserLoginByUser(User user) {
+        return userLoginRepository.findUserLoginByUser(user);
     }
 
     @Override
-    public UserLoginEntity getUserLoginByNick(String nick) {
-        return userLoginRepository.findUserLoginEntityByNick(nick);
+    public UserLogin getUserLoginByNick(String nick) {
+        return userLoginRepository.findUserLoginByNick(nick);
     }
 
     @Override
-    public UserLoginEntity getUserLoginByNickAndPassword(String nick, String password) {
-        return userLoginRepository.findUserLoginEntityByNickAndPassword(nick, password);
+    public UserLogin getUserLoginByNickAndPassword(String nick, String password) {
+        return userLoginRepository.findUserLoginByNickAndPassword(nick, password);
     }
 }

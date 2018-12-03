@@ -1,15 +1,14 @@
 package impl;
 
-import entity.GamesEntity;
-import entity.StatusesEntity;
-import entity.TributesEntity;
-import entity.UsersEntity;
+import entity.Game;
+import entity.Status;
+import entity.Tribute;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.StatusesRepository;
 import repository.TributesRepository;
-import repository.UserLoginRepository;
 import repository.UserRepository;
 import service.TributesService;
 
@@ -39,8 +38,8 @@ public class TributesServiceImpl implements TributesService {
      */
     @Transactional
     @Override
-    public TributesEntity createTribute(TributesEntity tribute) {
-        UsersEntity user = userRepository.findUsersEntityByTributesByUser(tribute);
+    public Tribute createTribute(Tribute tribute) {
+        User user = userRepository.findUserByTributesByUser(tribute);
         Calendar calendar = Calendar.getInstance();
         Date date = new Date(calendar.getTime().getTime());
         Date diff =  new Date(date.getTime() - user.getBirthday().getTime());
@@ -50,7 +49,7 @@ public class TributesServiceImpl implements TributesService {
         if (diff.getTime()/1000/60/60/24 > 18*365) {
             return null;
         }
-        StatusesEntity status = statusesRepository.findStatusesEntityByName("Трибут");
+        Status status = statusesRepository.findStatuseByName("Трибут");
         user.setStatus(status);
         userRepository.save(user);
         tributesRepository.save(tribute);
@@ -59,35 +58,35 @@ public class TributesServiceImpl implements TributesService {
 
     @Transactional
     @Override
-    public boolean deleteTribute(TributesEntity tribute) {
+    public boolean deleteTribute(Tribute tribute) {
         tributesRepository.delete(tribute);
         return true;
     }
 
     @Transactional
     @Override
-    public TributesEntity updateTribute(TributesEntity tribute) {
+    public Tribute updateTribute(Tribute tribute) {
         tributesRepository.save(tribute);
         return tribute;
     }
 
     @Override
-    public TributesEntity getTributeById(long tributeId) {
-        return tributesRepository.findTributesEntityByTributeId(tributeId);
+    public Tribute getTributeById(long tributeId) {
+        return tributesRepository.findTributeByTributeId(tributeId);
     }
 
     @Override
-    public List<TributesEntity> getTributesByUser(UsersEntity user) {
-        return tributesRepository.getTributesEntitiesByUser(user);
+    public List<Tribute> getTributesByUser(User user) {
+        return tributesRepository.getTributesByUser(user);
     }
 
     @Override
-    public List<TributesEntity> getTributesByGame(GamesEntity game) {
-        return tributesRepository.getTributesEntitiesByGame(game);
+    public List<Tribute> getTributesByGame(Game game) {
+        return tributesRepository.getTributesByGame(game);
     }
 
     @Override
-    public List<TributesEntity> getTributesByStatusAndGame(String status, GamesEntity game) {
-        return tributesRepository.getTributesEntityByStatusAndGame(status, game);
+    public List<Tribute> getTributesByStatusAndGame(String status, Game game) {
+        return tributesRepository.getTributesByStatusAndGame(status, game);
     }
 }

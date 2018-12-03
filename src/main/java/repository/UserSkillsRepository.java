@@ -1,15 +1,14 @@
 package repository;
 
-import entity.SkillsEntity;
-import entity.UsersEntity;
-import entity.UserSkillsEntity;
-import entity.UserSkillsEntityPK;
-import org.springframework.data.jpa.repository.JpaRepository;
+import entity.Skill;
+import entity.User;
+import entity.UserSkill;
+import entity.UserSkillPK;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface UserSkillsRepository extends CrudRepository<UserSkillsEntity, UserSkillsEntityPK> {
+public interface UserSkillsRepository extends CrudRepository<UserSkill, Integer> {
     /**
      * find user's level of skill
      *
@@ -17,7 +16,7 @@ public interface UserSkillsRepository extends CrudRepository<UserSkillsEntity, U
      * @param skill skill
      * @return user's skill with level
      */
-    UserSkillsEntity findUserSkillsEntityByUserAndSkill(UsersEntity user, SkillsEntity skill);
+    UserSkill findUserSkillByUserAndSkill(User user, Skill skill);
 
     /**
      * find user's skills
@@ -25,5 +24,5 @@ public interface UserSkillsRepository extends CrudRepository<UserSkillsEntity, U
      * @param user user
      * @return list of skills with level
      */
-    List<UserSkillsEntity> getUserSkillsEntitiesByUser(UsersEntity user);
+    List<UserSkill> getUserSkillsByUser(User user);
 }

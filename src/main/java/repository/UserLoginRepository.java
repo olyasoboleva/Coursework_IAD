@@ -1,23 +1,23 @@
 package repository;
 
-import entity.UserLoginEntity;
-import entity.UsersEntity;
+import entity.UserLogin;
+import entity.User;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserLoginRepository extends CrudRepository<UserLoginEntity, Integer> {
+public interface UserLoginRepository extends CrudRepository<UserLogin, Integer> {
     /**
      * find login parameters of user
      * @param user user
      * @return user login
      */
-    UserLoginEntity findUserLoginEntityByUser(UsersEntity user);
+    UserLogin findUserLoginByUser(User user);
 
     /**
      * find user login by nick
      * @param nick username
      * @return user login entity
      */
-    UserLoginEntity findUserLoginEntityByNick(String nick);
+    UserLogin findUserLoginByNick(String nick);
 
     /**
      * find user by nick and password
@@ -26,5 +26,5 @@ public interface UserLoginRepository extends CrudRepository<UserLoginEntity, Int
      * @param password password
      * @return user login
      */
-    UserLoginEntity findUserLoginEntityByNickAndPassword(String nick, String password);
+    UserLogin findUserLoginByNickAndPassword(String nick, String password);
 }

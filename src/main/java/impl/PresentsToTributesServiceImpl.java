@@ -1,15 +1,13 @@
 package impl;
 
-import entity.PresentsToTributesEntity;
-import entity.ShopEntity;
-import entity.TributesEntity;
-import entity.UsersEntity;
+import entity.PresentsToTribute;
+import entity.Shop;
+import entity.Tribute;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.PresentsToTributesRepository;
-import repository.TributesRepository;
-import repository.UserLoginRepository;
 import repository.UserRepository;
 import service.PresentsToTributesService;
 
@@ -29,30 +27,30 @@ public class PresentsToTributesServiceImpl implements PresentsToTributesService 
     }
 
     @Override
-    public PresentsToTributesEntity getPresentsToTributeById(int sendingId) {
-        return presentsToTributesRepository.findPresentsToTributesEntityBySendingId(sendingId);
+    public PresentsToTribute getPresentsToTributeById(int sendingId) {
+        return presentsToTributesRepository.findPresentsToTributeBySendingId(sendingId);
     }
 
     @Override
-    public List<PresentsToTributesEntity> getPresentsToTributeBySenderAndTribute(UsersEntity sender, TributesEntity tribute) {
-        return presentsToTributesRepository.getPresentsToTributesEntityBySenderAndTribute(sender, tribute);
+    public List<PresentsToTribute> getPresentsToTributeBySenderAndTribute(User sender, Tribute tribute) {
+        return presentsToTributesRepository.getPresentsToTributesBySenderAndTribute(sender, tribute);
     }
 
     @Override
-    public List<PresentsToTributesEntity> getPresentsToTributeBySender(UsersEntity sender) {
-        return presentsToTributesRepository.getPresentsToTributesEntityBySender(sender);
+    public List<PresentsToTribute> getPresentsToTributeBySender(User sender) {
+        return presentsToTributesRepository.getPresentsToTributesBySender(sender);
     }
 
     @Override
-    public List<PresentsToTributesEntity> getPresentsToTributeByTribute(TributesEntity tribute) {
-        return presentsToTributesRepository.getPresentsToTributesEntityByTribute(tribute);
+    public List<PresentsToTribute> getPresentsToTributeByTribute(Tribute tribute) {
+        return presentsToTributesRepository.getPresentsToTributesByTribute(tribute);
     }
 
     @Transactional
     @Override
-    public PresentsToTributesEntity createPresentsToTributes(PresentsToTributesEntity present) {
-        UsersEntity user = present.getSender();
-        ShopEntity product = present.getProduct();
+    public PresentsToTribute createPresentsToTributes(PresentsToTribute present) {
+        User user = present.getSender();
+        Shop product = present.getProduct();
         if (user.getCash() - product.getCost() < 0) {
             return null;
         }
@@ -63,13 +61,13 @@ public class PresentsToTributesServiceImpl implements PresentsToTributesService 
     }
 
     @Override
-    public PresentsToTributesEntity updatePresentsToTributes(PresentsToTributesEntity present) {
+    public PresentsToTribute updatePresentsToTributes(PresentsToTribute present) {
         presentsToTributesRepository.save(present);
         return present;
     }
 
     @Override
-    public boolean deletePresentsToTributes(PresentsToTributesEntity present) {
+    public boolean deletePresentsToTributes(PresentsToTribute present) {
         presentsToTributesRepository.delete(present);
         return true;
     }

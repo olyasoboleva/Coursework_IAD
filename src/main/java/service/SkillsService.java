@@ -12,13 +12,13 @@ public interface SkillsService {
      * @param skillId id
      * @return skill
      */
-    SkillsEntity getSkillById(int skillId);
+    Skill getSkillById(int skillId);
     /**
      * find default skill of district
-     * @param districtsEntity district
+     * @param district district
      * @return skill
      */
-    SkillsEntity getSkillByDistrict(DistrictsEntity districtsEntity);
+    Skill getSkillByDistrict(District district);
 
 
     /**
@@ -26,54 +26,54 @@ public interface SkillsService {
      * @param training training
      * @return skill
      */
-    SkillsEntity getSkillByTraining(TrainingsEntity training);
+    Skill getSkillByTraining(Training training);
 
     /**
      * find all skills of user
      * @param user user
      * @return list of skills
      */
-    List<SkillsEntity> getSkillsByUser(UsersEntity user);
+    List<Skill> getSkillsByUser(User user);
 
     /**
      * find skill necessary for this weapon
      * @param weapon weapon
      * @return skill
      */
-    SkillsEntity getSkillByWeapon(WeaponsEntity weapon);
+    Skill getSkillByWeapon(Weapon weapon);
 
     /**
      * It creates new skill
      * @param skill skill
      * @return new skill if it was created
      */
-    SkillsEntity createSkill(SkillsEntity skill);
+    Skill createSkill(Skill skill);
 
     /**
      * It updates sime skill
      * @param skill skill
      * @return skill if it was correctly updated
      */
-    SkillsEntity updateSkill(SkillsEntity skill);
+    Skill updateSkill(Skill skill);
 
     /**
      * It deletes skill
      * @param skill skill
      * @return true if it was successfully deleted
      */
-    boolean deleteSkill(SkillsEntity skill);
+    boolean deleteSkill(Skill skill);
 
     /**
      * Try to find all user skills
      * @param user user
      * @return his skills
      */
-    Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user);
+    Map<Skill, Integer> getAllUserSkills(User user);
 
     /**
      * Try to find all tribute skills
      * @param tribute tribute
      * @return his skills
      */
-    Map<SkillsEntity, Integer> getAllTributeSkills(TributesEntity tribute);
+    Map<Skill, Integer> getAllTributeSkills(Tribute tribute);
 }

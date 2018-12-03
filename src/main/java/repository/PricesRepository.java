@@ -1,15 +1,13 @@
 package repository;
 
-import entity.PricesEntity;
+import entity.Price;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
-public interface PricesRepository extends CrudRepository<PricesEntity,Integer> {
+public interface PricesRepository extends CrudRepository<Price,Integer> {
     /**
      * find price by id
      * @param priceId id
      * @return price
      */
-    PricesEntity findPricesEntityByPriceId(int priceId);
+    Price findPriceByPriceId(int priceId);
 }

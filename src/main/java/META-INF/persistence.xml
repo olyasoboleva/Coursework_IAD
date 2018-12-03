@@ -2,21 +2,21 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
     <persistence-unit name="NewPersistenceUnit">
-        <class>entity.ArenasEntity</class>
-        <class>entity.DistrictsEntity</class>
-        <class>entity.GamesEntity</class>
-        <class>entity.PresentsToTributesEntity</class>
-        <class>entity.PricesEntity</class>
-        <class>entity.ProductsAndLocationEntity</class>
-        <class>entity.ShopEntity</class>
-        <class>entity.SkillsEntity</class>
-        <class>entity.StatusesEntity</class>
-        <class>entity.TrainingsEntity</class>
-        <class>entity.TributesEntity</class>
-        <class>entity.UsersEntity</class>
-        <class>entity.UserSkillsEntity</class>
-        <class>entity.WeaponsEntity</class>
-        <class>entity.WeaponsInGameEntity</class>
+        <class>entity.Arena</class>
+        <class>entity.District</class>
+        <class>entity.Game</class>
+        <class>entity.PresentsToTribute</class>
+        <class>entity.Price</class>
+        <class>entity.ProductsAndLocation</class>
+        <class>entity.Shop</class>
+        <class>entity.Skill</class>
+        <class>entity.Status</class>
+        <class>entity.Training</class>
+        <class>entity.Tribute</class>
+        <class>entity.User</class>
+        <class>entity.UserSkill</class>
+        <class>entity.Weapon</class>
+        <class>entity.WeaponsInGame</class>
         <properties>
             <property name="toplink.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
             <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>

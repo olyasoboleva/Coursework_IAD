@@ -1,7 +1,7 @@
 package service;
 
-import entity.UserLoginEntity;
-import entity.UsersEntity;
+import entity.UserLogin;
+import entity.User;
 
 public interface UserLoginService {
     /**
@@ -9,35 +9,35 @@ public interface UserLoginService {
      * @param login login
      * @return bew login if it was created
      */
-    UserLoginEntity createLogin(UserLoginEntity login);
+    UserLogin createLogin(UserLogin login);
 
     /**
      * It updates the login for user
      * @param login login
      * @return login if it was correctly updated
      */
-    UserLoginEntity updateLogin(UserLoginEntity login);
+    UserLogin updateLogin(UserLogin login);
 
     /**
      * It deletes login
      * @param login login
      * @return true if it was successfully deleted
      */
-    boolean deleteSLogin(UserLoginEntity login);
+    boolean deleteSLogin(UserLogin login);
 
     /**
      * find login parameters of user
      * @param user user
      * @return user login
      */
-    UserLoginEntity getUserLoginByUser(UsersEntity user);
+    UserLogin getUserLoginByUser(User user);
 
     /**
      * find user login by nick
      * @param nick username
      * @return user login entity
      */
-    UserLoginEntity getUserLoginByNick(String nick);
+    UserLogin getUserLoginByNick(String nick);
 
     /**
      * find user by nick and password
@@ -46,5 +46,5 @@ public interface UserLoginService {
      * @param password password
      * @return user login
      */
-    UserLoginEntity getUserLoginByNickAndPassword(String nick, String password);
+    UserLogin getUserLoginByNickAndPassword(String nick, String password);
 }

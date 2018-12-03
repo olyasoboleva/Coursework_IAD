@@ -1,8 +1,8 @@
 package service;
 
-import entity.SkillsEntity;
-import entity.TributesEntity;
-import entity.WeaponsEntity;
+import entity.Skill;
+import entity.Tribute;
+import entity.Weapon;
 
 import java.util.List;
 
@@ -12,47 +12,47 @@ public interface WeaponsService {
      * @param weapon weapon
      * @return new weapon if it was created
      */
-    WeaponsEntity createWeapon(WeaponsEntity weapon);
+    Weapon createWeapon(Weapon weapon);
 
     /**
      * It deleted weapon
      * @param weapon weapon
      * @return true if it was successfully deleted
      */
-    boolean deleteWeapon(WeaponsEntity weapon);
+    boolean deleteWeapon(Weapon weapon);
 
     /**
      * It updates the weapon
      * @param weapon weapon
      * @return weapon if it was correctly updated
      */
-    WeaponsEntity updateWeapon(WeaponsEntity weapon);
+    Weapon updateWeapon(Weapon weapon);
 
     /**
      * It get tributes weapon
      * @param tribute tribute
      * @return his weapon
      */
-    List<WeaponsEntity> getTributeWeapons(TributesEntity tribute);
+    List<Weapon> getTributeWeapons(Tribute tribute);
 
     /**
      * find weapon by id
      * @param id id
      * @return weapon
      */
-    WeaponsEntity getWeaponById(int id);
+    Weapon getWeaponById(int id);
 
     /**
      * find weapon for this skill
      * @param skill skill
      * @return weapon
      */
-    WeaponsEntity getWeaponBySkill(SkillsEntity skill);
+    Weapon getWeaponBySkill(Skill skill);
 
     /**
      * find weapons which tribute have
      * @param tribute tribute
      * @return lit of weapons
      */
-    List<WeaponsEntity> getWeaponsByOwners(TributesEntity tribute);
+    List<Weapon> getWeaponsByOwners(Tribute tribute);
 }

@@ -1,9 +1,9 @@
 package impl;
 
-import entity.SkillsEntity;
-import entity.TributesEntity;
-import entity.WeaponsEntity;
-import entity.WeaponsInGameEntity;
+import entity.Skill;
+import entity.Tribute;
+import entity.Weapon;
+import entity.WeaponsInGame;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.WeaponsRepository;
@@ -29,54 +29,55 @@ public class WeaponsServiceImpl implements WeaponsService {
     //FIXME не тестила
     @Transactional
     @Override
-    public List<WeaponsEntity> getTributeWeapons(TributesEntity tribute) {
-        List<WeaponsEntity> tributeWeapons = new ArrayList<>();
-        List<WeaponsInGameEntity> gameWeapon = weaponsInGameRepository.getWeaponsInGameEntitiesByTribute(tribute);
-        List<WeaponsEntity> allWeapons = (List<WeaponsEntity>) weaponsRepository.findAll();
-        for (WeaponsEntity weapons : allWeapons) {
-            for (WeaponsInGameEntity weapon : gameWeapon) {
+    public List<Weapon> getTributeWeapons(Tribute tribute) {
+        List<Weapon> tributeWeapons = new ArrayList<>();
+        List<WeaponsInGame> gameWeapon = weaponsInGameRepository.getWeaponsInGamesByTribute(tribute);
+        List<Weapon> allWeapons = (List<Weapon>) weaponsRepository.findAll();
+        for (Weapon weapons : allWeapons) {
+            //TODO: сломалось
+            /*for (WeaponsInGame weapon : gameWeapon) {
                 if (weapons.getWeaponId() == weapon.getWeaponId()) {
                     tributeWeapons.add(weapons);
                 }
-            }
+            }*/
         }
         return tributeWeapons;
     }
 
     @Transactional
     @Override
-    public WeaponsEntity createWeapon(WeaponsEntity weapon) {
+    public Weapon createWeapon(Weapon weapon) {
         weaponsRepository.save(weapon);
         return weapon;
     }
 
     @Transactional
     @Override
-    public boolean deleteWeapon(WeaponsEntity weapon) {
+    public boolean deleteWeapon(Weapon weapon) {
         weaponsRepository.delete(weapon);
         return true;
     }
 
     @Transactional
     @Override
-    public WeaponsEntity updateWeapon(WeaponsEntity weapon) {
+    public Weapon updateWeapon(Weapon weapon) {
         weaponsRepository.save(weapon);
         return weapon;
     }
 
     @Override
-    public WeaponsEntity getWeaponById(int id) {
+    public Weapon getWeaponById(int id) {
         return weaponsRepository.findWeaponsEntityByWeaponId(id);
     }
 
     @Override
-    public WeaponsEntity getWeaponBySkill(SkillsEntity skill) {
-        return weaponsRepository.getWeaponsEntitiesBySkill(skill);
+    public Weapon getWeaponBySkill(Skill skill) {
+        return weaponsRepository.getWeaponBySkill(skill);
     }
 
     @Override
-    public List<WeaponsEntity> getWeaponsByOwners(TributesEntity tribute) {
-        return weaponsRepository.getWeaponsEntitiesByOwners(tribute);
+    public List<Weapon> getWeaponsByOwners(Tribute tribute) {
+        return weaponsRepository.getWeaponsByOwners(tribute);
     }
 
 }

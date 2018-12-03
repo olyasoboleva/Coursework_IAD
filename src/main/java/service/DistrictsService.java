@@ -1,6 +1,6 @@
 package service;
 
-import entity.DistrictsEntity;
+import entity.District;
 
 public interface DistrictsService {
    /**
@@ -8,26 +8,26 @@ public interface DistrictsService {
     * @param districtId id
     * @return district
     */
-   DistrictsEntity getDistrictById(int districtId);
+   District getDistrictById(int districtId);
 
    /**
     * It creates new district
     * @param district district
     * @return new district
     */
-   DistrictsEntity createDistrict(DistrictsEntity district);
+   District createDistrict(District district);
 
    /**
     * It updates the district
     * @param district district
     * @return district if it was correctly updated
     */
-   DistrictsEntity updateDistrict(DistrictsEntity district);
+   District updateDistrict(District district);
 
    /**
     * It deletes the district
     * @param district district
     * @return true if district was successfully deleted
     */
-   boolean deleteDistrict(DistrictsEntity district);
+   boolean deleteDistrict(District district);
 }

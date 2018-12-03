@@ -1,8 +1,8 @@
 package impl;
 
-import entity.SkillsEntity;
-import entity.UserSkillsEntity;
-import entity.UsersEntity;
+import entity.Skill;
+import entity.UserSkill;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.UserSkillsRepository;
@@ -21,30 +21,30 @@ public class UserSkillsServiceImpl implements UserSkillsService {
     }
 
     @Override
-    public UserSkillsEntity createUserSkill(UserSkillsEntity userSkill) {
+    public UserSkill createUserSkill(UserSkill userSkill) {
         userSkillsRepository.save(userSkill);
         return userSkill;
     }
 
     @Override
-    public boolean deleteUserSkill(UserSkillsEntity userSkill) {
+    public boolean deleteUserSkill(UserSkill userSkill) {
         userSkillsRepository.delete(userSkill);
         return true;
     }
 
     @Override
-    public UserSkillsEntity updateUserSkills(UserSkillsEntity userSkill) {
+    public UserSkill updateUserSkills(UserSkill userSkill) {
         userSkillsRepository.save(userSkill);
         return userSkill;
     }
 
     @Override
-    public UserSkillsEntity getUserSkillByUserAndSkill(UsersEntity user, SkillsEntity skill) {
-        return userSkillsRepository.findUserSkillsEntityByUserAndSkill(user, skill);
+    public UserSkill getUserSkillByUserAndSkill(User user, Skill skill) {
+        return userSkillsRepository.findUserSkillByUserAndSkill(user, skill);
     }
 
     @Override
-    public List<UserSkillsEntity> getUserSkillsByUser(UsersEntity user) {
-        return userSkillsRepository.getUserSkillsEntitiesByUser(user);
+    public List<UserSkill> getUserSkillsByUser(User user) {
+        return userSkillsRepository.getUserSkillsByUser(user);
     }
 }

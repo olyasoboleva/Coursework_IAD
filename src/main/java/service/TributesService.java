@@ -1,9 +1,8 @@
 package service;
 
-import entity.GamesEntity;
-import entity.ShopEntity;
-import entity.TributesEntity;
-import entity.UsersEntity;
+import entity.Game;
+import entity.Tribute;
+import entity.User;
 
 import java.util.List;
 
@@ -13,21 +12,21 @@ public interface TributesService {
      * @param tribute tribute
      * @return new tribute if it was saved
      */
-    TributesEntity createTribute(TributesEntity tribute);
+    Tribute createTribute(Tribute tribute);
 
     /**
      * It deletes tribute
      * @param tribute tribute
      * @return true if it was correctly deleted
      */
-    boolean deleteTribute(TributesEntity tribute);
+    boolean deleteTribute(Tribute tribute);
 
     /**
      * It updates the tribute
      * @param tribute tribute
      * @return tribute if it was updated correctly
      */
-    TributesEntity updateTribute(TributesEntity tribute);
+    Tribute updateTribute(Tribute tribute);
 
     /**
      * find tribute by id
@@ -35,7 +34,7 @@ public interface TributesService {
      * @param tributeId id
      * @return tribute
      */
-    TributesEntity getTributeById(long tributeId);
+    Tribute getTributeById(long tributeId);
 
     /**
      * find all tributes of user
@@ -43,7 +42,7 @@ public interface TributesService {
      * @param user user
      * @return list of tributes
      */
-    List<TributesEntity> getTributesByUser(UsersEntity user);
+    List<Tribute> getTributesByUser(User user);
 
     /**
      * find all tributes of game
@@ -51,7 +50,7 @@ public interface TributesService {
      * @param game game
      * @return list of tributes
      */
-    List<TributesEntity> getTributesByGame(GamesEntity game);
+    List<Tribute> getTributesByGame(Game game);
 
     /**
      * find all tributes of game with this status
@@ -60,6 +59,6 @@ public interface TributesService {
      * @param game game
      * @return list of games
      */
-    List<TributesEntity> getTributesByStatusAndGame(String status, GamesEntity game);
+    List<Tribute> getTributesByStatusAndGame(String status, Game game);
 
 }

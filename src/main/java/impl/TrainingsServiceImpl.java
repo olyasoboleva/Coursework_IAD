@@ -1,7 +1,7 @@
 package impl;
 
-import entity.TrainingsEntity;
-import entity.UsersEntity;
+import entity.Training;
+import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.TrainingsRepository;
@@ -20,35 +20,35 @@ public class TrainingsServiceImpl implements TrainingsService {
     }
 
     @Override
-    public TrainingsEntity createTraining(TrainingsEntity training) {
+    public Training createTraining(Training training) {
         trainingsRepository.save(training);
         return training;
     }
 
     @Override
-    public boolean deleteTraining(TrainingsEntity training) {
+    public boolean deleteTraining(Training training) {
         trainingsRepository.delete(training);
         return true;
     }
 
     @Override
-    public TrainingsEntity updateTraining(TrainingsEntity training) {
+    public Training updateTraining(Training training) {
         trainingsRepository.save(training);
         return training;
     }
 
     @Override
-    public TrainingsEntity getTrainingById(int trainingId) {
-        return trainingsRepository.findTrainingsEntityByTrainingId(trainingId);
+    public Training getTrainingById(int trainingId) {
+        return trainingsRepository.findTrainingByTrainingId(trainingId);
     }
 
     @Override
-    public List<TrainingsEntity> getTrainingsByDayOfWeek(int dayOfWeek) {
-        return trainingsRepository.getTrainingsEntityByDayOfWeek(dayOfWeek);
+    public List<Training> getTrainingsByDayOfWeek(int dayOfWeek) {
+        return trainingsRepository.getTrainingsByDayOfWeek(dayOfWeek);
     }
 
     @Override
-    public List<TrainingsEntity> getTrainingsByTrainer(UsersEntity trainer) {
-        return trainingsRepository.getTrainingsEntityByTrainer(trainer);
+    public List<Training> getTrainingsByTrainer(User trainer) {
+        return trainingsRepository.getTrainingsByTrainer(trainer);
     }
 }

@@ -30,15 +30,16 @@ public class SkillsServiceImpl implements SkillsService {
     //FIXME: не тестила
       @Transactional
       @Override
-    public Map<SkillsEntity, Integer> getAllUserSkills(UsersEntity user) {
-        Map<SkillsEntity, Integer> allUserSkills = new HashMap<>();
-        List<UserSkillsEntity> userSkills = userSkillsRepository.getUserSkillsEntitiesByUser(user);
-        List<SkillsEntity> allSkills = (List<SkillsEntity>) skillsRepository.findAll(); //FIXME а это норм?
-        for (SkillsEntity skill : allSkills) {
-            for (UserSkillsEntity userSkill : userSkills) {
-                if (skill.getSkillId() == userSkill.getSkillId()) {
+    public Map<Skill, Integer> getAllUserSkills(User user) {
+        Map<Skill, Integer> allUserSkills = new HashMap<>();
+        List<UserSkill> userSkills = userSkillsRepository.getUserSkillsByUser(user);
+        List<Skill> allSkills = (List<Skill>) skillsRepository.findAll(); //FIXME а это норм?
+        for (Skill skill : allSkills) {
+            for (UserSkill userSkill : userSkills) {
+                //TODO: сломалось
+                /*if (skill.getSkillId() == userSkill.getSkillId()) {
                     allUserSkills.put(skill,userSkill.getLevelOfSkill());
-                }
+                }*/
             }
         }
         return allUserSkills;
@@ -47,54 +48,54 @@ public class SkillsServiceImpl implements SkillsService {
 
     @Transactional
     @Override
-    public Map<SkillsEntity, Integer> getAllTributeSkills(TributesEntity tribute) {
-          UsersEntity user = userRepository.findUsersEntityByTributesByUser(tribute);
+    public Map<Skill, Integer> getAllTributeSkills(Tribute tribute) {
+          User user = userRepository.findUserByTributesByUser(tribute);
         return getAllUserSkills(user);
     }
 
 
     @Override
-    public SkillsEntity getSkillById(int skillId) {
-        return skillsRepository.findSkillsEntityBySkillId(skillId);
+    public Skill getSkillById(int skillId) {
+        return skillsRepository.findSkillBySkillId(skillId);
     }
 
     @Override
-    public SkillsEntity getSkillByDistrict(DistrictsEntity districtsEntity) {
-        return skillsRepository.findSkillsEntityByDistrict(districtsEntity);
+    public Skill getSkillByDistrict(District district) {
+        return skillsRepository.findSkillByDistrict(district);
     }
 
     @Override
-    public SkillsEntity getSkillByTraining(TrainingsEntity training) {
-        return skillsRepository.findSkillsEntityByTrainings(training);
+    public Skill getSkillByTraining(Training training) {
+        return skillsRepository.findSkillByTrainings(training);
     }
 
     @Override
-    public List<SkillsEntity> getSkillsByUser(UsersEntity user) {
-        return skillsRepository.findSkillsEntitiesByUsers(user);
+    public List<Skill> getSkillsByUser(User user) {
+        return skillsRepository.findSkillsByUsers(user);
     }
 
     @Override
-    public SkillsEntity getSkillByWeapon(WeaponsEntity weapon) {
-        return skillsRepository.findSkillsEntitiesByWeapon(weapon);
+    public Skill getSkillByWeapon(Weapon weapon) {
+        return skillsRepository.findSkillByWeapon(weapon);
     }
 
     @Transactional
     @Override
-    public SkillsEntity createSkill(SkillsEntity skill) {
+    public Skill createSkill(Skill skill) {
         skillsRepository.save(skill);
         return skill;
     }
 
     @Transactional
     @Override
-    public SkillsEntity updateSkill(SkillsEntity skill) {
+    public Skill updateSkill(Skill skill) {
         skillsRepository.save(skill);
         return skill;
     }
 
     @Transactional
     @Override
-    public boolean deleteSkill(SkillsEntity skill) {
+    public boolean deleteSkill(Skill skill) {
         skillsRepository.delete(skill);
         return true;
     }

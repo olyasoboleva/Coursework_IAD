@@ -1,7 +1,7 @@
 package impl;
 
-import entity.ArenasEntity;
-import entity.GamesEntity;
+import entity.Arena;
+import entity.Game;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.ArenasRepository;
@@ -20,32 +20,32 @@ public class ArenasServiceImpl implements ArenasService {
 
 
     @Override
-    public ArenasEntity getArenaById(int arenaId) {
-        return arenasRepository.findArenasEntityByArenaId(arenaId);
+    public Arena getArenaById(int arenaId) {
+        return arenasRepository.findArenaByArenaId(arenaId);
     }
 
     @Override
-    public  ArenasEntity getArenaByGame(GamesEntity game) {
-        return arenasRepository.findArenasEntityByGame(game);
+    public Arena getArenaByGame(Game game) {
+        return arenasRepository.findArenaByGame(game);
     }
 
     @Transactional
     @Override
-    public ArenasEntity createArena(ArenasEntity arena) {
+    public Arena createArena(Arena arena) {
         arenasRepository.save(arena);
         return arena;
     }
 
     @Transactional
     @Override
-    public boolean deleteArena(ArenasEntity arena) {
+    public boolean deleteArena(Arena arena) {
         arenasRepository.delete(arena);
         return true;
     }
 
     @Transactional
     @Override
-    public ArenasEntity updateArena(ArenasEntity arena) {
+    public Arena updateArena(Arena arena) {
         arenasRepository.save(arena);
         return arena;
     }

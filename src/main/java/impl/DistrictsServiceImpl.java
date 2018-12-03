@@ -1,6 +1,6 @@
 package impl;
 
-import entity.DistrictsEntity;
+import entity.District;
 import repository.DistrictsRepository;
 import service.DistrictsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +16,24 @@ public class DistrictsServiceImpl  implements DistrictsService{
     }
 
     @Override
-    public DistrictsEntity getDistrictById(int districtId) {
-        return districtsRepository.findDistrictsEntityByDistrictId(districtId);
+    public District getDistrictById(int districtId) {
+        return districtsRepository.findDistrictByDistrictId(districtId);
     }
 
     @Override
-    public DistrictsEntity createDistrict(DistrictsEntity district) {
+    public District createDistrict(District district) {
         districtsRepository.save(district);
         return district;
     }
 
     @Override
-    public DistrictsEntity updateDistrict(DistrictsEntity district) {
+    public District updateDistrict(District district) {
         districtsRepository.save(district);
         return district;
     }
 
     @Override
-    public boolean deleteDistrict(DistrictsEntity district) {
+    public boolean deleteDistrict(District district) {
         districtsRepository.delete(district);
         return true;
     }
