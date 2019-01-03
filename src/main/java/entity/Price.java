@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "priceId")
+    @Column(name = "price_id")
     private Integer priceId;
 
     @NotNull

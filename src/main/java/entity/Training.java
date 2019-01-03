@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "trainingId")
+    @Column(name = "training_id")
     private Integer trainingId;
 
     @Column(name = "name", length = 40)
@@ -34,18 +34,18 @@ public class Training {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "timeOfTraining")
+    @Column(name = "time_of_training")
     private LocalTime timeOfTraining;
 
-    @Column(name = "dayOfWeek")
+    @Column(name = "day_of_week")
     private int dayOfWeek;
 
     @ManyToOne
-    @JoinColumn(name = "skillId", referencedColumnName = "skillId")
+    @JoinColumn(name = "skill_id", referencedColumnName = "skill_id")
     private Skill skill;
 
     @ManyToOne
-    @JoinColumn(name = "trainer", referencedColumnName = "userId")
+    @JoinColumn(name = "trainer", referencedColumnName = "user_id")
     private User trainer;
 
     public Training(String name, Skill skill, int coefficient, int duration, String description, User trainer, LocalTime timeOfTraining, int dayOfWeek) {

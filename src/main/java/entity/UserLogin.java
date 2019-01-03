@@ -12,11 +12,11 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "userLogin", schema = "public", catalog = "postgres")
+@Table(name = "user_login", schema = "public", catalog = "postgres")
 public class UserLogin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "loginId")
+    @Column(name = "login_id")
     private Integer loginId;
 
     @NotNull

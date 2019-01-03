@@ -11,19 +11,19 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "weaponsInGame", schema = "public", catalog = "postgres")
+@Table(name = "weapons_in_game", schema = "public", catalog = "postgres")
 public class WeaponsInGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "weaponInGameId")
+    @Column(name = "weapon_in_game_id")
     private Integer weaponInGameId;
 
     @ManyToOne
-    @JoinColumn(name = "tributeId", referencedColumnName = "tributeId", nullable = false)
+    @JoinColumn(name = "tribute_id", referencedColumnName = "tribute_id", nullable = false)
     private Tribute tribute;
 
     @ManyToOne
-    @JoinColumn(name = "weaponId", referencedColumnName = "weaponId", nullable = false)
+    @JoinColumn(name = "weapon_id", referencedColumnName = "weapon_id", nullable = false)
     private Weapon weapon;
 
     public WeaponsInGame(Tribute tribute, Weapon weapon) {

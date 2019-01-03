@@ -1,7 +1,9 @@
 package repository;
 
 import entity.*;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -60,5 +62,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
      */
     List<User> findUsersByRecipients(Tribute tribute);
 
-
+    @Query(value = "select users from User  users LEFT JOIN FETCH Skill skill where users.userId=:id")
+    List<User> getUsersWithSkill(@Param("id")int id);
 }

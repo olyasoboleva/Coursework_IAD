@@ -19,14 +19,14 @@ import java.util.Objects;
 public class Weapon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "weaponId")
+    @Column(name = "weapon_id")
     private Integer weaponId;
 
     @Column(name = "name", length = 64, unique = true)
     private String name;
 
     @NotNull
-    @Column(name = "typeOfWeapon", length = 40)
+    @Column(name = "type_of_weapon", length = 40)
     private String typeOfWeapon;
 
     @Min(0)
@@ -35,7 +35,7 @@ public class Weapon {
     private int damage;
 
     @Min(0)
-    @Column(name = "radiusOfAction")
+    @Column(name = "radius_of_action")
     private int radiusOfAction;
 
     @Column(name = "picture")
@@ -46,9 +46,9 @@ public class Weapon {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "weaponsInGame",
-            joinColumns = {@JoinColumn(name = "weaponId")},
-            inverseJoinColumns = {@JoinColumn(name = "tributeId")}
+            name = "weapons_in_game",
+            joinColumns = {@JoinColumn(name = "weapon_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tribute_id")}
     )
     private Collection<Tribute> owners;
 

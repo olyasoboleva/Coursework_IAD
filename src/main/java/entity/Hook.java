@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Hook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hookId")
+    @Column(name = "hook_id")
     private Integer hookId;
 
     @Column(name = "name")
@@ -25,7 +25,7 @@ public class Hook {
     private int damage;
 
     @ManyToOne
-    @JoinColumn(name = "locationId", referencedColumnName = "locationId", nullable = false)
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location location;
 
     public Hook(String name, int damage, Location location){

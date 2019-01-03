@@ -12,23 +12,23 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "userSkill", schema = "public", catalog = "postgres")
+@Table(name = "user_skill", schema = "public", catalog = "postgres")
 public class UserSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userSkillId")
+    @Column(name = "user_skill_id")
     private Integer userSkillId;
 
     @Min(0)
-    @Column(name = "levelOfSkill")
+    @Column(name = "level_of_skill")
     private int levelOfSkill;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "skillId", referencedColumnName = "skillId", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "skill_id", referencedColumnName = "skill_id", nullable = false, insertable = false, updatable = false)
     private Skill skill;
 
     public UserSkill(User user, Skill skill, int levelOfSkill) {

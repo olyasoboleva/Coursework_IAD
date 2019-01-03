@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "skillId")
+    @Column(name = "skill_id")
     private Integer skillId;
 
     @NotNull
@@ -28,14 +28,14 @@ public class Skill {
     private String description;
 
     @NotNull
-    @Column(name = "typeOfSkill", length = 42)
+    @Column(name = "type_of_skill", length = 42)
     private String typeOfSkill;
 
     @OneToOne(mappedBy = "skill")
     private District district;
 
     @OneToOne
-    @JoinColumn(name = "weaponId", referencedColumnName = "weaponId")
+    @JoinColumn(name = "weapon_id", referencedColumnName = "weapon_id")
     private Weapon weapon;
 
     @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)

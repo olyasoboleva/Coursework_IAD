@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Arena {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "arenaId")
+    @Column(name = "arena_id")
     private Integer arenaId;
 
     @Min(0)
@@ -31,7 +31,7 @@ public class Arena {
     private int arenaWidth;
 
     @ManyToOne
-    @JoinColumn(name = "locationId", referencedColumnName = "locationId", nullable = false)
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location mainLocation;
 
     @OneToOne(mappedBy = "arena")

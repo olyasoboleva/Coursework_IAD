@@ -16,13 +16,13 @@ import java.util.Objects;
 public class Tribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tributeId")
+    @Column(name = "tribute_id")
     private Integer tributeId;
 
     @Column(name = "status", length = 40)
     private String status;
 
-    @Column(name = "causeOfDeath", length = 80)
+    @Column(name = "cause_of_death", length = 80)
     private String causeOfDeath;
 
     @Min(0)
@@ -32,18 +32,18 @@ public class Tribute {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "presentsToTribute",
-            joinColumns = {@JoinColumn(name = "tributeId")},
-            inverseJoinColumns = {@JoinColumn(name = "productId")}
+            name = "presents_to_tribute",
+            joinColumns = {@JoinColumn(name = "tribute_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
     private Collection<Shop> productsOfTribute;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "gameId", referencedColumnName = "gameId", nullable = false)
+    @JoinColumn(name = "game_id", referencedColumnName = "game_id", nullable = false)
     private Game game;
 
     @ManyToMany(mappedBy = "owners", fetch = FetchType.LAZY)

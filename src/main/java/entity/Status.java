@@ -16,14 +16,14 @@ import java.util.Objects;
 public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "statusId")
+    @Column(name = "status_id")
     private Integer statusId;
 
     @Column(name = "name", length = 40)
     private String name;
 
     @OneToOne
-    @JoinColumn(name = "priceId", referencedColumnName = "priceId", insertable = false, updatable = false)
+    @JoinColumn(name = "price_id", referencedColumnName = "price_id", insertable = false, updatable = false)
     private Price price;
 
     @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)

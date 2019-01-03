@@ -17,18 +17,18 @@ import java.util.Objects;
 public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "districtId")
+    @Column(name = "district_id")
     private Integer districtId;
 
     @Column(name = "name", length = 20, unique = true)
     private String name;
 
     @NotNull
-    @Column(name = "typeOfActivity", length = 40)
+    @Column(name = "type_of_activity", length = 40)
     private String typeOfActivity;
 
     @OneToOne
-    @JoinColumn(name = "skillId", referencedColumnName = "skillId")
+    @JoinColumn(name = "skill_id", referencedColumnName = "skill_id")
     private Skill skill;
 
     @OneToMany(mappedBy = "district", fetch = FetchType.LAZY)

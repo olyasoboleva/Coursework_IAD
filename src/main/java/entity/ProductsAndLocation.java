@@ -12,19 +12,19 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "productsAndLocation", schema = "public", catalog = "postgres")
+@Table(name = "products_and_location", schema = "public", catalog = "postgres")
 public class ProductsAndLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "applyingId")
+    @Column(name = "applying_id")
     private Integer applyingId;
 
     @ManyToOne
-    @JoinColumn(name = "locationId", referencedColumnName = "locationId", nullable = false)
+    @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Shop product;
 
     public ProductsAndLocation(Shop product, Location location) {

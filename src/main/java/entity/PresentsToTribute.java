@@ -12,11 +12,11 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "presentsToTribute", schema = "public", catalog = "postgres")
+@Table(name = "presents_to_tribute", schema = "public", catalog = "postgres")
 public class PresentsToTribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sendingId")
+    @Column(name = "sending_id")
     private Integer sendingId;
 
     @Min(0)
@@ -24,15 +24,15 @@ public class PresentsToTribute {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Shop product;
 
     @ManyToOne
-    @JoinColumn(name = "tributeId", referencedColumnName = "tributeId", nullable = false)
+    @JoinColumn(name = "tribute_id", referencedColumnName = "tribute_id", nullable = false)
     private Tribute tribute;
 
     @ManyToOne
-    @JoinColumn(name = "senderId", referencedColumnName = "userId", nullable = false)
+    @JoinColumn(name = "sender_id", referencedColumnName = "user_id", nullable = false)
     private User sender;
 
     public PresentsToTribute(Shop product, Tribute tribute, User sender, int quantity) {

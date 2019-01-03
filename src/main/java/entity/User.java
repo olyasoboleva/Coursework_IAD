@@ -18,7 +18,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Integer userId;
 
     @NotNull
@@ -45,7 +45,7 @@ public class User {
     private Date birthday;
 
     @ManyToOne
-    @JoinColumn(name = "statusId", referencedColumnName = "statusId")
+    @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private Status status;
 
     @Min(0)
@@ -69,34 +69,34 @@ public class User {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "presentsToTribute",
-            joinColumns = {@JoinColumn(name = "senderId")},
-            inverseJoinColumns = {@JoinColumn(name = "tributeId")}
+            name = "presents_to_tribute",
+            joinColumns = {@JoinColumn(name = "sender_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tribute_id")}
     )
     private Collection<Shop> sendings;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "presentsToTribute",
-            joinColumns = {@JoinColumn(name = "senderId")},
-            inverseJoinColumns = {@JoinColumn(name = "productId")}
+            name = "presents_to_tribute",
+            joinColumns = {@JoinColumn(name = "sender_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
     private Collection<Tribute> recipients;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "userSkill",
-            joinColumns = {@JoinColumn(name = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "skillId")}
+            name = "user_skill",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "skill_id")}
     )
     private Collection<Skill> skills;
 
     @ManyToOne
-    @JoinColumn(name = "district", referencedColumnName = "districtId")
+    @JoinColumn(name = "district", referencedColumnName = "district_id")
     private District district;
 
     @OneToOne
-    @JoinColumn(name = "loginId", referencedColumnName = "loginId")
+    @JoinColumn(name = "login_id", referencedColumnName = "login_id")
     private UserLogin userLogin;
 
 

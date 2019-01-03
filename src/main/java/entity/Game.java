@@ -20,30 +20,30 @@ import java.util.Objects;
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "gameId")
+    @Column(name = "game_id")
     private Integer gameId;
 
     @NotNull
-    @Column(name = "typeOfGame")
+    @Column(name = "type_of_game")
     private boolean typeOfGame;
 
     @Min(0)
-    @Column(name = "numberOfTributes")
+    @Column(name = "number_of_tributes")
     private int numberOfTributes;
 
     @NotNull
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     private Date startDate;
 
     @Column(name = "duration", nullable = false)
     private int duration;
 
     @ManyToOne
-    @JoinColumn(name = "steward", referencedColumnName = "userId", insertable = false, updatable = false)
+    @JoinColumn(name = "steward", referencedColumnName = "user_id", insertable = false, updatable = false)
     private User steward;
 
     @OneToOne
-    @JoinColumn(name = "arena", referencedColumnName = "arenaId")
+    @JoinColumn(name = "arena", referencedColumnName = "arena_id")
     private Arena arena;
 
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)

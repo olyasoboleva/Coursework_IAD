@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "productId")
+    @Column(name = "product_id")
     private Integer productId;
 
     @NotNull
@@ -32,7 +33,7 @@ public class Shop {
     private int cost;
 
     @NotNull
-    @Column(name = "typeOfPresent", length = 40)
+    @Column(name = "type_of_present", length = 40)
     private String typeOfPresent;
 
     @Column(name = "description")
@@ -40,7 +41,7 @@ public class Shop {
 
     @Min(0)
     @Max(100)
-    @Column(name = "healthRecovery")
+    @Column(name = "health_recovery")
     private int healthRecovery;
 
     @Column(name = "picture")
@@ -54,9 +55,9 @@ public class Shop {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "productsAndLocation",
-            joinColumns = {@JoinColumn(name = "productId")},
-            inverseJoinColumns = {@JoinColumn(name = "locationId")}
+            name = "products_and_location",
+            joinColumns = {@JoinColumn(name = "product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "location_id")}
     )
     private Collection<Location> locations;
 
@@ -82,7 +83,7 @@ public class Shop {
                 Objects.equals(description, that.description) &&
                 Objects.equals(productOwners, that.productOwners) &&
                 Objects.equals(locations, that.locations) &&
-                Objects.equals(picture, that.picture);
+                Arrays.equals(picture, that.picture);
     }
 
     @Override
