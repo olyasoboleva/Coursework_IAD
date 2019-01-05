@@ -8,7 +8,7 @@ import repository.UserLoginRepository;
 import repository.UserRepository;
 import service.UserService;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Service("userService")
@@ -84,5 +84,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getSendersOfPresentsByTribute(Tribute tribute) {
         return userRepository.findUsersByRecipients(tribute);
+    }
+
+    @Override
+    public User updateUserLastActivity(User user){
+        /*  FIXME: дичь написана
+        if (user.getLastActivity().getDate()!= new java.util.Date().getDate()) {
+            user.setLastActivity(new java.util.Date()); //и возможно изменить тип для дат
+            user.setCash(user.getCash()+1000);//надо брать из прайс-листа
+            updateUser(user);
+        }*/
+        return user;
     }
 }

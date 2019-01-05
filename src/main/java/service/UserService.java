@@ -2,7 +2,7 @@ package service;
 
 import entity.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface UserService {
@@ -88,4 +88,10 @@ public interface UserService {
      * @return list of users
      */
     List<User> getSendersOfPresentsByTribute(Tribute tribute);
+
+    /**
+     * update last activity date for getting daily prize
+     * @return is successful
+     */
+    User updateUserLastActivity(User user);
 }

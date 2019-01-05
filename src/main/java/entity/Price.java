@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Price {
     @Column(name = "cost")
     private Integer cost;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "price")
     private Status status;
 

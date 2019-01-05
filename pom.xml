@@ -151,7 +151,7 @@
 
     </dependencies>
     <build>
-        <finalName>weblab</finalName>
+        <finalName>hungergames</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -44,7 +45,10 @@ public class User {
     @Column(name = "birthday")
     private Date birthday;
 
-    @ManyToOne
+    @Column(name = "last_activity")
+    private Date lastActivity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private Status status;
 
@@ -95,6 +99,7 @@ public class User {
     @JoinColumn(name = "district", referencedColumnName = "district_id")
     private District district;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "login_id", referencedColumnName = "login_id")
     private UserLogin userLogin;

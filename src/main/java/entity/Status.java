@@ -1,9 +1,13 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -27,6 +31,7 @@ public class Status {
     private Price price;
 
     @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
+    @JsonIgnore
     private Collection<User> users;
 
     public Status(String name, Price price) {
