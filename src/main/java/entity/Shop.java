@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -47,12 +48,15 @@ public class Shop {
     @Column(name = "picture")
     private byte[] picture;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "productsOfTribute", fetch = FetchType.LAZY)
     private Collection<Tribute> productOwners;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "sendings", fetch = FetchType.LAZY)
     private Collection<User> senders;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "products_and_location",

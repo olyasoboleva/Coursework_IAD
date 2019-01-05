@@ -51,15 +51,10 @@ radius_of_action integer CHECK (radius_of_action > 0),
 picture bytea NOT NULL
 );
 
-CREATE TABLE user_login (
- login_id serial PRIMARY KEY,
- nick varchar(30) NOT NULL UNIQUE,
- password varchar(128) NOT NULL
-);
-
 CREATE TABLE users (
 user_id serial PRIMARY KEY,
-login_id INTEGER REFERENCES user_login,
+nick varchar(30) NOT NULL UNIQUE,
+password varchar(128) NOT NULL,
 surname varchar(30) NOT NULL,
 name varchar(30) NOT NULL,
 height integer,

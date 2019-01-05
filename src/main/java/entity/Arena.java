@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Arena {
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location mainLocation;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "arena")
     private Game game;
 

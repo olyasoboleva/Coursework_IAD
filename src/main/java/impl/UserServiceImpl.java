@@ -4,8 +4,8 @@ import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.UserLoginRepository;
 import repository.UserRepository;
+import service.StatusService;
 import service.UserService;
 
 import java.util.Date;
@@ -15,19 +15,18 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserLoginRepository userLoginRepository;
+    private final StatusService statusService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserLoginRepository userLoginRepository) {
+    public UserServiceImpl(UserRepository userRepository, StatusService statusService) {
         this.userRepository = userRepository;
-        this.userLoginRepository = userLoginRepository;
+        this.statusService = statusService;
     }
 
     @Transactional
     @Override
     public User getUserByNick(String nick) {
-        UserLogin login = userLoginRepository.findUserLoginByNick(nick);
-        return userRepository.findUserByUserLogin(login);
+        return userRepository.findUserByNick(nick);
     }
 
     @Transactional
@@ -67,11 +66,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserLogin(UserLogin userLogin) {
-        return userRepository.findUserByUserLogin(userLogin);
-    }
-
-    @Override
     public List<User> getUsersByStatus(Status status) {
         return userRepository.getUsersByStatus(status);
     }
@@ -88,12 +82,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUserLastActivity(User user){
-        /*  FIXME: дичь написана
-        if (user.getLastActivity().getDate()!= new java.util.Date().getDate()) {
-            user.setLastActivity(new java.util.Date()); //и возможно изменить тип для дат
-            user.setCash(user.getCash()+1000);//надо брать из прайс-листа
+        java.sql.Date curDate = new java.sql.Date(System.currentTimeMillis());
+        if (user.getLastActivity().getDate()==curDate.getDate() || user.getLastActivity().getYear()==curDate.getYear() || user.getLastActivity().getMonth()==curDate.getMonth()) {
+            user.setLastActivity(new java.sql.Date(System.currentTimeMillis()));
+            user.setCash(user.getCash()+1000);
+            //user.setCash(user.getCash()+statusService.getStatuseByName("Daily prize").getPrice().getCost());
             updateUser(user);
-        }*/
+        }
         return user;
     }
 }

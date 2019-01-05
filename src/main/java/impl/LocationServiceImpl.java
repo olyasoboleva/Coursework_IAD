@@ -22,12 +22,17 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location findLocationById(int locationId) {
-        return null;
+        return locationRepository.findLocationByLocationId(locationId);
+    }
+
+    @Override
+    public Location findLocationByName(String name){
+        return locationRepository.findLocationByName(name);
     }
 
     @Override
     public List<Location> getLocationsByProduct(Shop product) {
-        return null;
+        return locationRepository.getLocationsByProducts(product);
     }
 
     @Transactional

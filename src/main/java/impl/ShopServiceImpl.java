@@ -78,4 +78,9 @@ public class ShopServiceImpl implements ShopService{
         shopRepository.save(product);
         return product;
     }
+
+    @Override
+    public List<Shop> getFullRange(){
+        return (List<Shop>)shopRepository.findAll();
+    }
 }

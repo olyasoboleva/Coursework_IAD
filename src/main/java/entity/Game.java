@@ -51,7 +51,7 @@ public class Game {
 
     public Game(boolean typeOfGame, User steward, Arena arena, int numberOfTributes, Date startDate) {
         this.typeOfGame = typeOfGame;
-        this.numberOfTributes = numberOfTributes;
+        this.numberOfTributes = typeOfGame ? 24:numberOfTributes;
         this.startDate = startDate;
         this.steward = steward;
         this.arena = arena;

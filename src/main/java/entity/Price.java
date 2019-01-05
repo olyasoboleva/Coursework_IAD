@@ -30,9 +30,9 @@ public class Price {
     @Column(name = "cost")
     private Integer cost;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "price")
-    private Status status;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "price")
+//    private Status status;
 
     public Price(String name, Integer cost) {
         this.name = name;

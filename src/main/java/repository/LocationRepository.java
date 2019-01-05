@@ -15,6 +15,13 @@ public interface LocationRepository extends CrudRepository<Location, Integer> {
     Location findLocationByLocationId(int id);
 
     /**
+     * find location by name
+     * @param name name
+     * @return location
+     */
+    Location findLocationByName(String name);
+
+    /**
      * find all locations where product can be applied
      * @param product product
      * @return list of locations

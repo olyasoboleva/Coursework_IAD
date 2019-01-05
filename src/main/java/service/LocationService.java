@@ -15,6 +15,13 @@ public interface LocationService {
     Location findLocationById(int locationId);
 
     /**
+     * find location by name
+     * @param name name
+     * @return location
+     */
+    Location findLocationByName(String name);
+
+    /**
      * find all locations where product can be applied
      * @param product product
      * @return list of locations

@@ -62,13 +62,6 @@ public interface UserService {
     User getUserByTribute(Tribute tribute);
 
     /**
-     * find user by login
-     * @param userLogin user login
-     * @return user
-     */
-    User getUserByUserLogin(UserLogin userLogin);
-
-    /**
      * find user by status
      * @param status status
      * @return list of users

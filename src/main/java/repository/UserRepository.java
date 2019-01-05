@@ -17,6 +17,14 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     User findUsersEntityByUserId(int userId);
 
     /**
+     * find user by nick
+     * @param nick username
+     * @return user entity
+     */
+    User findUserByNick(String nick);
+
+
+    /**
      * find users for next game by parameters
      * @param district district
      * @param sex sex
@@ -33,13 +41,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
      * @return user
      */
     User findUserByTributesByUser(Tribute tribute);
-
-    /**
-     * find user by login
-     * @param userLogin user login
-     * @return user
-     */
-    User findUserByUserLogin(UserLogin userLogin);
 
     /**
      * find user by status

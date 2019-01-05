@@ -23,6 +23,15 @@ public class User {
     private Integer userId;
 
     @NotNull
+    @Column(name = "nick", length = 30, unique = true)
+    private String nick;
+
+    @NotNull
+    @JsonIgnore
+    @Column(name = "password", length = 128)
+    private String password;
+
+    @NotNull
     @Column(name = "surname", length = 30)
     private String surname;
 
@@ -46,9 +55,9 @@ public class User {
     private Date birthday;
 
     @Column(name = "last_activity")
-    private Date lastActivity;
+    private java.sql.Date lastActivity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
     private Status status;
 
@@ -99,13 +108,10 @@ public class User {
     @JoinColumn(name = "district", referencedColumnName = "district_id")
     private District district;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "login_id", referencedColumnName = "login_id")
-    private UserLogin userLogin;
 
-
-    public User(String surname, String name, int height, int weight, boolean sex, District district, Date birthday, byte[] picture, UserLogin userLogin, Status status) {
+    public User(String nick, String password, String surname, String name, int height, int weight, boolean sex, District district, Date birthday, byte[] picture, Status status) {
+        this.nick = nick;
+        this.password = password;
         this.surname = surname;
         this.name = name;
         this.height = height;
@@ -115,16 +121,17 @@ public class User {
         this.picture = picture;
         this.cash = 1000;
         this.status = status;
-        this.userLogin = userLogin;
         this.district = district;
+        this.lastActivity = new java.sql.Date(System.currentTimeMillis());
     }
 
-    public User(String surname, String name, byte[] picture, UserLogin userLogin, Status status) {
-        this.surname = surname;
+    public User(String nick, String password, String surname, String name, byte[] picture, Status status) {
+        this.nick = nick;
+        this.password = password;this.surname = surname;
         this.name = name;
         this.picture = picture;
-        this.userLogin = userLogin;
         this.status = status;
+        this.lastActivity = new java.sql.Date(System.currentTimeMillis());
     }
 
     @Override
@@ -146,14 +153,13 @@ public class User {
                 Objects.equals(trainings, that.trainings) &&
                 Objects.equals(tributesByUser, that.tributesByUser) &&
                 Objects.equals(skills, that.skills) &&
-                Objects.equals(district, that.district) &&
-                Objects.equals(userLogin, that.userLogin);
+                Objects.equals(district, that.district);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, stewardGames, presentstotributesByUserid, trainings, tributesByUser, skills, district, userLogin);
+        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, stewardGames, presentstotributesByUserid, trainings, tributesByUser, skills, district);
     }
 
 
