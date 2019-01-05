@@ -51,4 +51,9 @@ public class TrainingServiceImpl implements TrainingService {
     public List<Training> getTrainingsByTrainer(User trainer) {
         return trainingRepository.getTrainingsByTrainer(trainer);
     }
+
+    @Override
+    public Training getTrainingByName(String name) {
+        return trainingRepository.findTrainingByName(name);
+    }
 }

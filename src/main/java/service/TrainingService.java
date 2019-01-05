@@ -49,4 +49,7 @@ public interface TrainingService {
      */
     List<Training> getTrainingsByTrainer(User trainer);
 
+
+    Training getTrainingByName(String name);
+
 }

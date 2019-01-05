@@ -22,7 +22,7 @@ EXECUTE PROCEDURE check_date_of_birth();
 
 CREATE FUNCTION check_number_of_weapons() RETURNS trigger AS '
 BEGIN
-IF ((SELECT COUNT(weaponId) FROM weaponsingame WHERE tributeId = NEW.tributeId GROUP BY tributeId) >= 3) THEN
+IF ((SELECT COUNT(weaponId) FROM weapon_in_game WHERE tributeId = NEW.tributeId GROUP BY tributeId) >= 3) THEN
 	RAISE WARNING ''Один трибут не может иметь больше трёх оружий одновременно'';
 	RETURN NULL;
 ELSE

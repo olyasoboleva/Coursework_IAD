@@ -68,12 +68,12 @@ public interface SkillService {
      * @param user user
      * @return his skills
      */
-    Map<Skill, Integer> getAllUserSkills(User user);
+    List<Skill> getAllUserSkills(User user);
 
     /**
      * Try to find all tribute skills
      * @param tribute tribute
      * @return his skills
      */
-    Map<Skill, Integer> getAllTributeSkills(Tribute tribute);
+    List<Skill> getAllTributeSkills(Tribute tribute);
 }
