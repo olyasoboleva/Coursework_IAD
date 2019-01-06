@@ -8,7 +8,7 @@ import repository.GameRepository;
 import service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Service("gameService")
@@ -34,6 +34,11 @@ public class GameServiceImpl implements GameService {
     @Override
     public List<Game> getGameByStartDate(Date startDate) {
         return gameRepository.getGamesByStartDate(startDate);
+    }
+
+    @Override
+    public List<Game> getAllGames() {
+        return (List<Game>) gameRepository.findAll();
     }
 
     @Transactional

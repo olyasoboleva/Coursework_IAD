@@ -25,7 +25,6 @@ public class RegistrationController {
     @Autowired
     StatusService statusService;
 
-
     @Autowired
     DistrictService districtService;
 

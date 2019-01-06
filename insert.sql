@@ -1,6 +1,6 @@
-INSERT INTO price values (1,"salary", 1000);
-insert into status values (1, "viewer", 1);
-insert into status values (1, "tribute", 1);
+INSERT INTO price values (1,'salary', 1000);
+insert into status values (1, 'viewer', 1);
+insert into status values (2, 'tribute', 1);
 
 INSERT INTO skill VALUES (0,'Управление людьми','','Психологические',null);
 INSERT INTO skill VALUES (1,'Знание боевых искусств','','Другие',null);
@@ -29,3 +29,5 @@ INSERT INTO district VALUES (9,'Дистрикт 9','Сельское хозяй
 INSERT INTO district VALUES (10,'Дистрикт 10','Животноводство',10);
 INSERT INTO district VALUES (11,'Дистрикт 11','Сельское хозяйство',11);
 INSERT INTO district VALUES (12,'Дистрикт 12','Добыча угля',12);
+
+INSERT INTO user_skill VALUES (1,1,1,10);

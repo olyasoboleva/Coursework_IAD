@@ -4,7 +4,7 @@ import entity.Game;
 import entity.User;
 import org.springframework.data.repository.CrudRepository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface GameRepository extends CrudRepository<Game, Integer> {

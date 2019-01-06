@@ -51,7 +51,7 @@ public class TrainingController {
     }
 
     @GetMapping( "/trainings")
-    public @ResponseBody ResponseEntity getTrainings(@RequestParam("day")int day) {
+    public @ResponseBody ResponseEntity getTrainings(@RequestParam("day") int day) {
         return ResponseEntity.status(HttpStatus.OK).body(trainingService.getTrainingsByDayOfWeek(day));
     }
     }

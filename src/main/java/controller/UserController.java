@@ -2,14 +2,17 @@ package controller;
 
 import entity.Skill;
 import entity.User;
+import entity.UserSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 import service.SkillService;
 import service.UserService;
+import service.UserSkillService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +26,7 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    SkillService skillService;
+    UserSkillService userSkillService;
 
     @GetMapping( "/personal_page")
     public @ResponseBody ResponseEntity getUserInfo() {
@@ -35,15 +38,14 @@ public class UserController {
     @GetMapping( "/get_all_skills")
     public @ResponseBody ResponseEntity getUserSkills() {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Map<Skill, Integer> skills = skillService.getAllUserSkills(user);
+        List<UserSkill> skills = userSkillService.getUserSkillsByUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(skills);
     }
 
     @PostMapping("/edit_user")
-    public @ResponseBody ResponseEntity editUser(@RequestParam("height") int height, @RequestParam("weight") int weight ) {
+    public @ResponseBody ResponseEntity editUser(@RequestParam("password") String password) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        user.setWeight(weight);
-        user.setHeight(height);
+        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
         userService.updateUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }

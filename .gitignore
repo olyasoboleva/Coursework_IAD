@@ -5,3 +5,4 @@
 /src/main/java/config/database/DatabaseConfig.java
 /cw2.iml
 /src/main/resources/database.properties
+/src/main/resources/application.properties

@@ -25,14 +25,12 @@ public class Tribute {
     @Column(name = "cause_of_death", length = 80)
     private String causeOfDeath;
 
-    @Min(0)
-    @Max(100)
-    @Column(name = "health")
-    private int health;
     @Transient
-    private int hunger;
+    private int health = 100;
     @Transient
-    private int thirst;
+    private int hunger =100;
+    @Transient
+    private int thirst = 100;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -59,7 +57,6 @@ public class Tribute {
 
     public Tribute(User user, Game game) {
         this.user = user;
-        this.health = 100;
         this.status = "alive";
         this.game = game;
     }

@@ -34,12 +34,11 @@ public class WeaponServiceImpl implements WeaponService {
         List<WeaponsInGame> gameWeapon = weaponsInGameRepository.getWeaponsInGamesByTribute(tribute);
         List<Weapon> allWeapons = (List<Weapon>) weaponRepository.findAll();
         for (Weapon weapons : allWeapons) {
-            //TODO: сломалось
-            /*for (WeaponsInGame weapon : gameWeapon) {
-                if (weapons.getWeaponId() == weapon.getWeaponId()) {
+            for (WeaponsInGame weapon : gameWeapon) {
+                if (weapons == weapon.getWeapon()) {
                     tributeWeapons.add(weapons);
                 }
-            }*/
+            }
         }
         return tributeWeapons;
     }

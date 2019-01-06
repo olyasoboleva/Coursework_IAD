@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.*;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -68,7 +70,7 @@ public class GameController {
             }
         }
         weaponsInGameService.deleteWeaponsInGame(userWeapon);
-        return ResponseEntity.status(HttpStatus.OK).body("Оружие удалено");
+        return ResponseEntity.status(HttpStatus.OK).body("Weapon deleted");
     }
 
     @PostMapping("/add_weapon")
@@ -77,12 +79,12 @@ public class GameController {
         Tribute tribute = getTributeByUser(user, gameId);
         List<WeaponsInGame> userWeapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
         if (userWeapons.size() >= 3) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Нельзя больше взять оружия");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You can't take more weapons");
         }
         Weapon weapon = weaponService.getWeaponByName(weaponName);
         WeaponsInGame weaponsInGame = new WeaponsInGame(tribute,weapon);
         weaponsInGameService.createWeaponsInGame(weaponsInGame);
-        return ResponseEntity.status(HttpStatus.OK).body("Оружие добавлено");
+        return ResponseEntity.status(HttpStatus.OK).body("Weapon added");
     }
 
     @PostMapping("/drop_present")
@@ -92,13 +94,29 @@ public class GameController {
         Shop product = shopService.getProductByName(presentName);
         PresentsToTribute presentToDrop = null;
         List<PresentsToTribute> presents = presentsToTributeService.getPresentsToTributeByTribute(tribute);
-        for (PresentsToTribute e: presents) {
+        for (PresentsToTribute e : presents) {
             if (e.getProduct().equals(product)) {
                 presentToDrop = e;
             }
         }
         presentsToTributeService.deletePresentsToTributes(presentToDrop);
-        return ResponseEntity.status(HttpStatus.OK).body("Подарок удалён");
+        return ResponseEntity.status(HttpStatus.OK).body("Present deleted");
+    }
+
+    @GetMapping("/tribute_info")
+    public @ResponseBody ResponseEntity getTributeInfo(@RequestParam("nick")String nick) {
+        User user = userService.getUserByNick(nick);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
+    @GetMapping("/games_history")
+    public @ResponseBody ResponseEntity getGamesHistory() {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getAllGames());
+    }
+
+    @GetMapping("/games_by_date")
+    public @ResponseBody ResponseEntity getGamesByDate(@RequestParam("date") java.util.Date date) {
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getGameByStartDate(date));
     }
 
     private Tribute getTributeByUser(User user, String gameId) {

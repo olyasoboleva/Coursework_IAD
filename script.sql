@@ -114,8 +114,6 @@ user_id integer REFERENCES users,
 game_id integer REFERENCES game NOT NULL,
 status varchar(40),
 cause_of_death varchar(80),
-health integer DEFAULT 100,
-CONSTRAINT health CHECK (health >= 0 and health <= 100),
 CONSTRAINT user_on_game UNIQUE(game_id, user_id)
 );
 

@@ -3,7 +3,7 @@ package service;
 import entity.Game;
 import entity.User;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public interface GameService {
@@ -30,6 +30,8 @@ public interface GameService {
      */
     List<Game> getGameByStartDate(Date startDate);
 
+    List<Game> getAllGames();
+
     /**
      * It creates new game
      * @param game game
@@ -50,4 +52,5 @@ public interface GameService {
      * @return game if it was updated correctly
      */
     Game updateGame(Game game);
+
 }
