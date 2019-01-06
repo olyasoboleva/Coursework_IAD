@@ -24,4 +24,6 @@ public interface WeaponRepository extends CrudRepository<Weapon, Integer> {
      * @return lit of weapons
      */
     List<Weapon> getWeaponByOwners(Tribute tribute);
+
+    Weapon findWeaponByName(String name);
 }

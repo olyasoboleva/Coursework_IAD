@@ -56,4 +56,6 @@ public interface ShopService {
     Shop updateProduct(Shop product);
 
     List<Shop> getFullRange();
+
+    Shop getProductByName(String name);
 }

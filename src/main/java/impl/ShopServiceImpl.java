@@ -83,4 +83,9 @@ public class ShopServiceImpl implements ShopService{
     public List<Shop> getFullRange(){
         return (List<Shop>)shopRepository.findAll();
     }
+
+    @Override
+    public Shop getProductByName(String name) {
+        return shopRepository.findShopByName(name);
+    }
 }

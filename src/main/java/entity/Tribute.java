@@ -29,6 +29,9 @@ public class Tribute {
     @Max(100)
     @Column(name = "health")
     private int health;
+    private int hunger;
+    private int thirst;
+
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

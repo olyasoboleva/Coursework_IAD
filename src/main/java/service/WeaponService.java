@@ -55,4 +55,6 @@ public interface WeaponService {
      * @return lit of weapons
      */
     List<Weapon> getWeaponsByOwners(Tribute tribute);
+
+    Weapon getWeaponByName(String name);
 }

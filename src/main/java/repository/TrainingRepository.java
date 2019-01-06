@@ -14,6 +14,8 @@ public interface TrainingRepository extends CrudRepository<Training, Integer> {
      */
     Training findTrainingByTrainingId(int trainingId);
 
+    Training findTrainingByName(String name);
+
     /**
      * find training on this day of week
      * @param dayOfWeek day of week number
