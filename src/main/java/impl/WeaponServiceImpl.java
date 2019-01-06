@@ -80,4 +80,9 @@ public class WeaponServiceImpl implements WeaponService {
         return weaponRepository.getWeaponByOwners(tribute);
     }
 
+    @Override
+    public Weapon getWeaponByName(String name) {
+        return weaponRepository.findWeaponByName(name);
+    }
+
 }

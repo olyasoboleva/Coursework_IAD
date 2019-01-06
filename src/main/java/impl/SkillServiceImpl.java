@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,14 +30,14 @@ public class SkillServiceImpl implements SkillService {
 
       @Transactional
       @Override
-    public List<Skill> getAllUserSkills(User user) {
-        List<Skill> allUserSkills = new LinkedList<>();
+    public Map<Skill, Integer> getAllUserSkills(User user) {
+        Map<Skill, Integer> allUserSkills = new HashMap<>();
         List<UserSkill> userSkills = userSkillRepository.getUserSkillsByUser(user);
         List<Skill> allSkills = (List<Skill>) skillRepository.findAll();
         for (Skill skill : allSkills) {
             for (UserSkill userSkill : userSkills) {
                 if (skill.equals(userSkill.getSkill())) {
-                    allUserSkills.add(skill);
+                    allUserSkills.put(skill,userSkill.getLevelOfSkill());
                 }
             }
         }
@@ -48,7 +47,7 @@ public class SkillServiceImpl implements SkillService {
 
     @Transactional
     @Override
-    public List<Skill> getAllTributeSkills(Tribute tribute) {
+    public Map<Skill, Integer> getAllTributeSkills(Tribute tribute) {
         User user = userRepository.findUserByTributesByUser(tribute);
         return getAllUserSkills(user);
     }

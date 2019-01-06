@@ -61,4 +61,5 @@ public interface TributeService {
      */
     List<Tribute> getTributesByStatusAndGame(String status, Game game);
 
+
 }

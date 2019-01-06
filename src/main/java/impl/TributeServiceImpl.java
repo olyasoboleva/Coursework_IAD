@@ -89,4 +89,5 @@ public class TributeServiceImpl implements TributeService {
     public List<Tribute> getTributesByStatusAndGame(String status, Game game) {
         return tributeRepository.getTributesByStatusAndGame(status, game);
     }
+
 }

@@ -17,7 +17,7 @@ import service.UserSkillService;
 
 
 @RestController
-@RequestMapping("/training")
+@RequestMapping("/hungergames")
 @EnableAutoConfiguration
 public class TrainingController {
 
@@ -50,7 +50,7 @@ public class TrainingController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
-    @GetMapping( "/training")
+    @GetMapping( "/trainings")
     public @ResponseBody ResponseEntity getTrainings(@RequestParam("day")int day) {
         return ResponseEntity.status(HttpStatus.OK).body(trainingService.getTrainingsByDayOfWeek(day));
     }

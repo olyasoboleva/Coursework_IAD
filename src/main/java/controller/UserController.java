@@ -24,6 +24,9 @@ public class UserController {
     UserLoginService userLoginService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     SkillService skillService;
 
     @GetMapping( "/personal_page")
@@ -35,8 +38,17 @@ public class UserController {
     @GetMapping( "/get_all_skills")
     public @ResponseBody ResponseEntity getUserSkills() {
         User user = userLoginService.getUserLoginByNick( SecurityContextHolder.getContext().getAuthentication().getName()).getUser();
-        List<Skill> skills = skillService.getAllUserSkills(user);
+        Map<Skill, Integer> skills = skillService.getAllUserSkills(user);
         return ResponseEntity.status(HttpStatus.OK).body(skills);
+    }
+
+    @PostMapping("/edit_user")
+    public @ResponseBody ResponseEntity editUser(@RequestParam("height") int height, @RequestParam("weight") int weight ) {
+        User user = userLoginService.getUserLoginByNick( SecurityContextHolder.getContext().getAuthentication().getName()).getUser();
+        user.setWeight(weight);
+        user.setHeight(height);
+        userService.updateUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
 }

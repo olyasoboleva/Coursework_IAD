@@ -54,4 +54,6 @@ public interface ShopService {
      * @return shop if product was updated correctly
      */
     Shop updateProduct(Shop product);
+
+    Shop getProductByName(String name);
 }

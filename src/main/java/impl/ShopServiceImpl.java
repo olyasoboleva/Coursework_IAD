@@ -78,4 +78,9 @@ public class ShopServiceImpl implements ShopService{
         shopRepository.save(product);
         return product;
     }
+
+    @Override
+    public Shop getProductByName(String name) {
+        return shopRepository.findShopByName(name);
+    }
 }

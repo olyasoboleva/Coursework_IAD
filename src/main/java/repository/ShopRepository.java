@@ -27,4 +27,6 @@ public interface ShopRepository extends CrudRepository<Shop, Integer> {
      * @return list of products
      */
     List<Shop> findShopsByProductOwners(Tribute tribute);
+
+    Shop findShopByName(String name);
 }
