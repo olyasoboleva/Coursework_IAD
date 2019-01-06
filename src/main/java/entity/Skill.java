@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class Skill {
     @Column(name = "type_of_skill", length = 42)
     private String typeOfSkill;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "skill")
     private District district;
 
@@ -38,9 +40,11 @@ public class Skill {
     @JoinColumn(name = "weapon_id", referencedColumnName = "weapon_id")
     private Weapon weapon;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
     private Collection<Training> trainings;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "skills", fetch = FetchType.LAZY)
     private Collection<User> users;
 

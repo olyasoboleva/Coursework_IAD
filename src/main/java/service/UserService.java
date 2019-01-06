@@ -2,6 +2,7 @@ package service;
 
 import entity.*;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public interface UserService {
      * @param status status
      * @return list of users
      */
-    List<User> getUsersForGame(District district, boolean sex, Date date1, Date date2, Status status);
+    List<User> getUsersForGame(District district, boolean sex, Calendar date1, Calendar date2, Status status);
 
     /**
      * find user, who play for this tribute

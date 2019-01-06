@@ -12,6 +12,7 @@ import service.StatusService;
 import service.UserService;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 @RestController
 @RequestMapping("/hungergames")
@@ -31,7 +32,9 @@ public class RegistrationController {
     @PostMapping( "/signup")
     public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, String birthday, byte[] picture) {
         int defaultCash = 1000;//TODO: надо из прайс-листа бы доставать
-        User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), Date.valueOf(birthday), picture, statusService.getStatuseById(1));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Date.valueOf(birthday));
+        User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseById(1));
         if ((username.equals("")) || (password.equals(""))) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect username or password");
         }

@@ -39,20 +39,11 @@ public class TributeServiceImpl implements TributeService {
     @Transactional
     @Override
     public Tribute createTribute(Tribute tribute) {
+        tributeRepository.save(tribute);
         User user = userRepository.findUserByTributesByUser(tribute);
-        Calendar calendar = Calendar.getInstance();
-        Date date = new Date(calendar.getTime().getTime());
-        Date diff =  new Date(date.getTime() - user.getBirthday().getTime());
-        if (diff.getTime()/1000/60/60/24 < 12*365) {
-            return null;
-        }
-        if (diff.getTime()/1000/60/60/24 > 18*365) {
-            return null;
-        }
-        Status status = statusRepository.findStatuseByName("Трибут");
+        Status status = statusRepository.findStatuseByName("tribute");
         user.setStatus(status);
         userRepository.save(user);
-        tributeRepository.save(tribute);
         return tribute;
     }
 

@@ -46,7 +46,7 @@ public class GameController {
 
     @GetMapping( "/get_player_info")
     public @ResponseBody ResponseEntity getPlayerInfo(@RequestParam("game") String gameId) {
-        User user = userLoginService.getUserLoginByNick(SecurityContextHolder.getContext().getAuthentication().getName()).getUser();
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = getTributeByUser(user, gameId);
         int[] info = new int[3];
         info[0] = tribute.getHealth();
@@ -57,7 +57,7 @@ public class GameController {
 
     @PostMapping("/drop_weapon")
     public @ResponseBody ResponseEntity dropWeapon(@RequestParam("game") String gameId, @RequestParam("weapon") String weapon) {
-        User user = userLoginService.getUserLoginByNick(SecurityContextHolder.getContext().getAuthentication().getName()).getUser();
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = getTributeByUser(user, gameId);
         List<WeaponsInGame> userWeapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
         Weapon weap = weaponService.getWeaponByName(weapon);
@@ -73,7 +73,7 @@ public class GameController {
 
     @PostMapping("/add_weapon")
     public @ResponseBody ResponseEntity addWeapon(@RequestParam("game") String gameId, @RequestParam("weaponName") String weaponName) {
-        User user = userLoginService.getUserLoginByNick(SecurityContextHolder.getContext().getAuthentication().getName()).getUser();
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = getTributeByUser(user, gameId);
         List<WeaponsInGame> userWeapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
         if (userWeapons.size() >= 3) {
@@ -87,7 +87,7 @@ public class GameController {
 
     @PostMapping("/drop_present")
     public @ResponseBody ResponseEntity dropPresent(@RequestParam("game") String gameId, @RequestParam("presentName") String presentName){
-        User user = userLoginService.getUserLoginByNick(SecurityContextHolder.getContext().getAuthentication().getName()).getUser();
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = getTributeByUser(user, gameId);
         Shop product = shopService.getProductByName(presentName);
         PresentsToTribute presentToDrop = null;

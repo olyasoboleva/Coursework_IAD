@@ -8,6 +8,7 @@ import repository.UserRepository;
 import service.StatusService;
 import service.UserService;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersForGame(District district, boolean sex, Date date1, Date date2, Status status) {
+    public List<User> getUsersForGame(District district, boolean sex, Calendar date1, Calendar date2, Status status) {
         return userRepository.getUsersByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(district, sex, date1, date2,status);
     }
 

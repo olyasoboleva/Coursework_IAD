@@ -12,7 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.SkillService;
 import service.TrainingService;
-import service.UserLoginService;
+import service.UserService;
 import service.UserSkillService;
 
 
@@ -22,7 +22,7 @@ import service.UserSkillService;
 public class TrainingController {
 
     @Autowired
-    UserLoginService userLoginService;
+    UserService userService;
 
     @Autowired
     SkillService skillService;
@@ -36,7 +36,7 @@ public class TrainingController {
     @PostMapping( "/improveSkill")
     public @ResponseBody
     ResponseEntity improveSkill(@RequestParam("name") String train, @RequestParam("procent") String procent) {
-        User user = userLoginService.getUserLoginByNick(SecurityContextHolder.getContext().getAuthentication().getName()).getUser();
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Training training = trainingService.getTrainingByName(train);
         Skill skill = skillService.getSkillByTraining(training);
         UserSkill userSkill = userSkillService.getUserSkillByUserAndSkill(user, skill);

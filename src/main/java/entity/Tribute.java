@@ -29,7 +29,9 @@ public class Tribute {
     @Max(100)
     @Column(name = "health")
     private int health;
+    @Transient
     private int hunger;
+    @Transient
     private int thirst;
 
 

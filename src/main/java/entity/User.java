@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -52,7 +53,7 @@ public class User {
     private boolean sex;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private Calendar birthday;
 
     @Column(name = "last_activity")
     private java.sql.Date lastActivity;
@@ -77,9 +78,11 @@ public class User {
     @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY)
     private Collection<Training> trainings;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Collection<Tribute> tributesByUser;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "presents_to_tribute",
@@ -88,6 +91,7 @@ public class User {
     )
     private Collection<Shop> sendings;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "presents_to_tribute",
@@ -109,7 +113,7 @@ public class User {
     private District district;
 
 
-    public User(String nick, String password, String surname, String name, int height, int weight, boolean sex, District district, Date birthday, byte[] picture, Status status) {
+    public User(String nick, String password, String surname, String name, int height, int weight, boolean sex, District district, Calendar birthday, byte[] picture, Status status) {
         this.nick = nick;
         this.password = password;
         this.surname = surname;

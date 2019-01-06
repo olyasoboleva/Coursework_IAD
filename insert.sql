@@ -1,5 +1,21 @@
 INSERT INTO price values (1,"salary", 1000);
 insert into status values (1, "viewer", 1);
+insert into status values (1, "tribute", 1);
+
+INSERT INTO skill VALUES (0,'Управление людьми','','Психологические',null);
+INSERT INTO skill VALUES (1,'Знание боевых искусств','','Другие',null);
+INSERT INTO skill VALUES (2,'Обращение с оружием','','Боевые',null);
+INSERT INTO skill VALUES (3,'Знание электричества','','Боевые',null);
+INSERT INTO skill VALUES (4,'Рыболовство','','Информационные',null);
+INSERT INTO skill VALUES (5,'Знание энергетики','','Другие',null);
+INSERT INTO skill VALUES (6,'Знание механики','','Информационные',null);
+INSERT INTO skill VALUES (7,'Обращение с древесиной','','Информационные',null);
+INSERT INTO skill VALUES (8,'Вязание узлов','','Информационные',null);
+INSERT INTO skill VALUES (9,'Сила и выносливость','','Спортивные',null);
+INSERT INTO skill VALUES (10,'Охота','','Информационные',null);
+INSERT INTO skill VALUES (11,'Знание о культурных растениях','','Информационные',null);
+INSERT INTO skill VALUES (12,'Разжигание костра','','Информационные',null);
+
 INSERT INTO district VALUES (0,'Капитолий','Управление',0);
 INSERT INTO district VALUES (1,'Дистрикт 1','Роскошь',1);
 INSERT INTO district VALUES (2,'Дистрикт 2','Оружие',2);

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
      * @param status status
      * @return list of users
      */
-    List<User> getUsersByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(District district, boolean sex, Date date1, Date date2, Status status);
+    List<User> getUsersByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(District district, boolean sex, Calendar date1, Calendar date2, Status status);
 
     /**
      * find user, who play for this tribute
