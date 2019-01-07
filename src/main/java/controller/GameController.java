@@ -116,7 +116,7 @@ public class GameController {
     }
 
     @GetMapping("/games_by_date")
-    public @ResponseBody ResponseEntity getGamesByDate(@RequestParam("date") java.util.Date date) {
+    public @ResponseBody ResponseEntity getGamesByDate(@RequestParam("date") Calendar date) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.getGameByStartDate(date));
     }
 

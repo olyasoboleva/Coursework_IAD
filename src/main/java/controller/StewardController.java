@@ -42,7 +42,7 @@ public class StewardController {
     }
 
     @PostMapping( "/create_game")
-    public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int arenaID, int numberOfTributes, Date startDate) {
+    public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int arenaID, int numberOfTributes, Calendar startDate) {
         entity.User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Arena arena = arenaService.getArenaById(arenaID);
         Game game = new Game(typeOfGame, user, arena, numberOfTributes, startDate);

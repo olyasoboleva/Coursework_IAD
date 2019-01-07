@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Collection;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class Game {
 
     @NotNull
     @Column(name = "start_date")
-    private Date startDate;
+    private Calendar startDate;
 
     @Column(name = "duration", nullable = false)
     private int duration;
@@ -51,7 +52,7 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     private Collection<Tribute> tributes;
 
-    public Game(boolean typeOfGame, User steward, Arena arena, int numberOfTributes, Date startDate) {
+    public Game(boolean typeOfGame, User steward, Arena arena, int numberOfTributes, Calendar startDate) {
         this.typeOfGame = typeOfGame;
         this.numberOfTributes = typeOfGame ? 24:numberOfTributes;
         this.startDate = startDate;

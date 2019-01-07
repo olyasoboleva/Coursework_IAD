@@ -35,19 +35,19 @@ public class TrainingController {
 
     @PostMapping( "/improveSkill")
     public @ResponseBody
-    ResponseEntity improveSkill(@RequestParam("name") String train, @RequestParam("procent") String procent) {
+    ResponseEntity improveSkill(@RequestParam("name") String train, @RequestParam("percent") String percent) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Training training = trainingService.getTrainingByName(train);
         Skill skill = skillService.getSkillByTraining(training);
         UserSkill userSkill = userSkillService.getUserSkillByUserAndSkill(user, skill);
-        int koeff = Integer.parseInt(procent)*training.getCoefficient();
+        int koeff = Integer.parseInt(percent)*training.getCoefficient();
         if (userSkill.getLevelOfSkill()+ koeff < 100) {
             userSkill.setLevelOfSkill(userSkill.getLevelOfSkill() + koeff);
         } else {
             userSkill.setLevelOfSkill(100);
         }
         userSkillService.updateUserSkills(userSkill);
-        return ResponseEntity.status(HttpStatus.OK).body(user);
+        return ResponseEntity.status(HttpStatus.OK).body(userSkill);
     }
 
     @GetMapping( "/trainings")

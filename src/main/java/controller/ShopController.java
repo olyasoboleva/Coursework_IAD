@@ -40,6 +40,12 @@ public class ShopController {
         return ResponseEntity.status(HttpStatus.OK).body(shopList);
     }
 
+    @GetMapping( "/products_by_types")
+    public @ResponseBody ResponseEntity getProductsByType(@RequestParam("type") String type) {
+        List<Shop> products = shopService.getProductsByTypeOfPresent(type);
+        return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
+
     @PostMapping("/send_present")
     public @ResponseBody ResponseEntity createPresentToTribute(Integer tributeID, Integer presentID, int quantity){
         User sender = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());

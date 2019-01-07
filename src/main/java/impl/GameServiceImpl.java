@@ -8,6 +8,7 @@ import repository.GameRepository;
 import service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -27,12 +28,12 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<Game> getGameByStewardAndAfterDate(User steward, Date date) {
+    public List<Game> getGameByStewardAndAfterDate(User steward, Calendar date) {
         return gameRepository.getGamesByStewardAndStartDateGreaterThan(steward, date);
     }
 
     @Override
-    public List<Game> getGameByStartDate(Date startDate) {
+    public List<Game> getGameByStartDate(Calendar startDate) {
         return gameRepository.getGamesByStartDate(startDate);
     }
 

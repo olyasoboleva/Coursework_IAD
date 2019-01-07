@@ -4,6 +4,7 @@ import entity.Game;
 import entity.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,12 +22,12 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
      * @param date start date
      * @return list of games
      */
-    List<Game> getGamesByStewardAndStartDateGreaterThan(User steward, Date date);
+    List<Game> getGamesByStewardAndStartDateGreaterThan(User steward, Calendar date);
 
     /**
      * find all games which start on this date
      * @param startDate start date
      * @return list of games
      */
-    List<Game> getGamesByStartDate(Date startDate);
+    List<Game> getGamesByStartDate(Calendar startDate);
 }

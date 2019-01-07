@@ -3,6 +3,7 @@ package service;
 import entity.Game;
 import entity.User;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -21,14 +22,14 @@ public interface GameService {
      * @param date start date
      * @return list of games
      */
-    List<Game> getGameByStewardAndAfterDate(User steward, Date date);
+    List<Game> getGameByStewardAndAfterDate(User steward, Calendar date);
 
     /**
      * find all games which start on this date
      * @param startDate start date
      * @return list of games
      */
-    List<Game> getGameByStartDate(Date startDate);
+    List<Game> getGameByStartDate(Calendar startDate);
 
     List<Game> getAllGames();
 

@@ -44,4 +44,6 @@ public class RegistrationController {
         userService.createUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
+
+
 }
