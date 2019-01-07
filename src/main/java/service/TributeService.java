@@ -61,5 +61,11 @@ public interface TributeService {
      */
     List<Tribute> getTributesByStatusAndGame(String status, Game game);
 
-
+    /**
+     * find tribute of user in this game
+     * @param user user
+     * @param game game
+     * @return tribute
+     */
+    Tribute getTributeByUserAndGame(User user, Game game);
 }

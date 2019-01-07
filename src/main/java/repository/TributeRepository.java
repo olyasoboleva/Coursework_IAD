@@ -40,4 +40,12 @@ public interface TributeRepository extends CrudRepository<Tribute, Integer>{
      * @return list of games
      */
     List<Tribute> getTributesByStatusAndGame(String status, Game game);
+
+    /**
+     * find tribute of user in this game
+     * @param user user
+     * @param game game
+     * @return tribute
+     */
+    Tribute getTributeByUserAndGame(User user, Game game);
 }

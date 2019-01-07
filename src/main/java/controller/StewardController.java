@@ -41,8 +41,6 @@ public class StewardController {
         return ResponseEntity.status(HttpStatus.OK).body(arena);
     }
 
-
-    //FIXME: в таблице не сохраняется распорядитель
     @PostMapping( "/create_game")
     public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int arenaID, int numberOfTributes, Date startDate) {
         entity.User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
@@ -51,4 +49,6 @@ public class StewardController {
         gameService.createGame(game);
         return ResponseEntity.status(HttpStatus.OK).body(game);
     }
+
+    //TODO: create map
 }

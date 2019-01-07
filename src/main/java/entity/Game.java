@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,8 +39,9 @@ public class Game {
     @Column(name = "duration", nullable = false)
     private int duration;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "steward", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "steward", referencedColumnName = "user_id")
     private User steward;
 
     @OneToOne

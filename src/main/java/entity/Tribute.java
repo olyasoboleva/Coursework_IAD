@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -31,6 +32,10 @@ public class Tribute {
     private int hunger =100;
     @Transient
     private int thirst = 100;
+    @Transient
+    private int x;
+    @Transient
+    private int y;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -52,6 +57,7 @@ public class Tribute {
     @ManyToMany(mappedBy = "owners", fetch = FetchType.LAZY)
     private Collection<Weapon> weaponOfTribute;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "recipients", fetch = FetchType.LAZY)
     private Collection<User> presentsSenders;
 
@@ -59,6 +65,8 @@ public class Tribute {
         this.user = user;
         this.status = "alive";
         this.game = game;
+        this.x = (int)(Math.random()*game.getArena().getArenaWidth());
+        this.y = (int)(Math.random()*game.getArena().getArenaLength());
     }
 
     @Override

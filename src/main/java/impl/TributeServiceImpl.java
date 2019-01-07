@@ -81,4 +81,9 @@ public class TributeServiceImpl implements TributeService {
         return tributeRepository.getTributesByStatusAndGame(status, game);
     }
 
+    @Override
+    public Tribute getTributeByUserAndGame(User user, Game game){
+        return tributeRepository.getTributeByUserAndGame(user, game);
+    }
+
 }

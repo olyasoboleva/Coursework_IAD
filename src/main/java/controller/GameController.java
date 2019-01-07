@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.*;
 
+import javax.json.Json;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -131,4 +132,14 @@ public class GameController {
         return tribute;
     }
 
+    //FIXME: надо хранить координаты по-другому
+    @PostMapping("/move")
+    public @ResponseBody ResponseEntity updateXY(@RequestParam("x") int newX, @RequestParam("y") int newY, @RequestParam("game") Integer gameID) {
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Game game = gameService.getGameById(gameID);
+        Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
+        tribute.setX(newX);
+        tribute.setY(newY);
+        return ResponseEntity.status(HttpStatus.OK).body(tribute);
+    }
 }
