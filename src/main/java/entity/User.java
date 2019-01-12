@@ -75,6 +75,7 @@ public class User {
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private Collection<PresentsToTribute> presentstotributesByUserid;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY)
     private Collection<Training> trainings;
 

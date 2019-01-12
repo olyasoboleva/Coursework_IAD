@@ -43,9 +43,12 @@ public class UserController {
     }
 
     @PostMapping("/edit_user")
-    public @ResponseBody ResponseEntity editUser(@RequestParam("password") String password) {
+    public @ResponseBody ResponseEntity editUser(@RequestParam("password") String password, @RequestParam("newPassword") String newPassword ) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+        if (!BCrypt.checkpw(password,user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN ).body("Wrong password");
+        }
+        user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
         userService.updateUser(user);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }

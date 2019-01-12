@@ -70,7 +70,7 @@ INSERT INTO shop VALUES (6,'Сетка',10000,'Другое','Сетка для 
 INSERT INTO shop VALUES (7,'Суп',20000,'Еда','Маленькая чашка с супом',null,40);
 INSERT INTO shop VALUES (8,'Стрелы',50000,'Инструменты','6 стрел',null,40);
 INSERT INTO shop VALUES (9,'Фляга',30000,'Другое','Небольшая фляга для воды',null,40);
-INSERT INTO shop VALUES (10,'Йод',30000,'Лкарства','',null,40);
+INSERT INTO shop VALUES (10,'Йод',30000,'Лекарства','',null,40);
 
 
 

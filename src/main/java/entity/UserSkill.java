@@ -24,11 +24,11 @@ public class UserSkill {
     private int levelOfSkill;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "skill_id", referencedColumnName = "skill_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "skill_id", referencedColumnName = "skill_id", nullable = false)
     private Skill skill;
 
     public UserSkill(User user, Skill skill, int levelOfSkill) {

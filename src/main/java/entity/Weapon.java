@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,7 @@ public class Weapon {
     @Column(name = "picture")
     private byte[] picture;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "weapon")
     private Skill skill;
 
