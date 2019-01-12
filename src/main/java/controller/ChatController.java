@@ -19,34 +19,18 @@ import java.security.Principal;
 @Controller
 public class ChatController {
 
-/*
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    @MessageMapping("/chat.sendMessage")
-    public void sendMessage(@Payload Principal principal, ChatMessage chatMessage) {
-        messagingTemplate.convertAndSendToUser(principal.getName(), "/queue/public", chatMessage);
+    @MessageMapping("/hungergames/chat")
+    public void sendMessage(@Payload ChatMessage chatMessage) {
+        messagingTemplate.convertAndSendToUser(chatMessage.getReceiver(), "/queue/public", chatMessage);
     }
 
-    @MessageMapping("/chat.addUser")
-    @SendTo("/queue/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        // Add username in web socket session
+    //for tests
+    /*@MessageMapping("/chat.addUser")
+    public void addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        return chatMessage;
-    }
-*/
-    @MessageMapping("/chat.sendMessage")
-    @SendTo("/topic/public")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
-        return chatMessage;
-    }
-
-    @MessageMapping("/chat.addUser")
-    @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        // Add username in web socket session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        return chatMessage;
-    }
+        messagingTemplate.convertAndSendToUser(chatMessage.getReceiver(), "/queue/public", chatMessage);
+    }*/
 }

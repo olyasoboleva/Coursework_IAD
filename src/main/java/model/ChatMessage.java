@@ -40,7 +40,7 @@ public class ChatMessage {
         return receiver;
     }
 
-    public void setReceiver(String sender) {
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
     }
 }
