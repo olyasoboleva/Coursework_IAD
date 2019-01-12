@@ -3,7 +3,6 @@ package repository;
 import entity.Skill;
 import entity.User;
 import entity.UserSkill;
-import entity.UserSkillPK;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

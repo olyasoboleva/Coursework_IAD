@@ -85,8 +85,7 @@ skill_id integer REFERENCES skill,
 coefficient integer CHECK (coefficient >= 0),
 duration integer CHECK (duration > 0),
 description text,
-trainer integer REFERENCES users,
-time_of_training TIME,
+cost integer,
 day_of_week integer
 );
 
@@ -144,5 +143,14 @@ CREATE TABLE hook (
  name varchar(40) NOT NULL ,
  location_id integer REFERENCES location NOT NULL ,
  damage integer NOT NULL
+);
+
+CREATE TABLE map (
+ cell_id serial PRIMARY KEY ,
+ arena_id integer,
+ x_coordinate integer check (x_coordinate >= 0),
+ y_coordinate integer check (y_coordinate >= 0),
+ location_id integer,
+ CONSTRAINT unique_coordinates UNIQUE(arena_id, x_coordinate, y_coordinate)
 );
 

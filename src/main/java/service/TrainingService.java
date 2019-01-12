@@ -43,13 +43,10 @@ public interface TrainingService {
     List<Training> getTrainingsByDayOfWeek(int dayOfWeek);
 
     /**
-     * find schedule of trainer
-     * @param trainer trainer
-     * @return list of trainings
+     * find training by name
+     * @param name name
+     * @return training
      */
-    List<Training> getTrainingsByTrainer(User trainer);
-
-
     Training getTrainingByName(String name);
 
 }

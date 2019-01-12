@@ -12,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "products_and_location", schema = "public", catalog = "postgres")
+@Table(name = "products_and_location")
 public class ProductsAndLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

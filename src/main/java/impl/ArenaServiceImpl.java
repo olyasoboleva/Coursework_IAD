@@ -32,8 +32,7 @@ public class ArenaServiceImpl implements ArenaService {
     @Transactional
     @Override
     public Arena createArena(Arena arena) {
-        arenaRepository.save(arena);
-        return arena;
+        return arenaRepository.save(arena);
     }
 
     @Transactional
@@ -46,7 +45,6 @@ public class ArenaServiceImpl implements ArenaService {
     @Transactional
     @Override
     public Arena updateArena(Arena arena) {
-        arenaRepository.save(arena);
-        return arena;
+        return arenaRepository.save(arena);
     }
 }

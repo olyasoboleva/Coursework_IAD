@@ -16,7 +16,7 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "weapon", schema = "public", catalog = "postgres")
+@Table(name = "weapon")
 public class Weapon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

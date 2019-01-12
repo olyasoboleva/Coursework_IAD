@@ -48,11 +48,6 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public List<Training> getTrainingsByTrainer(User trainer) {
-        return trainingRepository.getTrainingsByTrainer(trainer);
-    }
-
-    @Override
     public Training getTrainingByName(String name) {
         return trainingRepository.findTrainingByName(name);
     }

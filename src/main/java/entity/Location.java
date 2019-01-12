@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "location", schema = "public", catalog = "postgres")
+@Table(name = "location")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,10 @@ public class Location {
     @JsonIgnore
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
     private Collection<Hook> hooks;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    private Collection<Map> gameMap;
 
     public Location(String name, byte[] picture){
         this.name = name;

@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "users", schema = "public", catalog = "postgres")
+@Table(name = "users")
 public class User {
 
     @Id

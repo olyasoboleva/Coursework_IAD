@@ -12,7 +12,7 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "presents_to_tribute", schema = "public", catalog = "postgres")
+@Table(name = "presents_to_tribute")
 public class PresentsToTribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,12 +9,13 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "arena", schema = "public", catalog = "postgres")
+@Table(name = "arena")
 public class Arena {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +39,10 @@ public class Arena {
     @JsonIgnore
     @OneToOne(mappedBy = "arena")
     private Game game;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "arena", fetch = FetchType.LAZY)
+    private Collection<Map> gameMap;
 
     public Arena(int arenaLength, int arenaWidth, Location location) {
         this.arenaLength = arenaLength;

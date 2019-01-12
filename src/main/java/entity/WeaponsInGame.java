@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "weapons_in_game", schema = "public", catalog = "postgres")
+@Table(name = "weapons_in_game")
 public class WeaponsInGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,7 +2,6 @@ package repository;
 
 import entity.Tribute;
 import entity.WeaponsInGame;
-import entity.WeaponsInGamePK;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

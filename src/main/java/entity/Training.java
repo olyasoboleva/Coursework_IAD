@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "training", schema = "public", catalog = "postgres")
+@Table(name = "training")
 public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,12 @@ public class Training {
     @Column(name = "duration")
     private int duration;
 
+    @Min(0)
+    @Column(name = "cost")
+    private int cost;
+
     @Column(name = "description")
     private String description;
-
-    @Column(name = "time_of_training")
-    private LocalTime timeOfTraining;
 
     @Column(name = "day_of_week")
     private int dayOfWeek;
@@ -44,19 +45,14 @@ public class Training {
     @JoinColumn(name = "skill_id", referencedColumnName = "skill_id")
     private Skill skill;
 
-    @ManyToOne
-    @JoinColumn(name = "trainer", referencedColumnName = "user_id")
-    private User trainer;
-
-    public Training(String name, Skill skill, int coefficient, int duration, String description, User trainer, LocalTime timeOfTraining, int dayOfWeek) {
+    public Training(String name, Skill skill, int coefficient, int duration, String description, int dayOfWeek, int cost) {
         this.name = name;
         this.coefficient = coefficient;
         this.duration = duration;
         this.description = description;
-        this.timeOfTraining = timeOfTraining;
         this.dayOfWeek = dayOfWeek;
         this.skill = skill;
-        this.trainer = trainer;
+        this.cost = cost;
     }
 
     @Override
@@ -70,13 +66,12 @@ public class Training {
                 dayOfWeek == that.dayOfWeek &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(timeOfTraining, that.timeOfTraining) &&
-                Objects.equals(skill, that.skill) &&
-                Objects.equals(trainer, that.trainer);
+                Objects.equals(cost, that.cost) &&
+                Objects.equals(skill, that.skill);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(trainingId, name, coefficient, duration, description, timeOfTraining, dayOfWeek, skill, trainer);
+        return Objects.hash(trainingId, name, coefficient, duration, description, dayOfWeek, skill);
     }
 }
