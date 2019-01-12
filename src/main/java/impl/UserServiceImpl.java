@@ -72,24 +72,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getTrainerOfTraining(Training training) {
-        return userRepository.findUserByTrainings(training);
-    }
-
-    @Override
     public List<User> getSendersOfPresentsByTribute(Tribute tribute) {
         return userRepository.findUsersByRecipients(tribute);
     }
 
     @Override
     public User updateUserLastActivity(User user){
-        /*java.sql.Date curDate = new java.sql.Date(System.currentTimeMillis());
+        java.sql.Date curDate = new java.sql.Date(System.currentTimeMillis());
         if (user.getLastActivity().getDate()==curDate.getDate() || user.getLastActivity().getYear()==curDate.getYear() || user.getLastActivity().getMonth()==curDate.getMonth()) {
             user.setLastActivity(new java.sql.Date(System.currentTimeMillis()));
             user.setCash(user.getCash()+1000);
             //user.setCash(user.getCash()+statusService.getStatuseByName("Daily prize").getPrice().getCost());
             updateUser(user);
-        }*/
+        }
         return user;
     }
 }
