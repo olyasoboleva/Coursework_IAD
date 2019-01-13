@@ -48,4 +48,15 @@ public interface TributeRepository extends CrudRepository<Tribute, Integer>{
      * @return tribute
      */
     Tribute getTributeByUserAndGame(User user, Game game);
+
+    /**
+     * find tributes in area
+     * @param game tributes of this game
+     * @param x1 left limit
+     * @param x2 right limit
+     * @param y1 top limit
+     * @param y2 bottom limit
+     * @return list of tributes
+     */
+    List<Tribute> getTributesByGameAndLocationXBetweenAndLocationYIsBetween(Game game, int x1, int x2, int y1, int y2);
 }

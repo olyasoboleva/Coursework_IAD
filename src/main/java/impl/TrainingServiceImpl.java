@@ -21,8 +21,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public Training createTraining(Training training) {
-        trainingRepository.save(training);
-        return training;
+        return trainingRepository.save(training);
     }
 
     @Override
@@ -33,8 +32,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public Training updateTraining(Training training) {
-        trainingRepository.save(training);
-        return training;
+        return trainingRepository.save(training);
     }
 
     @Override

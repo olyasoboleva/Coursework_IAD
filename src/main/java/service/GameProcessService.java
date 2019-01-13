@@ -1,9 +1,6 @@
 package service;
 
-import entity.Game;
-import entity.PresentsToTribute;
-import entity.Tribute;
-import entity.WeaponsInGame;
+import entity.*;
 
 public interface GameProcessService {
 
@@ -20,9 +17,9 @@ public interface GameProcessService {
     public void changeStatusAfterEndOfTheGame(Game game);
 
     /**
-     * To beat someone
-     * @param tributeWeapon this weapon will be used
-     * @param tributeToBeat he will be beaten
+     * Process of battle between two tributes
+     * @param attacking attacking tribute who start battle (has advantage)
+     * @param defending defending tribute
      */
-    public void beat(WeaponsInGame tributeWeapon, Tribute tributeToBeat);
+    public void fight(Tribute attacking, Tribute defending, String attWeaponName, String defWeaponName);
 }

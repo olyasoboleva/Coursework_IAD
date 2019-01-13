@@ -34,4 +34,12 @@ public interface PresentsToTributeRepository extends CrudRepository<PresentsToTr
      * @return list of presents
      */
     List<PresentsToTribute> getPresentsToTributesByTribute(Tribute tribute);
+
+    /**
+     * find present and quantity by product and tribute
+     * @param product product
+     * @param tribute tribute
+     * @return present
+     */
+    PresentsToTribute getPresentsToTributeByProductAndTribute(Shop product, Tribute tribute);
 }

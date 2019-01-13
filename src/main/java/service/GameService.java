@@ -54,4 +54,10 @@ public interface GameService {
      */
     Game updateGame(Game game);
 
+    /**
+     * find all games with status
+     * @param status status
+     * @return list of games
+     */
+    List<Game> getGamesByStatus(String status);
 }

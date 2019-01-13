@@ -22,14 +22,12 @@ public class DistrictServiceImpl implements DistrictService {
 
     @Override
     public District createDistrict(District district) {
-        districtRepository.save(district);
-        return district;
+         return districtRepository.save(district);
     }
 
     @Override
     public District updateDistrict(District district) {
-        districtRepository.save(district);
-        return district;
+        return districtRepository.save(district);
     }
 
     @Override

@@ -36,8 +36,7 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
         Tribute tribute = weaponInGame.getTribute();
         List<Weapon> list = weaponRepository.getWeaponByOwners(tribute);
         if (list.size() < 3 ) {
-            weaponsInGameRepository.save(weaponInGame);
-            return weaponInGame;
+            return weaponsInGameRepository.save(weaponInGame);
         } else {
             return null;
         }

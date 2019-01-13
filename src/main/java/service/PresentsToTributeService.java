@@ -1,6 +1,7 @@
 package service;
 
 import entity.PresentsToTribute;
+import entity.Shop;
 import entity.Tribute;
 import entity.User;
 
@@ -57,4 +58,12 @@ public interface PresentsToTributeService {
      * @return this relation if it was successfully deleted
      */
     boolean deletePresentsToTributes(PresentsToTribute present);
+
+    /**
+     * find present by product and tribute
+     * @param product product
+     * @param tribute tribute
+     * @return present
+     */
+    PresentsToTribute getPresentByProductAndTribute(Shop product, Tribute tribute);
 }

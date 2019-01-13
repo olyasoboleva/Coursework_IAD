@@ -1,5 +1,6 @@
 package impl;
 
+import entity.Location;
 import entity.ProductsAndLocation;
 import entity.Shop;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,7 @@ public class ProductsAndLocationServiceImpl implements ProductsAndLocationServic
     @Transactional
     @Override
     public ProductsAndLocation createProductsAndLocation(ProductsAndLocation productsandlocation) {
-        productsAndLocationRepository.save(productsandlocation);
-        return productsandlocation;
+        return productsAndLocationRepository.save(productsandlocation);
     }
 
     @Transactional
@@ -47,7 +47,11 @@ public class ProductsAndLocationServiceImpl implements ProductsAndLocationServic
     @Transactional
     @Override
     public ProductsAndLocation updateProductsAndLocation(ProductsAndLocation productsAndLocation) {
-        productsAndLocationRepository.save(productsAndLocation);
-        return productsAndLocation;
+        return productsAndLocationRepository.save(productsAndLocation);
+    }
+
+    @Override
+    public ProductsAndLocation getApplying(Shop product, Location location) {
+        return productsAndLocationRepository.findProductsAndLocationByProductAndLocation(product, location);
     }
 }

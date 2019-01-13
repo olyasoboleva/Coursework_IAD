@@ -24,6 +24,9 @@ public class Hook {
     @Column(name = "damage")
     private int damage;
 
+    @Column(name = "radius")
+    private int radius;
+
     @ManyToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location location;

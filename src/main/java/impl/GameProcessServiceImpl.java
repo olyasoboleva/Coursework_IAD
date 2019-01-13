@@ -14,11 +14,14 @@ public class GameProcessServiceImpl implements GameProcessService {
     private final TributeRepository tributeRepository;
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
+    private final WeaponRepository weaponRepository;
+
     @Autowired
-    public GameProcessServiceImpl(TributeRepository tributeRepository, UserRepository userRepository, StatusRepository statusRepository) {
+    public GameProcessServiceImpl(TributeRepository tributeRepository, UserRepository userRepository, StatusRepository statusRepository, WeaponRepository weaponRepository) {
         this.tributeRepository = tributeRepository;
         this.userRepository = userRepository;
         this.statusRepository = statusRepository;
+        this.weaponRepository = weaponRepository;
     }
 
     //TODO: кажется, вычитание из количества подарка мы тут не пропишем, потому что решили не менять это в БД
@@ -46,16 +49,14 @@ public class GameProcessServiceImpl implements GameProcessService {
     }
 
 
-    public void beat(WeaponsInGame tributeWeapon, Tribute tributeToBeat) {
-        Weapon weapon = tributeWeapon.getWeapon();
-        //FIXME: урон нормально надо прописать)))
-        if (tributeToBeat.getHealth() - weapon.getDamage() <=0) {
-            tributeToBeat.setHealth(0);
-            tributeToBeat.setStatus("Погибший трибут");
-        } else {
-            tributeToBeat.setHealth(tributeToBeat.getHealth() - weapon.getDamage());
+    @Override
+    public void fight(Tribute attacking, Tribute defending, String attWeaponName, String defWeaponName) {
+        Weapon attWeapon = weaponRepository.findWeaponByName(attWeaponName);
+        Weapon defWeapon = weaponRepository.findWeaponByName(defWeaponName);
+        for (int i=0; i<3 && attacking.getHealth()>=0 && defending.getHealth()>=0; i++){
+            //if ()
         }
-        tributeRepository.save(tributeToBeat);
+
     }
 
 }

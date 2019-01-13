@@ -45,17 +45,4 @@ public class ShopController {
         List<Shop> products = shopService.getProductsByTypeOfPresent(type);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
-
-    @PostMapping("/send_present")
-    public @ResponseBody ResponseEntity createPresentToTribute(Integer tributeID, Integer presentID, int quantity){
-        User sender = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeById(tributeID);
-        Shop present = shopService.getProductById(presentID);
-        PresentsToTribute presentsToTribute = new PresentsToTribute(present, tribute, sender, quantity);
-        if (presentsToTributeService.createPresentsToTributes(presentsToTribute)==null){
-            return ResponseEntity.status(HttpStatus.OK).body("Недостаточно средств");
-        } else {
-            return ResponseEntity.status(HttpStatus.OK).body("Подарок отправлен");
-        }
-    }
 }

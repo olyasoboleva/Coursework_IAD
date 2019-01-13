@@ -45,8 +45,12 @@ public class GameServiceImpl implements GameService {
     @Transactional
     @Override
     public Game createGame(Game game) {
-        gameRepository.save(game);
-        return game;
+        List<Game> games = gameRepository.getGamesByStartDate(game.getStartDate());
+        if (games.size()==0) {
+            return gameRepository.save(game);
+        } else {
+            return null;
+        }
     }
 
     @Transactional
@@ -59,7 +63,11 @@ public class GameServiceImpl implements GameService {
     @Transactional
     @Override
     public Game updateGame(Game game) {
-        gameRepository.save(game);
-        return game;
+        return gameRepository.save(game);
+    }
+
+    @Override
+    public List<Game> getGamesByStatus(String status){
+        return gameRepository.getGamesByStatus(status);
     }
 }

@@ -1,10 +1,14 @@
 package controller;
 
 import entity.*;
+import model.TributeHealth;
+import model.TributeLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.*;
@@ -18,6 +22,8 @@ import java.util.List;
 @RequestMapping("/hungergames/game")
 @EnableAutoConfiguration
 public class GameController {
+
+    //TODO: надо бы распределить по другим контроллерам (много зависимостей)
 
     @Autowired
     GameService gameService;
@@ -39,6 +45,15 @@ public class GameController {
 
     @Autowired
     ShopService shopService;
+
+    @Autowired
+    ProductsAndLocationService productsAndLocationService;
+
+    @Autowired
+    WebSocketController webSocketController;
+
+    @Autowired
+    MapService mapService;
 
     @GetMapping( "/get_tributes_of_game")
     public @ResponseBody ResponseEntity getGameTributes(@RequestParam("game") String gameId) {
@@ -132,14 +147,35 @@ public class GameController {
         return tribute;
     }
 
-    //FIXME: надо хранить координаты по-другому
-    @PostMapping("/move")
-    public @ResponseBody ResponseEntity updateXY(@RequestParam("x") int newX, @RequestParam("y") int newY, @RequestParam("game") Integer gameID) {
+    @PostMapping("/use_present")
+    public @ResponseBody ResponseEntity usePresent(Integer gameId, String presentName){
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Game game = gameService.getGameById(gameID);
+        Game game = gameService.getGameById(gameId);
         Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
-        tribute.setX(newX);
-        tribute.setY(newY);
-        return ResponseEntity.status(HttpStatus.OK).body(tribute);
+        Location location = mapService.getCell(game.getArena(), tribute.getLocationX(), tribute.getLocationY()).getLocation();
+        Shop present = shopService.getProductByName(presentName);
+        if (productsAndLocationService.getApplying(present, location)!=null){
+            PresentsToTribute presentsToTribute = presentsToTributeService.getPresentByProductAndTribute(present, tribute);
+            switch (present.getTypeOfPresent()){
+                case "Еда":
+                    tribute.setHunger(tribute.getHunger()+present.getHealthRecovery()>100?100:tribute.getHunger()+present.getHealthRecovery());
+                    break;
+                case "Лекарство":
+                    tribute.setHealth(tribute.getHealth()+present.getHealthRecovery()>100?100:tribute.getHealth()+present.getHealthRecovery());
+                    break;
+                //другие типы дописать
+            }
+            tributeService.updateTribute(tribute);
+            webSocketController.getHealth(new TributeHealth(user.getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
+            presentsToTribute.setQuantity(presentsToTribute.getQuantity()-1);
+            if (presentsToTribute.getQuantity()<=0) {
+                return dropPresent(gameId.toString(), presentName);
+            } else {
+                presentsToTributeService.updatePresentsToTributes(presentsToTribute);
+                return ResponseEntity.status(HttpStatus.OK).body(presentsToTribute);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body("Нельзя применить подарок в текущей локации");
+        }
     }
 }

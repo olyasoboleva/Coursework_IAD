@@ -46,8 +46,7 @@ public class WeaponServiceImpl implements WeaponService {
     @Transactional
     @Override
     public Weapon createWeapon(Weapon weapon) {
-        weaponRepository.save(weapon);
-        return weapon;
+        return weaponRepository.save(weapon);
     }
 
     @Transactional
@@ -60,13 +59,12 @@ public class WeaponServiceImpl implements WeaponService {
     @Transactional
     @Override
     public Weapon updateWeapon(Weapon weapon) {
-        weaponRepository.save(weapon);
-        return weapon;
+        return weaponRepository.save(weapon);
     }
 
     @Override
     public Weapon getWeaponById(int id) {
-        return weaponRepository.findWeaponsEntityByWeaponId(id);
+        return weaponRepository.findWeaponByWeaponId(id);
     }
 
     @Override

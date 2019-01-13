@@ -61,8 +61,7 @@ public class ShopServiceImpl implements ShopService{
     @Transactional
     @Override
     public Shop createProduct(Shop product) {
-        shopRepository.save(product);
-        return product;
+        return shopRepository.save(product);
     }
 
     @Transactional
@@ -75,8 +74,7 @@ public class ShopServiceImpl implements ShopService{
     @Transactional
     @Override
     public Shop updateProduct(Shop product) {
-        shopRepository.save(product);
-        return product;
+        return shopRepository.save(product);
     }
 
     @Override

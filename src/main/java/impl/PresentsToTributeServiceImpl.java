@@ -56,19 +56,22 @@ public class PresentsToTributeServiceImpl implements PresentsToTributeService {
         }
         user.setCash(user.getCash() - product.getCost());
         userRepository.save(user);
-        presentsToTributeRepository.save(present);
-        return present;
+        return presentsToTributeRepository.save(present);
     }
 
     @Override
     public PresentsToTribute updatePresentsToTributes(PresentsToTribute present) {
-        presentsToTributeRepository.save(present);
-        return present;
+        return presentsToTributeRepository.save(present);
     }
 
     @Override
     public boolean deletePresentsToTributes(PresentsToTribute present) {
         presentsToTributeRepository.delete(present);
         return true;
+    }
+
+    @Override
+    public PresentsToTribute getPresentByProductAndTribute(Shop product, Tribute tribute) {
+        return presentsToTributeRepository.getPresentsToTributeByProductAndTribute(product, tribute);
     }
 }

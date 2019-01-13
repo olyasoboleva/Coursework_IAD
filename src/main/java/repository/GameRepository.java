@@ -30,4 +30,11 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
      * @return list of games
      */
     List<Game> getGamesByStartDate(Calendar startDate);
+
+    /**
+     * get all games with status
+     * @param status status
+     * @return list of games
+     */
+    List<Game> getGamesByStatus(String status);
 }

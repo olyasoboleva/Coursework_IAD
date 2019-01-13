@@ -81,15 +81,13 @@ public class SkillServiceImpl implements SkillService {
     @Transactional
     @Override
     public Skill createSkill(Skill skill) {
-        skillRepository.save(skill);
-        return skill;
+        return skillRepository.save(skill);
     }
 
     @Transactional
     @Override
     public Skill updateSkill(Skill skill) {
-        skillRepository.save(skill);
-        return skill;
+        return skillRepository.save(skill);
     }
 
     @Transactional

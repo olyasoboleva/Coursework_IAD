@@ -68,4 +68,14 @@ public interface TributeService {
      * @return tribute
      */
     Tribute getTributeByUserAndGame(User user, Game game);
+
+    /**
+     * find tributes in area
+     * @param game game
+     * @param x current x
+     * @param y current y
+     * @param radius radius of figure around current position
+     * @return list of tributes
+     */
+    List<Tribute> getTributeInArea(Game game, int x, int y, int radius);
 }

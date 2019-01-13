@@ -46,8 +46,11 @@ public class StewardController {
         entity.User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Arena arena = arenaService.getArenaById(arenaID);
         Game game = new Game(typeOfGame, user, arena, numberOfTributes, startDate);
-        gameService.createGame(game);
-        return ResponseEntity.status(HttpStatus.OK).body(game);
+        if (gameService.createGame(game)==null){
+            return ResponseEntity.status(HttpStatus.OK).body("Этот день для проведения игр уже занят.");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(game);
+        }
     }
 
     //TODO: create map

@@ -26,16 +26,16 @@ public class Tribute {
     @Column(name = "cause_of_death", length = 80)
     private String causeOfDeath;
 
-    @Transient
+    @Column(name = "health")
     private int health = 100;
-    @Transient
+    @Column(name = "hunger")
     private int hunger =100;
-    @Transient
+    @Column(name = "thirst")
     private int thirst = 100;
-    @Transient
-    private int x;
-    @Transient
-    private int y;
+    @Column(name = "location_x")
+    private int locationX;
+    @Column(name = "location_y")
+    private int locationY;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -65,8 +65,8 @@ public class Tribute {
         this.user = user;
         this.status = "alive";
         this.game = game;
-        this.x = (int)(Math.random()*game.getArena().getArenaWidth());
-        this.y = (int)(Math.random()*game.getArena().getArenaLength());
+        this.locationX = (int)(Math.random()*game.getArena().getArenaLength());
+        this.locationY = (int)(Math.random()*game.getArena().getArenaWidth());
     }
 
     @Override

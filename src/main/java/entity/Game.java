@@ -40,6 +40,9 @@ public class Game {
     @Column(name = "duration", nullable = false)
     private int duration;
 
+    @Column(name = "status")
+    private String status;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "steward", referencedColumnName = "user_id")

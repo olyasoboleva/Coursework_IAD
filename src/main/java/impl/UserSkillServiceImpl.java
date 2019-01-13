@@ -22,8 +22,7 @@ public class UserSkillServiceImpl implements UserSkillService {
 
     @Override
     public UserSkill createUserSkill(UserSkill userSkill) {
-        userSkillRepository.save(userSkill);
-        return userSkill;
+        return userSkillRepository.save(userSkill);
     }
 
     @Override
@@ -34,8 +33,7 @@ public class UserSkillServiceImpl implements UserSkillService {
 
     @Override
     public UserSkill updateUserSkills(UserSkill userSkill) {
-        userSkillRepository.save(userSkill);
-        return userSkill;
+        return userSkillRepository.save(userSkill);
     }
 
     @Override

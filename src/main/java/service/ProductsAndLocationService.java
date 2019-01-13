@@ -1,5 +1,6 @@
 package service;
 
+import entity.Location;
 import entity.ProductsAndLocation;
 import entity.Shop;
 
@@ -39,4 +40,12 @@ public interface ProductsAndLocationService {
      * @return this relation if it was updated correctly
      */
     ProductsAndLocation updateProductsAndLocation(ProductsAndLocation productsAndLocation);
+
+    /**
+     * check, can we apply product in this location
+     * @param product product
+     * @param location location
+     * @return applying or null
+     */
+    ProductsAndLocation getApplying(Shop product, Location location);
 }

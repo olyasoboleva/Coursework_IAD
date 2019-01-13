@@ -23,8 +23,7 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price createPrice(Price price) {
-        priceRepository.save(price);
-        return price;
+        return priceRepository.save(price);
     }
 
     @Override
@@ -35,7 +34,6 @@ public class PriceServiceImpl implements PriceService {
 
     @Override
     public Price updatePrices(Price price) {
-        priceRepository.save(price);
-        return price;
+        return priceRepository.save(price);
     }
 }

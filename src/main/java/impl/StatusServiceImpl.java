@@ -18,14 +18,12 @@ public class StatusServiceImpl implements StatusService {
     @Transactional
     @Override
     public Status updateStatuses(Status status) {
-        statusRepository.save(status);
-        return status;
+        return statusRepository.save(status);
     }
 
     @Override
     public Status createStatus(Status status) {
-        statusRepository.save(status);
-        return status;
+        return statusRepository.save(status);
     }
 
     @Override

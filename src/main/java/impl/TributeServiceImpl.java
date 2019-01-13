@@ -57,8 +57,7 @@ public class TributeServiceImpl implements TributeService {
     @Transactional
     @Override
     public Tribute updateTribute(Tribute tribute) {
-        tributeRepository.save(tribute);
-        return tribute;
+        return tributeRepository.save(tribute);
     }
 
     @Override
@@ -86,4 +85,8 @@ public class TributeServiceImpl implements TributeService {
         return tributeRepository.getTributeByUserAndGame(user, game);
     }
 
+    @Override
+    public List<Tribute> getTributeInArea(Game game, int x, int y, int radius) {
+        return tributeRepository.getTributesByGameAndLocationXBetweenAndLocationYIsBetween(game, x-radius,x+radius,y-radius,y+radius);
+    }
 }
