@@ -69,15 +69,13 @@ public class User {
     @Column(name = "picture")
     private byte[] picture;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "steward", fetch = FetchType.LAZY)
     private Collection<Game> stewardGames;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private Collection<PresentsToTribute> presentstotributesByUserid;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "trainer", fetch = FetchType.LAZY)
-    private Collection<Training> trainings;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -155,7 +153,6 @@ public class User {
                 Objects.equals(status, that.status) &&
                 Objects.equals(stewardGames, that.stewardGames) &&
                 Objects.equals(presentstotributesByUserid, that.presentstotributesByUserid) &&
-                Objects.equals(trainings, that.trainings) &&
                 Objects.equals(tributesByUser, that.tributesByUser) &&
                 Objects.equals(skills, that.skills) &&
                 Objects.equals(district, that.district);
@@ -164,7 +161,7 @@ public class User {
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, stewardGames, presentstotributesByUserid, trainings, tributesByUser, skills, district);
+        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, stewardGames, presentstotributesByUserid, tributesByUser, skills, district);
     }
 
 

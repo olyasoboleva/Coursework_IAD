@@ -35,19 +35,28 @@ public class TrainingController {
 
     @PostMapping( "/improveSkill")
     public @ResponseBody
-    ResponseEntity improveSkill(@RequestParam("name") String train, @RequestParam("percent") String percent) {
+    ResponseEntity improveSkill(@RequestParam("name") String train, @RequestParam("percent") int percent) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Training training = trainingService.getTrainingByName(train);
         Skill skill = skillService.getSkillByTraining(training);
         UserSkill userSkill = userSkillService.getUserSkillByUserAndSkill(user, skill);
-        int koeff = Integer.parseInt(percent)*training.getCoefficient();
-        if (userSkill.getLevelOfSkill()+ koeff < 100) {
-            userSkill.setLevelOfSkill(userSkill.getLevelOfSkill() + koeff);
-        } else {
-            userSkill.setLevelOfSkill(100);
+        int koeff = percent * training.getCoefficient()/100;
+        if (koeff != 0) {
+            if (userSkill == null) {
+                userSkill = new UserSkill(user, skill, koeff);
+                userSkillService.createUserSkill(userSkill);
+            } else {
+                if (userSkill.getLevelOfSkill() + koeff < 100) {
+                    userSkill.setLevelOfSkill(userSkill.getLevelOfSkill() + koeff);
+                } else {
+                    userSkill.setLevelOfSkill(100);
+                }
+                userSkillService.updateUserSkills(userSkill);
+            }
         }
-        userSkillService.updateUserSkills(userSkill);
-        return ResponseEntity.status(HttpStatus.OK).body(userSkill);
+        user.setCash(user.getCash() - training.getCost());
+        userService.updateUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
     @GetMapping( "/trainingByName")

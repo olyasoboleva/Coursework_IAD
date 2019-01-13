@@ -72,11 +72,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getTrainerOfTraining(Training training) {
-        return userRepository.findUserByTrainings(training);
-    }
-
-    @Override
     public List<User> getSendersOfPresentsByTribute(Tribute tribute) {
         return userRepository.findUsersByRecipients(tribute);
     }

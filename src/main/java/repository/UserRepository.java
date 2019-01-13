@@ -51,13 +51,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> getUsersByStatus(Status status);
 
     /**
-     * find trainer
-     * @param training training
-     * @return trainer
-     */
-    User findUserByTrainings(Training training);
-
-    /**
      * find all senders of presents to this tribute
      * @param tribute tribute
      * @return list of users

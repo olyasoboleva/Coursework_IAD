@@ -85,7 +85,7 @@ skill_id integer REFERENCES skill,
 coefficient integer CHECK (coefficient >= 0),
 duration integer CHECK (duration > 0),
 description text,
-cost integer,
+cost INTEGER NOT NULL CHECK (cost > 0),
 day_of_week integer
 );
 

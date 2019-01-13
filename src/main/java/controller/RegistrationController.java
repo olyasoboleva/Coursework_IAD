@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import service.*;
 
 import java.text.DateFormat;
@@ -37,8 +38,14 @@ public class RegistrationController {
     UserSkillService userSkillService;
 
     @PostMapping( "/signup")
-    public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, String birthday, byte[] picture) {
+    public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, String birthday, MultipartFile file) {
         int defaultCash = 1000;//TODO: надо из прайс-листа бы доставать
+        byte[] picture = null;
+        try {
+            picture = file.getBytes();
+        } catch (Exception exc) {
+            //
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(birthday));
         User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseById(1));

@@ -70,13 +70,6 @@ public interface UserService {
     List<User> getUsersByStatus(Status status);
 
     /**
-     * find trainer
-     * @param training training
-     * @return trainer
-     */
-    User getTrainerOfTraining(Training training);
-
-    /**
      * find all senders of presents to this tribute
      * @param tribute tribute
      * @return list of users
