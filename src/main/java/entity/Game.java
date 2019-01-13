@@ -43,7 +43,6 @@ public class Game {
     @Column(name = "status")
     private String status;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "steward", referencedColumnName = "user_id")
     private User steward;

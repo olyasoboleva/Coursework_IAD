@@ -85,7 +85,7 @@ CREATE TABLE training (
   coefficient integer CHECK (coefficient >= 0),
   duration    integer CHECK (duration > 0),
   description text,
-  cost        integer,
+  cost        integer NOT NULL CHECK (cost > 0),
   day_of_week integer
 );
 

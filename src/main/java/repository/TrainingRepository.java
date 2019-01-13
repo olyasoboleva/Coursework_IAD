@@ -22,4 +22,5 @@ public interface TrainingRepository extends CrudRepository<Training, Integer> {
      * @return list of trainings
      */
     List<Training> getTrainingsByDayOfWeek(int dayOfWeek);
+
 }

@@ -31,12 +31,12 @@ public class Training {
     @Column(name = "duration")
     private int duration;
 
-    @Min(0)
-    @Column(name = "cost")
-    private int cost;
-
     @Column(name = "description")
     private String description;
+
+    @Min(0)
+    @Column(name = "cost", nullable = false)
+    private int cost;
 
     @Column(name = "day_of_week")
     private int dayOfWeek;
@@ -45,14 +45,14 @@ public class Training {
     @JoinColumn(name = "skill_id", referencedColumnName = "skill_id")
     private Skill skill;
 
-    public Training(String name, Skill skill, int coefficient, int duration, String description, int dayOfWeek, int cost) {
+    public Training(String name, Skill skill, int coefficient, int duration, String description, int cost, int dayOfWeek) {
         this.name = name;
         this.coefficient = coefficient;
         this.duration = duration;
         this.description = description;
+        this.cost = cost;
         this.dayOfWeek = dayOfWeek;
         this.skill = skill;
-        this.cost = cost;
     }
 
     @Override
@@ -72,6 +72,6 @@ public class Training {
 
     @Override
     public int hashCode() {
-        return Objects.hash(trainingId, name, coefficient, duration, description, dayOfWeek, skill);
+        return Objects.hash(trainingId, name, coefficient, duration, description, cost, dayOfWeek, skill);
     }
 }

@@ -69,9 +69,11 @@ public class User {
     @Column(name = "picture")
     private byte[] picture;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "steward", fetch = FetchType.LAZY)
     private Collection<Game> stewardGames;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private Collection<PresentsToTribute> presentstotributesByUserid;
 
