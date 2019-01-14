@@ -57,4 +57,11 @@ public interface WeaponService {
     List<Weapon> getWeaponsByOwners(Tribute tribute);
 
     Weapon getWeaponByName(String name);
+
+    /**
+     * sum of weapon's coefficient of protection
+     * @param tribute tribute
+     * @return coefficient
+     */
+    int getProtectionOftribute(Tribute tribute);
 }

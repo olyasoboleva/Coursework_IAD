@@ -5,16 +5,10 @@ import entity.*;
 public interface GameProcessService {
 
     /**
-     * It adds health to tribute after using present
-     * @param present present
-     */
-    public void updateHealthByPresent(PresentsToTribute present);
-
-    /**
      * After end of the game it changes statuses to Observer for all users who played in this game
      * @param game game
      */
-    public void changeStatusAfterEndOfTheGame(Game game);
+    public void changeStatusAfterEndOfTheGame(Game game, Tribute winner);
 
     /**
      * Process of battle between two tributes

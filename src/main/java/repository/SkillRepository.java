@@ -41,4 +41,11 @@ public interface SkillRepository extends CrudRepository<Skill,Integer> {
      */
     Skill findSkillByWeapon(Weapon weapon);
 
+    /**
+     * find skill by name
+     * @param name name
+     * @return skill
+     */
+    Skill findSkillByName(String name);
+
 }

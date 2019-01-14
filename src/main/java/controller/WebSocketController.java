@@ -18,6 +18,8 @@ import service.GameService;
 import service.TributeService;
 import service.UserService;
 
+import java.util.List;
+
 @Controller
 public class WebSocketController {
 
@@ -79,6 +81,20 @@ public class WebSocketController {
             messagingTemplate.convertAndSendToUser(battle.getDefending(),"/queue/health",
                     new TributeHealth(battle.getDefending(), defendingTribute.getHealth(), defendingTribute.getHunger(), defendingTribute.getThirst()));
         }
+
+        tributeService.updateTribute(attackingTribute);
+        tributeService.updateTribute(defendingTribute);
+
+        List<Tribute> tributesAlive = tributeService.getTributesByStatusAndGame("Жив", game);
+        if (tributesAlive.size()==1){
+            gameProcessService.changeStatusAfterEndOfTheGame(game, tributesAlive.get(0));
+            gameEvent(new Message("Конец игры! Победитель - "+tributesAlive.get(0).getUser().getNick(),"", Message.Type.GAMEOVER));
+        } else {
+            if (tributesAlive.size()==0) {
+                gameProcessService.changeStatusAfterEndOfTheGame(game, null);
+                gameEvent(new Message("Конец игры! Но все умерли:)", "", Message.Type.GAMEOVER));
+            }
+        }
     }
 
     @MessageMapping("/hungergames/send_present")
@@ -103,6 +119,11 @@ public class WebSocketController {
     @MessageMapping("/hungergames/message")
     public void gameEvent(@Payload Message message) {
         messagingTemplate.convertAndSend("/topic/notification", message);
+    }
+
+    @MessageMapping("/hungergames/userMessage")
+    public void userGameEvent(@Payload Message message) {
+        messagingTemplate.convertAndSendToUser(message.getNick(),"/queue/notification", message);
     }
 
     @MessageMapping("/hungergames/health")

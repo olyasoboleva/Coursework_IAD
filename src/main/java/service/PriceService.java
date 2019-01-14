@@ -11,6 +11,13 @@ public interface PriceService {
     Price getPriceById(int priceId);
 
     /**
+     * find price by name
+     * @param name name
+     * @return price
+     */
+    Price getPriceByName(String name);
+
+    /**
      * It creates new price
      * @param price price
      * @return new price if it was created

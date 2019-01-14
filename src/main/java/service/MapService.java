@@ -1,6 +1,7 @@
 package service;
 
 import entity.Arena;
+import entity.Game;
 import entity.Map;
 
 import java.util.List;
@@ -60,4 +61,11 @@ public interface MapService {
      * @return new map if it was correctly updated in database
      */
     Map updateMap(Map map);
+
+    /**
+     * generate game field for arena
+     * @param arena arena
+     * @return map
+     */
+    List<Map> createAllGameField(Arena arena);
 }

@@ -37,6 +37,10 @@ public class Shop {
     @Column(name = "type_of_present", length = 40)
     private String typeOfPresent;
 
+    @NotNull
+    @Column(name = "type_of_recovery", length = 40)
+    private String typeOfRecovery;
+
     @Column(name = "description")
     private String description;
 

@@ -3,6 +3,7 @@ package controller;
 import entity.*;
 import model.TributeHealth;
 import model.TributeLocation;
+import model.VisibleMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -85,7 +86,12 @@ public class GameController {
                 userWeapon = e;
             }
         }
-        weaponsInGameService.deleteWeaponsInGame(userWeapon);
+        if (userWeapon!=null) {
+            userWeapon.setLocationX(tribute.getLocationX());
+            userWeapon.setLocationY(tribute.getLocationY());
+            userWeapon.setTribute(null);
+            weaponsInGameService.updateWeaponsInGame(userWeapon);
+        }
         return ResponseEntity.status(HttpStatus.OK).body("Weapon deleted");
     }
 
@@ -156,26 +162,44 @@ public class GameController {
         Shop present = shopService.getProductByName(presentName);
         if (productsAndLocationService.getApplying(present, location)!=null){
             PresentsToTribute presentsToTribute = presentsToTributeService.getPresentByProductAndTribute(present, tribute);
-            switch (present.getTypeOfPresent()){
+            switch (present.getTypeOfRecovery()){
                 case "Еда":
                     tribute.setHunger(tribute.getHunger()+present.getHealthRecovery()>100?100:tribute.getHunger()+present.getHealthRecovery());
                     break;
                 case "Лекарство":
                     tribute.setHealth(tribute.getHealth()+present.getHealthRecovery()>100?100:tribute.getHealth()+present.getHealthRecovery());
                     break;
-                //другие типы дописать
+                case "Напиток":
+                    tribute.setThirst(tribute.getThirst()+present.getHealthRecovery()>100?100:tribute.getThirst()+present.getHealthRecovery());
             }
             tributeService.updateTribute(tribute);
             webSocketController.getHealth(new TributeHealth(user.getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
-            presentsToTribute.setQuantity(presentsToTribute.getQuantity()-1);
-            if (presentsToTribute.getQuantity()<=0) {
-                return dropPresent(gameId.toString(), presentName);
+            if (!present.getTypeOfPresent().equals("Инструменты")) {
+                presentsToTribute.setQuantity(presentsToTribute.getQuantity() - 1);
+                if (presentsToTribute.getQuantity() <= 0) {
+                    return dropPresent(gameId.toString(), presentName);
+                } else {
+                    presentsToTributeService.updatePresentsToTributes(presentsToTribute);
+                    return ResponseEntity.status(HttpStatus.OK).body(presentsToTribute);
+                }
             } else {
-                presentsToTributeService.updatePresentsToTributes(presentsToTribute);
                 return ResponseEntity.status(HttpStatus.OK).body(presentsToTribute);
             }
         } else {
             return ResponseEntity.status(HttpStatus.OK).body("Нельзя применить подарок в текущей локации");
         }
+    }
+
+    @GetMapping("/move")
+    public @ResponseBody ResponseEntity getVisibleMap(TributeLocation tributeLocation){
+        webSocketController.moveTribute(tributeLocation);
+        int radius = 4;
+        Game game = gameService.getGameById(tributeLocation.getGameId());
+        List<Map> area = mapService.getArea(game.getArena(), tributeLocation.getX(), tributeLocation.getY());
+        List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameInAreaWithoutOwner(game, tributeLocation.getX(), tributeLocation.getY(), radius);
+        VisibleMap visibleMap = new VisibleMap();
+        visibleMap.setArea(area);
+        visibleMap.setWeapons(weapons);
+        return ResponseEntity.status(HttpStatus.OK).body(visibleMap);
     }
 }

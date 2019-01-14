@@ -17,16 +17,37 @@ public class WeaponsInGame {
     private Integer weaponInGameId;
 
     @ManyToOne
-    @JoinColumn(name = "tribute_id", referencedColumnName = "tribute_id", nullable = false)
+    @JoinColumn(name = "tribute_id", referencedColumnName = "tribute_id")
     private Tribute tribute;
 
     @ManyToOne
     @JoinColumn(name = "weapon_id", referencedColumnName = "weapon_id", nullable = false)
     private Weapon weapon;
 
+    @ManyToOne
+    @JoinColumn(name = "game_id", referencedColumnName = "game_id", nullable = false)
+    private Game game;
+
+    @Column(name = "location_x")
+    int locationX;
+
+    @Column(name = "location_y")
+    int locationY;
+
     public WeaponsInGame(Tribute tribute, Weapon weapon) {
         setTribute(tribute);
         setWeapon(weapon);
+        setGame(tribute.getGame());
+        setLocationX(tribute.getLocationX());
+        setLocationY(tribute.getLocationY());
+    }
+
+
+    public WeaponsInGame(Game game, Weapon weapon, int x, int y) {
+        setWeapon(weapon);
+        setGame(game);
+        setLocationX(x);
+        setLocationY(y);
     }
 
     @Override

@@ -82,4 +82,16 @@ public class WeaponServiceImpl implements WeaponService {
         return weaponRepository.findWeaponByName(name);
     }
 
+    @Override
+    public int getProtectionOftribute(Tribute tribute) {
+        List<Weapon> weapons = weaponRepository.getWeaponByOwners(tribute);
+        int coef = 0;
+        for (Weapon weapon: weapons){
+            if (weapon.getTypeOfWeapon().equals("Защитное")){
+                coef += weapon.getDamage();
+            }
+        }
+        if (coef>100) coef = 100;
+        return coef;
+    }
 }

@@ -54,6 +54,10 @@ public class Game {
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     private Collection<Tribute> tributes;
 
+    @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
+    private Collection<WeaponsInGame> weaponsInGames;
+
+
     public Game(boolean typeOfGame, User steward, Arena arena, int numberOfTributes, Calendar startDate) {
         this.typeOfGame = typeOfGame;
         this.numberOfTributes = typeOfGame ? 24:numberOfTributes;

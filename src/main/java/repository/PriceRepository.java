@@ -10,4 +10,6 @@ public interface PriceRepository extends CrudRepository<Price,Integer> {
      * @return price
      */
     Price findPriceByPriceId(int priceId);
+
+    Price findPriceByName(String name);
 }

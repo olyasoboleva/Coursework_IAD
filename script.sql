@@ -32,13 +32,14 @@ CREATE TABLE status (
   price_id  integer REFERENCES price
 );
 CREATE TABLE shop (
-  product_id      serial PRIMARY KEY,
-  name            varchar(64) NOT NULL,
-  cost            integer     NOT NULL CHECK (cost >= 0),
-  type_of_present VARCHAR(40) NOT NULL,
-  description     text,
-  picture         bytea       not null,
-  health_recovery integer
+  product_id       serial PRIMARY KEY,
+  name             varchar(64) NOT NULL,
+  cost             integer     NOT NULL CHECK (cost >= 0),
+  type_of_present  VARCHAR(40) NOT NULL,
+  type_of_recovery varchar(40) not null,
+  description      text,
+  picture          bytea       not null,
+  health_recovery  integer
     CHECK ((health_recovery < 100) AND (health_recovery >= 0))
 );
 
@@ -141,8 +142,11 @@ CREATE TABLE products_and_location (
 
 CREATE TABLE weapons_in_game (
   weapon_in_game_id serial PRIMARY KEY,
+  game_id           integer references game   not null,
   tribute_id        integer REFERENCES tribute,
-  weapon_id         integer REFERENCES weapon
+  weapon_id         integer REFERENCES weapon not null,
+  location_x        integer check (location_x >= 0),
+  location_y        integer check (location_y >= 0)
 );
 
 CREATE TABLE hook (

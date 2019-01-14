@@ -22,6 +22,11 @@ public class PriceServiceImpl implements PriceService {
     }
 
     @Override
+    public Price getPriceByName(String name){
+        return priceRepository.findPriceByName(name);
+    }
+
+    @Override
     public Price createPrice(Price price) {
         return priceRepository.save(price);
     }

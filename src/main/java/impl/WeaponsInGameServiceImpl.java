@@ -1,5 +1,6 @@
 package impl;
 
+import entity.Game;
 import entity.Tribute;
 import entity.Weapon;
 import entity.WeaponsInGame;
@@ -10,6 +11,7 @@ import repository.WeaponsInGameRepository;
 import repository.WeaponRepository;
 import service.WeaponsInGameService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("weaponsInGameService")
@@ -52,5 +54,29 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
     @Override
     public List<WeaponsInGame> getWeaponsInGameByTribute(Tribute tribute) {
         return weaponsInGameRepository.getWeaponsInGamesByTribute(tribute);
+    }
+
+    @Override
+    public WeaponsInGame updateWeaponsInGame(WeaponsInGame weaponInGame) {
+        return weaponsInGameRepository.save(weaponInGame);
+    }
+
+    @Override
+    public List<WeaponsInGame> getWeaponsInGameInAreaWithoutOwner(Game game, int x, int y, int radius) {
+        return weaponsInGameRepository.getWeaponsInGamesByGameAndLocationXBetweenAndLocationYBetweenAndTribute(game,x-radius, x+radius, y-radius, y+radius, null);
+    }
+
+    @Override
+    public List<WeaponsInGame> throwWeaponsOnArena(Game game) {
+        List<WeaponsInGame> weapons = new ArrayList<>();
+        WeaponsInGame weaponsInGame;
+        int numWeaponsToGenerate = (int)(Math.random()*77+24);
+        int numWeaponsDB = (int)weaponRepository.count();
+        for (int i=0;i<numWeaponsToGenerate;i++){
+            weaponsInGame = new WeaponsInGame(game, weaponRepository.findWeaponByWeaponId((int)(Math.random()*numWeaponsDB+1)), (int)(Math.random()*game.getArena().getArenaLength()),(int)(Math.random()*game.getArena().getArenaWidth()));
+            weapons.add(weaponsInGame);
+            weaponsInGameRepository.save(weaponsInGame);
+        }
+        return weapons;
     }
 }
