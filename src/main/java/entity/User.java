@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Data
@@ -119,7 +116,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "district", referencedColumnName = "district_id")
     private District district;
-
 
     public User(String nick, String password, String surname, String name, int height, int weight, boolean sex, District district, Calendar birthday, byte[] picture, Status status) {
         this.nick = nick;

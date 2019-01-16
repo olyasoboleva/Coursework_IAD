@@ -1,10 +1,12 @@
 package config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,14 +20,19 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import repository.UserRepository;
+import service.DistrictService;
+import service.StatusService;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
+import java.util.Calendar;
 
 @Configuration
 @ComponentScan
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@Order(1000)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -104,5 +111,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+
+    @Autowired
+    StatusService statusService;
+    @Autowired
+    DistrictService districtService;
+
+   @Bean
+    public PrincipalExtractor principalExtractor(UserRepository userRepository) {
+        return map -> {
+            int id =  map.get("sub").hashCode();
+            int a = (int) (Math.random()*12345678+1);
+            entity.User user = userRepository.findById(id).orElseGet(() -> {
+                entity.User newUser = new entity.User(String.valueOf(a),"1",(String)map.get("family_name"),String.valueOf(map.get("given_name")),
+                        170, 50,true,districtService.getDistrictById((int)(Math.random()*12+1)),Calendar.getInstance(),
+                        null,statusService.getStatuseById(1));
+                //FIXME: id and picture for user
+                newUser.setUserId(id);
+
+                //newUser.setPicture((byte[]) map.get("picture"));
+                return  newUser;
+            });
+
+            userRepository.save(user);
+            return user;
+        };
+    }
+
 
 }
