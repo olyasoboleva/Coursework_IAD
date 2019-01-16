@@ -166,3 +166,14 @@ CREATE TABLE map (
   CONSTRAINT unique_coordinates UNIQUE (arena_id, x_coordinate, y_coordinate)
 );
 
+create table role (
+  role_id serial primary key ,
+  name varchar(32) not null
+);
+
+create table user_roles (
+  user_id integer,
+  role_id integer,
+  PRIMARY KEY (user_id,role_id)
+);
+

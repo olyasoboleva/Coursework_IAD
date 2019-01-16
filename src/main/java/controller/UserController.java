@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class UserController {
     @Autowired
     UserSkillService userSkillService;
 
+    @Secured("ROLE_USER")
     @GetMapping( "/personal_page")
     public @ResponseBody ResponseEntity getUserInfo() {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
@@ -35,6 +37,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    @Secured("ROLE_USER")
     @GetMapping( "/get_all_skills")
     public @ResponseBody ResponseEntity getUserSkills() {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
@@ -42,6 +45,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(skills);
     }
 
+    @Secured("ROLE_USER")
     @PostMapping("/edit_user")
     public @ResponseBody ResponseEntity editUser(@RequestParam("password") String password, @RequestParam("newPassword") String newPassword ) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());

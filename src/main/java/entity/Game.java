@@ -64,6 +64,7 @@ public class Game {
         this.startDate = startDate;
         this.steward = steward;
         this.arena = arena;
+        this.status = "created";
     }
 
 

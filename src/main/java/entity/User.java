@@ -99,6 +99,15 @@ public class User {
     )
     private Collection<Tribute> recipients;
 
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")}
+    )
+    private Collection<Role> roles;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_skill",

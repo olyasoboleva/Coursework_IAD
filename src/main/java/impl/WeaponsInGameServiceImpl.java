@@ -72,10 +72,12 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
         WeaponsInGame weaponsInGame;
         int numWeaponsToGenerate = (int)(Math.random()*77+24);
         int numWeaponsDB = (int)weaponRepository.count();
-        for (int i=0;i<numWeaponsToGenerate;i++){
-            weaponsInGame = new WeaponsInGame(game, weaponRepository.findWeaponByWeaponId((int)(Math.random()*numWeaponsDB+1)), (int)(Math.random()*game.getArena().getArenaLength()),(int)(Math.random()*game.getArena().getArenaWidth()));
-            weapons.add(weaponsInGame);
-            weaponsInGameRepository.save(weaponsInGame);
+        if (numWeaponsDB!=0) {
+            for (int i = 0; i < numWeaponsToGenerate; i++) {
+                weaponsInGame = new WeaponsInGame(game, weaponRepository.findWeaponByWeaponId((int) (Math.random() * numWeaponsDB + 1)), (int) (Math.random() * game.getArena().getArenaLength()), (int) (Math.random() * game.getArena().getArenaWidth()));
+                weapons.add(weaponsInGame);
+                weaponsInGameRepository.save(weaponsInGame);
+            }
         }
         return weapons;
     }

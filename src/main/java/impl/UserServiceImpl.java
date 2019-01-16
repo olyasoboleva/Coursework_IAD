@@ -4,24 +4,25 @@ import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import repository.RoleRepository;
 import repository.UserRepository;
 import service.StatusService;
 import service.UserService;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final StatusService statusService;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, StatusService statusService) {
+    public UserServiceImpl(UserRepository userRepository, StatusService statusService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.statusService = statusService;
+        this.roleRepository = roleRepository;
     }
 
     @Transactional
@@ -33,6 +34,24 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User createUser(User user) {
+        Role userRole = roleRepository.findRoleByName("ROLE_USER");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    @Override
+    public User addRole(User user, String role) {
+        Role userRole = roleRepository.findRoleByName(role);
+        user.getRoles().add(userRole);
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    @Override
+    public User removeRole(User user, String role) {
+        Role userRole = roleRepository.findRoleByName(role);
+        user.getRoles().remove(userRole);
         return userRepository.save(user);
     }
 

@@ -81,4 +81,8 @@ public interface UserService {
      * @return is successful
      */
     User updateUserLastActivity(User user);
+
+    User addRole(User user, String role);
+
+    User removeRole(User user, String role);
 }

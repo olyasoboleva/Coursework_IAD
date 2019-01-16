@@ -38,7 +38,7 @@ public class RegistrationController {
     UserSkillService userSkillService;
 
     @PostMapping( "/signup")
-    public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, String birthday, MultipartFile file) {
+    public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, String birthday, MultipartFile file) throws Exception {
         int defaultCash = 1000;//TODO: надо из прайс-листа бы доставать
         byte[] picture = null;
         try {
@@ -46,8 +46,10 @@ public class RegistrationController {
         } catch (Exception exc) {
             //
         }
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date tempDate = df.parse(birthday);
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(birthday));
+        calendar.setTime(tempDate);
         User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseById(1));
         UserSkill userSkill = new UserSkill(user, skillService.getSkillById(user.getDistrict().getDistrictId()), 100);
         if ((username.equals("")) || (password.equals(""))) {

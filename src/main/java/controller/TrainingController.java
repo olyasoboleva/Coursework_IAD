@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.SkillService;
@@ -33,6 +34,7 @@ public class TrainingController {
     @Autowired
     UserSkillService userSkillService;
 
+    @Secured("ROLE_USER")
     @PostMapping( "/improveSkill")
     public @ResponseBody
     ResponseEntity improveSkill(@RequestParam("name") String train, @RequestParam("percent") int percent) {
@@ -59,11 +61,13 @@ public class TrainingController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    @Secured("ROLE_USER")
     @GetMapping( "/trainingByName")
     public @ResponseBody ResponseEntity getTrainingByName(@RequestParam("name") String name) {
         return ResponseEntity.status(HttpStatus.OK).body(trainingService.getTrainingByName(name));
     }
 
+    @Secured("ROLE_USER")
     @GetMapping( "/trainings")
     public @ResponseBody ResponseEntity getTrainings(@RequestParam("day") int day) {
         return ResponseEntity.status(HttpStatus.OK).body(trainingService.getTrainingsByDayOfWeek(day));

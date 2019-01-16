@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.*;
@@ -56,6 +57,7 @@ public class GameController {
     @Autowired
     MapService mapService;
 
+    @Secured("ROLE_USER")
     @GetMapping( "/get_tributes_of_game")
     public @ResponseBody ResponseEntity getGameTributes(@RequestParam("game") String gameId) {
         Game game = gameService.getGameById(Integer.parseInt(gameId));
@@ -63,17 +65,7 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(tributes);
     }
 
-    @GetMapping( "/get_player_info")
-    public @ResponseBody ResponseEntity getPlayerInfo(@RequestParam("game") String gameId) {
-        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = getTributeByUser(user, gameId);
-        int[] info = new int[3];
-        info[0] = tribute.getHealth();
-        info[1] = tribute.getHunger();
-        info[2] = tribute.getThirst();
-        return ResponseEntity.status(HttpStatus.OK).body(info);
-    }
-
+    @Secured("ROLE_TRIBUTE")
     @PostMapping("/drop_weapon")
     public @ResponseBody ResponseEntity dropWeapon(@RequestParam("game") String gameId, @RequestParam("weapon") String weapon) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
@@ -95,6 +87,7 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body("Weapon deleted");
     }
 
+    @Secured("ROLE_TRIBUTE")
     @PostMapping("/add_weapon")
     public @ResponseBody ResponseEntity addWeapon(@RequestParam("game") String gameId, @RequestParam("weaponName") String weaponName) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
@@ -109,6 +102,7 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body("Weapon added");
     }
 
+    @Secured("ROLE_TRIBUTE")
     @PostMapping("/drop_present")
     public @ResponseBody ResponseEntity dropPresent(@RequestParam("game") String gameId, @RequestParam("presentName") String presentName){
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
@@ -125,17 +119,20 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body("Present deleted");
     }
 
+    @Secured({"ROLE_USER","ROLE_TRIBUTE"})
     @GetMapping("/tribute_info")
     public @ResponseBody ResponseEntity getTributeInfo(@RequestParam("nick")String nick) {
         User user = userService.getUserByNick(nick);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    @Secured("ROLE_USER")
     @GetMapping("/games_history")
     public @ResponseBody ResponseEntity getGamesHistory() {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.getAllGames());
     }
 
+    @Secured("ROLE_USER")
     @GetMapping("/games_by_date")
     public @ResponseBody ResponseEntity getGamesByDate(@RequestParam("date") Calendar date) {
         return ResponseEntity.status(HttpStatus.OK).body(gameService.getGameByStartDate(date));
@@ -153,6 +150,7 @@ public class GameController {
         return tribute;
     }
 
+    @Secured("ROLE_TRIBUTE")
     @PostMapping("/use_present")
     public @ResponseBody ResponseEntity usePresent(Integer gameId, String presentName){
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
@@ -190,9 +188,16 @@ public class GameController {
         }
     }
 
+    @Secured("ROLE_TRIBUTE")
     @GetMapping("/move")
-    public @ResponseBody ResponseEntity getVisibleMap(TributeLocation tributeLocation){
+    public @ResponseBody ResponseEntity moveAndGetVisibleMap(TributeLocation tributeLocation){
         webSocketController.moveTribute(tributeLocation);
+        return getVisibleMap(tributeLocation);
+    }
+
+    @Secured({"ROLE_USER","ROLE_TRIBUTE"})
+    @GetMapping("/get_map")
+    public @ResponseBody ResponseEntity getVisibleMap(TributeLocation tributeLocation){
         int radius = 4;
         Game game = gameService.getGameById(tributeLocation.getGameId());
         List<Map> area = mapService.getArea(game.getArena(), tributeLocation.getX(), tributeLocation.getY());
