@@ -70,6 +70,7 @@ public class TributeSelectionController {
         }
         for (entity.User user: tributes){
             tribute = new Tribute(user, game);
+            userService.addRole(user, "ROLE_TRIBUTE");
             tributeService.createTribute(tribute);
         }
 

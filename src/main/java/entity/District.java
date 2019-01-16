@@ -28,6 +28,7 @@ public class District {
     @Column(name = "type_of_activity", length = 40)
     private String typeOfActivity;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "skill_id", referencedColumnName = "skill_id")
     private Skill skill;

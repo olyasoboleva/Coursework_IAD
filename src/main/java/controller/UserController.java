@@ -33,7 +33,7 @@ public class UserController {
     @GetMapping( "/personal_page")
     public @ResponseBody ResponseEntity getUserInfo() {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        //userService.updateUserLastActivity(user);
+        userService.updateUserLastActivity(user);
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 

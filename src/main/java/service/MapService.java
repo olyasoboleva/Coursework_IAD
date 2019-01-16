@@ -44,7 +44,6 @@ public interface MapService {
     /**
      * It deletes all map's cells of arena
      * @param arena arena
-     * @return true if map was deleted
      */
     void deleteAllMap(Arena arena);
 

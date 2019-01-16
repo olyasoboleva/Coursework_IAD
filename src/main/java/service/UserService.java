@@ -82,7 +82,19 @@ public interface UserService {
      */
     User updateUserLastActivity(User user);
 
+    /**
+     * add role to user
+     * @param user user
+     * @param role name of role
+     * @return user
+     */
     User addRole(User user, String role);
 
+    /**
+     * remove role from user
+     * @param user user
+     * @param role name of role
+     * @return user
+     */
     User removeRole(User user, String role);
 }

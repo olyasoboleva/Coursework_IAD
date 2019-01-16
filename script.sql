@@ -66,7 +66,7 @@ CREATE TABLE users (
   last_activity date,
   status_id     integer REFERENCES status NOT NULL,
   cash          integer,
-  picture       bytea                     NOT NULL,
+  picture       bytea,
   CONSTRAINT info CHECK (height > 0 AND weight > 0 AND cash >= 0)
 );
 
@@ -167,13 +167,13 @@ CREATE TABLE map (
 );
 
 create table role (
-  role_id serial primary key ,
-  name varchar(32) not null
+  role_id serial primary key,
+  name    varchar(32) not null
 );
 
 create table user_roles (
   user_id integer,
   role_id integer,
-  PRIMARY KEY (user_id,role_id)
+  PRIMARY KEY (user_id, role_id)
 );
 

@@ -14,5 +14,7 @@ drop table training cascade;
 drop table products_and_location cascade;
 drop table skill cascade;
 drop table weapon cascade;
-drop table user_login CASCADE ;
 drop table location CASCADE ;
+drop table map CASCADE ;
+drop table role CASCADE ;
+drop table user_roles CASCADE ;

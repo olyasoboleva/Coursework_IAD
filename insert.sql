@@ -1,3 +1,6 @@
+INSERT into role values (1,'ROLE_ADMIN');
+INSERT into role values (2,'ROLE_USER');
+INSERT into role values (3,'ROLE_TRIBUTE');
 INSERT INTO price values (1,'salary', 1000);
 insert into status values (1, 'Наблюдатель', 1);
 insert into status values (2, 'Трибут', 1);
