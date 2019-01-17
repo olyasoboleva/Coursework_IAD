@@ -41,7 +41,7 @@ public class GameProcessServiceImpl implements GameProcessService {
         int sponsorProfit = priceRepository.findPriceByName("winner's sponsor").getCost();
         if (winner!=null) {
             winner.setStatus("Победитель");
-            winner.getUser().setCash(winner.getUser().getCash()+priceRepository.findPriceByName("winner").getCost());
+            winner.getUser().setCash(winner.getUser().getCash() + priceRepository.findPriceByName("winner").getCost());
             tributeRepository.save(winner);
             Collection<User> sponsors = winner.getPresentsSenders();
             for (User sponsor: sponsors){

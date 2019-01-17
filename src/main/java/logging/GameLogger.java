@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import service.*;
 
+import java.util.Collection;
+
 
 @Aspect
 public class GameLogger {
@@ -16,43 +18,61 @@ public class GameLogger {
     UserService userService;
 
     @Autowired
-    TrainingService trainingService;
-
-    @Autowired
     TributeService tributeService;
-
-    @Autowired
-    ShopService shopService;
 
     @Autowired
     StatusService statusService;
 
+    @Autowired
+    PriceService priceService;
 
-    @After("execution(* controller.TrainingController.improveSkill(..)) && within(controller.TrainingController)")
-    public void improveSkillChecker(JoinPoint joinPoint){
-        final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
-        Object params  = joinPoint.getArgs()[0];
-        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Training training = trainingService.getTrainingByName(params.toString().trim());
-        logger.info("Пользователь: " + user.getNick() +", Тренировка: " + params.toString() + ", Цена: " + training.getCost());
-    }
 
-    @After("execution(* controller.WebSocketController.sendPresent(..)) && within(controller.WebSocketController)")
-    public void sendPresentLogger(JoinPoint joinPoint) {
-        final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
-        Object[] params  = joinPoint.getArgs();
-        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeById((Long) params[0]);
-        Shop product = shopService.getProductById((Integer) params[1]);
-        logger.info("Отправитель: " + user.getNick() + ", Трибут: " + tribute.getUser().getNick() +", Количество: " + params[2] + ", Цена: " + product.getCost());
-
-    }
-
-    @After("execution(* impl.UserServiceImpl.updateUserLastActivity(..)) && within(impl.UserServiceImpl)")
-    public void sendBonuce(JoinPoint joinPoint) {
+    /**
+     * Log message for daily bonus
+     * @param joinPoint join point
+     */
+    @After("execution(* service.UserService.updateUserLastActivity(..)) && within(service.UserService)")
+    public void sendBonus(JoinPoint joinPoint) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        //FIXME: почему это на английском и почему в статусах?
         int price = statusService.getStatuseByName("Daily prize").getPrice().getCost();
         logger.info("Пользователь: " + user.getNick() + "Бонус: " + price + "Баланс: " + user.getCash());
     }
+
+    @AfterThrowing(value = "execution(* service.UserService.updateUserLastActivity(..)) && within(service.UserService)", throwing = "exc")
+    public void catchSendBonusException(JoinPoint joinPoint, Throwable exc) {
+        final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        logger.error("Ошибка при отправке ежедневного бонуса пользователю " + user.getNick() + ". Ошибка: " + exc.getClass().getSimpleName());
+    }
+
+
+    /**
+     * Price for game winner and sponsors
+     * @param joinPoint join point
+     */
+    @After("execution(* service.GameProcessService.changeStatusAfterEndOfTheGame(..)) && within(service.GameProcessService)")
+    public void paymentForWinner(JoinPoint joinPoint) {
+        final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
+        Object[] params  = joinPoint.getArgs();
+        Tribute tribute = (Tribute) params[1];
+        Game game = (Game) params[0];
+        logger.info("Игра " + game.getGameId() + ", Трибут-победитель: " + tribute.getUser().getNick()+ ", Зараплата: "  + priceService.getPriceByName("winner").getCost() + ", Баланс: " + tribute.getUser().getCash());
+        int sponsorProfit = priceService.getPriceByName("winner's sponsor").getCost();
+        Collection<User> sponsors = tribute.getPresentsSenders();
+        for (User sponsor: sponsors){
+            logger.info("Игра " + game.getGameId() + "Зарплата спонсору: " + sponsor.getNick() + ", Зарплата: " + sponsorProfit + ", Баланс: " + sponsor.getCash());
+        }
+    }
+
+    @AfterThrowing(value = "execution(* service.GameProcessService.changeStatusAfterEndOfTheGame(..)) && within(service.GameProcessService)", throwing = "exc")
+    public void catchPaymentForWinnerException(JoinPoint joinPoint, Throwable exc) {
+        final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
+        Object[] params  = joinPoint.getArgs();
+        Tribute tribute = (Tribute) params[1];
+        Game game = (Game) params[0];
+        logger.error("Ошибка при выдаче зарплаты победителю" + tribute.getUser().getNick() +" или спонсорам в игре " + game.getGameId()  + ". Ошибка: " + exc.getClass().getSimpleName());
+    }
+
 }

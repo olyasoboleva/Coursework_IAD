@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EntityScan("entity")
 @EnableJpaRepositories("repository")
 @EnableScheduling
-//FIXME: раскомментировать потом
+//FIXME: раскомментировать потом, for frontend
 //@EnableOAuth2Sso
 public class Application {
 
