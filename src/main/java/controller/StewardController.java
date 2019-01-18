@@ -39,33 +39,35 @@ public class StewardController {
     @Autowired
     MapService mapService;
 
-    @Secured("ROLE_ADMIN")
+   /* @Secured("ROLE_ADMIN")
     @PostMapping( "/create_arena")
     public @ResponseBody ResponseEntity createArena(int length, int width, String locationName) {
         Arena arena = new Arena(length, width, locationService.findLocationByName(locationName));
         arenaService.createArena(arena);
         return ResponseEntity.status(HttpStatus.OK).body(arena);
     }
-
+*/
     @Secured("ROLE_ADMIN")
     @PostMapping( "/create_game")
-    public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int arenaID, int numberOfTributes, String date) {
+    public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int length, int width, String locationName, String date) {
         entity.User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Arena arena = arenaService.getArenaById(arenaID);
-        try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            Date tempDate = df.parse(date);
+        Arena arena = new Arena(length, width, locationService.findLocationByName(locationName));
+        arenaService.createArena(arena);
             Calendar startDate = Calendar.getInstance();
-            startDate.setTime(tempDate);
+            startDate.setTime(new Date(date));
+            int numberOfTributes;
+            if (typeOfGame){
+                numberOfTributes = 24;
+            } else {
+                numberOfTributes = 48;
+            }
             Game game = new Game(typeOfGame, user, arena, numberOfTributes, startDate);
             if (gameService.createGame(game)==null){
                 return ResponseEntity.status(HttpStatus.OK).body("Этот день для проведения игр уже занят.");
             } else {
                 return ResponseEntity.status(HttpStatus.OK).body(game);
             }
-        } catch (ParseException e){
-            return ResponseEntity.status(HttpStatus.OK).body("Что-то не так с датой");
-        }
+
     }
 
     @Secured("ROLE_ADMIN")

@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import service.*;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,15 +49,17 @@ public class RegistrationController {
     public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, String birthday, MultipartFile file) throws Exception {
         int defaultCash = 1000;//TODO: надо из прайс-листа бы доставать
         byte[] picture = null;
-       /* try {
-            picture = file.getBytes();
+        try {
+            if (file != null) {
+                picture = file.getBytes();
+            } else {
+               // picture = extractBytes("./pik.jpg");
+            }
         } catch (Exception exc) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error loading image");
-        }*/
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date tempDate = df.parse(birthday);
+        }
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(tempDate);
+        calendar.setTime(new Date(birthday));
         User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseById(1));
         UserSkill userSkill = new UserSkill(user, skillService.getSkillById(user.getDistrict().getDistrictId()), 100);
         if ((username.equals("")) || (password.equals(""))) {
@@ -89,5 +98,13 @@ public class RegistrationController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    public byte[] extractBytes (String ImageName) throws IOException {
+        File imgPath = new File(ImageName);
+        BufferedImage bufferedImage = ImageIO.read(imgPath);
+        WritableRaster raster = bufferedImage .getRaster();
+        DataBufferByte data   = (DataBufferByte) raster.getDataBuffer();
+
+        return ( data.getData() );
+    }
 
 }
