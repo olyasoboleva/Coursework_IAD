@@ -107,13 +107,7 @@ public class SchedulerService {
                 List<Hook> hooks = hookService.getHookByLocation(map.getLocation());
                 if (hooks.size() != 0) {
                     Hook hook = hooks.get((int) (Math.random() * hooks.size()));
-                    List<Tribute> damagedTributes = tributeService.getTributeInArea(game, x, y, hook.getRadius());
-                    for (Tribute tribute : damagedTributes) {
-                        tribute.setHealth(tribute.getHealth() - hook.getDamage());
-                        webSocketController.userGameEvent(new Message("Вы попали в ловушку " + hook.getName() + "!", tribute.getUser().getNick(), Message.Type.HOOK));
-                        tributeService.updateTribute(tribute);
-                        webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
-                    }
+                    hookService.activateHook(game,hook,x,y);
                 }
             }
         }

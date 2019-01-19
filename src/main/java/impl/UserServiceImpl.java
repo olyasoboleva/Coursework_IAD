@@ -104,4 +104,9 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public User getSteward(Game game) {
+        return userRepository.findUserByStewardGames(game);
+    }
 }

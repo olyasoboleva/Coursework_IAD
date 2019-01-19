@@ -189,7 +189,7 @@ public class GameController {
     }
 
     @Secured("ROLE_TRIBUTE")
-    @GetMapping("/move")
+    @PostMapping("/move")
     public @ResponseBody ResponseEntity moveAndGetVisibleMap(TributeLocation tributeLocation){
         webSocketController.moveTribute(tributeLocation);
         return getVisibleMap(tributeLocation);

@@ -20,4 +20,11 @@ public interface HookRepository extends CrudRepository<Hook, Integer> {
      * @return list of hooks
      */
     List<Hook> getHooksByLocation(Location location);
+
+    /**
+     * find hook by name
+     * @param name name
+     * @return hook
+     */
+    Hook getHookByName(String  name);
 }

@@ -60,7 +60,7 @@ public class RegistrationController {
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(birthday));
-        User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseById(1));
+        User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseByName("Наблюдатель"));
         UserSkill userSkill = new UserSkill(user, skillService.getSkillById(user.getDistrict().getDistrictId()), 100);
         if ((username.equals("")) || (password.equals(""))) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect username or password");

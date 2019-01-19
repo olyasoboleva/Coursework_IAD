@@ -97,4 +97,11 @@ public interface UserService {
      * @return user
      */
     User removeRole(User user, String role);
+
+    /**
+     * find steward of game
+     * @param game game
+     * @return steward
+     */
+    User getSteward(Game game);
 }
