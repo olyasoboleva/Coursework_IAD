@@ -61,7 +61,6 @@ public class RegistrationController {
         } catch (Exception exc) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error loading image");
         }
-        System.out.println(birthday);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(birthday);
         User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseById(1), defaultCash);

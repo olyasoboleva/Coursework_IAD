@@ -78,4 +78,6 @@ public interface TributeService {
      * @return list of tributes
      */
     List<Tribute> getTributeInArea(Game game, int x, int y, int radius);
+
+    void moveTribute(Tribute tribute, int newX, int newY);
 }

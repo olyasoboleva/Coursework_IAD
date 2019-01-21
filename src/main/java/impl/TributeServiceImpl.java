@@ -1,19 +1,12 @@
 package impl;
 
-import entity.Game;
-import entity.Status;
-import entity.Tribute;
-import entity.User;
+import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.StatusRepository;
-import repository.TributeRepository;
-import repository.UserRepository;
+import repository.*;
 import service.TributeService;
 
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -23,12 +16,19 @@ public class TributeServiceImpl implements TributeService {
     private final TributeRepository tributeRepository;
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
+    private final MapRepository mapRepository;
+    private final SkillRepository skillRepository;
+    private final UserSkillRepository userSkillRepository;
+
 
     @Autowired
-    public TributeServiceImpl(TributeRepository tributeRepository, UserRepository userRepository, StatusRepository statusRepository) {
+    public TributeServiceImpl(TributeRepository tributeRepository, UserRepository userRepository, StatusRepository statusRepository, MapRepository mapRepository, SkillRepository skillRepository, UserSkillRepository userSkillRepository) {
         this.tributeRepository = tributeRepository;
         this.userRepository = userRepository;
         this.statusRepository = statusRepository;
+        this.mapRepository = mapRepository;
+        this.skillRepository = skillRepository;
+        this.userSkillRepository = userSkillRepository;
     }
 
     /**
@@ -88,5 +88,28 @@ public class TributeServiceImpl implements TributeService {
     @Override
     public List<Tribute> getTributeInArea(Game game, int x, int y, int radius) {
         return tributeRepository.getTributesByGameAndLocationXBetweenAndLocationYIsBetween(game, x-radius,x+radius,y-radius,y+radius);
+    }
+
+    @Override
+    public void moveTribute(Tribute tribute, int newX, int newY) {
+        int koef = 4;
+        Skill necessarySkill = null;
+        tribute.setLocationX(newX);
+        tribute.setLocationY(newY);
+        String curLocation = mapRepository.findMapByArenaAndXCoordinateAndYCoordinate(tribute.getGame().getArena(), newX, newY).getLocation().getName();
+        switch (curLocation){
+            case "Горы": necessarySkill = skillRepository.findSkillByName("Скалолазание");
+                break;
+            case "Водная": necessarySkill = skillRepository.findSkillByName("Плавание");
+                break;
+        }
+        if (necessarySkill!=null){
+            if (!tribute.getUser().getSkills().contains(necessarySkill)){
+                tribute.setHealth(tribute.getHealth() - koef);
+            } else {
+                tribute.setHealth(tribute.getHealth()-koef*(100-userSkillRepository.findUserSkillByUserAndSkill(tribute.getUser(), necessarySkill).getLevelOfSkill()));
+            }
+        }
+        tributeRepository.save(tribute);
     }
 }

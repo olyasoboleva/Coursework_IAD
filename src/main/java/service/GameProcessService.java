@@ -2,6 +2,8 @@ package service;
 
 import entity.*;
 
+import java.util.List;
+
 public interface GameProcessService {
 
     /**
@@ -19,4 +21,6 @@ public interface GameProcessService {
      * @param defWeaponName defending tribute's weapon name
      */
     public void fight(Tribute attacking, Tribute defending, String attWeaponName, String defWeaponName);
+
+    public List<User> selection(List<User> onlineUser, Game game);
 }

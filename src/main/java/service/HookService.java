@@ -1,5 +1,6 @@
 package service;
 
+import entity.Game;
 import entity.Hook;
 import entity.Location;
 
@@ -16,4 +17,8 @@ public interface HookService {
     List<Hook> getHookByLocation(Location location);
 
     Hook getHookById(Integer id);
+
+    boolean activateHook(Game game, Hook hook, int x, int y);
+
+    Hook getHookByName(String name);
 }

@@ -49,8 +49,9 @@ public class WebSocketController {
         User user = userService.getUserByNick(tributeLocation.getNick());
         Game game = gameService.getGameById(tributeLocation.getGameId());
         Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
-        tribute.setLocationX(tributeLocation.getX());
-        tribute.setLocationX(tributeLocation.getY());
+        tributeService.moveTribute(tribute, tributeLocation.getX(), tributeLocation.getY());
+        messagingTemplate.convertAndSendToUser(tributeLocation.getNick(),"/queue/health",
+                new TributeHealth(tributeLocation.getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
         messagingTemplate.convertAndSend("/topic/tributesLocation", tributeLocation);
     }
 

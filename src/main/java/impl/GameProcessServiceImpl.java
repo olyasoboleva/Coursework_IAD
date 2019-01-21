@@ -3,54 +3,60 @@ package impl;
 import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import repository.*;
-import service.GameProcessService;
-import service.UserService;
-import service.WeaponService;
+import service.*;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
 @Service("gameProcess")
 public class GameProcessServiceImpl implements GameProcessService {
-    private final TributeRepository tributeRepository;
+    private final TributeService tributeService;
     private final UserService userService;
-    private final StatusRepository statusRepository;
+    private final StatusService statusService;
     private final WeaponService weaponService;
     private final GameRepository gameRepository;
     private final PriceRepository priceRepository;
     private final SkillRepository skillRepository;
     private final UserSkillRepository userSkillRepository;
-    private final PresentsToTributeRepository presentsToTributeRepository;
+    private final DistrictService districtService;
 
     @Autowired
-    public GameProcessServiceImpl(TributeRepository tributeRepository, UserService userService, StatusRepository statusRepository, WeaponService weaponService, GameRepository gameRepository, PriceRepository priceRepository, SkillRepository skillRepository, UserSkillRepository userSkillRepository, PresentsToTributeRepository presentsToTributeRepository) {
-        this.tributeRepository = tributeRepository;
+    public GameProcessServiceImpl(TributeService tributeService, UserService userService, StatusService statusService, WeaponService weaponService, GameRepository gameRepository, PriceRepository priceRepository, SkillRepository skillRepository, UserSkillRepository userSkillRepository, DistrictService districtService) {
+        this.tributeService = tributeService;
         this.userService = userService;
-        this.statusRepository = statusRepository;
+        this.statusService = statusService;
         this.weaponService = weaponService;
         this.gameRepository = gameRepository;
         this.priceRepository = priceRepository;
         this.skillRepository = skillRepository;
         this.userSkillRepository = userSkillRepository;
-        this.presentsToTributeRepository = presentsToTributeRepository;
+        this.districtService = districtService;
     }
 
     public void changeStatusAfterEndOfTheGame(Game game, Tribute winner) {
-        List<Tribute> allTributes = tributeRepository.getTributesByGame(game);
+        List<Tribute> allTributes = tributeService.getTributesByGame(game);
+        User steward = userService.getSteward(game);
         int sponsorProfit = priceRepository.findPriceByName("winner's sponsor").getCost();
         if (winner!=null) {
             winner.setStatus("Победитель");
             winner.getUser().setCash(winner.getUser().getCash() + priceRepository.findPriceByName("winner").getCost());
-            tributeRepository.save(winner);
+            //userService.updateUser(winner.getUser());
+            tributeService.updateTribute(winner);
             Collection<User> sponsors = winner.getPresentsSenders();
             for (User sponsor: sponsors){
                 sponsor.setCash(sponsor.getCash()+sponsorProfit);
+                userService.updateUser(sponsor);
             }
         }
+        steward.setCash(steward.getCash() + priceRepository.findPriceByName("steward").getCost());
+        userService.updateUser(steward);
         game.setStatus("game over");
         gameRepository.save(game);
-        Status status = statusRepository.findStatuseByName("Наблюдатель");
+        Status status = statusService.getStatuseByName("Наблюдатель");
         for (Tribute tribute: allTributes) {
             User user = userService.getUserByTribute(tribute);
             user.setStatus(status);
@@ -87,8 +93,8 @@ public class GameProcessServiceImpl implements GameProcessService {
         defSkillLevel.setLevelOfSkill(defSkillLevel.getLevelOfSkill()+1);
         userSkillRepository.save(attSkillLevel);
         userSkillRepository.save(defSkillLevel);
-        tributeRepository.save(attacking);
-        tributeRepository.save(defending);
+        tributeService.updateTribute(attacking);
+        tributeService.updateTribute(defending);
     }
 
     private Skill tributeWithoutWeapon(Weapon weapon){
@@ -103,4 +109,40 @@ public class GameProcessServiceImpl implements GameProcessService {
         return skill;
     }
 
+    @Override
+    public List<User> selection(List<User> usersOnline, Game game){
+        Calendar greaterThan=Calendar.getInstance(),lessThan=Calendar.getInstance();
+        greaterThan.add(Calendar.YEAR,-18);
+        lessThan.add(Calendar.YEAR,-12);
+        Tribute tribute;
+        List<entity.User> temp;
+        List<entity.User> tributes = new ArrayList<>();
+        Status tributeStatus = statusService.getStatuseByName("Трибут");
+        Status viewerStatus = statusService.getStatuseByName("Наблюдатель");
+
+        for (int doubleSelection=0;doubleSelection<=game.getNumberOfTributes()/48;doubleSelection++) {
+            for (int i = 0; i < 12; i++) {
+                for (int j = 0; j < 2; j++) {
+                    temp = userService.getUsersForGame(districtService.getDistrictById(i + 1), j != 0, greaterThan, lessThan, viewerStatus);
+                    temp.retainAll(usersOnline);
+                    if (temp.size() != 0) {
+                        tributes.add(temp.get((int) (Math.random() * temp.size())));
+                        tributes.get(tributes.size()-1).setStatus(tributeStatus);
+                    } else {
+                        for (entity.User user: tributes){
+                            tributes.get(tributes.size()-1).setStatus(viewerStatus);
+                        }
+                        return tributes;
+                    }
+                }
+            }
+        }
+        for (entity.User user: tributes){
+            tribute = new Tribute(user, game);
+            userService.addRole(user, "ROLE_TRIBUTE");
+            tributeService.createTribute(tribute);
+        }
+
+        return tributes;
+    }
 }

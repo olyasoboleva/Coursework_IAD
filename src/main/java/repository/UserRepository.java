@@ -60,4 +60,11 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "select users from User  users LEFT JOIN FETCH Skill skill where users.userId=:id")
     List<User> getUsersWithSkill(@Param("id")int id);
+
+    /**
+     * find steward of game
+     * @param game game
+     * @return steward
+     */
+    User findUserByStewardGames(Game game);
 }
