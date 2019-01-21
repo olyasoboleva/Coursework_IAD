@@ -69,13 +69,13 @@ public class WebSocketController {
 
         gameProcessService.fight(attackingTribute, defendingTribute, battle.getAttWeaponName(), battle.getDefWeaponName());
 
-        if (attackingTribute.getHealth()<=0) {
+        if (attackingTribute.getHealth() <=0 ) {
             attackingTribute.setStatus("Убит");
             messagingTemplate.convertAndSend("/topic/deadTribute", attackingTribute);
             messagingTemplate.convertAndSendToUser(battle.getAttacking(),"/queue/health",
                     new TributeHealth(battle.getAttacking(), attackingTribute.getHealth(), attackingTribute.getHunger(), attackingTribute.getThirst()));
         }
-        if (defendingTribute.getHealth()<=0){
+        if (defendingTribute.getHealth() <= 0){
             defendingTribute.setStatus("Убит");
             messagingTemplate.convertAndSend("/topic/deadTribute", defendingTribute);
             messagingTemplate.convertAndSendToUser(battle.getDefending(),"/queue/health",
@@ -86,11 +86,11 @@ public class WebSocketController {
         tributeService.updateTribute(defendingTribute);
 
         List<Tribute> tributesAlive = tributeService.getTributesByStatusAndGame("Жив", game);
-        if (tributesAlive.size()==1){
+        if (tributesAlive.size() == 1){
             gameProcessService.changeStatusAfterEndOfTheGame(game, tributesAlive.get(0));
-            gameEvent(new Message("Конец игры! Победитель - "+tributesAlive.get(0).getUser().getNick(),"", Message.Type.GAMEOVER));
+            gameEvent(new Message("Конец игры! Победитель - " + tributesAlive.get(0).getUser().getNick(),"", Message.Type.GAMEOVER));
         } else {
-            if (tributesAlive.size()==0) {
+            if (tributesAlive.size() == 0) {
                 gameProcessService.changeStatusAfterEndOfTheGame(game, null);
                 gameEvent(new Message("Конец игры! Но все умерли:)", "", Message.Type.GAMEOVER));
             }
@@ -108,7 +108,7 @@ public class WebSocketController {
             if (presentInBag==null) {
                 messagingTemplate.convertAndSendToUser(tribute.getUser().getNick(), "/queue/presents", presentsToTribute);
             } else {
-            presentInBag.setQuantity(presentInBag.getQuantity()+quantity);
+            presentInBag.setQuantity(presentInBag.getQuantity() + quantity);
             presentsToTributeService.updatePresentsToTributes(presentInBag);
             messagingTemplate.convertAndSendToUser(tribute.getUser().getNick(), "/queue/presents", presentInBag);
             }

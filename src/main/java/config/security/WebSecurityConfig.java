@@ -126,7 +126,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             entity.User user = userRepository.findById(id).orElseGet(() -> {
                 entity.User newUser = new entity.User(String.valueOf(a),"1",(String)map.get("family_name"),String.valueOf(map.get("given_name")),
                         170, 50,true,districtService.getDistrictById((int)(Math.random()*12+1)),Calendar.getInstance(),
-                        null,statusService.getStatuseById(1));
+                        null,statusService.getStatuseById(1), 2000);
                 //FIXME: id and picture for user
                 newUser.setUserId(id);
 

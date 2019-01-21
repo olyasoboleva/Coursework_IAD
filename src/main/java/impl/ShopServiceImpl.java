@@ -40,7 +40,6 @@ public class ShopServiceImpl implements ShopService{
         return shopRepository.findShopsByProductOwners(tribute);
     }
 
-    //FIXME: не тестила
     @Transactional
     @Override
     public List<Shop> getAllPresentsOfTribute(Tribute tribute) {

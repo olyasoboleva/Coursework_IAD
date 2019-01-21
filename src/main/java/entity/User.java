@@ -117,7 +117,7 @@ public class User {
     @JoinColumn(name = "district", referencedColumnName = "district_id")
     private District district;
 
-    public User(String nick, String password, String surname, String name, int height, int weight, boolean sex, District district, Calendar birthday, byte[] picture, Status status) {
+    public User(String nick, String password, String surname, String name, int height, int weight, boolean sex, District district, Calendar birthday, byte[] picture, Status status, int cash) {
         this.nick = nick;
         this.password = password;
         this.surname = surname;
@@ -127,19 +127,20 @@ public class User {
         this.sex = sex;
         this.birthday = birthday;
         this.picture = picture;
-        this.cash = 1000;
+        this.cash = cash;
         this.status = status;
         this.district = district;
         this.lastActivity = new java.sql.Date(System.currentTimeMillis());
     }
 
-    public User(String nick, String password, String surname, String name, byte[] picture, Status status) {
+    public User(String nick, String password, String surname, String name, byte[] picture, Status status, int cash) {
         this.nick = nick;
         this.password = password;this.surname = surname;
         this.name = name;
         this.picture = picture;
         this.status = status;
         this.lastActivity = new java.sql.Date(System.currentTimeMillis());
+        this.cash = cash;
     }
 
     @Override

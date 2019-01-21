@@ -80,5 +80,8 @@ INSERT INTO training VALUES (2,'Занятие с луком',15,10,10,'Стре
 INSERT INTO training VALUES (3,'Занятие с булавой',19,10,10,'Тренировка с булавой на площадке',100,6);
 INSERT INTO training VALUES (4,'Охота на животных',10,10,3,'Охота в лесу на мелких животных',100,6);
 
+INSERT INTO price VALUES (2,'Ежедневный приз',1000);
+INSERT INTO price VALUES (3,'Начальный баланс',2000);
+
 
 

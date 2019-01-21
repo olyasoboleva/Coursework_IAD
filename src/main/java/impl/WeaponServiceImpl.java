@@ -26,7 +26,6 @@ public class WeaponServiceImpl implements WeaponService {
         this.weaponsInGameRepository = weaponsInGameRepository;
     }
 
-    //FIXME не тестила
     @Transactional
     @Override
     public List<Weapon> getTributeWeapons(Tribute tribute) {

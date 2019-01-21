@@ -84,12 +84,13 @@ public class GameController {
             userWeapon.setTribute(null);
             weaponsInGameService.updateWeaponsInGame(userWeapon);
         }
-        return ResponseEntity.status(HttpStatus.OK).body("Weapon deleted");
+        userWeapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
+        return ResponseEntity.status(HttpStatus.OK).body(userWeapons);
     }
 
     @Secured("ROLE_TRIBUTE")
     @PostMapping("/add_weapon")
-    public @ResponseBody ResponseEntity addWeapon(@RequestParam("game") String gameId, @RequestParam("weaponName") String weaponName) {
+    public @ResponseBody ResponseEntity addWeapon(@RequestParam("game") String gameId, @RequestParam("weapon") String weaponName) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = getTributeByUser(user, gameId);
         List<WeaponsInGame> userWeapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
@@ -99,12 +100,13 @@ public class GameController {
         Weapon weapon = weaponService.getWeaponByName(weaponName);
         WeaponsInGame weaponsInGame = new WeaponsInGame(tribute,weapon);
         weaponsInGameService.createWeaponsInGame(weaponsInGame);
-        return ResponseEntity.status(HttpStatus.OK).body("Weapon added");
+        userWeapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
+        return ResponseEntity.status(HttpStatus.OK).body(userWeapons);
     }
 
     @Secured("ROLE_TRIBUTE")
     @PostMapping("/drop_present")
-    public @ResponseBody ResponseEntity dropPresent(@RequestParam("game") String gameId, @RequestParam("presentName") String presentName){
+    public @ResponseBody ResponseEntity dropPresent(@RequestParam("game") String gameId, @RequestParam("present") String presentName){
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = getTributeByUser(user, gameId);
         Shop product = shopService.getProductByName(presentName);
@@ -116,7 +118,8 @@ public class GameController {
             }
         }
         presentsToTributeService.deletePresentsToTributes(presentToDrop);
-        return ResponseEntity.status(HttpStatus.OK).body("Present deleted");
+        presents = presentsToTributeService.getPresentsToTributeByTribute(tribute);
+        return ResponseEntity.status(HttpStatus.OK).body(presents);
     }
 
     @Secured({"ROLE_USER","ROLE_TRIBUTE"})

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.RoleRepository;
 import repository.UserRepository;
+import service.PriceService;
 import service.StatusService;
 import service.UserService;
 
@@ -17,12 +18,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final StatusService statusService;
     private final RoleRepository roleRepository;
+    private final PriceService priceService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, StatusService statusService, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, StatusService statusService, RoleRepository roleRepository, PriceService priceService) {
         this.userRepository = userRepository;
         this.statusService = statusService;
         this.roleRepository = roleRepository;
+        this.priceService = priceService;
     }
 
     @Transactional
@@ -75,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersForGame(District district, boolean sex, Calendar date1, Calendar date2, Status status) {
-        return userRepository.getUsersByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(district, sex, date1, date2,status);
+        return userRepository.getUsersByDistrictAndSexAndBirthdayGreaterThanAndBirthdayLessThanAndStatus(district, sex, date1, date2, status);
     }
 
     @Override
@@ -94,12 +97,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserLastActivity(User user){
+    public User updateUserLastActivity(User user) {
         java.sql.Date curDate = new java.sql.Date(System.currentTimeMillis());
-        if (user.getLastActivity().getDate()==curDate.getDate() || user.getLastActivity().getYear()==curDate.getYear() || user.getLastActivity().getMonth()==curDate.getMonth()) {
+        if (!(user.getLastActivity().getDate() == curDate.getDate() && user.getLastActivity().getYear() == curDate.getYear() && user.getLastActivity().getMonth() == curDate.getMonth()))
+        {
             user.setLastActivity(new java.sql.Date(System.currentTimeMillis()));
-            user.setCash(user.getCash()+1000);
-            //user.setCash(user.getCash()+statusService.getStatuseByName("Daily prize").getPrice().getCost());
+            user.setCash(user.getCash() + priceService.getPriceByName("Ежедневный приз").getCost());
             updateUser(user);
         }
         return user;
