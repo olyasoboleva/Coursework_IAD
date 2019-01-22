@@ -98,10 +98,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUserLastActivity(User user) {
-        java.sql.Date curDate = new java.sql.Date(System.currentTimeMillis());
-        if (!(user.getLastActivity().getDate() == curDate.getDate() && user.getLastActivity().getYear() == curDate.getYear() && user.getLastActivity().getMonth() == curDate.getMonth()))
+        Calendar curDate = Calendar.getInstance();
+        if (!(user.getLastActivity().get(Calendar.DAY_OF_MONTH) == curDate.get(Calendar.DAY_OF_MONTH) && user.getLastActivity().get(Calendar.YEAR) == curDate.get(Calendar.YEAR) && user.getLastActivity().get(Calendar.MONTH) == curDate.get(Calendar.MONTH)))
         {
-            user.setLastActivity(new java.sql.Date(System.currentTimeMillis()));
+            user.setLastActivity(Calendar.getInstance());
             user.setCash(user.getCash() + priceService.getPriceByName("Ежедневный приз").getCost());
             updateUser(user);
         }

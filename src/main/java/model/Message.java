@@ -17,6 +17,6 @@ public class Message {
     }
 
     public enum Type{
-        SELECTION, GAMESTART, HOOK, GAMEOVER
+        SELECTION, GAMESTART, HOOK, GAMEOVER, PRESENT, DEADTRIBUTE, ATTACK
     }
 }

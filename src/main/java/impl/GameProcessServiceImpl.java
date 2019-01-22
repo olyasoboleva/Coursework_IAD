@@ -1,9 +1,10 @@
 package impl;
 
+import controller.WebSocketController;
 import entity.*;
+import model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import repository.*;
 import service.*;
 
@@ -23,9 +24,10 @@ public class GameProcessServiceImpl implements GameProcessService {
     private final SkillRepository skillRepository;
     private final UserSkillRepository userSkillRepository;
     private final DistrictService districtService;
+    private  final WebSocketController webSocketController;
 
     @Autowired
-    public GameProcessServiceImpl(TributeService tributeService, UserService userService, StatusService statusService, WeaponService weaponService, GameRepository gameRepository, PriceRepository priceRepository, SkillRepository skillRepository, UserSkillRepository userSkillRepository, DistrictService districtService) {
+    public GameProcessServiceImpl(TributeService tributeService, UserService userService, StatusService statusService, WeaponService weaponService, GameRepository gameRepository, PriceRepository priceRepository, SkillRepository skillRepository, UserSkillRepository userSkillRepository, DistrictService districtService, WebSocketController webSocketController) {
         this.tributeService = tributeService;
         this.userService = userService;
         this.statusService = statusService;
@@ -35,6 +37,7 @@ public class GameProcessServiceImpl implements GameProcessService {
         this.skillRepository = skillRepository;
         this.userSkillRepository = userSkillRepository;
         this.districtService = districtService;
+        this.webSocketController = webSocketController;
     }
 
     public void changeStatusAfterEndOfTheGame(Game game, Tribute winner) {
@@ -67,32 +70,21 @@ public class GameProcessServiceImpl implements GameProcessService {
 
 
     @Override
-    public void fight(Tribute attacking, Tribute defending, String attWeaponName, String defWeaponName) {
+    public void fight(Tribute attacking, Tribute defending, String attWeaponName) {
         Weapon attWeapon = weaponService.getWeaponByName(attWeaponName);
-        Weapon defWeapon = weaponService.getWeaponByName(defWeaponName);
-        Skill attSkill, defSkill;
+        Skill attSkill;
         attSkill = tributeWithoutWeapon(attWeapon);
-        defSkill = tributeWithoutWeapon(defWeapon);
         UserSkill attSkillLevel = userSkillRepository.findUserSkillByUserAndSkill(attacking.getUser(), attSkill);
-        UserSkill defSkillLevel = userSkillRepository.findUserSkillByUserAndSkill(defending.getUser(), defSkill);
         int distance = Math.max(Math.abs(attacking.getLocationX()-defending.getLocationX()), Math.abs(attacking.getLocationY()-defending.getLocationY()));
-        int attProtect = weaponService.getProtectionOftribute(attacking);
         int defProtect = weaponService.getProtectionOftribute(defending);
         int damage;
-        for (int i=0; i<3 && attacking.getHealth()>=0 && defending.getHealth()>=0; i++){
-            if (distance<=attWeapon.getRadiusOfAction()) {
-                damage = (int) ((100 + attSkillLevel.getLevelOfSkill()) * attWeapon.getDamage() * (100 - defProtect) * (Math.random() * 5 + 1) / 10000);
-                defending.setHealth(defending.getHealth() - damage);
-            }
-            if (distance<=defWeapon.getRadiusOfAction()) {
-                damage = (int) ((100 + defSkillLevel.getLevelOfSkill()) * defWeapon.getDamage() * (100 - attProtect) * (Math.random() * 5 + 1) / 10000);
-                attacking.setHealth(attacking.getHealth() - damage);
-            }
+        if (distance<=attWeapon.getRadiusOfAction()) {
+            damage = (int) ((100 + attSkillLevel.getLevelOfSkill()) * attWeapon.getDamage() * (100 - defProtect) * (Math.random() * 5 + 1) / 10000);
+            defending.setHealth(defending.getHealth() - damage);
         }
+        webSocketController.userGameEvent(new Message("",defending.getUser().getNick(), Message.Type.ATTACK));
         attSkillLevel.setLevelOfSkill(attSkillLevel.getLevelOfSkill()+1);
-        defSkillLevel.setLevelOfSkill(defSkillLevel.getLevelOfSkill()+1);
         userSkillRepository.save(attSkillLevel);
-        userSkillRepository.save(defSkillLevel);
         tributeService.updateTribute(attacking);
         tributeService.updateTribute(defending);
     }
@@ -130,15 +122,17 @@ public class GameProcessServiceImpl implements GameProcessService {
                         tributes.get(tributes.size()-1).setStatus(tributeStatus);
                     } else {
                         for (entity.User user: tributes){
-                            tributes.get(tributes.size()-1).setStatus(viewerStatus);
+                            user.setStatus(viewerStatus);
                         }
                         return tributes;
                     }
                 }
             }
         }
+        String msg = "В результате прошедшей жатвы вы выбраны трибутом \"+game.getGameId()+\" Голодных игр, которые пройдут "+ game.getStartDate();
         for (entity.User user: tributes){
             tribute = new Tribute(user, game);
+            webSocketController.userGameEvent(new Message(msg, user.getNick(), Message.Type.SELECTION));
             userService.addRole(user, "ROLE_TRIBUTE");
             tributeService.createTribute(tribute);
         }

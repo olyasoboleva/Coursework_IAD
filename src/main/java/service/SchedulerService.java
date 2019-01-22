@@ -59,26 +59,26 @@ public class SchedulerService {
         for (Game game: gamesToday){
             game.setStatus("running");
             gameService.updateGame(game);
-            webSocketController.gameEvent(new Message("Началась игра!", "", Message.Type.GAMESTART));
+            webSocketController.gameEvent(new Message("Начались "+game.getGameId()+" Голодные игры", "", Message.Type.GAMESTART));
         }
     }
 
-    @Scheduled(cron = "0 */2 10-23 * * *")
+    @Scheduled(cron = "0 */5 10-23 * * *")
     public void decreaseTributesHunger(){
         if (tributesToday==null){
             init();
         }
         if (tributesToday.size()!=0) {
             for (Tribute tribute : tributesToday) {
-                tribute.setHunger(tribute.getHunger() - 1);
-                tribute.setThirst(tribute.getThirst() - 2);
+                tribute.setHunger((tribute.getHunger() - 1)>0 ? tribute.getHunger() - 1 : 0);
+                tribute.setThirst((tribute.getThirst() - 2)>0 ? tribute.getThirst() - 2 : 0);
                 tributeService.updateTribute(tribute);
                 webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(),tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
             }
         }
     }
 
-    @Scheduled(cron = "0 */5 10-23 * * *")
+    @Scheduled(cron = "0 */10 10-23 * * *")
     public void decreaseTributesHealth(){
         if (tributesToday==null){
             init();
@@ -86,6 +86,11 @@ public class SchedulerService {
         if (tributesToday.size()!=0) {
             for (Tribute tribute : tributesToday) {
                 tribute.setHealth(tribute.getHealth() - (1 - tribute.getHunger() / 100) * 2 - (1 - tribute.getThirst() / 100) * 2);
+                if (tribute.getHealth()<=0){
+                    tribute.setHealth(0);
+                    tribute.setStatus("Убит");
+                    webSocketController.gameEvent(new Message(tribute.getUser().getNick()+", "+tribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
+                }
                 tributeService.updateTribute(tribute);
                 webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(),tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
             }

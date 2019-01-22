@@ -25,13 +25,6 @@ public class ChatController {
 
     @MessageMapping("/hungergames/chat")
     public void sendMessage(@Payload ChatMessage chatMessage) {
-        messagingTemplate.convertAndSendToUser(chatMessage.getReceiver(), "/queue/chat", chatMessage);
-    }
-
-
-    @MessageMapping("/chat.addUser")
-    public void addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
-        //headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        messagingTemplate.convertAndSendToUser(chatMessage.getReceiver(), "/queue/chat", chatMessage);
+        messagingTemplate.convertAndSend("/topic/chat", chatMessage);
     }
 }

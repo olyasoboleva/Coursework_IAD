@@ -53,7 +53,7 @@ public class User {
     private Calendar birthday;
 
     @Column(name = "last_activity")
-    private java.sql.Date lastActivity;
+    private Calendar lastActivity;
 
     @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "status_id")
@@ -130,7 +130,7 @@ public class User {
         this.cash = cash;
         this.status = status;
         this.district = district;
-        this.lastActivity = new java.sql.Date(System.currentTimeMillis());
+        this.lastActivity = Calendar.getInstance();
     }
 
     public User(String nick, String password, String surname, String name, byte[] picture, Status status, int cash) {
@@ -139,7 +139,7 @@ public class User {
         this.name = name;
         this.picture = picture;
         this.status = status;
-        this.lastActivity = new java.sql.Date(System.currentTimeMillis());
+        this.lastActivity = Calendar.getInstance();
         this.cash = cash;
     }
 

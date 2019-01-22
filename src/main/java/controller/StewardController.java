@@ -24,32 +24,21 @@ public class StewardController {
     private final ArenaService arenaService;
     private final LocationService locationService;
     private final UserService userService;
-    private final MapService mapService;
     private final GameProcessService gameProcessService;
     private final HookService hookService;
     private final SessionRegistry sessionRegistry;
 
     @Autowired
-    public StewardController(GameService gameService, ArenaService arenaService, LocationService locationService, UserService userService, MapService mapService, GameProcessService gameProcessService, HookService hookService, SessionRegistry sessionRegistry) {
+    public StewardController(GameService gameService, ArenaService arenaService, LocationService locationService, UserService userService, GameProcessService gameProcessService, HookService hookService, SessionRegistry sessionRegistry) {
         this.gameService = gameService;
         this.arenaService = arenaService;
         this.locationService = locationService;
         this.userService = userService;
-        this.mapService = mapService;
         this.gameProcessService = gameProcessService;
         this.hookService = hookService;
         this.sessionRegistry = sessionRegistry;
     }
 
-
-    /* @Secured("ROLE_ADMIN")
-    @PostMapping( "/create_arena")
-    public @ResponseBody ResponseEntity createArena(int length, int width, String locationName) {
-        Arena arena = new Arena(length, width, locationService.findLocationByName(locationName));
-        arenaService.createArena(arena);
-        return ResponseEntity.status(HttpStatus.OK).body(arena);
-    }
-*/
     @Secured("ROLE_ADMIN")
     @PostMapping( "/create_game")
     public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int length, int width, String locationName, String date) {

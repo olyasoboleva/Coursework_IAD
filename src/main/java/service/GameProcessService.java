@@ -18,9 +18,8 @@ public interface GameProcessService {
      * @param attacking attacking tribute who start battle (has advantage)
      * @param defending defending tribute
      * @param attWeaponName attacking tribute's weapon name
-     * @param defWeaponName defending tribute's weapon name
      */
-    public void fight(Tribute attacking, Tribute defending, String attWeaponName, String defWeaponName);
+    public void fight(Tribute attacking, Tribute defending, String attWeaponName);
 
     public List<User> selection(List<User> onlineUser, Game game);
 }

@@ -37,7 +37,7 @@ public class Game {
     @Column(name = "start_date")
     private Calendar startDate;
 
-    @Column(name = "duration", nullable = false)
+    @Column(name = "duration")
     private int duration;
 
     @Column(name = "status")
@@ -51,9 +51,11 @@ public class Game {
     @JoinColumn(name = "arena", referencedColumnName = "arena_id")
     private Arena arena;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     private Collection<Tribute> tributes;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "game", fetch = FetchType.LAZY)
     private Collection<WeaponsInGame> weaponsInGames;
 
