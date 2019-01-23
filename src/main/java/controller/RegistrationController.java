@@ -49,21 +49,21 @@ public class RegistrationController {
     PriceService priceService;
 
     @PostMapping( "/signup")
-    public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, long birthday, byte[] file) throws Exception {
+    public @ResponseBody ResponseEntity registerUser(String username, String password, boolean sex, String name, String surname, int height, int weight, long birthday, MultipartFile file) throws Exception {
         int defaultCash = priceService.getPriceByName("Начальный баланс").getCost();
         byte[] picture = null;
-        /*try {
+        try {
             if (file != null) {
                 picture = file.getBytes();
             } else {
-               // picture = extractBytes("./pik.jpg");
+                picture = extractBytes("./pik.jpg");
             }
         } catch (Exception exc) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error loading image");
-        }*/
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(birthday);
-        User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, file, statusService.getStatuseById(1), defaultCash);
+        User user = new User(username, BCrypt.hashpw(password, BCrypt.gensalt()), surname, name, height, weight, sex, districtService.getDistrictById((int)(Math.random()*12+1)), calendar, picture, statusService.getStatuseById(1), defaultCash);
         UserSkill userSkill = new UserSkill(user, skillService.getSkillById(user.getDistrict().getDistrictId()), 100);
         if ((username.equals("")) || (password.equals(""))) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect username or password");
