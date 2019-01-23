@@ -40,16 +40,14 @@ public class WebSocketController {
     private TributeService tributeService;
 
     @Autowired
-    private ShopServiceImpl shopService;
-
-    @Autowired
     private PresentsToTributeServiceImpl presentsToTributeService;
 
     @MessageMapping("/hungergames/move")
     public void moveTribute(@Payload TributeLocation tributeLocation) {
-        User user = userService.getUserByNick(tributeLocation.getNick());
-        Game game = gameService.getGameById(tributeLocation.getGameId());
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
         Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
+        tributeLocation.setNick(user.getNick());
         tributeService.moveTribute(tribute, tributeLocation.getX(), tributeLocation.getY());
         messagingTemplate.convertAndSendToUser(tributeLocation.getNick(),"/queue/health",
                 new TributeHealth(tributeLocation.getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));

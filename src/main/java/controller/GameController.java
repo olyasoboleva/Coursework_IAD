@@ -216,7 +216,7 @@ public class GameController {
     @PostMapping("/get_map")
     public @ResponseBody ResponseEntity getVisibleWeapon(TributeLocation tributeLocation){
         int radius = 3;
-        Game game = gameService.getGameById(tributeLocation.getGameId());
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
         List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameInAreaWithoutOwner(game, tributeLocation.getX(), tributeLocation.getY(), radius);
         return ResponseEntity.status(HttpStatus.OK).body(weapons);
     }
@@ -237,6 +237,25 @@ public class GameController {
         Tribute tribute = getTributeByUser(user, gameId);
         List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
         return ResponseEntity.status(HttpStatus.OK).body(weapons);
+    }
+
+    @Secured({"ROLE_TRIBUTE"})
+    @GetMapping("/tribute")
+    public @ResponseBody ResponseEntity getTribute(){
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
+        Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
+        return ResponseEntity.status(HttpStatus.OK).body(tribute);
+    }
+
+    @Secured({"ROLE_TRIBUTE"})
+    @GetMapping("/health")
+    public @ResponseBody ResponseEntity getHealth(){
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
+        Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
+        TributeHealth tributeHealth = new TributeHealth(user.getNick(),tribute.getHealth(), tribute.getHunger(), tribute.getThirst());
+        return ResponseEntity.status(HttpStatus.OK).body(tributeHealth);
     }
 
     @Secured({"ROLE_TRIBUTE"})

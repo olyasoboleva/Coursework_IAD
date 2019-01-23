@@ -92,10 +92,12 @@ public class TributeServiceImpl implements TributeService {
 
     @Override
     public void moveTribute(Tribute tribute, int newX, int newY) {
-        int koef = 4;
-        Skill necessarySkill = null;
         tribute.setLocationX(newX);
         tribute.setLocationY(newY);
+
+        tributeRepository.save(tribute);
+        /*int koef = 2;
+        Skill necessarySkill = null;
         String curLocation = mapRepository.findMapByArenaAndXCoordinateAndYCoordinate(tribute.getGame().getArena(), newX, newY).getLocation().getName();
         switch (curLocation){
             case "Горы": necessarySkill = skillRepository.findSkillByName("Скалолазание");
@@ -110,6 +112,8 @@ public class TributeServiceImpl implements TributeService {
                 tribute.setHealth(tribute.getHealth()-koef*(100-userSkillRepository.findUserSkillByUserAndSkill(tribute.getUser(), necessarySkill).getLevelOfSkill()));
             }
         }
-        tributeRepository.save(tribute);
+        if (tribute.getHealth()<=0){
+            tribute.setStatus("dead");
+        }*/
     }
 }
