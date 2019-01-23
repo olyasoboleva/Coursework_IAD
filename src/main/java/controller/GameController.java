@@ -131,8 +131,10 @@ public class GameController {
 
     @Secured("ROLE_USER")
     @GetMapping("/games_by_date")
-    public @ResponseBody ResponseEntity getGamesByDate(@RequestParam("date") Calendar date) {
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.getGameByStartDate(date));
+    public @ResponseBody ResponseEntity getGamesByDate(@RequestParam("date") long date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getGameByStartDate(calendar));
     }
 
     private Tribute getTributeByUser(User user, String gameId) {
@@ -221,5 +223,23 @@ public class GameController {
         visibleMap.setArea(area);
         visibleMap.setWeapons(weapons);
         return ResponseEntity.status(HttpStatus.OK).body(visibleMap);
+    }
+
+    @Secured({"ROLE_TRIBUTE"})
+    @GetMapping("/get_tribute_presents")
+    public @ResponseBody ResponseEntity getTributePresents(String gameId){
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Tribute tribute = getTributeByUser(user, gameId);
+        List<PresentsToTribute> presents = presentsToTributeService.getPresentsToTributeByTribute(tribute);
+        return ResponseEntity.status(HttpStatus.OK).body(presents);
+    }
+
+    @Secured({"ROLE_TRIBUTE"})
+    @GetMapping("/get_tribute_weapons")
+    public @ResponseBody ResponseEntity getTributeWeapons(String gameId){
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Tribute tribute = getTributeByUser(user, gameId);
+        List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
+        return ResponseEntity.status(HttpStatus.OK).body(weapons);
     }
 }

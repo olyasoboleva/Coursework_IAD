@@ -1,7 +1,7 @@
 CREATE TABLE location (
   location_id serial PRIMARY KEY,
   name        varchar(40),
-  picture     bytea not null
+  picture     bytea
 );
 
 CREATE TABLE arena (
@@ -49,7 +49,7 @@ CREATE TABLE weapon (
   type_of_weapon   VARCHAR(40) NOT NULL,
   damage           integer CHECK ((damage >= 0) AND (damage <= 100)),
   radius_of_action integer CHECK (radius_of_action > 0),
-  picture          bytea       NOT NULL
+  picture          bytea
 );
 
 CREATE TABLE users (

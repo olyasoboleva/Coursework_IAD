@@ -29,7 +29,7 @@ public class ShopLogger {
      * Log message for sending present
      * @param joinPoint join point
      */
-    @After("execution(* controller.WebSocketController.sendPresent(..)) && within(controller.WebSocketController)")
+    @After("execution(* controller.GameController.sendPresent(..)) && within(controller.GameController)")
     public void sendPresentLogger(JoinPoint joinPoint) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         Object[] params  = joinPoint.getArgs();
@@ -39,7 +39,7 @@ public class ShopLogger {
         logger.info("Отправитель: " + user.getNick() + ", Трибут: " + tribute.getUser().getNick() +", Количество: " + params[2] + ", Цена: " + product.getCost());
     }
 
-    @AfterThrowing(value = "execution(* controller.WebSocketController.sendPresent(..)) && within(controller.WebSocketController)", throwing = "exc")
+    @AfterThrowing(value = "execution(* controller.GameController.sendPresent(..)) && within(controller.GameController)", throwing = "exc")
     public void catchSendPresentException(JoinPoint joinPoint, Throwable exc) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         Object[] params  = joinPoint.getArgs();
@@ -48,4 +48,5 @@ public class ShopLogger {
         Shop product = (Shop) params[2];
         logger.error("Ошибка при отправке подарка " + product.getName() + " пользователем " + user.getNick() + " пользователю "+ tribute.getUser().getNick() + ". Ошибка: " + exc.getClass().getSimpleName());
     }
+
 }
