@@ -15,6 +15,7 @@ import java.util.Objects;
 @Table(name = "map")
 public class Map {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cell_id")
@@ -33,13 +34,8 @@ public class Map {
     @Column(name = "y_coordinate")
     private Integer yCoordinate;
 
-    @Transient
-    @Setter
+    @Column(name = "location_id", insertable = false, updatable = false)
     private Integer locationId;
-
-    public void setLocationId(){
-        this.locationId = this.location.getLocationId();
-    }
 
     @JsonIgnore
     @ManyToOne

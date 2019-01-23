@@ -42,4 +42,6 @@ public interface MapRepository extends CrudRepository<Map, Integer> {
      * @param arena arena where game takes place
      */
     void deleteMapsByArena(Arena arena);
+
+    List<Map> findMapsByArena(Arena arena);
 }

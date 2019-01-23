@@ -171,7 +171,7 @@ public class GameController {
             }
             tributeService.updateTribute(tribute);
             webSocketController.getHealth(new TributeHealth(user.getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
-            if (!present.getTypeOfPresent().equals("Инструменты")) {
+            if (!present.getTypeOfPresent().equals("Инструменты") && !present.getTypeOfPresent().equals("Другое")) {
                 presentsToTribute.setQuantity(presentsToTribute.getQuantity() - 1);
                 if (presentsToTribute.getQuantity() <= 0) {
                     return dropPresent(gameId.toString(), presentName);
@@ -191,13 +191,19 @@ public class GameController {
     @PostMapping("/move")
     public @ResponseBody ResponseEntity moveAndGetVisibleMap(TributeLocation tributeLocation){
         webSocketController.moveTribute(tributeLocation);
-        return getVisibleMap(tributeLocation);
+        return getVisibleWeapon(tributeLocation);
     }
 
     @Secured("ROLE_USER")
-    @GetMapping("/locations")
-    public @ResponseBody ResponseEntity getLocations(){
-        return ResponseEntity.status(HttpStatus.OK).body(locationService.findAll());
+    @GetMapping("/game_start_pack")
+    public @ResponseBody ResponseEntity getMap(){
+        Game game  = gameService.getGameByStartDate(Calendar.getInstance());
+        List<Location> locations = locationService.findAll();
+        List<Map> area = mapService.getAllGameField(game.getArena());
+        VisibleMap visibleMap  =new VisibleMap();
+        visibleMap.setArea(area);
+        visibleMap.setLocation(locations);
+        return ResponseEntity.status(HttpStatus.OK).body(visibleMap);
     }
 
     @Secured({"ROLE_USER"})
@@ -209,20 +215,13 @@ public class GameController {
         webSocketController.sendPresent(sender, tribute, present, quantity);
     }
 
-    @Secured({"ROLE_USER","ROLE_TRIBUTE"})
+    @Secured({"ROLE_USER"})
     @PostMapping("/get_map")
-    public @ResponseBody ResponseEntity getVisibleMap(TributeLocation tributeLocation){
-        int radius = 4;
+    public @ResponseBody ResponseEntity getVisibleWeapon(TributeLocation tributeLocation){
+        int radius = 3;
         Game game = gameService.getGameById(tributeLocation.getGameId());
-        List<Map> area = mapService.getArea(game.getArena(), tributeLocation.getX(), tributeLocation.getY());
-        for (Map map: area){
-            map.setLocationId();
-        }
         List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameInAreaWithoutOwner(game, tributeLocation.getX(), tributeLocation.getY(), radius);
-        VisibleMap visibleMap = new VisibleMap();
-        visibleMap.setArea(area);
-        visibleMap.setWeapons(weapons);
-        return ResponseEntity.status(HttpStatus.OK).body(visibleMap);
+        return ResponseEntity.status(HttpStatus.OK).body(weapons);
     }
 
     @Secured({"ROLE_TRIBUTE"})

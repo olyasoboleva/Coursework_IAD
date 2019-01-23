@@ -31,7 +31,7 @@ public class SchedulerService {
 
     private final WeaponsInGameService weaponsInGameService;
 
-    private List<Game> gamesToday;
+    private Game gameToday;
     private List<Tribute> tributesToday;
 
     @Autowired
@@ -47,19 +47,19 @@ public class SchedulerService {
     @Scheduled(cron = "0 0 9 * * *")
     public void prepareMap(){
         init();
-        for (Game game: gamesToday){
-            mapService.createAllGameField(game.getArena());
-            weaponsInGameService.throwWeaponsOnArena(game);
+        if (gameToday!=null) {
+            mapService.createAllGameField(gameToday.getArena());
+            weaponsInGameService.throwWeaponsOnArena(gameToday);
         }
     }
 
     @Scheduled(cron = "0 0 10 * * *")
     public void runGame(){
         init();
-        for (Game game: gamesToday){
-            game.setStatus("running");
-            gameService.updateGame(game);
-            webSocketController.gameEvent(new Message("Начались "+game.getGameId()+" Голодные игры", "", Message.Type.GAMESTART));
+        if (gameToday!=null) {
+            gameToday.setStatus("running");
+            gameService.updateGame(gameToday);
+            webSocketController.gameEvent(new Message("Начались " + gameToday.getGameId() + " Голодные игры", "", Message.Type.GAMESTART));
         }
     }
 
@@ -99,20 +99,19 @@ public class SchedulerService {
 
     @Scheduled(cron = "0 */30 10-23 * * *")
     public void createHook(){
-        if (gamesToday==null){
+        if (gameToday==null){
             init();
         }
-        if (gamesToday.size()!=0) {
-            Game game = gamesToday.get(0);
+        if (gameToday!=null) {
             int x, y;
-            x = (int) (Math.random() * game.getArena().getArenaLength());
-            y = (int) (Math.random() * game.getArena().getArenaWidth());
-            Map map = mapService.getCell(game.getArena(),x,y);
+            x = (int) (Math.random() * gameToday.getArena().getArenaLength());
+            y = (int) (Math.random() * gameToday.getArena().getArenaWidth());
+            Map map = mapService.getCell(gameToday.getArena(),x,y);
             if (map!=null) {
                 List<Hook> hooks = hookService.getHookByLocation(map.getLocation());
                 if (hooks.size() != 0) {
                     Hook hook = hooks.get((int) (Math.random() * hooks.size()));
-                    hookService.activateHook(game,hook,x,y);
+                    hookService.activateHook(gameToday,hook,x,y);
                 }
             }
         }
@@ -121,9 +120,9 @@ public class SchedulerService {
     private void init(){
         Calendar today = new GregorianCalendar();
         today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH),0,0,0);
-        gamesToday = gameService.getGameByStartDate(today);
-        if (gamesToday.size()!=0) {
-            tributesToday = tributeService.getTributesByGame(gamesToday.get(0));
+        gameToday = gameService.getGameByStartDate(today);
+        if (gameToday!=null) {
+            tributesToday = tributeService.getTributesByGame(gameToday);
         } else {
             tributesToday = new ArrayList<>();
         }

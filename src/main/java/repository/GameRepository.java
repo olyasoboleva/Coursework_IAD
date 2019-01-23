@@ -25,11 +25,11 @@ public interface GameRepository extends CrudRepository<Game, Integer> {
     List<Game> getGamesByStewardAndStartDateGreaterThan(User steward, Calendar date);
 
     /**
-     * find all games which start on this date
+     * find game which start on this date
      * @param startDate start date
-     * @return list of games
+     * @return game
      */
-    List<Game> getGamesByStartDate(Calendar startDate);
+    Game getGamesByStartDate(Calendar startDate);
 
     /**
      * get all games with status

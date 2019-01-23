@@ -67,4 +67,6 @@ public interface MapService {
      * @return map
      */
     List<Map> createAllGameField(Arena arena);
+
+    List<Map> getAllGameField(Arena arena);
 }
