@@ -61,7 +61,7 @@ public class TributeServiceImpl implements TributeService {
     }
 
     @Override
-    public Tribute getTributeById(long tributeId) {
+    public Tribute getTributeById(int tributeId) {
         return tributeRepository.findTributeByTributeId(tributeId);
     }
 

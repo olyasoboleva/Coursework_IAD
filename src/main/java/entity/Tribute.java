@@ -38,6 +38,7 @@ public class Tribute {
     private int locationY;
 
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "presents_to_tribute",
@@ -54,6 +55,7 @@ public class Tribute {
     @JoinColumn(name = "game_id", referencedColumnName = "game_id", nullable = false)
     private Game game;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "owners", fetch = FetchType.LAZY)
     private Collection<Weapon> weaponOfTribute;
 

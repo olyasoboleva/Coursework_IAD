@@ -34,7 +34,7 @@ public interface TributeService {
      * @param tributeId id
      * @return tribute
      */
-    Tribute getTributeById(long tributeId);
+    Tribute getTributeById(int tributeId);
 
     /**
      * find all tributes of user

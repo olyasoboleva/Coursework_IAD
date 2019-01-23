@@ -41,24 +41,24 @@ public class StewardController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping( "/create_game")
-    public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int length, int width, String locationName, String date) {
-        entity.User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Arena arena = new Arena(length, width, locationService.findLocationByName(locationName));
-        arenaService.createArena(arena);
-            Calendar startDate = Calendar.getInstance();
-            startDate.setTime(new Date(date));
+    public @ResponseBody ResponseEntity createGame(boolean typeOfGame, int length, int width, String locationName, long startDate) {
+        Calendar date = Calendar.getInstance();
+        date.setTime(new Date(startDate));
+        if (gameService.getGameByStartDate(date)==null) {
+            entity.User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+            Arena arena = new Arena(length, width, locationService.findLocationByName(locationName));
+            arenaService.createArena(arena);
             int numberOfTributes;
-            if (typeOfGame){
+            if (typeOfGame) {
                 numberOfTributes = 24;
             } else {
                 numberOfTributes = 48;
             }
-            Game game = new Game(typeOfGame, user, arena, numberOfTributes, startDate);
-            if (gameService.createGame(game)==null){
-                return ResponseEntity.status(HttpStatus.OK).body("Этот день для проведения игр уже занят.");
-            } else {
-                return ResponseEntity.status(HttpStatus.OK).body(game);
-            }
+            Game game = new Game(typeOfGame, user, arena, numberOfTributes, date);
+            return ResponseEntity.status(HttpStatus.OK).body(game);
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body("Этот день для проведения игр уже занят.");
+        }
 
     }
 

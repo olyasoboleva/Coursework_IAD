@@ -1,6 +1,7 @@
 package controller;
 
 import entity.*;
+import model.Message;
 import model.TributeHealth;
 import model.TributeLocation;
 import model.VisibleMap;
@@ -8,15 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.*;
 
-import javax.json.Json;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,37 +24,32 @@ import java.util.List;
 @EnableAutoConfiguration
 public class GameController {
 
-    //TODO: надо бы распределить по другим контроллерам (много зависимостей)
+    private final GameService gameService;
+    private final TributeService tributeService;
+    private final UserService userService;
+    private final WeaponService weaponService;
+    private final WeaponsInGameService weaponsInGameService;
+    private final PresentsToTributeService presentsToTributeService;
+    private final ShopService shopService;
+    private final ProductsAndLocationService productsAndLocationService;
+    private final WebSocketController webSocketController;
+    private final MapService mapService;
+    private final LocationService locationService;
 
     @Autowired
-    GameService gameService;
-
-    @Autowired
-    TributeService tributeService;
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    WeaponService weaponService;
-
-    @Autowired
-    WeaponsInGameService weaponsInGameService;
-
-    @Autowired
-    PresentsToTributeService presentsToTributeService;
-
-    @Autowired
-    ShopService shopService;
-
-    @Autowired
-    ProductsAndLocationService productsAndLocationService;
-
-    @Autowired
-    WebSocketController webSocketController;
-
-    @Autowired
-    MapService mapService;
+    public GameController(GameService gameService, TributeService tributeService, UserService userService, WeaponService weaponService, WeaponsInGameService weaponsInGameService, PresentsToTributeService presentsToTributeService, ShopService shopService, ProductsAndLocationService productsAndLocationService, WebSocketController webSocketController, MapService mapService, LocationService locationService) {
+        this.gameService = gameService;
+        this.tributeService = tributeService;
+        this.userService = userService;
+        this.weaponService = weaponService;
+        this.weaponsInGameService = weaponsInGameService;
+        this.presentsToTributeService = presentsToTributeService;
+        this.shopService = shopService;
+        this.productsAndLocationService = productsAndLocationService;
+        this.webSocketController = webSocketController;
+        this.mapService = mapService;
+        this.locationService = locationService;
+    }
 
     @Secured("ROLE_USER")
     @GetMapping( "/get_tributes_of_game")
@@ -198,12 +192,30 @@ public class GameController {
         return getVisibleMap(tributeLocation);
     }
 
+    @Secured("ROLE_USER")
+    @GetMapping("/locations")
+    public @ResponseBody ResponseEntity getLocations(){
+        return ResponseEntity.status(HttpStatus.OK).body(locationService.findAll());
+    }
+
+    @Secured({"ROLE_USER"})
+    @PostMapping("/send_present")
+    public void sendPresent(int tributeID, int presentID, int quantity){
+        User sender = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Tribute tribute = tributeService.getTributeById(tributeID);
+        Shop present = shopService.getProductById(presentID);
+        webSocketController.sendPresent(sender, tribute, present, quantity);
+    }
+
     @Secured({"ROLE_USER","ROLE_TRIBUTE"})
-    @GetMapping("/get_map")
+    @PostMapping("/get_map")
     public @ResponseBody ResponseEntity getVisibleMap(TributeLocation tributeLocation){
         int radius = 4;
         Game game = gameService.getGameById(tributeLocation.getGameId());
         List<Map> area = mapService.getArea(game.getArena(), tributeLocation.getX(), tributeLocation.getY());
+        for (Map map: area){
+            map.setLocationId();
+        }
         List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameInAreaWithoutOwner(game, tributeLocation.getX(), tributeLocation.getY(), radius);
         VisibleMap visibleMap = new VisibleMap();
         visibleMap.setArea(area);

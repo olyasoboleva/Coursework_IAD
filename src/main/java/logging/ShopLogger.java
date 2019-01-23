@@ -34,8 +34,8 @@ public class ShopLogger {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         Object[] params  = joinPoint.getArgs();
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeById((Long) params[0]);
-        Shop product = shopService.getProductById((Integer) params[1]);
+        Tribute tribute = (Tribute) params[1];
+        Shop product = (Shop) params[2];
         logger.info("Отправитель: " + user.getNick() + ", Трибут: " + tribute.getUser().getNick() +", Количество: " + params[2] + ", Цена: " + product.getCost());
     }
 
@@ -44,8 +44,8 @@ public class ShopLogger {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         Object[] params  = joinPoint.getArgs();
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeById((Long) params[0]);
-        Shop product = shopService.getProductById((Integer) params[1]);
+        Tribute tribute = (Tribute) params[1];
+        Shop product = (Shop) params[2];
         logger.error("Ошибка при отправке подарка " + product.getName() + " пользователем " + user.getNick() + " пользователю "+ tribute.getUser().getNick() + ". Ошибка: " + exc.getClass().getSimpleName());
     }
 }

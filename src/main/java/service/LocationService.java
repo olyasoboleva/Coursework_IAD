@@ -14,6 +14,8 @@ public interface LocationService {
      */
     Location findLocationById(int locationId);
 
+    List<Location> findAll();
+
     /**
      * find location by name
      * @param name name

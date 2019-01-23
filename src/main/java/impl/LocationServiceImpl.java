@@ -35,6 +35,11 @@ public class LocationServiceImpl implements LocationService {
         return locationRepository.getLocationsByProducts(product);
     }
 
+    @Override
+    public List<Location> findAll() {
+        return (List<Location>)locationRepository.findAll();
+    }
+
     @Transactional
     @Override
     public Location createLocation(Location location){

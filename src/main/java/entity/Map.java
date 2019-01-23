@@ -1,7 +1,9 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -18,6 +20,7 @@ public class Map {
     @Column(name = "cell_id")
     private int cellId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "arena_id", referencedColumnName = "arena_id", nullable = false)
     private Arena arena;
@@ -30,6 +33,15 @@ public class Map {
     @Column(name = "y_coordinate")
     private Integer yCoordinate;
 
+    @Transient
+    @Setter
+    private Integer locationId;
+
+    public void setLocationId(){
+        this.locationId = this.location.getLocationId();
+    }
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "location_id", referencedColumnName = "location_id", nullable = false)
     private Location location;

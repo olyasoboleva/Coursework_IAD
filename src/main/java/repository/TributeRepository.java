@@ -14,7 +14,7 @@ public interface TributeRepository extends CrudRepository<Tribute, Integer>{
      * @param tributeId id
      * @return tribute
      */
-    Tribute findTributeByTributeId(long tributeId);
+    Tribute findTributeByTributeId(int tributeId);
 
     /**
      * find all tributes of user

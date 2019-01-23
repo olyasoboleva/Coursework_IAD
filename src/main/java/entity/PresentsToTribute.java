@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class PresentsToTribute {
     @JoinColumn(name = "tribute_id", referencedColumnName = "tribute_id", nullable = false)
     private Tribute tribute;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sender_id", referencedColumnName = "user_id", nullable = false)
     private User sender;

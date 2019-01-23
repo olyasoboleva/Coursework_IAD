@@ -96,11 +96,7 @@ public class WebSocketController {
         }
     }
 
-    @MessageMapping("/hungergames/send_present")
-    public void sendPresent(@Payload Integer tributeID, Integer presentID, int quantity){
-        User sender = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeById(tributeID);
-        Shop present = shopService.getProductById(presentID);
+    public void sendPresent(User sender, Tribute tribute, Shop present, int quantity){
         PresentsToTribute presentInBag = presentsToTributeService.getPresentByProductAndTribute(present, tribute);
         PresentsToTribute presentsToTribute = new PresentsToTribute(present, tribute, sender, quantity);
         if (presentsToTributeService.createPresentsToTributes(presentsToTribute)!=null){
