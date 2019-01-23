@@ -33,7 +33,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<Game> getGameByStartDate(Calendar startDate) {
+    public Game getGameByStartDate(Calendar startDate) {
         return gameRepository.getGamesByStartDate(startDate);
     }
 
@@ -45,12 +45,7 @@ public class GameServiceImpl implements GameService {
     @Transactional
     @Override
     public Game createGame(Game game) {
-        List<Game> games = gameRepository.getGamesByStartDate(game.getStartDate());
-        if (games.size()==0) {
-            return gameRepository.save(game);
-        } else {
-            return null;
-        }
+        return gameRepository.save(game);
     }
 
     @Transactional

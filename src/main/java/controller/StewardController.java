@@ -55,6 +55,7 @@ public class StewardController {
                 numberOfTributes = 48;
             }
             Game game = new Game(typeOfGame, user, arena, numberOfTributes, date);
+            gameService.createGame(game);
             return ResponseEntity.status(HttpStatus.OK).body(game);
         } else {
             return ResponseEntity.status(HttpStatus.OK).body("Этот день для проведения игр уже занят.");

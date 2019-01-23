@@ -1,5 +1,6 @@
 package model;
 
+import entity.Location;
 import entity.Map;
 import entity.Weapon;
 import entity.WeaponsInGame;
@@ -12,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class VisibleMap {
     List<Map> area;
-    List<WeaponsInGame> weapons;
+    List<Location> location;
 }

@@ -25,11 +25,11 @@ public interface GameService {
     List<Game> getGameByStewardAndAfterDate(User steward, Calendar date);
 
     /**
-     * find all games which start on this date
+     * find game which start on this date
      * @param startDate start date
-     * @return list of games
+     * @return game
      */
-    List<Game> getGameByStartDate(Calendar startDate);
+    Game getGameByStartDate(Calendar startDate);
 
     List<Game> getAllGames();
 

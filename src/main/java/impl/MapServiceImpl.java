@@ -89,4 +89,9 @@ public class MapServiceImpl implements MapService {
         }
         return gameField;
     }
+
+    @Override
+    public List<Map> getAllGameField(Arena arena) {
+        return mapRepository.findMapsByArena(arena);
+    }
 }
