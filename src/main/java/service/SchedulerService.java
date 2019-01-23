@@ -44,7 +44,7 @@ public class SchedulerService {
         this.weaponsInGameService = weaponsInGameService;
     }
 
-    @Scheduled(cron = "0 0 9 * * *")
+    @Scheduled(cron = "0 29 00 * * *")
     public void prepareMap(){
         init();
         if (gameToday!=null) {
@@ -63,7 +63,8 @@ public class SchedulerService {
         }
     }
 
-    @Scheduled(cron = "0 */5 10-23 * * *")
+   // @Scheduled(cron = "0 */5 10-23 * * *")
+   @Scheduled(cron = "0 */5 * * * *")
     public void decreaseTributesHunger(){
         if (tributesToday==null){
             init();
@@ -78,7 +79,8 @@ public class SchedulerService {
         }
     }
 
-    @Scheduled(cron = "0 */10 10-23 * * *")
+    //@Scheduled(cron = "0 */10 10-23 * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     public void decreaseTributesHealth(){
         if (tributesToday==null){
             init();
@@ -97,7 +99,8 @@ public class SchedulerService {
         }
     }
 
-    @Scheduled(cron = "0 */30 10-23 * * *")
+    //@Scheduled(cron = "0 */30 10-23 * * *")
+    @Scheduled(cron = "0 */30 * * * *")
     public void createHook(){
         if (gameToday==null){
             init();

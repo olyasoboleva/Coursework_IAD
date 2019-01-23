@@ -18,6 +18,7 @@ import service.GameService;
 import service.TributeService;
 import service.UserService;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -62,7 +63,7 @@ public class WebSocketController {
     public void battle(@Payload Battle battle) {
         User attackingUser = userService.getUserByNick(battle.getAttacking());
         User defendingUser = userService.getUserByNick(battle.getDefending());
-        Game game = gameService.getGameById(battle.getGameId());
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
         Tribute attackingTribute = tributeService.getTributeByUserAndGame(attackingUser, game);
         Tribute defendingTribute = tributeService.getTributeByUserAndGame(defendingUser, game);
 
@@ -99,16 +100,15 @@ public class WebSocketController {
     public void sendPresent(User sender, Tribute tribute, Shop present, int quantity){
         PresentsToTribute presentInBag = presentsToTributeService.getPresentByProductAndTribute(present, tribute);
         PresentsToTribute presentsToTribute = new PresentsToTribute(present, tribute, sender, quantity);
-        if (presentsToTributeService.createPresentsToTributes(presentsToTribute)!=null){
-            if (presentInBag==null) {
-                messagingTemplate.convertAndSendToUser(tribute.getUser().getNick(), "/queue/presents", presentsToTribute);
-            } else {
+        if (presentInBag==null) {
+            presentsToTributeService.createPresentsToTributes(presentsToTribute);
+            messagingTemplate.convertAndSendToUser(tribute.getUser().getNick(), "/queue/presents", presentsToTribute);
+        } else {
             presentInBag.setQuantity(presentInBag.getQuantity() + quantity);
             presentsToTributeService.updatePresentsToTributes(presentInBag);
             messagingTemplate.convertAndSendToUser(tribute.getUser().getNick(), "/queue/presents", presentInBag);
-            }
-            userGameEvent(new Message(sender+" отправил(а) вам подарок - "+present.getName(),tribute.getUser().getNick(), Message.Type.PRESENT));
         }
+        userGameEvent(new Message(sender+" отправил(а) вам подарок - "+present.getName(),tribute.getUser().getNick(), Message.Type.PRESENT));
 
     }
 

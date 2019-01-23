@@ -1,10 +1,7 @@
 package controller;
 
 import entity.*;
-import model.Message;
-import model.TributeHealth;
-import model.TributeLocation;
-import model.VisibleMap;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -151,9 +148,9 @@ public class GameController {
 
     @Secured("ROLE_TRIBUTE")
     @PostMapping("/use_present")
-    public @ResponseBody ResponseEntity usePresent(Integer gameId, String presentName){
+    public @ResponseBody ResponseEntity usePresent(String presentName){
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Game game = gameService.getGameById(gameId);
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
         Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
         Location location = mapService.getCell(game.getArena(), tribute.getLocationX(), tribute.getLocationY()).getLocation();
         Shop present = shopService.getProductByName(presentName);
@@ -174,7 +171,7 @@ public class GameController {
             if (!present.getTypeOfPresent().equals("Инструменты") && !present.getTypeOfPresent().equals("Другое")) {
                 presentsToTribute.setQuantity(presentsToTribute.getQuantity() - 1);
                 if (presentsToTribute.getQuantity() <= 0) {
-                    return dropPresent(gameId.toString(), presentName);
+                    return dropPresent(game.getGameId().toString(), presentName);
                 } else {
                     presentsToTributeService.updatePresentsToTributes(presentsToTribute);
                     return ResponseEntity.status(HttpStatus.OK).body(presentsToTribute);
@@ -208,9 +205,9 @@ public class GameController {
 
     @Secured({"ROLE_USER"})
     @PostMapping("/send_present")
-    public void sendPresent(int tributeID, int presentID, int quantity){
+    public void sendPresent(String nick, int presentID, int quantity){
         User sender = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeById(tributeID);
+        Tribute tribute = tributeService.getTributeByUserAndGame(userService.getUserByNick(nick),gameService.getGameByStartDate(Calendar.getInstance()));
         Shop present = shopService.getProductById(presentID);
         webSocketController.sendPresent(sender, tribute, present, quantity);
     }
@@ -240,5 +237,16 @@ public class GameController {
         Tribute tribute = getTributeByUser(user, gameId);
         List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameByTribute(tribute);
         return ResponseEntity.status(HttpStatus.OK).body(weapons);
+    }
+
+    @Secured({"ROLE_TRIBUTE"})
+    @PostMapping("/beat")
+    public @ResponseBody ResponseEntity Beat(String tribute, String weapon){
+        Battle battle = new Battle();
+        battle.setAttacking(SecurityContextHolder.getContext().getAuthentication().getName());
+        battle.setDefending(tribute);
+        battle.setAttWeaponName(weapon);
+        webSocketController.battle(battle);
+        return ResponseEntity.status(HttpStatus.OK).body("Атака завершена");
     }
 }
