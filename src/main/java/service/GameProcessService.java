@@ -22,4 +22,6 @@ public interface GameProcessService {
     public void fight(Tribute attacking, Tribute defending, String attWeaponName);
 
     public List<User> selection(List<User> onlineUser, Game game);
+
+    public boolean isGameOver(Game game);
 }

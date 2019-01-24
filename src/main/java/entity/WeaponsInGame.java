@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,7 @@ public class WeaponsInGame {
     @JoinColumn(name = "weapon_id", referencedColumnName = "weapon_id", nullable = false)
     private Weapon weapon;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "game_id", referencedColumnName = "game_id", nullable = false)
     private Game game;

@@ -44,4 +44,11 @@ public interface UserSkillService {
      * @return list of skills with level
      */
     List<UserSkill> getUserSkillsByUser(User user);
+
+    /**
+     * +1 to existing skill or add skill with level 1 to user
+     * @param skill skill
+     * @param user user
+     */
+    void incLevel(Skill skill, User user);
 }

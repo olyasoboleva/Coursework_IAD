@@ -28,12 +28,18 @@ public interface WeaponsInGameRepository extends CrudRepository<WeaponsInGame, I
     /**
      * find weapons of game in some area
      * @param game game
-     * @param x1 left limit
-     * @param x2 right limit
-     * @param y1 top limit
-     * @param y2 bottom limit
      * @param tribute tribute
      * @return list of weapons
      */
-    List<WeaponsInGame> getWeaponsInGamesByGameAndLocationXBetweenAndLocationYBetweenAndTribute(Game game, int x1, int x2, int y1, int y2, Tribute tribute);
+    List<WeaponsInGame> getWeaponsInGamesByGameAndTribute(Game game, Tribute tribute);
+
+    /**
+     * find weapons of game in cell
+     * @param game game
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param tribute tribute
+     * @return list of weapons
+     */
+    List<WeaponsInGame> getWeaponsInGamesByGameAndLocationXAndLocationYAndTribute(Game game, int x, int y, Tribute tribute);
 }

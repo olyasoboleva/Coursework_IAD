@@ -22,12 +22,12 @@ public class GameProcessServiceImpl implements GameProcessService {
     private final GameRepository gameRepository;
     private final PriceRepository priceRepository;
     private final SkillRepository skillRepository;
-    private final UserSkillRepository userSkillRepository;
+    private final UserSkillService userSkillService;
     private final DistrictService districtService;
     private  final WebSocketController webSocketController;
 
     @Autowired
-    public GameProcessServiceImpl(TributeService tributeService, UserService userService, StatusService statusService, WeaponService weaponService, GameRepository gameRepository, PriceRepository priceRepository, SkillRepository skillRepository, UserSkillRepository userSkillRepository, DistrictService districtService, WebSocketController webSocketController) {
+    public GameProcessServiceImpl(TributeService tributeService, UserService userService, StatusService statusService, WeaponService weaponService, GameRepository gameRepository, PriceRepository priceRepository, SkillRepository skillRepository, UserSkillService userSkillService, DistrictService districtService, WebSocketController webSocketController) {
         this.tributeService = tributeService;
         this.userService = userService;
         this.statusService = statusService;
@@ -35,7 +35,7 @@ public class GameProcessServiceImpl implements GameProcessService {
         this.gameRepository = gameRepository;
         this.priceRepository = priceRepository;
         this.skillRepository = skillRepository;
-        this.userSkillRepository = userSkillRepository;
+        this.userSkillService = userSkillService;
         this.districtService = districtService;
         this.webSocketController = webSocketController;
     }
@@ -74,19 +74,21 @@ public class GameProcessServiceImpl implements GameProcessService {
         Weapon attWeapon = weaponService.getWeaponByName(attWeaponName);
         Skill attSkill;
         attSkill = tributeWithoutWeapon(attWeapon);
-        UserSkill attSkillLevel = userSkillRepository.findUserSkillByUserAndSkill(attacking.getUser(), attSkill);
+        UserSkill attSkillLevel = userSkillService.getUserSkillByUserAndSkill(attacking.getUser(), attSkill);
         int distance = Math.max(Math.abs(attacking.getLocationX()-defending.getLocationX()), Math.abs(attacking.getLocationY()-defending.getLocationY()));
         int defProtect = weaponService.getProtectionOftribute(defending);
-        int damage;
-        if (distance<=attWeapon.getRadiusOfAction()) {
-            damage = (int) ((100 + attSkillLevel.getLevelOfSkill()) * attWeapon.getDamage() * (100 - defProtect) * (Math.random() * 5 + 1) / 10000);
-            defending.setHealth(defending.getHealth() - damage);
+        int damage, level=0;
+        if (attSkillLevel!=null){
+            level = attSkillLevel.getLevelOfSkill();
         }
-        webSocketController.userGameEvent(new Message("",defending.getUser().getNick(), Message.Type.ATTACK));
-        attSkillLevel.setLevelOfSkill(attSkillLevel.getLevelOfSkill()+1);
-        userSkillRepository.save(attSkillLevel);
-        tributeService.updateTribute(attacking);
-        tributeService.updateTribute(defending);
+        if (distance<=attWeapon.getRadiusOfAction()) {
+            damage = (int) ((100 + level) * attWeapon.getDamage() * (100 - defProtect) * (Math.random() * 2) / 10000);
+            damage = tributeService.getDamage(defending, damage);
+            webSocketController.userGameEvent(new Message(attacking.getUser().getNick()+" нанес вам урон "+damage,defending.getUser().getNick(), Message.Type.ATTACK));
+            userSkillService.incLevel(attSkill, attacking.getUser());
+            tributeService.updateTribute(attacking);
+            tributeService.updateTribute(defending);
+        }
     }
 
     private Skill tributeWithoutWeapon(Weapon weapon){
@@ -140,5 +142,22 @@ public class GameProcessServiceImpl implements GameProcessService {
         }
 
         return tributes;
+    }
+
+    @Override
+    public boolean isGameOver(Game game){
+        List<Tribute> tributesAlive = tributeService.getTributesByStatusAndGame("alive", game);
+        if (tributesAlive.size() == 1){
+            changeStatusAfterEndOfTheGame(game, tributesAlive.get(0));
+            webSocketController.gameEvent(new Message("Конец игры! Победитель - " + tributesAlive.get(0).getUser().getNick(),"", Message.Type.GAMEOVER));
+            return true;
+        } else {
+            if (tributesAlive.size() == 0) {
+                changeStatusAfterEndOfTheGame(game, null);
+                webSocketController.gameEvent(new Message("Конец игры! Но все умерли:)", "", Message.Type.GAMEOVER));
+                return true;
+            }
+        }
+        return false;
     }
 }

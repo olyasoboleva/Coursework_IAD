@@ -80,4 +80,10 @@ public interface TributeService {
     List<Tribute> getTributeInArea(Game game, int x, int y, int radius);
 
     void moveTribute(Tribute tribute, int newX, int newY);
+
+    int getDamage(Tribute tribute, int damage);
+
+    void getHunger(Tribute tribute, int hunger);
+
+    void getThirst(Tribute tribute, int thirst);
 }

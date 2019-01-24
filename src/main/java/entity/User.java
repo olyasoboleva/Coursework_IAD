@@ -97,7 +97,7 @@ public class User {
     private Collection<Tribute> recipients;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
@@ -105,6 +105,7 @@ public class User {
     )
     private Collection<Role> roles;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_skill",

@@ -31,17 +31,20 @@ public class SchedulerService {
 
     private final WeaponsInGameService weaponsInGameService;
 
+    private final GameProcessService gameProcessService;
+
     private Game gameToday;
     private List<Tribute> tributesToday;
 
     @Autowired
-    public SchedulerService(GameService gameService, TributeService tributeService, HookService hookService, MapService mapService, WebSocketController webSocketController, WeaponsInGameService weaponsInGameService) {
+    public SchedulerService(GameService gameService, TributeService tributeService, HookService hookService, MapService mapService, WebSocketController webSocketController, WeaponsInGameService weaponsInGameService, GameProcessService gameProcessService) {
         this.gameService = gameService;
         this.tributeService = tributeService;
         this.hookService = hookService;
         this.mapService = mapService;
         this.webSocketController = webSocketController;
         this.weaponsInGameService = weaponsInGameService;
+        this.gameProcessService = gameProcessService;
     }
 
     @Scheduled(cron = "0 0 9 * * *")
@@ -63,41 +66,43 @@ public class SchedulerService {
         }
     }
 
-    @Scheduled(cron = "0 */5 10-23 * * *")
+    //@Scheduled(cron = "0 */5 10-23 * * *")
+    @Scheduled(cron = "0 */5 * * * *")
     public void decreaseTributesHunger(){
         if (tributesToday==null){
             init();
         }
         if (tributesToday.size()!=0) {
             for (Tribute tribute : tributesToday) {
-                tribute.setHunger((tribute.getHunger() - 1)>0 ? tribute.getHunger() - 1 : 0);
-                tribute.setThirst((tribute.getThirst() - 2)>0 ? tribute.getThirst() - 2 : 0);
-                tributeService.updateTribute(tribute);
+                tributeService.getHunger(tribute, 1);
+                tributeService.getThirst(tribute, 2);
                 webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(),tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
             }
         }
     }
 
-    @Scheduled(cron = "0 */10 10-23 * * *")
+    //@Scheduled(cron = "0 */10 10-23 * * *")
+    @Scheduled(cron = "0 */10 * * * *")
     public void decreaseTributesHealth(){
+        int damage = 0;
         if (tributesToday==null){
             init();
         }
         if (tributesToday.size()!=0) {
             for (Tribute tribute : tributesToday) {
-                tribute.setHealth(tribute.getHealth() - (1 - tribute.getHunger() / 100) * 2 - (1 - tribute.getThirst() / 100) * 2);
+                damage = ((100 - tribute.getHunger()) * 2 + (100 - tribute.getThirst()) * 2)/10;
+                tributeService.getDamage(tribute, damage);
                 if (tribute.getHealth()<=0){
-                    tribute.setHealth(0);
-                    tribute.setStatus("Убит");
                     webSocketController.gameEvent(new Message(tribute.getUser().getNick()+", "+tribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
+                    if (gameProcessService.isGameOver(gameToday)) tributesToday = new ArrayList<>();
                 }
-                tributeService.updateTribute(tribute);
                 webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(),tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
             }
         }
     }
 
-    @Scheduled(cron = "0 */30 10-23 * * *")
+    //@Scheduled(cron = "0 */30 10-23 * * *")
+    @Scheduled(cron = "0 */30 * * * *")
     public void createHook(){
         if (gameToday==null){
             init();

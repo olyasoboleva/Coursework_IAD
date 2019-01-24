@@ -2,21 +2,17 @@ package controller;
 
 import entity.*;
 import impl.PresentsToTributeServiceImpl;
-import impl.ShopServiceImpl;
 import model.Battle;
 import model.Message;
 import model.TributeHealth;
-import model.TributeLocation;
+import model.Coordinates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import service.GameProcessService;
-import service.GameService;
-import service.TributeService;
-import service.UserService;
+import service.*;
 
 import java.util.Calendar;
 import java.util.List;
@@ -42,16 +38,20 @@ public class WebSocketController {
     @Autowired
     private PresentsToTributeServiceImpl presentsToTributeService;
 
+    @Autowired
+    private WeaponsInGameService weaponsInGameService;
+
     @MessageMapping("/hungergames/move")
-    public void moveTribute(@Payload TributeLocation tributeLocation) {
+    public void moveTribute(@Payload Coordinates coordinates) {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Game game = gameService.getGameByStartDate(Calendar.getInstance());
         Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
-        tributeLocation.setNick(user.getNick());
-        tributeService.moveTribute(tribute, tributeLocation.getX(), tributeLocation.getY());
-        messagingTemplate.convertAndSendToUser(tributeLocation.getNick(),"/queue/health",
-                new TributeHealth(tributeLocation.getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
-        messagingTemplate.convertAndSend("/topic/tributesLocation", tributeLocation);
+        coordinates.setNick(user.getNick());
+        tributeService.moveTribute(tribute, coordinates.getX(), coordinates.getY());
+        takeWeapon(tribute);
+        messagingTemplate.convertAndSendToUser(coordinates.getNick(),"/queue/health",
+                new TributeHealth(coordinates.getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
+        messagingTemplate.convertAndSend("/topic/tributesLocation", coordinates);
         if (tribute.getHealth()<=0){
             gameEvent(new Message(tribute.getUser().getNick()+", "+tribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
         }
@@ -67,32 +67,16 @@ public class WebSocketController {
 
         gameProcessService.fight(attackingTribute, defendingTribute, battle.getAttWeaponName());
 
-        if (attackingTribute.getHealth() <=0 ) {
-            attackingTribute.setStatus("Убит");
-            gameEvent(new Message(attackingTribute.getUser().getNick()+", "+attackingTribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
-            messagingTemplate.convertAndSendToUser(battle.getAttacking(),"/queue/health",
-                    new TributeHealth(battle.getAttacking(), attackingTribute.getHealth(), attackingTribute.getHunger(), attackingTribute.getThirst()));
-        }
+        messagingTemplate.convertAndSendToUser(battle.getDefending(),"/queue/health",
+                new TributeHealth(battle.getDefending(), defendingTribute.getHealth(), defendingTribute.getHunger(), defendingTribute.getThirst()));
         if (defendingTribute.getHealth() <= 0){
-            defendingTribute.setStatus("Убит");
+            moveTribute(new Coordinates(defendingTribute.getUser().getNick(), defendingTribute.getLocationX(), defendingTribute.getLocationY()));
             gameEvent(new Message(defendingTribute.getUser().getNick()+", "+defendingTribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
-            messagingTemplate.convertAndSendToUser(battle.getDefending(),"/queue/health",
-                    new TributeHealth(battle.getDefending(), defendingTribute.getHealth(), defendingTribute.getHunger(), defendingTribute.getThirst()));
         }
 
         tributeService.updateTribute(attackingTribute);
         tributeService.updateTribute(defendingTribute);
-
-        List<Tribute> tributesAlive = tributeService.getTributesByStatusAndGame("Жив", game);
-        if (tributesAlive.size() == 1){
-            gameProcessService.changeStatusAfterEndOfTheGame(game, tributesAlive.get(0));
-            gameEvent(new Message("Конец игры! Победитель - " + tributesAlive.get(0).getUser().getNick(),"", Message.Type.GAMEOVER));
-        } else {
-            if (tributesAlive.size() == 0) {
-                gameProcessService.changeStatusAfterEndOfTheGame(game, null);
-                gameEvent(new Message("Конец игры! Но все умерли:)", "", Message.Type.GAMEOVER));
-            }
-        }
+        gameProcessService.isGameOver(game);
     }
 
     public void sendPresent(User sender, Tribute tribute, Shop present, int quantity){
@@ -108,6 +92,16 @@ public class WebSocketController {
         }
         userGameEvent(new Message(sender+" отправил(а) вам подарок - "+present.getName(),tribute.getUser().getNick(), Message.Type.PRESENT));
 
+    }
+
+    public void takeWeapon(Tribute tribute){
+        List<WeaponsInGame> weaponsInGames = weaponsInGameService.addFreeWeaponsToTribute(tribute);
+        if (weaponsInGames.size()!=0){
+            messagingTemplate.convertAndSendToUser(tribute.getUser().getNick(), "/queue/weapons", weaponsInGames);
+        }
+        for (WeaponsInGame weaponInGame: weaponsInGames){
+            messagingTemplate.convertAndSend("/topic/weaponsLocation", new Coordinates(weaponInGame.getWeaponInGameId().toString(), weaponInGame.getLocationX(), weaponInGame.getLocationY()));
+        }
     }
 
     @MessageMapping("/hungergames/message")

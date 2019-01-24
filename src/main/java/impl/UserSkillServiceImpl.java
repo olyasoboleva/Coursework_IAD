@@ -45,4 +45,15 @@ public class UserSkillServiceImpl implements UserSkillService {
     public List<UserSkill> getUserSkillsByUser(User user) {
         return userSkillRepository.getUserSkillsByUser(user);
     }
+
+    @Override
+    public void incLevel(Skill skill, User user) {
+        UserSkill userSkill = userSkillRepository.findUserSkillByUserAndSkill(user, skill);
+        if (userSkill!=null){
+            userSkill.setLevelOfSkill(userSkill.getLevelOfSkill()+1);
+        } else {
+            userSkill = new UserSkill(user, skill, 1);
+        }
+        userSkillRepository.save(userSkill);
+    }
 }

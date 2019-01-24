@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.*;
+import service.GameProcessService;
 import service.TributeService;
 
 import java.util.List;
@@ -115,5 +116,33 @@ public class TributeServiceImpl implements TributeService {
         if (tribute.getHealth()<=0){
             tribute.setStatus("dead");
         }*/
+    }
+
+    @Override
+    public int getDamage(Tribute tribute, int damage) {
+        int health = tribute.getHealth()-damage<0 ? 0 : tribute.getHealth()-damage;
+        damage = tribute.getHealth()-health;
+        tribute.setHealth(health);
+        if (tribute.getHealth()<=0) {
+            tribute.setStatus("dead");
+            tribute.setLocationX(-1);
+            tribute.setLocationY(-1);
+        }
+        tributeRepository.save(tribute);
+        return damage;
+    }
+
+
+    @Override
+    public void getHunger(Tribute tribute, int hunger) {
+        tribute.setHunger(tribute.getHunger()-hunger<0 ? 0 : tribute.getHunger()-hunger);
+        tributeRepository.save(tribute);
+    }
+
+
+    @Override
+    public void getThirst(Tribute tribute, int thirst) {
+        tribute.setThirst(tribute.getThirst()-thirst<0 ? 0 : tribute.getThirst()-thirst);
+        tributeRepository.save(tribute);
     }
 }

@@ -62,8 +62,8 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
     }
 
     @Override
-    public List<WeaponsInGame> getWeaponsInGameInAreaWithoutOwner(Game game, int x, int y, int radius) {
-        return weaponsInGameRepository.getWeaponsInGamesByGameAndLocationXBetweenAndLocationYBetweenAndTribute(game,x-radius, x+radius, y-radius, y+radius, null);
+    public List<WeaponsInGame> getWeaponsInGameWithoutOwner(Game game) {
+        return weaponsInGameRepository.getWeaponsInGamesByGameAndTribute(game,null);
     }
 
     @Override
@@ -80,5 +80,20 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
             }
         }
         return weapons;
+    }
+
+    @Override
+    public List<WeaponsInGame> getWeaponsInGameInCellWithoutOwner(Game game, int x, int y) {
+        return weaponsInGameRepository.getWeaponsInGamesByGameAndLocationXAndLocationYAndTribute(game, x, y, null);
+    }
+
+    @Override
+    public List<WeaponsInGame> addFreeWeaponsToTribute(Tribute tribute) {
+        List<WeaponsInGame> weaponsInGame = getWeaponsInGameInCellWithoutOwner(tribute.getGame(), tribute.getLocationX(), tribute.getLocationY());
+        for (WeaponsInGame weapons: weaponsInGame){
+            weapons.setTribute(tribute);
+            weaponsInGameRepository.save(weapons);
+        }
+        return weaponsInGame;
     }
 }

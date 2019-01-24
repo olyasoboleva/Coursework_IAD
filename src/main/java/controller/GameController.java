@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -186,20 +185,32 @@ public class GameController {
 
     @Secured("ROLE_TRIBUTE")
     @PostMapping("/move")
-    public @ResponseBody ResponseEntity moveAndGetVisibleMap(TributeLocation tributeLocation){
-        webSocketController.moveTribute(tributeLocation);
-        return getVisibleWeapon(tributeLocation);
+    public @ResponseBody ResponseEntity moveAndGetVisibleMap(Coordinates coordinates){
+        webSocketController.moveTribute(coordinates);
+        return ResponseEntity.status(HttpStatus.OK).body("Ok");
     }
 
     @Secured("ROLE_USER")
     @GetMapping("/game_start_pack")
     public @ResponseBody ResponseEntity getMap(){
         Game game  = gameService.getGameByStartDate(Calendar.getInstance());
+        List<WeaponsInGame> weaponsInGame = weaponsInGameService.getWeaponsInGameWithoutOwner(game);
         List<Location> locations = locationService.findAll();
         List<Map> area = mapService.getAllGameField(game.getArena());
+        List<Tribute> tributes = tributeService.getTributesByGame(game);
+        List<Coordinates> tributesLocation = new ArrayList<>();
+        List<Coordinates> weaponsLocation = new ArrayList<>();
+        for (Tribute tribute: tributes){
+            tributesLocation.add(new Coordinates(tribute.getUser().getNick(), tribute.getLocationX(), tribute.getLocationY()));
+        }
+        for (WeaponsInGame weaponInGame: weaponsInGame){
+            weaponsLocation.add(new Coordinates(weaponInGame.getWeaponInGameId().toString(), weaponInGame.getLocationX(), weaponInGame.getLocationY()));
+        }
         VisibleMap visibleMap  =new VisibleMap();
         visibleMap.setArea(area);
         visibleMap.setLocation(locations);
+        visibleMap.setTributes(tributesLocation);
+        visibleMap.setWeapons(weaponsLocation);
         return ResponseEntity.status(HttpStatus.OK).body(visibleMap);
     }
 
@@ -210,15 +221,6 @@ public class GameController {
         Tribute tribute = tributeService.getTributeByUserAndGame(userService.getUserByNick(nick),gameService.getGameByStartDate(Calendar.getInstance()));
         Shop present = shopService.getProductById(presentID);
         webSocketController.sendPresent(sender, tribute, present, quantity);
-    }
-
-    @Secured({"ROLE_USER"})
-    @PostMapping("/get_map")
-    public @ResponseBody ResponseEntity getVisibleWeapon(TributeLocation tributeLocation){
-        int radius = 3;
-        Game game = gameService.getGameByStartDate(Calendar.getInstance());
-        List<WeaponsInGame> weapons = weaponsInGameService.getWeaponsInGameInAreaWithoutOwner(game, tributeLocation.getX(), tributeLocation.getY(), radius);
-        return ResponseEntity.status(HttpStatus.OK).body(weapons);
     }
 
     @Secured({"ROLE_TRIBUTE"})

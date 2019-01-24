@@ -37,14 +37,11 @@ public interface WeaponsInGameService {
     List<WeaponsInGame> getWeaponsInGameByTribute(Tribute tribute);
 
     /**
-     * find weapons without owner in area with center in (x,y) and this radius
+     * find weapons without owner
      * @param game game
-     * @param x coordinate x
-     * @param y coordinate y
-     * @param radius radius
      * @return list of weapons in game
      */
-    List<WeaponsInGame> getWeaponsInGameInAreaWithoutOwner(Game game, int x, int y, int radius);
+    List<WeaponsInGame> getWeaponsInGameWithoutOwner(Game game);
 
     /**
      * generate weapons on game's arena
@@ -52,4 +49,15 @@ public interface WeaponsInGameService {
      * @return list of weapons in game
      */
     List<WeaponsInGame> throwWeaponsOnArena(Game game);
+
+    /**
+     * find weapons of game in cell without user
+     * @param game game
+     * @param x x coodinate
+     * @param y y coordinate
+     * @return list of weapons
+     */
+    List<WeaponsInGame> getWeaponsInGameInCellWithoutOwner(Game game, int x, int y);
+
+    List<WeaponsInGame> addFreeWeaponsToTribute(Tribute tribute);
 }
