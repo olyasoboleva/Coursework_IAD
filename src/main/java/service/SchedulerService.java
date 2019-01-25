@@ -82,15 +82,16 @@ public class SchedulerService {
     //@Scheduled(cron = "0 */10 10-23 * * *")
     @Scheduled(cron = "0 */10 * * * *")
     public void decreaseTributesHealth(){
-        int damage;
+        int damage, x, y;
         init();
         if (tributesToday.size()!=0) {
             for (Tribute tribute : tributesToday) {
+                x = tribute.getLocationX(); y = tribute.getLocationY();
                 damage = ((100 - tribute.getHunger()) + (100 - tribute.getThirst()))/10;
                 tributeService.getDamage(tribute, damage);
                 if (tribute.getHealth()<=0){
                     webSocketController.gameEvent(new Message(tribute.getUser().getNick()+", "+tribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
-                    webSocketController.dropAllWeapon(tribute);
+                    webSocketController.dropAllWeapon(tribute, x, y);
                     if (gameProcessService.isGameOver(gameToday)) tributesToday = new ArrayList<>();
                 }
                 webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(),tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
