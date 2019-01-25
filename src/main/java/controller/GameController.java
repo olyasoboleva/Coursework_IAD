@@ -122,7 +122,7 @@ public class GameController {
     @Secured("ROLE_USER")
     @GetMapping("/games_history")
     public @ResponseBody ResponseEntity getGamesHistory() {
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.getAllGames());
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getGamesByStartDateBefore(Calendar.getInstance()));
     }
 
     @Secured("ROLE_USER")
@@ -206,7 +206,7 @@ public class GameController {
         for (WeaponsInGame weaponInGame: weaponsInGame){
             weaponsLocation.add(new Coordinates(weaponInGame.getWeaponInGameId().toString(), weaponInGame.getLocationX(), weaponInGame.getLocationY()));
         }
-        VisibleMap visibleMap  =new VisibleMap();
+        VisibleMap visibleMap  = new VisibleMap();
         visibleMap.setArea(area);
         visibleMap.setLocation(locations);
         visibleMap.setTributes(tributesLocation);
@@ -270,4 +270,11 @@ public class GameController {
         webSocketController.battle(battle);
         return ResponseEntity.status(HttpStatus.OK).body("Атака завершена");
     }
+
+    @GetMapping("/gameWinner")
+    public @ResponseBody ResponseEntity getWinner(int gameId){
+        List<Tribute> tributes = tributeService.getTributesByStatusAndGame("Победитель", gameService.getGameById(gameId));
+        return ResponseEntity.status(HttpStatus.OK).body(tributes);
+    }
+
 }

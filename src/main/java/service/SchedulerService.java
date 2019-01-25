@@ -66,8 +66,8 @@ public class SchedulerService {
         }
     }
 
-    //@Scheduled(cron = "0 */5 10-23 * * *")
-    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "0 */5 10-23 * * *")
+    //@Scheduled(cron = "0 */5 * * * *")
     public void decreaseTributesHunger(){
         init();
         if (tributesToday.size()!=0) {
@@ -79,8 +79,8 @@ public class SchedulerService {
         }
     }
 
-    //@Scheduled(cron = "0 */10 10-23 * * *")
-    @Scheduled(cron = "0 */10 * * * *")
+    @Scheduled(cron = "0 */10 10-23 * * *")
+    //@Scheduled(cron = "0 */10 * * * *")
     public void decreaseTributesHealth(){
         int damage;
         init();
@@ -97,8 +97,8 @@ public class SchedulerService {
         }
     }
 
-    //@Scheduled(cron = "0 */30 10-23 * * *")
-    @Scheduled(cron = "0 */30 * * * *")
+    @Scheduled(cron = "0 */30 10-23 * * *")
+    //@Scheduled(cron = "0 */30 * * * *")
     public void createHook(){
         init();
         if (gameToday!=null) {

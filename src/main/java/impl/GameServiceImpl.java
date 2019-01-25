@@ -65,4 +65,9 @@ public class GameServiceImpl implements GameService {
     public List<Game> getGamesByStatus(String status){
         return gameRepository.getGamesByStatus(status);
     }
+
+    @Override
+    public List<Game> getGamesByStartDateBefore(Calendar startDate) {
+        return gameRepository.getGamesByStartDateBefore(startDate);
+    }
 }

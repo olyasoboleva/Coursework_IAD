@@ -60,4 +60,6 @@ public interface GameService {
      * @return list of games
      */
     List<Game> getGamesByStatus(String status);
+
+    List<Game> getGamesByStartDateBefore(Calendar startDate);
 }
