@@ -58,6 +58,7 @@ public class GameProcessServiceImpl implements GameProcessService {
         steward.setCash(steward.getCash() + priceRepository.findPriceByName("steward").getCost());
         userService.updateUser(steward);
         game.setStatus("game over");
+        game.setDuration((int)((Calendar.getInstance().getTimeInMillis()-game.getStartDate().getTimeInMillis())/1000/60));
         gameRepository.save(game);
         Status status = statusService.getStatuseByName("Наблюдатель");
         for (Tribute tribute: allTributes) {
@@ -82,7 +83,7 @@ public class GameProcessServiceImpl implements GameProcessService {
             level = attSkillLevel.getLevelOfSkill();
         }
         if (distance<=attWeapon.getRadiusOfAction()) {
-            damage = (int) ((100 + level) * attWeapon.getDamage() * (100 - defProtect) * (Math.random() * 2) / 10000);
+            damage = (int) ((100 + level) * attWeapon.getDamage() * (100 - defProtect) * (Math.random() * 2) / 100000);
             damage = tributeService.getDamage(defending, damage);
             webSocketController.userGameEvent(new Message(attacking.getUser().getNick()+" нанес вам урон "+damage,defending.getUser().getNick(), Message.Type.ATTACK));
             userSkillService.incLevel(attSkill, attacking.getUser());

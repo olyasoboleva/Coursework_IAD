@@ -69,9 +69,7 @@ public class SchedulerService {
     //@Scheduled(cron = "0 */5 10-23 * * *")
     @Scheduled(cron = "0 */5 * * * *")
     public void decreaseTributesHunger(){
-        if (tributesToday==null){
-            init();
-        }
+        init();
         if (tributesToday.size()!=0) {
             for (Tribute tribute : tributesToday) {
                 tributeService.getHunger(tribute, 1);
@@ -84,13 +82,11 @@ public class SchedulerService {
     //@Scheduled(cron = "0 */10 10-23 * * *")
     @Scheduled(cron = "0 */10 * * * *")
     public void decreaseTributesHealth(){
-        int damage = 0;
-        if (tributesToday==null){
-            init();
-        }
+        int damage;
+        init();
         if (tributesToday.size()!=0) {
             for (Tribute tribute : tributesToday) {
-                damage = ((100 - tribute.getHunger()) * 2 + (100 - tribute.getThirst()) * 2)/10;
+                damage = ((100 - tribute.getHunger()) + (100 - tribute.getThirst()))/10;
                 tributeService.getDamage(tribute, damage);
                 if (tribute.getHealth()<=0){
                     webSocketController.gameEvent(new Message(tribute.getUser().getNick()+", "+tribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
@@ -104,9 +100,7 @@ public class SchedulerService {
     //@Scheduled(cron = "0 */30 10-23 * * *")
     @Scheduled(cron = "0 */30 * * * *")
     public void createHook(){
-        if (gameToday==null){
-            init();
-        }
+        init();
         if (gameToday!=null) {
             int x, y;
             x = (int) (Math.random() * gameToday.getArena().getArenaLength());
@@ -126,6 +120,9 @@ public class SchedulerService {
         Calendar today = new GregorianCalendar();
         today.set(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH),0,0,0);
         gameToday = gameService.getGameByStartDate(today);
+        if (gameToday.getStatus().equals("game over")){
+            gameToday = null;
+        }
         if (gameToday!=null) {
             tributesToday = tributeService.getTributesByGame(gameToday);
         } else {

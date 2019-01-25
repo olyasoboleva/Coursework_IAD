@@ -241,7 +241,7 @@ public class GameController {
         return ResponseEntity.status(HttpStatus.OK).body(weapons);
     }
 
-    @Secured({"ROLE_TRIBUTE"})
+    @Secured({"ROLE_USER"})
     @GetMapping("/tribute")
     public @ResponseBody ResponseEntity getTribute(){
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
