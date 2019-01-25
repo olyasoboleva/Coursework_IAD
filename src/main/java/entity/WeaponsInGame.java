@@ -36,12 +36,16 @@ public class WeaponsInGame {
     @Column(name = "location_y")
     int locationY;
 
+    @Column(name = "active")
+    boolean active;
+
     public WeaponsInGame(Tribute tribute, Weapon weapon) {
         setTribute(tribute);
         setWeapon(weapon);
         setGame(tribute.getGame());
         setLocationX(tribute.getLocationX());
         setLocationY(tribute.getLocationY());
+        setActive(false);
     }
 
 

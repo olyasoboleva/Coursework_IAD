@@ -47,7 +47,6 @@ public class GameProcessServiceImpl implements GameProcessService {
         if (winner!=null) {
             winner.setStatus("Победитель");
             winner.getUser().setCash(winner.getUser().getCash() + priceRepository.findPriceByName("winner").getCost());
-            //userService.updateUser(winner.getUser());
             tributeService.updateTribute(winner);
             Collection<User> sponsors = winner.getPresentsSenders();
             for (User sponsor: sponsors){
@@ -71,10 +70,16 @@ public class GameProcessServiceImpl implements GameProcessService {
 
 
     @Override
-    public void fight(Tribute attacking, Tribute defending, String attWeaponName) {
-        Weapon attWeapon = weaponService.getWeaponByName(attWeaponName);
+    public void fight(Tribute attacking, Tribute defending, Weapon weapon) {
+        Weapon attWeapon = weapon;
         Skill attSkill;
-        attSkill = tributeWithoutWeapon(attWeapon);
+        if (attWeapon==null){
+            attWeapon = new Weapon(); attWeapon.setDamage(5);
+            attWeapon.setRadiusOfAction(1);
+            attSkill = skillRepository.findSkillByName("Рукопашный бой");
+        } else {
+            attSkill = skillRepository.findSkillByWeapon(weapon);
+        }
         UserSkill attSkillLevel = userSkillService.getUserSkillByUserAndSkill(attacking.getUser(), attSkill);
         int distance = Math.max(Math.abs(attacking.getLocationX()-defending.getLocationX()), Math.abs(attacking.getLocationY()-defending.getLocationY()));
         int defProtect = weaponService.getProtectionOftribute(defending);
@@ -86,22 +91,11 @@ public class GameProcessServiceImpl implements GameProcessService {
             damage = (int) ((100 + level) * attWeapon.getDamage() * (100 - defProtect) * (Math.random() * 2) / 100000);
             damage = tributeService.getDamage(defending, damage);
             webSocketController.userGameEvent(new Message(attacking.getUser().getNick()+" нанес вам урон "+damage,defending.getUser().getNick(), Message.Type.ATTACK));
+            webSocketController.userGameEvent(new Message("Вы нанесли "+defending.getUser().getNick()+" урон "+damage,attacking.getUser().getNick(), Message.Type.SUCCESSATTACK));
             userSkillService.incLevel(attSkill, attacking.getUser());
             tributeService.updateTribute(attacking);
             tributeService.updateTribute(defending);
         }
-    }
-
-    private Skill tributeWithoutWeapon(Weapon weapon){
-        Skill skill;
-        if (weapon==null){
-            weapon = new Weapon(); weapon.setDamage(5);
-            weapon.setRadiusOfAction(1);
-            skill = skillRepository.findSkillByName("Рукопашный бой");
-        } else {
-            skill = skillRepository.findSkillByWeapon(weapon);
-        }
-        return skill;
     }
 
     @Override

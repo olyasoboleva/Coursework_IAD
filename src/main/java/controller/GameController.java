@@ -262,12 +262,22 @@ public class GameController {
 
     @Secured({"ROLE_TRIBUTE"})
     @PostMapping("/beat")
-    public @ResponseBody ResponseEntity Beat(String tribute, String weapon){
+    public @ResponseBody ResponseEntity beat(String tribute){
         Battle battle = new Battle();
         battle.setAttacking(SecurityContextHolder.getContext().getAuthentication().getName());
         battle.setDefending(tribute);
-        battle.setAttWeaponName(weapon);
         webSocketController.battle(battle);
         return ResponseEntity.status(HttpStatus.OK).body("Атака завершена");
+    }
+
+    @Secured({"ROLE_TRIBUTE"})
+    @PostMapping("/choose_weapon")
+    public @ResponseBody ResponseEntity activateWeapon(String weaponName){
+        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
+        Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
+        Weapon weapon = weaponService.getWeaponByName(weaponName);
+        weaponsInGameService.setActiveWeapon(tribute, weapon);
+        return ResponseEntity.status(HttpStatus.OK).body("Активное оружие - " + weaponName);
     }
 }

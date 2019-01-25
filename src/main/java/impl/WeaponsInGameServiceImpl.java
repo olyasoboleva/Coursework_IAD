@@ -96,4 +96,23 @@ public class WeaponsInGameServiceImpl implements WeaponsInGameService {
         }
         return weaponsInGame;
     }
+
+    @Override
+    public WeaponsInGame getActiveWeapon(Tribute tribute) {
+        return weaponsInGameRepository.getWeaponsInGameByTributeAndActive(tribute, true);
+    }
+
+    @Override
+    public void setActiveWeapon(Tribute tribute, Weapon weapon) {
+        WeaponsInGame weaponsInGamePast = getActiveWeapon(tribute);
+        if (weaponsInGamePast!=null){
+            weaponsInGamePast.setActive(false);
+            weaponsInGameRepository.save(weaponsInGamePast);
+        }
+        WeaponsInGame weaponsInGameCur = weaponsInGameRepository.getWeaponsInGameByTributeAndWeapon(tribute, weapon);
+        if (weaponsInGameCur!=null){
+            weaponsInGameCur.setActive(true);
+            weaponsInGameRepository.save(weaponsInGameCur);
+        }
+    }
 }

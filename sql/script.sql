@@ -146,7 +146,8 @@ CREATE TABLE weapons_in_game (
   tribute_id        integer REFERENCES tribute,
   weapon_id         integer REFERENCES weapon not null,
   location_x        integer check (location_x >= 0),
-  location_y        integer check (location_y >= 0)
+  location_y        integer check (location_y >= 0),
+  active            boolean default false
 );
 
 CREATE TABLE hook (

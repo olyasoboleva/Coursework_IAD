@@ -64,14 +64,21 @@ public class WebSocketController {
         Game game = gameService.getGameByStartDate(Calendar.getInstance());
         Tribute attackingTribute = tributeService.getTributeByUserAndGame(attackingUser, game);
         Tribute defendingTribute = tributeService.getTributeByUserAndGame(defendingUser, game);
+        WeaponsInGame weaponsInGame = weaponsInGameService.getActiveWeapon(attackingTribute);
+        Weapon weapon;
+        int x = defendingTribute.getLocationX(), y = defendingTribute.getLocationY();
+        if (weaponsInGame!=null) {
+            weapon = weaponsInGame.getWeapon();
+        } else weapon = null;
 
-        gameProcessService.fight(attackingTribute, defendingTribute, battle.getAttWeaponName());
+        gameProcessService.fight(attackingTribute, defendingTribute, weapon);
 
         messagingTemplate.convertAndSendToUser(battle.getDefending(),"/queue/health",
                 new TributeHealth(battle.getDefending(), defendingTribute.getHealth(), defendingTribute.getHunger(), defendingTribute.getThirst()));
         if (defendingTribute.getHealth() <= 0){
             moveTribute(new Coordinates(defendingTribute.getUser().getNick(), defendingTribute.getLocationX(), defendingTribute.getLocationY()));
             gameEvent(new Message(defendingTribute.getUser().getNick()+", "+defendingTribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
+            dropAllWeapon(defendingTribute, x, y);
         }
 
         tributeService.updateTribute(attackingTribute);
@@ -100,7 +107,17 @@ public class WebSocketController {
             messagingTemplate.convertAndSendToUser(tribute.getUser().getNick(), "/queue/weapons", weaponsInGames);
         }
         for (WeaponsInGame weaponInGame: weaponsInGames){
-            messagingTemplate.convertAndSend("/topic/weaponsLocation", new Coordinates(weaponInGame.getWeaponInGameId().toString(), weaponInGame.getLocationX(), weaponInGame.getLocationY()));
+            messagingTemplate.convertAndSend("/topic/weaponsDelLocation", new Coordinates(weaponInGame.getWeaponInGameId().toString(), weaponInGame.getLocationX(), weaponInGame.getLocationY()));
+        }
+    }
+
+    public void dropAllWeapon(Tribute tribute, int x, int y){
+        List<WeaponsInGame> weaponsInGames = weaponsInGameService.getWeaponsInGameByTribute(tribute);
+        for (WeaponsInGame weaponInGame: weaponsInGames){
+            weaponInGame.setTribute(null);
+            weaponInGame.setLocationX(x);
+            weaponInGame.setLocationY(y);
+            messagingTemplate.convertAndSend("/topic/weaponsAddLocation", new Coordinates(weaponInGame.getWeaponInGameId().toString(), weaponInGame.getLocationX(), weaponInGame.getLocationY()));
         }
     }
 

@@ -60,4 +60,8 @@ public interface WeaponsInGameService {
     List<WeaponsInGame> getWeaponsInGameInCellWithoutOwner(Game game, int x, int y);
 
     List<WeaponsInGame> addFreeWeaponsToTribute(Tribute tribute);
+
+    WeaponsInGame getActiveWeapon(Tribute tribute);
+
+    void setActiveWeapon(Tribute tribute, Weapon weapon);
 }

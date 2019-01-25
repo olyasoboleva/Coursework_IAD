@@ -90,6 +90,7 @@ public class SchedulerService {
                 tributeService.getDamage(tribute, damage);
                 if (tribute.getHealth()<=0){
                     webSocketController.gameEvent(new Message(tribute.getUser().getNick()+", "+tribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
+                    webSocketController.dropAllWeapon(tribute);
                     if (gameProcessService.isGameOver(gameToday)) tributesToday = new ArrayList<>();
                 }
                 webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(),tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));

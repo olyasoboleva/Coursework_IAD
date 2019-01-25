@@ -42,4 +42,6 @@ public interface WeaponsInGameRepository extends CrudRepository<WeaponsInGame, I
      * @return list of weapons
      */
     List<WeaponsInGame> getWeaponsInGamesByGameAndLocationXAndLocationYAndTribute(Game game, int x, int y, Tribute tribute);
+
+    WeaponsInGame getWeaponsInGameByTributeAndActive(Tribute tribute, boolean active);
 }
