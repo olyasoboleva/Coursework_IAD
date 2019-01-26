@@ -86,6 +86,7 @@ public class WebSocketController {
         gameProcessService.isGameOver(game);
     }
 
+
     public void sendPresent(User sender, Tribute tribute, Shop present, int quantity){
         PresentsToTribute presentInBag = presentsToTributeService.getPresentByProductAndTribute(present, tribute);
         PresentsToTribute presentsToTribute = new PresentsToTribute(present, tribute, sender, quantity);

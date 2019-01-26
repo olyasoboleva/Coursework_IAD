@@ -35,24 +35,24 @@ public class ShopLogger {
      * Log message for sending present
      * @param joinPoint join point
      */
-    @After("execution(* controller.GameController.sendPresent(..)) && within(controller.GameController)")
+    @After("execution(* controller.WebSocketController.sendPresent(..)) && within(controller.WebSocketController)")
     public void sendPresentLogger(JoinPoint joinPoint) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         Object[] params  = joinPoint.getArgs();
-        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeByUserAndGame(userService.getUserByNick((String) params[0]),gameService.getGameByStartDate(Calendar.getInstance()));
-        Shop present = shopService.getProductById((Integer) params[1]);
-        logger.info("Sender: " + user.getNick() + ", Tribute: " + tribute.getUser().getNick() +", Quantity: " + params[2] + ", Цена: " + present.getCost());
+        User sender = (User) params[0];
+        Tribute tribute = (Tribute) params[1];
+        Shop present = (Shop) params[2];
+        logger.info("Sender: " + sender.getNick() + ", Tribute: " + tribute.getUser().getNick() +", Quantity: " + params[3] + ", Цена: " + present.getCost());
     }
 
-    @AfterThrowing(value = "execution(* controller.GameController.sendPresent(..)) && within(controller.GameController)", throwing = "exc")
+    @AfterThrowing(value = "execution(* controller.WebSocketController.sendPresent(..)) && within(controller.WebSocketController)", throwing = "exc")
     public void catchSendPresentException(JoinPoint joinPoint, Throwable exc) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         Object[] params  = joinPoint.getArgs();
-        User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        Tribute tribute = tributeService.getTributeByUserAndGame(userService.getUserByNick((String) params[0]),gameService.getGameByStartDate(Calendar.getInstance()));
-        Shop present = shopService.getProductById((Integer) params[1]);
-        logger.error("Error in sending present " + present.getName() + " from " + user.getNick() + " to "+ tribute.getUser().getNick() + ". Error: " + exc.getClass().getSimpleName());
+        User sender = (User) params[0];
+        Tribute tribute = (Tribute) params[1];
+        Shop present = (Shop) params[2];
+        logger.error("Error in sending present " + present.getName() + " from " + sender.getNick() + " to "+ tribute.getUser().getNick() + ". Error: " + exc.getClass().getSimpleName());
     }
 
 }
