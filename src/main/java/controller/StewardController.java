@@ -85,6 +85,17 @@ public class StewardController {
     }
 
     @Secured("ROLE_ADMIN")
+    @PostMapping( "/get_hooks")
+    public @ResponseBody ResponseEntity getHooks() {
+        List<Hook> hooks = hookService.getAllHooks();
+        List<String> hooksName = new ArrayList<>();
+        for (Hook hook: hooks){
+            hooksName.add(hook.getName());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(hooksName);
+    }
+
+    @Secured("ROLE_ADMIN")
     @GetMapping( "/tributeSelection")
     public @ResponseBody ResponseEntity selectTributes(int gameID) {
         final List<Object> allPrincipals = sessionRegistry.getAllPrincipals();
@@ -108,8 +119,8 @@ public class StewardController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/createHook")
-    public @ResponseBody ResponseEntity createHook(int gameId, int x, int y, String hookName){
-        Game game = gameService.getGameById(gameId);
+    public @ResponseBody ResponseEntity createHook(int x, int y, String hookName){
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
         Hook hook = hookService.getHookByName(hookName);
         if (hookService.activateHook(game, hook, x, y)) {
             return ResponseEntity.status(HttpStatus.OK).body("Ловушка установлена");

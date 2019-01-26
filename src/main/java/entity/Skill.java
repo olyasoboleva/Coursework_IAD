@@ -12,13 +12,12 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Table(name = "skill")
-//@ToString(of = {"skillId", "name", "description", "typeOfSkill"})
+@ToString(of = {"skillId", "name", "description", "typeOfSkill"})
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "skill_id")
     private Integer skillId;
-
     @NotNull
     @Column(name = "name", length = 32)
     private String name;
@@ -51,29 +50,6 @@ public class Skill {
         this.description = description;
         this.typeOfSkill = typeOfSkill;
         this.weapon = weapon;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Skill that = (Skill) o;
-
-        if (!Objects.equals(skillId, that.skillId)) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (typeOfSkill != null ? !typeOfSkill.equals(that.typeOfSkill) : that.typeOfSkill != null) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = skillId;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (typeOfSkill != null ? typeOfSkill.hashCode() : 0);
-        return result;
     }
 
 }

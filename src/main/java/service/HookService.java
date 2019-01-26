@@ -21,4 +21,6 @@ public interface HookService {
     boolean activateHook(Game game, Hook hook, int x, int y);
 
     Hook getHookByName(String name);
+
+    List<Hook> getAllHooks();
 }

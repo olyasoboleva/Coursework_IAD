@@ -15,7 +15,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Table(name = "tribute")
-//@ToString(exclude = {"productsOfTribute","presentsSenders"})
+@ToString(exclude = {"productsOfTribute","presentsSenders"})
 public class Tribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

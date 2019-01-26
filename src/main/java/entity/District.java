@@ -12,7 +12,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Table(name = "district")
-//@ToString(exclude = "users")
+@ToString(exclude = "users")
 public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

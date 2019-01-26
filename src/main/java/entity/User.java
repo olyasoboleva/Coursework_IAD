@@ -14,7 +14,7 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 @Table(name = "users")
-//@ToString(exclude = {"tributesByUser","stewardGames"})
+@ToString(exclude = {"tributesByUser","stewardGames"})
 public class User {
 
     @Id

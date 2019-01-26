@@ -121,12 +121,16 @@ public class TributeServiceImpl implements TributeService {
     @Override
     public int getDamage(Tribute tribute, int damage) {
         int health = tribute.getHealth()-damage<0 ? 0 : tribute.getHealth()-damage;
+        User user = tribute.getUser();
+        Status status = statusRepository.findStatuseByName("Наблюдатель");
         damage = tribute.getHealth()-health;
         tribute.setHealth(health);
         if (tribute.getHealth()<=0) {
             tribute.setStatus("dead");
             tribute.setLocationX(-1);
             tribute.setLocationY(-1);
+            user.setStatus(status);
+            userRepository.save(user);
         }
         tributeRepository.save(tribute);
         return damage;

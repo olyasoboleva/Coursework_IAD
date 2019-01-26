@@ -1,10 +1,7 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Table(name = "presents_to_tribute")
+@ToString(of = {"sendingId", "quantity", "product"})
 public class PresentsToTribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

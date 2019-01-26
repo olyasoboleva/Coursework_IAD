@@ -15,6 +15,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Table(name = "shop")
+@ToString(exclude = {"productOwners", "locations"})
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

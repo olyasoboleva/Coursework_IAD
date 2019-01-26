@@ -9,6 +9,7 @@ import model.Message;
 import model.TributeHealth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,24 +21,20 @@ import java.util.List;
 public class SchedulerService {
 
     private final GameService gameService;
-
     private final TributeService tributeService;
-
     private final HookService hookService;
-
     private final MapService mapService;
-
     private final WebSocketController webSocketController;
-
     private final WeaponsInGameService weaponsInGameService;
-
     private final GameProcessService gameProcessService;
+    private final SessionRegistry sessionRegistry;
+    private final UserService userService;
 
     private Game gameToday;
     private List<Tribute> tributesToday;
 
     @Autowired
-    public SchedulerService(GameService gameService, TributeService tributeService, HookService hookService, MapService mapService, WebSocketController webSocketController, WeaponsInGameService weaponsInGameService, GameProcessService gameProcessService) {
+    public SchedulerService(GameService gameService, TributeService tributeService, HookService hookService, MapService mapService, WebSocketController webSocketController, WeaponsInGameService weaponsInGameService, GameProcessService gameProcessService, SessionRegistry sessionRegistry, UserService userService) {
         this.gameService = gameService;
         this.tributeService = tributeService;
         this.hookService = hookService;
@@ -45,6 +42,8 @@ public class SchedulerService {
         this.webSocketController = webSocketController;
         this.weaponsInGameService = weaponsInGameService;
         this.gameProcessService = gameProcessService;
+        this.sessionRegistry = sessionRegistry;
+        this.userService = userService;
     }
 
     @Scheduled(cron = "0 0 9 * * *")
@@ -53,6 +52,22 @@ public class SchedulerService {
         if (gameToday!=null) {
             mapService.createAllGameField(gameToday.getArena());
             weaponsInGameService.throwWeaponsOnArena(gameToday);
+        }
+    }
+
+    @Scheduled(cron = "0 17 23 * * *")
+    public void prepareTributes(){
+        init();
+        if (gameToday!=null) {
+            final List<Object> allPrincipals = sessionRegistry.getAllPrincipals();
+            List<entity.User> usersOnline = new ArrayList<>();
+
+            for(final Object principal : allPrincipals) {
+                if(principal instanceof org.springframework.security.core.userdetails.User) {
+                    usersOnline.add(userService.getUserByNick(((org.springframework.security.core.userdetails.User)principal).getUsername()));
+                }
+            }
+            gameProcessService.selection(usersOnline, gameToday);
         }
     }
 
@@ -102,8 +117,8 @@ public class SchedulerService {
         init();
         if (gameToday!=null) {
             int x, y;
-            x = (int) (Math.random() * gameToday.getArena().getArenaLength());
-            y = (int) (Math.random() * gameToday.getArena().getArenaWidth());
+            x = (int) (Math.random() * gameToday.getArena().getArenaLength() + 1);
+            y = (int) (Math.random() * gameToday.getArena().getArenaWidth() + 1);
             Map map = mapService.getCell(gameToday.getArena(),x,y);
             if (map!=null) {
                 List<Hook> hooks = hookService.getHookByLocation(map.getLocation());

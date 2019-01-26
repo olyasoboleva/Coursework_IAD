@@ -7,6 +7,7 @@ import model.TributeHealth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import repository.HookRepository;
+import service.GameProcessService;
 import service.HookService;
 import service.MapService;
 import service.TributeService;
@@ -16,14 +17,20 @@ import java.util.List;
 @Service("hookService")
 public class HookServiceImpl implements HookService {
 
+    private final HookRepository hookRepository;
+    private final TributeService tributeService;
+    private final WebSocketController webSocketController;
+    private final MapService mapService;
+    private final GameProcessService gameProcessService;
+
     @Autowired
-    private HookRepository hookRepository;
-    @Autowired
-    private TributeService tributeService;
-    @Autowired
-    private WebSocketController webSocketController;
-    @Autowired
-    private MapService mapService;
+    public HookServiceImpl(HookRepository hookRepository, TributeService tributeService, WebSocketController webSocketController, MapService mapService, GameProcessService gameProcessService) {
+        this.hookRepository = hookRepository;
+        this.tributeService = tributeService;
+        this.webSocketController = webSocketController;
+        this.mapService = mapService;
+        this.gameProcessService = gameProcessService;
+    }
 
     @Override
     public Hook createHook(Hook hook) {
@@ -57,11 +64,16 @@ public class HookServiceImpl implements HookService {
         if (hook.getLocation().equals(cell.getLocation())) {
             List<Tribute> damagedTributes = tributeService.getTributeInArea(game, x, y, hook.getRadius());
             for (Tribute tribute : damagedTributes) {
-                tribute.setHealth(tribute.getHealth() - hook.getDamage());
+                tributeService.getDamage(tribute, hook.getDamage());
+                if (tribute.getHealth()<=0){
+                    webSocketController.gameEvent(new Message(tribute.getUser().getNick()+", "+tribute.getUser().getDistrict().getName(),"", Message.Type.DEADTRIBUTE));
+                    webSocketController.dropAllWeapon(tribute, x, y);
+                }
                 webSocketController.userGameEvent(new Message("Вы попали в ловушку " + hook.getName() + "!", tribute.getUser().getNick(), Message.Type.HOOK));
                 tributeService.updateTribute(tribute);
                 webSocketController.getHealth(new TributeHealth(tribute.getUser().getNick(), tribute.getHealth(), tribute.getHunger(), tribute.getThirst()));
             }
+            gameProcessService.isGameOver(game);
             return true;
         } else return false;
     }
@@ -69,5 +81,10 @@ public class HookServiceImpl implements HookService {
     @Override
     public Hook getHookByName(String name) {
         return hookRepository.getHookByName(name);
+    }
+
+    @Override
+    public List<Hook> getAllHooks() {
+        return (List<Hook>)hookRepository.findAll();
     }
 }

@@ -106,27 +106,33 @@ public class GameProcessServiceImpl implements GameProcessService {
         Tribute tribute;
         List<entity.User> temp;
         List<entity.User> tributes = new ArrayList<>();
+        List<String> userOnlineNick = new ArrayList<>();
+        List<String> tempNick = new ArrayList<>();
         Status tributeStatus = statusService.getStatuseByName("Трибут");
         Status viewerStatus = statusService.getStatuseByName("Наблюдатель");
+
+        for (User user: usersOnline){
+            userOnlineNick.add(user.getNick());
+        }
 
         for (int doubleSelection=0;doubleSelection<=game.getNumberOfTributes()/48;doubleSelection++) {
             for (int i = 0; i < 12; i++) {
                 for (int j = 0; j < 2; j++) {
                     temp = userService.getUsersForGame(districtService.getDistrictById(i + 1), j != 0, greaterThan, lessThan, viewerStatus);
-                    temp.retainAll(usersOnline);
+                    for (User user: temp){
+                        tempNick.add(user.getNick());
+                    }
+                    tempNick.retainAll(userOnlineNick);
                     if (temp.size() != 0) {
-                        tributes.add(temp.get((int) (Math.random() * temp.size())));
+                        tributes.add(userService.getUserByNick(tempNick.get((int) (Math.random() * temp.size()))));
                         tributes.get(tributes.size()-1).setStatus(tributeStatus);
-                    } else {
-                        for (entity.User user: tributes){
-                            user.setStatus(viewerStatus);
-                        }
-                        return tributes;
                     }
                 }
             }
         }
-        String msg = "В результате прошедшей жатвы вы выбраны трибутом \"+game.getGameId()+\" Голодных игр, которые пройдут "+ game.getStartDate();
+        game.setNumberOfTributes(tributes.size());
+        gameRepository.save(game);
+        String msg = "В результате прошедшей жатвы вы выбраны трибутом "+game.getGameId()+" Голодных игр, которые пройдут через "+ (int)((Calendar.getInstance().getTimeInMillis()-game.getStartDate().getTimeInMillis())/1000/60)+" дней";
         for (entity.User user: tributes){
             tribute = new Tribute(user, game);
             tribute.setLocationX((int)(Math.random()*(game.getArena().getArenaLength()-3))+4);
