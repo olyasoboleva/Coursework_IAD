@@ -42,7 +42,7 @@ public class ShopLogger {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = tributeService.getTributeByUserAndGame(userService.getUserByNick((String) params[0]),gameService.getGameByStartDate(Calendar.getInstance()));
         Shop present = shopService.getProductById((Integer) params[1]);
-        logger.info("Отправитель: " + user.getNick() + ", Трибут: " + tribute.getUser().getNick() +", Количество: " + params[2] + ", Цена: " + present.getCost());
+        logger.info("Sender: " + user.getNick() + ", Tribute: " + tribute.getUser().getNick() +", Quantity: " + params[2] + ", Цена: " + present.getCost());
     }
 
     @AfterThrowing(value = "execution(* controller.GameController.sendPresent(..)) && within(controller.GameController)", throwing = "exc")
@@ -52,7 +52,7 @@ public class ShopLogger {
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = tributeService.getTributeByUserAndGame(userService.getUserByNick((String) params[0]),gameService.getGameByStartDate(Calendar.getInstance()));
         Shop present = shopService.getProductById((Integer) params[1]);
-        logger.error("Ошибка при отправке подарка " + present.getName() + " пользователем " + user.getNick() + " пользователю "+ tribute.getUser().getNick() + ". Ошибка: " + exc.getClass().getSimpleName());
+        logger.error("Error in sending present " + present.getName() + " from " + user.getNick() + " to "+ tribute.getUser().getNick() + ". Error: " + exc.getClass().getSimpleName());
     }
 
 }

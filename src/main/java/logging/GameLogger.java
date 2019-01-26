@@ -21,9 +21,6 @@ public class GameLogger {
     TributeService tributeService;
 
     @Autowired
-    StatusService statusService;
-
-    @Autowired
     PriceService priceService;
 
 
@@ -35,16 +32,15 @@ public class GameLogger {
     public void sendBonus(JoinPoint joinPoint) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        //FIXME: почему это на английском и почему в статусах?
-        int price = statusService.getStatuseByName("Daily prize").getPrice().getCost();
-        logger.info("Пользователь: " + user.getNick() + "Бонус: " + price + "Баланс: " + user.getCash());
+        int price = priceService.getPriceByName("Ежедневный приз").getCost();
+        logger.info("User: " + user.getNick() + "Bonus: " + price + "Balance: " + user.getCash());
     }
 
     @AfterThrowing(value = "execution(* service.UserService.updateUserLastActivity(..)) && within(service.UserService)", throwing = "exc")
     public void catchSendBonusException(JoinPoint joinPoint, Throwable exc) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        logger.error("Ошибка при отправке ежедневного бонуса пользователю " + user.getNick() + ". Ошибка: " + exc.getClass().getSimpleName());
+        logger.error("Ошибка при отправке ежедневного бонуса пользователю " + user.getNick() + ". Error: " + exc.getClass().getSimpleName());
     }
 
 
@@ -58,11 +54,11 @@ public class GameLogger {
         Object[] params  = joinPoint.getArgs();
         Tribute tribute = (Tribute) params[1];
         Game game = (Game) params[0];
-        logger.info("Игра " + game.getGameId() + ", Трибут-победитель: " + tribute.getUser().getNick()+ ", Зараплата: "  + priceService.getPriceByName("winner").getCost() + ", Баланс: " + tribute.getUser().getCash());
+        logger.info("Game " + game.getGameId() + ", Tribute-winner: " + tribute.getUser().getNick()+ ", Salary: "  + priceService.getPriceByName("winner").getCost() + ", Balance: " + tribute.getUser().getCash());
         int sponsorProfit = priceService.getPriceByName("winner's sponsor").getCost();
         Collection<User> sponsors = tribute.getPresentsSenders();
         for (User sponsor: sponsors){
-            logger.info("Игра " + game.getGameId() + "Зарплата спонсору: " + sponsor.getNick() + ", Зарплата: " + sponsorProfit + ", Баланс: " + sponsor.getCash());
+            logger.info("Game " + game.getGameId() + "Salary to sponsor: " + sponsor.getNick() + ", Salary: " + sponsorProfit + ", Balance: " + sponsor.getCash());
         }
     }
 

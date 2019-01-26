@@ -49,8 +49,8 @@ public class GameController {
 
     @Secured("ROLE_USER")
     @GetMapping( "/get_tributes_of_game")
-    public @ResponseBody ResponseEntity getGameTributes(@RequestParam("game") String gameId) {
-        Game game = gameService.getGameById(Integer.parseInt(gameId));
+    public @ResponseBody ResponseEntity getGameTributes() {
+        Game game = gameService.getGameByStartDate(Calendar.getInstance());
         List<Tribute> tributes = tributeService.getTributesByGame(game);
         return ResponseEntity.status(HttpStatus.OK).body(tributes);
     }
@@ -283,8 +283,14 @@ public class GameController {
 
     @GetMapping("/gameWinner")
     public @ResponseBody ResponseEntity getWinner(int gameId){
-        List<Tribute> tributes = tributeService.getTributesByStatusAndGame("Победитель", gameService.getGameById(gameId));
-        return ResponseEntity.status(HttpStatus.OK).body(tributes);
+        List<Tribute> tributes = tributeService.getTributesByGame(gameService.getGameById(gameId));
+        Tribute tribute = null;
+        for (Tribute e: tributes) {
+            if (e.getStatus().equals("Победитель")) {
+                tribute = e;
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(tribute);
     }
 
 }

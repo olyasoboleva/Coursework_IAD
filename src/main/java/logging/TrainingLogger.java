@@ -31,13 +31,13 @@ public class TrainingLogger {
         Object params  = joinPoint.getArgs()[0];
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Training training = trainingService.getTrainingByName(params.toString().trim());
-        logger.info("Пользователь: " + user.getNick() +", Тренировка: " + params.toString() + ", Цена: " + training.getCost());
+        logger.info("User: " + user.getNick() +", Training: " + params.toString() + ", Cost: " + training.getCost());
     }
 
     @AfterThrowing(value = "execution(* controller.TrainingController.improveSkill(..)) && within(controller.TrainingController)", throwing = "exc")
     public void catchImproveSkillException(JoinPoint joinPoint, Throwable exc) {
         final Logger logger = Logger.getLogger(joinPoint.getTarget().getClass());
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
-        logger.error("Ошибка при оплате тренировке пользователем " + user.getNick() + ". Ошибка: " + exc.getClass().getSimpleName());
+        logger.error("Ошибка при оплате тренировке пользователем " + user.getNick() + ". Error: " + exc.getClass().getSimpleName());
     }
 }
