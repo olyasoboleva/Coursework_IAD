@@ -216,11 +216,20 @@ public class GameController {
 
     @Secured({"ROLE_USER"})
     @PostMapping("/send_present")
-    public void sendPresent(String nick, int presentID, int quantity){
+    public @ResponseBody ResponseEntity sendPresent(String nick, int presentID, int quantity){
         User sender = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Tribute tribute = tributeService.getTributeByUserAndGame(userService.getUserByNick(nick),gameService.getGameByStartDate(Calendar.getInstance()));
-        Shop present = shopService.getProductById(presentID);
-        webSocketController.sendPresent(sender, tribute, present, quantity);
+        if (tribute==null || tribute.getStatus().equals("dead")){
+            if (tribute == null){
+                return ResponseEntity.status(HttpStatus.OK).body("Трибут не найден");
+            } else {
+                return ResponseEntity.status(HttpStatus.OK).body("Не отправляйте подарки мертвым трибутам. Они им не к чему.");
+            }
+        } else {
+            Shop present = shopService.getProductById(presentID);
+            webSocketController.sendPresent(sender, tribute, present, quantity);
+            return ResponseEntity.status(HttpStatus.OK).body("Подарок отправлен");
+        }
     }
 
     @Secured({"ROLE_TRIBUTE"})

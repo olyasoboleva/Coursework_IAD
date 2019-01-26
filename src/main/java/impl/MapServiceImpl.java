@@ -74,8 +74,8 @@ public class MapServiceImpl implements MapService {
         int locationId;
         Location curLocation;
         Location mainLocation = arena.getMainLocation();
-        for (int x=0;x<arena.getArenaLength();x++){
-            for (int y=0;y<arena.getArenaWidth();y++){
+        for (int x=1;x<=arena.getArenaLength();x++){
+            for (int y=1;y<=arena.getArenaWidth();y++){
                 if (Math.random()<0.5){
                     curLocation = mainLocation;
                 } else {

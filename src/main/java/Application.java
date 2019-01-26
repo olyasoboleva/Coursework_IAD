@@ -13,7 +13,7 @@ import repository.ShopRepository;
 import service.ShopService;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"logging", "service", "entity", "controller", "impl", "config.security", "config.websocket", "config.logger"})
+@ComponentScan(basePackages = {"service", "entity", "controller", "impl", "config.security", "config.websocket"})
 @EntityScan("entity")
 @EnableJpaRepositories("repository")
 @EnableScheduling

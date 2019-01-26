@@ -129,8 +129,8 @@ public class GameProcessServiceImpl implements GameProcessService {
         String msg = "В результате прошедшей жатвы вы выбраны трибутом \"+game.getGameId()+\" Голодных игр, которые пройдут "+ game.getStartDate();
         for (entity.User user: tributes){
             tribute = new Tribute(user, game);
-            tribute.setLocationX((int)(Math.random()*game.getArena().getArenaLength()));
-            tribute.setLocationY((int)(Math.random()*game.getArena().getArenaWidth()));
+            tribute.setLocationX((int)(Math.random()*(game.getArena().getArenaLength()-3))+4);
+            tribute.setLocationY((int)(Math.random()*(game.getArena().getArenaWidth())-3)+4);
             webSocketController.userGameEvent(new Message(msg, user.getNick(), Message.Type.SELECTION));
             userService.addRole(user, "ROLE_TRIBUTE");
             tributeService.createTribute(tribute);

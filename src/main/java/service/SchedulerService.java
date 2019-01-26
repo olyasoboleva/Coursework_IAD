@@ -47,7 +47,7 @@ public class SchedulerService {
         this.gameProcessService = gameProcessService;
     }
 
-    @Scheduled(cron = "0 43 9 * * *")
+    @Scheduled(cron = "0 0 9 * * *")
     public void prepareMap(){
         init();
         if (gameToday!=null) {

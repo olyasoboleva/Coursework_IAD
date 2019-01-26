@@ -3,6 +3,7 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -13,6 +14,7 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 @Table(name = "users")
+//@ToString(exclude = {"tributesByUser","stewardGames"})
 public class User {
 
     @Id
@@ -83,15 +85,6 @@ public class User {
     @JoinTable(
             name = "presents_to_tribute",
             joinColumns = {@JoinColumn(name = "sender_id")},
-            inverseJoinColumns = {@JoinColumn(name = "tribute_id")}
-    )
-    private Collection<Shop> sendings;
-
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "presents_to_tribute",
-            joinColumns = {@JoinColumn(name = "sender_id")},
             inverseJoinColumns = {@JoinColumn(name = "product_id")}
     )
     private Collection<Tribute> recipients;
@@ -144,32 +137,6 @@ public class User {
         this.cash = cash;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User that = (User) o;
-        return Objects.equals(userId, that.userId) &&
-                height == that.height &&
-                weight == that.weight &&
-                sex == that.sex &&
-                cash == that.cash &&
-                Objects.equals(surname, that.surname) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(birthday, that.birthday) &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(stewardGames, that.stewardGames) &&
-                Objects.equals(presentstotributesByUserid, that.presentstotributesByUserid) &&
-                Objects.equals(tributesByUser, that.tributesByUser) &&
-                Objects.equals(skills, that.skills) &&
-                Objects.equals(district, that.district);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(userId, surname, name, height, weight, sex, birthday, status, cash, stewardGames, presentstotributesByUserid, tributesByUser, skills, district);
-    }
 
 
 }

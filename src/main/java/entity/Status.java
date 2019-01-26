@@ -29,11 +29,7 @@ public class Status {
     @OneToOne
     @JoinColumn(name = "price_id", referencedColumnName = "price_id", insertable = false, updatable = false)
     private Price price;
-
-    @OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Collection<User> users;
-
+    
     public Status(String name, Price price) {
         this.name = name;
         this.price = price;

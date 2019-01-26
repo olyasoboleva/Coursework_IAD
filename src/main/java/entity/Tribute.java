@@ -3,6 +3,7 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -14,6 +15,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Table(name = "tribute")
+//@ToString(exclude = {"productsOfTribute","presentsSenders"})
 public class Tribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,26 +71,6 @@ public class Tribute {
         this.game = game;
         this.locationX = (int)(Math.random()*game.getArena().getArenaLength());
         this.locationY = (int)(Math.random()*game.getArena().getArenaWidth());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tribute that = (Tribute) o;
-        return Objects.equals(tributeId, that.tributeId) &&
-                health == that.health &&
-                Objects.equals(status, that.status) &&
-                Objects.equals(causeOfDeath, that.causeOfDeath) &&
-                Objects.equals(productsOfTribute, that.productsOfTribute) &&
-                Objects.equals(user, that.user) &&
-                Objects.equals(game, that.game) &&
-                Objects.equals(weaponOfTribute, that.weaponOfTribute);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(tributeId, status, causeOfDeath, health, productsOfTribute, user, game, weaponOfTribute);
     }
 
 }

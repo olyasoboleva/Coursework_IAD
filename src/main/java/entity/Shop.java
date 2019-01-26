@@ -1,10 +1,7 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -56,9 +53,6 @@ public class Shop {
     @ManyToMany(mappedBy = "productsOfTribute", fetch = FetchType.LAZY)
     private Collection<Tribute> productOwners;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "sendings", fetch = FetchType.LAZY)
-    private Collection<User> senders;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
@@ -76,27 +70,6 @@ public class Shop {
         this.description = description;
         this.healthRecovery = healthRecovery;
         this.picture = picture;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Shop that = (Shop) o;
-        return Objects.equals(productId, that.productId) &&
-                cost == that.cost &&
-                healthRecovery == that.healthRecovery &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(typeOfPresent, that.typeOfPresent) &&
-                Objects.equals(description, that.description) &&
-                Objects.equals(productOwners, that.productOwners) &&
-                Objects.equals(locations, that.locations) &&
-                Arrays.equals(picture, that.picture);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(productId, name, cost, typeOfPresent, description, healthRecovery, productOwners, locations, picture);
     }
 
 }

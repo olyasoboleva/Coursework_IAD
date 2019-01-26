@@ -1,10 +1,7 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +12,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @Table(name = "skill")
+//@ToString(of = {"skillId", "name", "description", "typeOfSkill"})
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

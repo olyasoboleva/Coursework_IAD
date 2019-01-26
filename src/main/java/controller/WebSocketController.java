@@ -43,6 +43,7 @@ public class WebSocketController {
 
     @MessageMapping("/hungergames/move")
     public void moveTribute(@Payload Coordinates coordinates) {
+
         User user = userService.getUserByNick( SecurityContextHolder.getContext().getAuthentication().getName());
         Game game = gameService.getGameByStartDate(Calendar.getInstance());
         Tribute tribute = tributeService.getTributeByUserAndGame(user, game);
@@ -114,6 +115,7 @@ public class WebSocketController {
     public void dropAllWeapon(Tribute tribute, int x, int y){
         List<WeaponsInGame> weaponsInGames = weaponsInGameService.getWeaponsInGameByTribute(tribute);
         for (WeaponsInGame weaponInGame: weaponsInGames){
+            weaponInGame.setActive(false);
             weaponInGame.setTribute(null);
             weaponInGame.setLocationX(x);
             weaponInGame.setLocationY(y);

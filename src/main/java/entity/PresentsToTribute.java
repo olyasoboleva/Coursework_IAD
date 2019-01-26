@@ -44,20 +44,4 @@ public class PresentsToTribute {
         this.quantity = quantity;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PresentsToTribute that = (PresentsToTribute) o;
-        return Objects.equals(sendingId, that.sendingId) &&
-                quantity == that.quantity &&
-                Objects.equals(product, that.product) &&
-                Objects.equals(tribute, that.tribute) &&
-                Objects.equals(sender, that.sender);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(sendingId, quantity, product, tribute, sender);
-    }
 }
